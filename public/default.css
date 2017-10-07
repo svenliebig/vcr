@@ -1,0 +1,36 @@
+@font-face { 
+	font-family: 'palanquin-regular';
+	src: url('assets/fonts/palanquin/palanquin-regular.ttf') format('truetype'); 
+}
+
+@font-face { 
+	font-family: 'palanquin-bold';
+	src: url('assets/fonts/palanquin/palanquin-bold.ttf') format('truetype'); 
+}
+
+html, body {
+	margin: 0;
+	height: 100%;
+}
+
+h1, h2, h3 {
+	font-family: 'palanquin-bold';
+}
+
+html {
+	background: url("bg.jpg");
+	font-family: 'palanquin-regular';
+	color: #b5b5b5;
+}
+
+html li {
+	transition: color 0.3s ease;
+}
+
+html li:hover {
+	color: white;
+}
+
+body {
+	background-color: rgba(0, 0, 0, 0.5);
+}

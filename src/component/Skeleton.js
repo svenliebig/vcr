@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Header from './header/Header';
 
 /**
  * 
@@ -12,9 +13,7 @@ export default class Skeleton extends Component {
   render() {
 	return (
 			<div>
-				<div className="header">
-					Header
-				</div>
+				<Header />
 				<div className="content">
 					{ this.props.children }
 				</div>
