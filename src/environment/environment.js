@@ -4,15 +4,15 @@ import * as devel from './development.environment';
 
 let environment = null;
 
-if (process.env.NODE_ENV == "test") {
+if (process.env.NODE_ENV === "test") {
 	environment = test.default;
 }
 
-if (process.env.NODE_ENV == "production") {
+if (process.env.NODE_ENV === "production") {
 	environment = prod.default;
 }
 
-if (process.env.NODE_ENV == "development") {
+if (process.env.NODE_ENV === "development") {
 	environment = devel.default;
 }
 

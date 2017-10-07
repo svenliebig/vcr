@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.16.2",
     "enzyme": "^3.1.0",
     "firebase": "^4.5.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
     "react-test-renderer": "^16.0.0"
   },
@@ -14,6 +16,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "testc": "react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject"
   }
 }

@@ -26,12 +26,8 @@ class Firebase {
 		return this.auth.currentUser;
 	}
 
-	write(where) {
-		this.db.ref(where).set({
-			username: "name",
-			email: "email",
-			profile_picture : "imageUrl"
-		});
+	write(where, value) {
+		this.db.ref(where).set(value);
 	}
 
 	get(str, callback) {
@@ -46,10 +42,12 @@ class Firebase {
 			var errorCode = error.code;
 			var errorMessage = error.message;
 
-			console.log("THGIS CATCH");
+			console.log("Cant login!");
+			console.log("Exception don't hurt me!");
+			console.log("Don't hurt me!");
+			console.log("No more!");
 			console.log(errorCode);
 			console.log(errorMessage);
-			// ...
 		});
 	}
 
@@ -58,7 +56,13 @@ class Firebase {
 			// Handle Errors here.
 			var errorCode = error.code;
 			var errorMessage = error.message;
-			// ...
+			
+			console.log("Cant Register!");
+			console.log("Exception don't hurt me!");
+			console.log("Don't hurt me!");
+			console.log("No more!");
+			console.log(errorCode);
+			console.log(errorMessage);
 		});
 	}
 }
