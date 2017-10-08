@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Firebase from '@service/firebase/Firebase';
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import './Options.css';
 
 class Options extends Component {

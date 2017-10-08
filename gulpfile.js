@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
-var watchLess = require('gulp-watch');
 var path = require('path');
 
 gulp.task('less', function () {
@@ -14,3 +13,5 @@ gulp.task('less', function () {
 gulp.task('less-watch', function () {
 	return gulp.watch('./src/**/*.less', ["less"]);
 });
+
+gulp.task('default', ['less']);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Skeleton from '@component/Skeleton';
 import Firebase from '@service/firebase/Firebase';
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class Login extends Component {
 	constructor() {
@@ -29,7 +29,7 @@ class Login extends Component {
 	  const name = target.id;
   
 	  this.setState({
-		[name]: value
+			[name]: value
 	  });
 	}
   

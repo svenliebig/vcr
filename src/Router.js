@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 
 /** Components */
 import Login from '@component/content/login/Login';
-import App from '@component/App';
+import Manage from '@component/content/manage/Manage';
+import Board from '@component/content/board/Board';
 
 /** Router */
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -23,7 +24,8 @@ export default class Router extends Component {
 	let routesArray = null;
 	if(Firebase.isLoggedIn()) {
 		routesArray = [
-			{ path: '/', component: App, key: '1' }
+			{ path: '/', component: Board, key: '1' },
+			{ path: '/manage', component: Manage, key: '1' }
 		];
 	} else {
 		routesArray = [
