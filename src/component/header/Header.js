@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Nav from './nav/Nav';
+import Nav from '@component/header/nav/Nav';
+import Options from '@component/header/options/Options';
 import './Header.css';
 
 export default class Header extends Component {
@@ -7,6 +8,7 @@ export default class Header extends Component {
 	return (
 	  <div className="header-wrapper">
 			<Nav />
+			<Options />
 	  </div>
 	)
   }

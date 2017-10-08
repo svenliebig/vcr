@@ -2,7 +2,8 @@
 import React, { Component } from 'react'
 
 /** Components */
-import App from './component/App';
+import Login from '@component/content/login/Login';
+import App from '@component/App';
 
 /** Router */
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -26,7 +27,7 @@ export default class Router extends Component {
 		];
 	} else {
 		routesArray = [
-			{ path: '/', component: App, key: '1' }
+			{ path: '/', component: Login, key: '1' }
 		];
 	}
 

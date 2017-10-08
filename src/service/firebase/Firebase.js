@@ -46,18 +46,25 @@ class Firebase {
 	}
 
 	login(email, password) {
+		console.log("try to log in");
 		this.auth.signInWithEmailAndPassword(email, password).catch(function(error) {
 			// Handle Errors here.
 			var errorCode = error.code;
 			var errorMessage = error.message;
 
+			console.log(errorCode);
+			console.log(errorMessage);
 			console.log("Cant login!");
 			console.log("Exception don't hurt me!");
 			console.log("Don't hurt me!");
 			console.log("No more!");
-			console.log(errorCode);
-			console.log(errorMessage);
+		}).then(() => {
+			console.log("logged in");
 		});
+	}
+
+	logout() {
+		this.auth.signOut();
 	}
 
 	createUser(email, password) {
