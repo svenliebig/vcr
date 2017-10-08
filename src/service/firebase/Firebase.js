@@ -8,11 +8,15 @@ class Firebase {
 		this.auth = this.app.auth();
 		this.afterLogin = () => {};
 		let self = this;
+		this.user = JSON.parse(localStorage.getItem('firebase-user-login'));
 		this.auth.onAuthStateChanged(function(user) {
 			if (user) {
-				  console.log(`logged in: ${user.uid}`);
-				  self.afterLogin();
+				self.afterLogin();
+				self.user = user;
+				window.localStorage.setItem('firebase-user-login', JSON.stringify(user));
+				console.log(`logged in: ${user.uid}`);
 			} else {
+				window.localStorage.removeItem('firebase-user-login');
 				console.log(`not logged`);
 			}
 		});
@@ -34,6 +38,11 @@ class Firebase {
 		this.db.ref(str).once('value').then((snapshot) => {
 			callback(snapshot.val());
 		});
+	}
+
+	isLoggedIn() {
+		console.log(this.user);
+		return !!this.user;
 	}
 
 	login(email, password) {
