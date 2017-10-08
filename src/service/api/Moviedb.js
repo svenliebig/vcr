@@ -107,16 +107,17 @@ class SeriesapiService {
 				if (seasonIterator.season_number !== 0) {
 					self.getSeriesSeason(id, seasonIterator.season_number, (seasonData) => {
 						const seasonName = seasonData.name;
+						const seasonOverview = seasonData.overview;
 						const totalEpisodes = seasonData.episodes.length;
 						const seasonNumber = seasonData.season_number;
-						const season = new Season(seasonName, totalEpisodes, seasonNumber);
+						const season = new Season(seasonName, seasonOverview, seasonNumber, [], totalEpisodes);
 
-						seasonData.episodes.forEach(episode => {
-							season.$episodes.push(new Episode(episode.name, episode.overview, episode.air_date));
+						seasonData.episodes.forEach((episode, index) => {
+							season.$episodes.push(new Episode(episode.name, episode.overview, episode.air_date, seasonNumber, index + 1));
 						});
 						series.$seasons.push(season);
 
-						if (seasonNumber === lastSeason) {
+						if (series.$seasons.length === lastSeason) {
 							series.$seasons.sort((a, b) => {
 								return a.$seasonNumber - b.$seasonNumber;
 							});

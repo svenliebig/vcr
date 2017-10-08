@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Skeleton from '@component/Skeleton';
+import SearchResult from '@component/content/manage/searchresult/SearchResult';
 import SeriesapiService from '@service/api/Moviedb';
 
 import './Manage.css';
@@ -22,14 +23,13 @@ export default class Manage extends Component {
 		let self = this;
 		this.state.searchStringObs.debounceTime(500).subscribe(
 			() => {
-				if (self.searchString === '') {
+				if (self.state.searchString === '') {
 					self.setState({
 						searchResultsArray: []
 					});
 					return;
 				}
 				tvapi.findSerieByName(self.state.searchString, (result) => {
-					console.log(result);
 					self.setState({
 						searchResultsArray: result
 					});
@@ -55,13 +55,15 @@ export default class Manage extends Component {
 	render() {
 		const searchResults = this.state.searchResultsArray.map((series) =>
 			<div key={ series.id }>
-				{ series.name }
+				<SearchResult series={ series } />
 			</div> 
 		);
 
 		return (
 		<Skeleton>
-			<input placeholder="Suche. ." type="text" onChange={ this.searchStringChanged } value={ this.state.searchString} />
+			<div className="manage-wrapper">
+				<input placeholder="Suche. ." type="text" onChange={ this.searchStringChanged } value={ this.state.searchString} />
+			</div>
 			{ searchResults }
 		</Skeleton>
 		)

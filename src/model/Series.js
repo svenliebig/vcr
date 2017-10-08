@@ -179,10 +179,12 @@ export class Episode {
 	 * @param {string} [airdate=''] Air date of this episode.
 	 * @memberof Episode
 	 */
-	constructor(name = '', overview = '', airdate = '') {
+	constructor(name = '', overview = '', airdate = '', season = 0, episode = 0) {
 		this.name = name;
 		this.overview = overview;
-		this.airDate = new Date(airdate);
+		this.airDate = airdate;
+		this.season = season;
+		this.episode = episode;
 	}
 
 	get $name() {

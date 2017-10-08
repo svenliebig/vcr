@@ -13,8 +13,17 @@ class SeriesConverter {
 	 * @param {any} object 
 	 * @memberof SeriesConverter
 	 */
-	static convert(object) {
-		return object;
+	static convert(series) {
+		series.seasons.forEach(season => {
+			season.episodes.forEach(episode => {
+				episode.watched = false;
+			});
+		});
+		return series;
+	}
+
+	static merge(updated, current) {
+		return updated;
 	}
 }
 

@@ -1,0 +1,179 @@
+// @card-height: 169px;
+@card-height: 60px;
+@card-width: 100%;
+
+.series-card-wrapper {
+    height: @card-height;
+    width: @card-width;
+    position: relative;
+    overflow: hidden;
+
+    .series-card-container {
+        .banner-wrapper {
+            display: inline-block;
+            position: relative;
+            height: @card-height;
+            overflow: hidden;
+			width: 200px;
+            float: left;
+
+            img {
+                z-index: 4;
+                width: 200px;
+            }
+
+            .image-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 5;
+                background: rgba(255, 255, 255, 0.24);
+            }
+        }
+        
+        .title-wrapper {
+            position: absolute;
+            z-index: 6;
+            font-size: 32px;
+            top: 0px;
+            left: 10px;
+			text-shadow: 2px 2px 3px rgb(0, 0, 0);
+			font-weight: bolder;
+			max-width: 290px;
+			color: white;
+			overflow: hidden;
+        }
+
+        .seasons-wrapper {
+            display: inline-block;
+            float: left;
+            height: 60px;
+            overflow: hidden;
+			position: absolute;
+			margin-left: 100px;
+            width: calc(100% ~"-" 300px);
+            bottom: 0;
+
+            .season {
+                height: 0;
+                font-size: 0px;
+				transition: all 0.2s ease;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: nowrap;
+				justify-content: flex-start;
+				align-items: flex-start;
+				overflow: hidden;
+
+                &.active {
+                    height: 23px;
+					font-size: 16px;
+    				line-height: 19px;
+					
+					&:first-child {
+						margin-top: 15px;
+					}
+
+					.episodes-wrapper {
+						height: 19px;
+						overflow: hidden;
+
+						.episode-container {
+							width: 13px;
+						}
+					}
+
+					.season-title {
+						width: 65px;
+						min-width: 65px;
+					}
+                }
+
+                &.preactive {
+                    height: 17px;
+					font-size: 12px;
+    				line-height: 12px;
+                }
+
+                .season-title {
+					display: inline-block;
+					width: 45px;
+					min-width: 45px;
+					transition: width 0.2s ease;
+					order: 0;
+					flex-grow: 0;
+					flex-shrink: 1;
+					flex-basis: auto;
+					align-self: auto;
+                }
+
+                .episodes-wrapper {
+					display: inline-block;
+					margin-left: 5px;
+					order: 0;
+					flex-grow: 1;
+					flex-shrink: 1;
+					flex-basis: auto;
+					align-self: auto;
+					height: 14px;
+					overflow: hidden;
+                    
+                    .episode-container {
+						display: inline-block;
+						padding: 0px 2px;
+						width: 9px;
+						transition: width 0.2s ease;
+
+						button {
+							background: none;
+							border: none;
+							color: #b5b5b5;
+							padding: 0;
+							transition: color 0.3s ease;
+							cursor: pointer;
+							outline: none;
+
+							&.fa-square-o:hover {
+								color: white;
+							}
+						}
+					}
+					
+					button.fa-eye {
+						background: none;
+						border: none;
+						color: #b5b5b5;
+						padding: 0;
+						transition: color 0.3s ease;
+						cursor: pointer;
+						outline: none;
+						padding-left: 15px;
+
+						&:hover {
+							color: white;
+						}
+					}
+                }
+            }
+
+            .season-navigation {
+                display: block;
+                position: absolute;
+                right: 5px;
+                top: 0;
+
+                div {
+                    -webkit-touch-callout: none; /* iOS Safari */
+                    -webkit-user-select: none; /* Safari */
+                     -khtml-user-select: none; /* Konqueror HTML */
+                       -moz-user-select: none; /* Firefox */
+                        -ms-user-select: none; /* Internet Explorer/Edge */
+                            user-select: none; /* Non-prefixed version, currently
+                                                  supported by Chrome and Opera */
+                }
+            }
+        }
+    }
+}
