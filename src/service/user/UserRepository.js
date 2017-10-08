@@ -59,16 +59,21 @@ class UserRepository {
 	addSeries(series) {
 		if(this.uid == null || this.uid == '' || series == null)
 			throw this.exception('UID or series is not defined.');
-		this.hasSeries(series.id, result => {
+		this.getSeries(series.id, result => {
 			let userSeries = null;
 			if (result) {
 				userSeries = SeriesConverter.merge(series, result);
-			}
-			if(!result) {
+			} else {
 				userSeries = SeriesConverter.convert(series);
 			}
 			this.fb.write(`/users/${this.uid}/series/${series.id}`, userSeries);
 		});
+	}
+
+	updateWatchedSeries(series) {
+		if(this.uid == null || this.uid == '' || series == null)
+			throw this.exception('UID or series is not defined.');
+		this.fb.write(`/users/${this.uid}/series/${series.id}`, series);
 	}
 
 	exception(str) {

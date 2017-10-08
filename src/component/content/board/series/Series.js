@@ -94,12 +94,12 @@ export default class Series extends Component {
 		}
 	}
 
-	toggleEpisode(episode, event) {
+	toggleEpisode(episode) {
 		let updated = this.state.series;
 		const snum = episode.season - 1;
 		const epnum = episode.episode - 1;
 		updated.seasons[snum].episodes[epnum].watched = !updated.seasons[snum].episodes[epnum].watched;
-		this.ur.addSeries(updated);
+		this.ur.updateWatchedSeries(updated);
 		this.setState({
 			series: updated
 		});
@@ -122,15 +122,13 @@ export default class Series extends Component {
 			});
 		}
 
-		this.ur.addSeries(updated);
+		this.ur.updateWatchedSeries(updated);
 		this.setState({
 			series: updated
 		});
 	}
 	
 	render() {
-		const series = this.state.series;
-
 		const createEpisodes = (episode, index) => {
 			return(
 				<div key={ index } className="episode-container">
