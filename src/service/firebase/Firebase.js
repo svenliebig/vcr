@@ -14,10 +14,8 @@ class Firebase {
 				self.afterLogin();
 				self.user = user;
 				window.localStorage.setItem('firebase-user-login', JSON.stringify(user));
-				console.log(`logged in: ${user.uid}`);
 			} else {
 				window.localStorage.removeItem('firebase-user-login');
-				console.log(`not logged`);
 			}
 		});
 	}
@@ -41,12 +39,10 @@ class Firebase {
 	}
 
 	isLoggedIn() {
-		console.log(this.user);
 		return !!this.user;
 	}
 
 	login(email, password) {
-		console.log("try to log in");
 		this.auth.signInWithEmailAndPassword(email, password).catch(function(error) {
 			// Handle Errors here.
 			var errorCode = error.code;
@@ -58,8 +54,6 @@ class Firebase {
 			console.log("Exception don't hurt me!");
 			console.log("Don't hurt me!");
 			console.log("No more!");
-		}).then(() => {
-			console.log("logged in");
 		});
 	}
 

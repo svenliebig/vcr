@@ -8,18 +8,19 @@ class Login extends Component {
 	  super();
 	  this.fire = Firebase;  
 	  this.state = {
-			  email: '',
-		password: '',
-		logtext: 'not logged in'
+			email: '',
+			password: '',
+			logtext: 'not logged in'
 	  };
 	  
 	  this.submit = this.submit.bind(this);
 	  this.handleInputChange = this.handleInputChange.bind(this);
 	}
   
-	submit() {
+	submit(event) {
+		event.preventDefault();
 		this.fire.login(this.state.email, this.state.password);
-		window.location.pathname = "/";
+		this.fire.afterLogin = () => { window.location.pathname = "/"; };
 	}
   
 	handleInputChange(event) {
@@ -36,13 +37,13 @@ class Login extends Component {
 	  return (
 		<Skeleton>
 		  <div className="App">
-			<div className="login-wrapper">
-			  <label htmlFor="email">E-Mail</label>
-			  <input id="email" type="text" value={ this.state.email } onChange={ this.handleInputChange }/>
-			  <label htmlFor="password">Password</label>
-			  <input id="password" type="password" value={ this.state.password } onChange={ this.handleInputChange } />
-			  <input value="Submit" type="button" onClick={this.submit}/>
-			</div>
+				<form className="login-wrapper" onSubmit={this.submit} >
+					<label htmlFor="email">E-Mail</label>
+					<input id="email" type="text" value={ this.state.email } onChange={ this.handleInputChange }/>
+					<label htmlFor="password">Password</label>
+					<input id="password" type="password" value={ this.state.password } onChange={ this.handleInputChange } />
+					<input value="Submit" type="submit" />
+				</form>
 		  </div>
 		</Skeleton>
 	  );

@@ -16,13 +16,17 @@ class Options extends Component {
   }
 
   render() {
-    return (
-		<div className="options-wrapper">
-			<div className="options-container">
-				<button onClick={ this.logout }>LO</button>
-			</div>
-		</div>
-    );
+		if (Firebase.isLoggedIn()) {
+			return (
+					<div className="options-wrapper">
+						<div className="options-container">
+							<button onClick={ this.logout }>LO</button>
+						</div>
+					</div>
+			);
+		} else {
+			return (<div/>);
+		}
   }
 }
 
