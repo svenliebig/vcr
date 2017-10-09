@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import SeriesapiService from '@service/api/Moviedb';
 import UserRepository from '@service/user/UserRepository';
+import SeriesRepository from '@service/series/SeriesRepository'
 
 import './SearchResult.css';
 
@@ -11,6 +12,7 @@ export default class SearchResult extends Component {
 		super();
 		this.ur = UserRepository;
 		this.sapi = new SeriesapiService();
+		this.sr = SeriesRepository;
 
 		this.state = {
 			hasSeries: false,
@@ -36,6 +38,7 @@ export default class SearchResult extends Component {
 		});
 		this.sapi.getCompleteSeries(this.props.series.id, (series) => {
 			self.ur.addSeries(series);
+			self.sr.addSeries(series);
 			self.setState({
 				hasSeries: true,
 				processing: false

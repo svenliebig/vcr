@@ -11,10 +11,10 @@ class SeriesRepository {
 		this.fb.get(`/series/${id}`, callback);
 	}
 
-	addSeries(id, value) {
-		if(id == null || id == '')
-			throw this.exception('ID or VALUE is not defined.');
-		this.fb.write(`/series/${id}`, value);
+	addSeries(series) {
+		if(series == null || series.id == '')
+			throw this.exception('series or VALUE is not defined.');
+		this.fb.write(`/series/${series.id}`, series);
 	}
 
 	exception(str) {
@@ -25,4 +25,4 @@ class SeriesRepository {
 	}
 }
 
-export default SeriesRepository;
+export default new SeriesRepository();

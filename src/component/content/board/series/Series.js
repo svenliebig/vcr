@@ -21,6 +21,7 @@ export default class Series extends Component {
 		this.decrementActiveSeason = this.decrementActiveSeason.bind(this);
 		this.toggleEpisode = this.toggleEpisode.bind(this);
 		this.toggleSeason = this.toggleSeason.bind(this);
+		this.seasonScroll = this.seasonScroll.bind(this);
 	}
 
 	componentDidMount() {
@@ -127,13 +128,21 @@ export default class Series extends Component {
 			series: updated
 		});
 	}
+
+	seasonScroll(event) {
+		if (event.deltaY > 0) {
+			this.incrementActiveSeason();
+		} else {
+			this.decrementActiveSeason();
+		}
+	}
 	
 	render() {
 		const createEpisodes = (episode, index) => {
 			return(
 				<div key={ index } className="episode-container">
 					<button 
-						className={ this.isAirDateAfterToday(episode) ? ('fa fa-share-square-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') } 
+						className={ this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') } 
 						title={ this.createEpisodeTooltip(episode) }
 						onClick={ this.toggleEpisode.bind(this, episode) }>
 					</button>
@@ -160,7 +169,7 @@ export default class Series extends Component {
 		const seasonMap = () => {
 			return (
 				<div className="seasons-wrapper">
-					<div className="season-container">
+					<div className="season-container" onWheel={ this.seasonScroll }>
 						{ this.state.series.seasons.map(createSeasons) }
 					</div>
 					<div className="season-navigation">

@@ -1,3 +1,6 @@
+
+import moment from 'moment';
+
 /**
  * Represents a series.
  * 
@@ -23,11 +26,12 @@ export class Series {
 		this.id = id;
 		this.name = name;
 		this.overview = overview;
-		this.airDate = new Date(airDate);
+		this.airDate = airDate;
 		this.posterUrl = posterUrl;
 		this.rating = rating;
 		this.votes = votes;
 		this.seasons = seasons;
+		this.updated = moment().format('DD.MM.YYYY');
 	}
 
 	get $name() {
