@@ -36,10 +36,11 @@ export default class Series extends Component {
 
 		if (this.state.series) {
 			this.state.series.seasons.some(season => {
-				return season.episodes.some(episode => {
-					activeSeason = season.seasonNumber;
-					return !episode.watched;
-				});
+				if (season.episodes != undefined)
+					return season.episodes.some(episode => {
+						activeSeason = season.seasonNumber;
+						return !episode.watched;
+					});
 			});
 		}
 
@@ -130,6 +131,7 @@ export default class Series extends Component {
 	}
 
 	seasonScroll(event) {
+		event.preventDefault();
 		if (event.deltaY > 0) {
 			this.incrementActiveSeason();
 		} else {
@@ -138,6 +140,8 @@ export default class Series extends Component {
 	}
 	
 	render() {
+		let self = this;
+
 		const createEpisodes = (episode, index) => {
 			return(
 				<div key={ index } className="episode-container">
@@ -150,17 +154,33 @@ export default class Series extends Component {
 			);
 		}
 
+		const createSeasonToggle = (season) => {
+			let render = true;
+
+			if(season.episodes == undefined)
+				return '';
+
+			season.episodes.forEach(episode => {
+				render &= moment(episode.airDate).isBefore();
+			})
+			
+			if (render)
+				return (
+					<button 
+						className="fa fa-eye"
+						title="Alle Folgen dieser Staffel als gesehen markieren."
+						onClick={ self.toggleSeason.bind(self, season) }>
+					</button>
+				);
+		}
+
 		const createSeasons = (season, index) => {
 			return(
 				<div key={ index } className={ 'season ' + this.getSeasonClass(season.seasonNumber) }>
 					<div className="season-title">{ 'Staffel ' + season.seasonNumber }</div>
 					<div className="episodes-wrapper" season={ season.seasonNumber }>
-						{ season.episodes.map(createEpisodes) }
-						<button 
-							className="fa fa-eye"
-							title="Alle Folgen dieser Staffel als gesehen markieren."
-							onClick={ this.toggleSeason.bind(this, season) }>
-						</button>
+						{ (season.episodes != undefined ? season.episodes.map(createEpisodes) : '')}
+						{ createSeasonToggle(season) }
 					</div>
 				</div>
 			);

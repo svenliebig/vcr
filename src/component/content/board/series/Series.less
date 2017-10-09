@@ -2,6 +2,17 @@
 @card-height: 60px;
 @card-width: 100%;
 
+.not-selectable() {
+	cursor: default;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	 -khtml-user-select: none; /* Konqueror HTML */
+	   -moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* Non-prefixed version, currently
+								  supported by Chrome and Opera */
+}
+
 .series-card-wrapper {
     height: @card-height;
     width: @card-width;
@@ -44,6 +55,7 @@
 			max-width: 290px;
 			color: white;
 			overflow: hidden;
+			.not-selectable();
         }
 
         .seasons-wrapper {
@@ -105,6 +117,7 @@
 					flex-shrink: 1;
 					flex-basis: auto;
 					align-self: auto;
+					.not-selectable();
                 }
 
                 .episodes-wrapper {

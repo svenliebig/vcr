@@ -116,15 +116,15 @@ export class Season {
 	 * @param {string} [overview=''] Description of this season.
 	 * @param {number} [seasonNumber=0] Number of this season.
 	 * @param {any} [episodes=new Array<Episode>()] Array of episodes that are in this season.
-	 * @param {number} [episodeAmout=0] Number of total episodes of this season.
+	 * @param {number} [episodeAmount=0] Number of total episodes of this season.
 	 * @memberof Season
 	 */
-	constructor(name = '', overview = '', seasonNumber = 0, episodes = [], episodeAmout = 0) {
+	constructor(name = '', overview = '', seasonNumber = 0, episodes = [], episodeAmount = 0) {
 		this.name = name;
 		this.overview = overview;
 		this.seasonNumber = seasonNumber;
 		this.episodes = episodes;
-		this.episodeAmout = episodeAmout;
+		this.episodeAmount = episodeAmount;
 	}
 
 	get $name() {

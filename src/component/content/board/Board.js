@@ -20,15 +20,33 @@ export default class Board extends Component {
 			userSeries: [],
 			deprecatedArray: [],
 			filterWatched: true,
+			filterUpcoming: true,
+			filterNotWatched: false,
 			updateIndex: 0,
 			processing: false
 		}
 
 		this.checkDeprecated = this.checkDeprecated.bind(this);
 		this.toggleWatched = this.toggleWatched.bind(this);
+		this.toggleNotWatched = this.toggleNotWatched.bind(this);
+		this.toggleUpcoming = this.toggleUpcoming.bind(this);
 		this.filterSeries = this.filterSeries.bind(this);
 		this.updateAll = this.updateAll.bind(this);
 		this.updateLoop = this.updateLoop.bind(this);
+	}
+	
+	componentDidMount() {
+		let self = this;
+		this.ur.getAllSeries(series => {
+			const tempArray = [];
+			for(let key in series) { 
+				tempArray.push(series[key]); 
+			}
+			self.setState({
+				userSeries: tempArray
+			});
+			self.checkDeprecated();
+		});
 	}
 
 	updateAll() {
@@ -73,35 +91,63 @@ export default class Board extends Component {
 		})
 	}
 
-	componentDidMount() {
-		let self = this;
-		this.ur.getAllSeries(series => {
-			const tempArray = [];
-			for(let key in series) { 
-				tempArray.push(series[key]); 
-			}
-			self.setState({
-				userSeries: tempArray
-			});
-			self.checkDeprecated();
-		});
-	}
-
 	toggleWatched() {
 		this.setState({
 			filterWatched: !this.state.filterWatched
 		})
 	}
 
+	toggleNotWatched() {
+		this.setState({
+			filterNotWatched: !this.state.filterNotWatched
+		})
+	}
+	
+	toggleUpcoming() {
+		this.setState({
+			filterUpcoming: !this.state.filterUpcoming
+		})
+	}
+
 	isCompleteWatched(series) {
 		let result = true;
 		series.seasons.forEach(season => {
-			season.episodes.forEach(episode => {
-				if (!episode.watched && moment(episode.airDate).isBefore()) {
-					result = false;
-					return result;
-				}
-			});
+			if (season.episodeAmount != 0)
+				season.episodes.forEach(episode => {
+					if (!episode.watched) {
+						result = false;
+					}
+				});
+		});
+		return result;
+	};
+
+	hasUpcoming(series) {
+		let result = false;
+		let completlyWatched = true;
+		series.seasons.forEach(season => {
+			if (season.episodeAmount != 0)
+				season.episodes.forEach(episode => {
+					if (moment(episode.airDate).isAfter()) {
+						result = true;
+					}
+					if (!episode.watched && moment(episode.airDate).isBefore()) {
+						completlyWatched = false;
+					}
+				});
+		});
+		return result && completlyWatched;
+	}
+
+	hasNotWatched(series) {
+		let result = false;
+		series.seasons.forEach(season => {
+			if (season.episodeAmount != 0)
+				season.episodes.forEach(episode => {
+					if (!episode.watched && moment(episode.airDate).isBefore()) {
+						result = true;
+					}
+				});
 		});
 		return result;
 	};
@@ -109,6 +155,16 @@ export default class Board extends Component {
 	filterSeries(series) {
 		if (this.state.filterWatched) {
 			if (this.isCompleteWatched(series)) {
+				return false;
+			}
+		}
+		if (this.state.filterUpcoming) {
+			if (this.hasUpcoming(series)) {
+				return false;
+			}
+		}
+		if (this.state.filterNotWatched) {
+			if (this.hasNotWatched(series)) {
 				return false;
 			}
 		}
@@ -136,7 +192,6 @@ export default class Board extends Component {
 			}
 		}
 		
-
 		return (
 			<Skeleton>
 				{ updateBlocker() }
@@ -150,7 +205,15 @@ export default class Board extends Component {
 							<span>Gesehen </span>
 							<span className={ this.state.filterWatched ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
 						</button>
-						<button onClick={ this.updateAll }>
+						<button className="filter-toggle" onClick={ this.toggleNotWatched }>
+							<span>Offene </span>
+							<span className={ this.state.filterNotWatched ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
+						</button>
+						<button className="filter-toggle" onClick={ this.toggleUpcoming }>
+							<span>Bekommt neue </span>
+							<span className={ this.state.filterUpcoming ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
+						</button>
+						<button className="updater" onClick={ this.updateAll }>
 							<span>Alles updaten </span>
 							<span className="fa fa-refresh"></span>
 						</button>

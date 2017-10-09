@@ -29,7 +29,6 @@
 	.series-table-header {
 		border-bottom: 1px solid rgba(181, 181, 181, 0.3);
 		margin-bottom: 5px;
-		padding-bottom: 5px;
 		display: flex;
 		flex-direction: row;
 
@@ -46,8 +45,18 @@
 			}
 
 			&.filter-toggle {
-				flex-grow: 1;
+				flex-grow: 0;
 				text-align: left;
+				padding-left: 0;
+				padding-right: 8px;
+				padding-bottom: 4px;
+				border-right: 1px solid rgba(181, 181, 181, 0.3);
+				margin-right: 8px;
+			}
+
+			&.updater {
+				flex-grow: 1;
+				text-align: right;
 			}
 		}
 	}
