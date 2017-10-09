@@ -70,6 +70,12 @@ class UserRepository {
 		});
 	}
 
+	removeSeries(id, callback) {
+		if(this.uid == null || this.uid == '' || id == null)
+			throw this.exception('UID or series is not defined.');
+		this.fb.remove(`/users/${this.uid}/series/${id}`, callback);
+	}
+
 	updateWatchedSeries(series) {
 		if(this.uid == null || this.uid == '' || series == null)
 			throw this.exception('UID or series is not defined.');

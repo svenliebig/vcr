@@ -38,6 +38,12 @@ class Firebase {
 		});
 	}
 
+	remove(str, callback) {
+		this.db.ref(str).remove().then(() => {
+			callback();
+		});
+	}
+
 	isLoggedIn() {
 		return !!this.user;
 	}

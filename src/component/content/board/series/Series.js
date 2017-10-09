@@ -91,7 +91,7 @@ export default class Series extends Component {
 		if(this.isAirDateAfterToday(episode)) {
 			return `S${episode.season}E${episode.episode} kommt am ` + moment(episode.airDate).format('DD.MM.YYYY');
 		} else {
-			return `S${episode.season}E${episode.episode} - ${episode.name}`;
+			return `S${episode.season}E${episode.episode} - ${episode.name} vom ${moment(episode.airDate).format('DD.MM.YYYY')}`;
 		}
 	}
 

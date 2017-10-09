@@ -16,10 +16,13 @@ export default class Board extends Component {
 
 		this.state = {
 			userSeries: [],
-			deprecatedArray: []
+			deprecatedArray: [],
+			filterWatched: true
 		}
 
 		this.checkDeprecated = this.checkDeprecated.bind(this);
+		this.toggleWatched = this.toggleWatched.bind(this);
+		this.filterSeries = this.filterSeries.bind(this);
 	}
 
 	checkDeprecated() {
@@ -50,10 +53,38 @@ export default class Board extends Component {
 			self.checkDeprecated();
 		});
 	}
-	
-  render() {
 
-		const seriesMap = this.state.userSeries.map((series) =>
+	toggleWatched() {
+		this.setState({
+			filterWatched: !this.state.filterWatched
+		})
+	}
+
+	isCompleteWatched(series) {
+		let result = true;
+		series.seasons.forEach(season => {
+			season.episodes.forEach(episode => {
+				if (!episode.watched && moment(episode.airDate).isBefore()) {
+					result = false;
+					return result;
+				}
+			});
+		});
+		return result;
+	};
+
+	filterSeries(series) {
+		if (this.state.filterWatched) {
+			if (this.isCompleteWatched(series)) {
+				return false;
+			}
+		}
+		return true;
+	};
+	
+	render() {
+
+		const seriesMap = this.state.userSeries.filter(this.filterSeries).map((series) =>
 			<div key={ series.id }>
 				<Series series={ series } />
 			</div> 
@@ -67,6 +98,10 @@ export default class Board extends Component {
 							this.state.deprecatedArray.length > 0 ? 
 							<span className='fa fa-exclamation-triangle' title={ this.state.deprecatedArray.join(' ,') }></span> : '' 
 						}
+						<button onClick={ this.toggleWatched }>
+							<span>Gesehen </span>
+							<span className={ this.state.filterWatched ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
+						</button>
 					</div>
 					<div className="series-table-content">
 					{ seriesMap }

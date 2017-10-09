@@ -20,6 +20,7 @@ export default class SearchResult extends Component {
 		}
 
 		this.addSeries = this.addSeries.bind(this);
+		this.removeSeries = this.removeSeries.bind(this);
 	}
 
 	componentDidMount() {
@@ -45,6 +46,19 @@ export default class SearchResult extends Component {
 			});
 		});
 	}
+
+	removeSeries() {
+		let self = this;
+		self.setState({
+			processing: true
+		});
+		this.ur.removeSeries(this.props.series.id, () => {
+			self.setState({
+				hasSeries: false,
+				processing: false
+			});
+		});
+	}
 	
 	render() {
 		const series = this.props.series;
@@ -57,7 +71,7 @@ export default class SearchResult extends Component {
 				return (
 					<div className="actions">
 						<button onClick={ this.addSeries }>update</button>
-						<button>remove</button>
+						<button onClick={ this.removeSeries }>remove</button>
 					</div>
 				);
 			}

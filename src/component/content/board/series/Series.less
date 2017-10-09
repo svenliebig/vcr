@@ -157,20 +157,39 @@
             }
 
             .season-navigation {
-                display: block;
                 position: absolute;
-                right: 5px;
-                top: 0;
+				right: 5px;
+				padding-top: 4px;
+				top: 0;
+				flex-direction: column;
+				flex-wrap: nowrap;
+				justify-content: flex-start;
+				align-items: flex-start;
+				display: flex;
 
                 div {
-                    -webkit-touch-callout: none; /* iOS Safari */
+                  -webkit-touch-callout: none; /* iOS Safari */
                     -webkit-user-select: none; /* Safari */
                      -khtml-user-select: none; /* Konqueror HTML */
                        -moz-user-select: none; /* Firefox */
                         -ms-user-select: none; /* Internet Explorer/Edge */
                             user-select: none; /* Non-prefixed version, currently
                                                   supported by Chrome and Opera */
-                }
+				}
+				
+				button {
+					background: none;
+					border: none;
+					color: #b5b5b5;
+					padding: 0;
+					transition: color 0.3s ease;
+					cursor: pointer;
+					outline: none;
+
+					&:hover {
+						color: white;
+					}
+				}
             }
         }
     }

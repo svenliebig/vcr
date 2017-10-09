@@ -96,9 +96,13 @@ class SeriesapiService {
 			const overview = seriesData.overview;
 			const airDate = seriesData.first_air_date;
 			const series = new Series(id, name, overview, airDate);
-			series.$posterUrl = `${self.POSTER_URL}${seriesData.backdrop_path}`;
-			series.$rating = seriesData.vote_average;
-			series.$votes = seriesData.vote_count;
+			series.posterUrl = `${self.POSTER_URL}${seriesData.backdrop_path}`;
+			series.rating = seriesData.vote_average;
+			series.votes = seriesData.vote_count;
+			series.genres = seriesData.genres;
+			series.country = seriesData.origin_country;
+			series.status = seriesData.status;
+			series.createdBy = seriesData.created_by;
 			const lastSeason = seriesData.number_of_seasons;
 
 			// console.log(seriesData);
@@ -113,13 +117,13 @@ class SeriesapiService {
 						const season = new Season(seasonName, seasonOverview, seasonNumber, [], totalEpisodes);
 
 						seasonData.episodes.forEach((episode, index) => {
-							season.$episodes.push(new Episode(episode.name, episode.overview, episode.air_date, seasonNumber, index + 1));
+							season.episodes.push(new Episode(episode.name, episode.overview, episode.air_date, seasonNumber, index + 1));
 						});
-						series.$seasons.push(season);
+						series.seasons.push(season);
 
-						if (series.$seasons.length === lastSeason) {
-							series.$seasons.sort((a, b) => {
-								return a.$seasonNumber - b.$seasonNumber;
+						if (series.seasons.length === lastSeason) {
+							series.seasons.sort((a, b) => {
+								return a.seasonNumber - b.$seasonNumber;
 							});
 							callback(series);
 						}

@@ -20,7 +20,9 @@ class Options extends Component {
 			return (
 					<div className="options-wrapper">
 						<div className="options-container">
-							<button onClick={ this.logout }>LO</button>
+							<button onClick={ this.logout } title="Ausloggen">
+								<span className="fa fa-power-off"></span>
+							</button>
 						</div>
 					</div>
 			);
