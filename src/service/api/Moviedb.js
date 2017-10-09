@@ -158,7 +158,7 @@ class SeriesapiService {
 				callback(null);
 			}
 		})
-		.catch(error => {
+		.catch(() => {
 			setTimeout(() => {
 				self.callApi(url, callback);
 			}, 1000);

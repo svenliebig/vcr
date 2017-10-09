@@ -6,14 +6,12 @@ class UserRepository {
 		let self = this;
 		this.fb = Firebase;
 		if(this.fb.isLoggedIn()) {
-		this.uid = this.fb.user.uid;
-	} else {
-		this.uid = null;
-	}
+			this.uid = this.fb.user.uid;
+		} else {
+			this.uid = null;
+		}
 	
-		console.log(`construc`);
 		this.isUserInDb(result => {
-			console.log(`result: ${result}`);
 			if(!result) {
 				self.addUserToDb();
 			}

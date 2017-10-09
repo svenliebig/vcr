@@ -29,7 +29,7 @@ export default class Board extends Component {
 		let self = this;
 		this.state.userSeries.forEach(series => {
 			self.sr.getById(series.id, (val) => {
-				if(moment(series.updated).isBefore(moment(val.updated))) {
+				if(moment(series.updated, 'DD.MM.YYYY').isBefore(moment(val.updated, 'DD.MM.YYYY'))) {
 					let tempArray = self.state.deprecatedArray;
 					tempArray.push(series.name);
 					self.setState({
