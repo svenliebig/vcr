@@ -62,7 +62,7 @@ export default class SearchResult extends Component {
 	
 	render() {
 		const series = this.props.series;
-
+		
 		const actions = () => {
 			if (this.state.processing) {
 				return;

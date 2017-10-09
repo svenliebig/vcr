@@ -189,6 +189,7 @@ export class Episode {
 		this.airDate = airdate;
 		this.season = season;
 		this.episode = episode;
+		this.watched = false;
 	}
 
 	get $name() {

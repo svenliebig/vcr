@@ -3,6 +3,7 @@ import Skeleton from '@component/Skeleton';
 import Series from '@component/content/board/series/Series';
 import UserRepository from '@service/user/UserRepository';
 import SeriesRepository from '@service/series/SeriesRepository';
+import SeriesapiService from '@service/api/Moviedb';
 
 import './Board.css';
 
@@ -13,16 +14,48 @@ export default class Board extends Component {
 		super();
 		this.ur = UserRepository;
 		this.sr = SeriesRepository;
+		this.sapi = new SeriesapiService();
 
 		this.state = {
 			userSeries: [],
 			deprecatedArray: [],
-			filterWatched: true
+			filterWatched: true,
+			updateIndex: 0,
+			processing: false
 		}
 
 		this.checkDeprecated = this.checkDeprecated.bind(this);
 		this.toggleWatched = this.toggleWatched.bind(this);
 		this.filterSeries = this.filterSeries.bind(this);
+		this.updateAll = this.updateAll.bind(this);
+		this.updateLoop = this.updateLoop.bind(this);
+	}
+
+	updateAll() {
+		if(this.state.userSeries.length == 0)
+			return
+
+		this.setState({
+			updateIndex: 0,
+			processing: true
+		}, () => {
+			this.sapi.getCompleteSeries(this.state.userSeries[this.state.updateIndex].id, this.updateLoop);
+		});
+	}
+
+	updateLoop(series) {
+		this.ur.addSeries(series);
+		this.sr.addSeries(series);
+
+		this.setState({
+			updateIndex: (this.state.userSeries.length > (this.state.updateIndex + 1) ? this.state.updateIndex + 1 : 0)
+		}, () => {
+			if (this.state.updateIndex != 0) {
+				this.sapi.getCompleteSeries(this.state.userSeries[this.state.updateIndex].id, this.updateLoop);
+			} else {
+				window.location.pathname = "/";
+			}
+		});
 	}
 
 	checkDeprecated() {
@@ -34,7 +67,7 @@ export default class Board extends Component {
 					tempArray.push(series.name);
 					self.setState({
 						deprecatedArray: tempArray
-					})
+					});
 				}
 			});
 		})
@@ -83,6 +116,7 @@ export default class Board extends Component {
 	};
 	
 	render() {
+		let self = this;
 
 		const seriesMap = this.state.userSeries.filter(this.filterSeries).map((series) =>
 			<div key={ series.id }>
@@ -90,17 +124,35 @@ export default class Board extends Component {
 			</div> 
 		);
 
+		const updateBlocker = () => {
+			if (self.state.processing) {
+				return (
+					<div className="updateBlocker">
+						<div className="updateBlockerText">
+							{ `Aktualisiere:  ${self.state.userSeries[self.state.updateIndex].name} [${self.state.updateIndex}/${self.state.userSeries.length}]` }
+						</div>
+					</div>
+				);
+			}
+		}
+		
+
 		return (
 			<Skeleton>
+				{ updateBlocker() }
 				<div className="series-table-wrapper">
 					<div className="series-table-header">
 						{ 
 							this.state.deprecatedArray.length > 0 ? 
 							<span className='fa fa-exclamation-triangle' title={ this.state.deprecatedArray.join(' ,') }></span> : '' 
 						}
-						<button onClick={ this.toggleWatched }>
+						<button className="filter-toggle" onClick={ this.toggleWatched }>
 							<span>Gesehen </span>
 							<span className={ this.state.filterWatched ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
+						</button>
+						<button onClick={ this.updateAll }>
+							<span>Alles updaten </span>
+							<span className="fa fa-refresh"></span>
 						</button>
 					</div>
 					<div className="series-table-content">

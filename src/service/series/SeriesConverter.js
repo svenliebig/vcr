@@ -6,8 +6,7 @@
 class SeriesConverter {
 
 	/**
-	 * 
-	 * Converts a object to a list.
+	 * Converts a series that comes directly from the moviedb Database.
 	 * 
 	 * @static
 	 * @param {any} object 
