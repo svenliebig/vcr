@@ -17,7 +17,15 @@
     height: @card-height;
     width: @card-width;
     position: relative;
-    overflow: hidden;
+	overflow: hidden;
+	
+	.view-link {
+		position: absolute;
+		left: 3px;
+		z-index: 10;
+		top: -5px;
+		color: white;
+	}
 
     .series-card-container {
         .banner-wrapper {
