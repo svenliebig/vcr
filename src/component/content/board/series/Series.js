@@ -147,7 +147,7 @@ export default class Series extends Component {
 				<div key={ index } className="episode-container">
 					<button 
 						className={ this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') } 
-						title={ this.createEpisodeTooltip(episode) }
+						title={this.createEpisodeTooltip(episode) }
 						onClick={ this.toggleEpisode.bind(this, episode) }>
 					</button>
 				</div>
@@ -212,7 +212,7 @@ export default class Series extends Component {
 						<div className="image-overlay"/>
 					</div>
 					<div className="title-wrapper">
-						{ this.state.series.name }
+						<p className="title-wrapper__text">{this.state.series.name}</p>
 					</div>
 					{ seasonMap() }
 				</div>
