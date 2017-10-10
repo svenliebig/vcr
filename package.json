@@ -59,7 +59,7 @@
     "start-js": "node scripts/start.js",
     "build-js": "node scripts/build.js",
     "start": "npm run build-css && npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && react-scripts-ts build-js",
+    "build": "npm run build-css && npm run build-js",
     "test": "npm run build-css && node scripts/test.js --env=jsdom",
     "testc": "npm run build-css && node scripts/test.js --env=jsdom --coverage"
   },
