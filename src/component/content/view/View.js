@@ -17,6 +17,11 @@ export default class View extends Component {
 
 		let self = this;
 
+		// TODO
+		// Checken ob der nutzer die Serie hat, falls nicht lade die 
+		// Series aus dem SeriesRepository, falls doch lade sie vom Nutzer
+		// Und zeige gleichzeitig an ob er schon was gesehen hat etc.
+
 		this.ur.getSeries(props.match.params.id, (series) => {
 			self.setState({
 				series: series
