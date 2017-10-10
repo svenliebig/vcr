@@ -67,13 +67,22 @@ export default class View extends Component {
 			);
 		}
 
+		const mapGenres = (genre) => {
+			return(
+				<div className="genre-wrapper">
+					{ genre.name }
+				</div>
+			);
+		}
+
 		const renderSeries = () => {
 			if (self.state.series != null) {
 
 				return (
 					<div>
-						{self.state.series.name}<br />
-						{self.state.series.overview}<br />
+						{ self.state.series.name }<br />
+						{ self.state.series.overview }<br />
+						{ self.state.series.genres.map(mapGenres) }<br />
 						<img src={ self.getImageSrc() } alt="" />
 						{ self.state.series.seasons.map(mapSeason) }
 					</div>
