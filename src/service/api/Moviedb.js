@@ -141,7 +141,7 @@ class SeriesapiService {
 	 * @memberof SeriesapiService
 	 */
 	findSerieByName(name, callback) {
-		const url = `${this.API_URL}${this.BY_NAME}${environment.themoviedb}&query=${name}`;
+		const url = `${this.API_URL}${this.BY_NAME}${environment.themoviedb}&query=${name}${this.LANG_PARAM}`;
 		const findSeriesByNameCall = (res) => {
 			callback(res.results);
 		};

@@ -5,6 +5,8 @@ import SeriesapiService from '@service/api/Moviedb';
 import UserRepository from '@service/user/UserRepository';
 import SeriesRepository from '@service/series/SeriesRepository'
 
+import moment from 'moment';
+
 import './SearchResult.css';
 
 export default class SearchResult extends Component {
@@ -59,6 +61,15 @@ export default class SearchResult extends Component {
 			});
 		});
 	}
+
+	getImageSrc(series) {
+		const url = series.backdrop_path;
+		if (url !== null && url.endsWith('jpg')) {
+			return `https://image.tmdb.org/t/p/w300${url}`;
+		} else {
+			return 'bright-squares.png';
+		}
+	}
 	
 	render() {
 		const series = this.props.series;
@@ -69,20 +80,24 @@ export default class SearchResult extends Component {
 			}
 			if (this.state.hasSeries) {
 				return (
-					<div className="actions">
-						<button onClick={ this.addSeries }>update</button>
-						<button onClick={ this.removeSeries }>remove</button>
+					<div>
+						<button onClick={ this.addSeries }><span className="fa fa-refresh"></span></button>
+						<button onClick={ this.removeSeries }><span className="fa fa-trash"></span></button>
 					</div>
 				);
 			}
-			return (<button onClick={ this.addSeries }>add</button>);
+			return (<button onClick={ this.addSeries }><span className="fa fa-plus"></span></button>);
 		}
 
 		return (
-			<div>
-				Name: { series.name }
-				-- Has: { this.state.hasSeries ? 'true' : 'false' }
-				{ actions() }
+			<div className="series-result">
+				<img src={ this.getImageSrc(series) } alt="" />
+				<div className="series-title">{ series.name }</div>
+				<div className="series-description">{ series.overview }</div>
+				<div className="airing">{ moment(series.first_air_date).format('DD.MM.YYYY') }</div>
+				<div className="actions">
+					{ actions() }
+				</div>
 	  		</div>
 		)
 	}
