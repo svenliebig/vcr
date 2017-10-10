@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 
 class Firebase {
 	constructor() {
+		this.error = undefined;
 		this.app = firebase.initializeApp(environment.firebase);
 		this.db = this.app.database();
 		this.auth = this.app.auth();
@@ -22,6 +23,10 @@ class Firebase {
 
 	setAfterLogin(callback) {
 		this.afterLogin = callback;
+	}
+
+	getError() {
+		return this.error;
 	}
 
 	getUser() {
@@ -49,17 +54,14 @@ class Firebase {
 	}
 
 	login(email, password) {
+		var that = this;
 		this.auth.signInWithEmailAndPassword(email, password).catch(function(error) {
 			// Handle Errors here.
 			var errorCode = error.code;
 			var errorMessage = error.message;
 
 			console.log(errorCode);
-			console.log(errorMessage);
-			console.log("Cant login!");
-			console.log("Exception don't hurt me!");
-			console.log("Don't hurt me!");
-			console.log("No more!");
+			that.error = errorMessage;
 		});
 	}
 

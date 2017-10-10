@@ -10,7 +10,8 @@ class Login extends Component {
 	  this.state = {
 			email: '',
 			password: '',
-			logtext: 'not logged in'
+			logtext: 'not logged in',
+			error: undefined
 	  };
 	  
 	  this.submit = this.submit.bind(this);
@@ -20,9 +21,15 @@ class Login extends Component {
 	submit(event) {
 		event.preventDefault();
 		this.fire.login(this.state.email, this.state.password);
+		const error = this.fire.getError();
+		if (error) {
+			this.setState(() => ({error}))
+		}
 		this.fire.afterLogin = () => { window.location.pathname = "/"; };
 	}
-  
+
+
+	
 	handleInputChange(event) {
 	  const target = event.target;
 	  const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -38,6 +45,7 @@ class Login extends Component {
 		<Skeleton>
 		  <div className="App">
 				<form className="login-wrapper" onSubmit={this.submit} >
+					{!!this.state.error ? <p>{this.state.error}</p> : null}
 					<label htmlFor="email">E-Mail</label>
 					<input id="email" type="text" value={ this.state.email } onChange={ this.handleInputChange }/>
 					<label htmlFor="password">Password</label>
