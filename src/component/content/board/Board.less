@@ -32,6 +32,11 @@
 		display: flex;
 		flex-direction: row;
 
+		.spacer {
+			order: 2;
+			flex-grow: 1;
+		}
+
 		button {
 			background: none;
 			border: none;
@@ -52,10 +57,12 @@
 				padding-bottom: 4px;
 				border-right: 1px solid rgba(181, 181, 181, 0.3);
 				margin-right: 8px;
+				order: 1;
 			}
-
+			
 			&.updater {
-				flex-grow: 1;
+				order: 3;
+				flex-grow: 0;
 				text-align: right;
 			}
 		}

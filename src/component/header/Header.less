@@ -6,4 +6,18 @@
 	flex-wrap: nowrap;
 	justify-content: flex-start;
 	align-items: flex-start;
+
+	.quote {
+		overflow: auto;
+		height: 35px;
+		font-size: 14px;
+		line-height: 15px;
+		margin-top: -3px;
+		margin-bottom: -3px;
+
+		&::-webkit-scrollbar { width: 5px; }
+		&::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); -webkit-border-radius: 0px; border-radius: 0px; width: 5px; }
+		&::-webkit-scrollbar-thumb { width: 5px; -webkit-border-radius: 0; border-radius: 0; background: rgba(255, 255, 255, 0.8); -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); }
+		&::-webkit-scrollbar-thumb:window-inactive { background: rgba(234, 234, 234, 0.4); width: 5px; }
+	}
 }

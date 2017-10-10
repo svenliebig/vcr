@@ -213,6 +213,7 @@ export default class Board extends Component {
 							<span>Bekommt neue </span>
 							<span className={ this.state.filterUpcoming ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
 						</button>
+						<div className="spacer"></div>
 						<button className="updater" onClick={ this.updateAll }>
 							<span>Alles updaten </span>
 							<span className="fa fa-refresh"></span>
