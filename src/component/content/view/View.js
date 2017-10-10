@@ -3,6 +3,8 @@ import UserRepository from '@service/user/UserRepository';
 
 import Skeleton from '@component/Skeleton';
 
+import './View.css';
+
 export default class View extends Component {
 
 	constructor(props) {
@@ -65,7 +67,8 @@ export default class View extends Component {
 
 				return (
 					<div>
-						{self.state.series.name}
+						{self.state.series.name}<br />
+						{self.state.series.overview}<br />
 						<img src={ self.getImageSrc() } alt="" />
 						{ self.state.series.seasons.map(mapSeason) }
 					</div>
