@@ -3,6 +3,8 @@ import Skeleton from '@component/Skeleton';
 import Firebase from '@service/firebase/Firebase';
 import { withRouter } from "react-router-dom";
 
+import './Login.css';
+
 class Login extends Component {
 	constructor() {
 		super();
@@ -32,7 +34,7 @@ class Login extends Component {
 			} else {
 				window.location.pathname = "/";
 			}
-		
+
 		});
 	}
 
@@ -53,12 +55,44 @@ class Login extends Component {
 		<Skeleton>
 		  <div className="App">
 				<form className="login-wrapper" onSubmit={this.submit} >
-					{!!this.state.error ? <p>{this.state.error}</p> : null}
-					<label htmlFor="email">E-Mail</label>
-					<input id="email" type="text" value={ this.state.email } onChange={ this.handleInputChange }/>
-					<label htmlFor="password">Password</label>
-					<input id="password" type="password" value={ this.state.password } onChange={ this.handleInputChange } />
-					<input value="Submit" type="submit" />
+					<div className="login-wrapper--form">
+						<div className="input-area">
+							<label
+								htmlFor="password"
+								className="input-area--label"
+							>	
+								E-Mail
+							</label>
+							<input 
+								className="input-area--input"
+								id="email" 
+								type="text" 
+								value={this.state.email} 
+								onChange={this.handleInputChange} 
+							/>
+						</div>
+						<div className="input-area">
+							<label 
+								htmlFor="password"
+								className="input-area--label"
+							>	
+								Password
+							</label>
+							<input 
+								className="input-area--input"
+								id="password" 
+								type="password" 
+								value={this.state.password} 
+								onChange={this.handleInputChange} />
+						</div>
+							{!!this.state.error ? <p className="input-area--login-error">{this.state.error}</p> : null}
+							<input 
+								className="input-area--button"
+								value="Submit" 
+								type="submit" 
+							/>
+
+					</div>
 				</form>
 		  </div>
 		</Skeleton>
