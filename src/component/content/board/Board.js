@@ -22,6 +22,7 @@ export default class Board extends Component {
 			filterWatched: true,
 			filterUpcoming: true,
 			filterNotWatched: false,
+			sortAscending: true,
 			updateIndex: 0,
 			processing: false
 		}
@@ -30,7 +31,9 @@ export default class Board extends Component {
 		this.toggleWatched = this.toggleWatched.bind(this);
 		this.toggleNotWatched = this.toggleNotWatched.bind(this);
 		this.toggleUpcoming = this.toggleUpcoming.bind(this);
+		this.toggleSort = this.toggleSort.bind(this);
 		this.filterSeries = this.filterSeries.bind(this);
+		this.sortSeries = this.sortSeries.bind(this);
 		this.updateAll = this.updateAll.bind(this);
 		this.updateLoop = this.updateLoop.bind(this);
 	}
@@ -109,6 +112,10 @@ export default class Board extends Component {
 		})
 	}
 
+	toggleSort() {
+		this.setState({ sortAscending: !this.state.sortAscending })
+	}
+
 	isCompleteWatched(series) {
 		let result = true;
 		series.seasons.forEach(season => {
@@ -170,11 +177,17 @@ export default class Board extends Component {
 		}
 		return true;
 	};
+
+	sortSeries(seriesA, seriesB) {
+		if (this.state.sortAscending)
+			return seriesA.name.localeCompare(seriesB.name);
+		return seriesB.name.localeCompare(seriesA.name);
+	}
 	
 	render() {
 		let self = this;
 
-		const seriesMap = this.state.userSeries.filter(this.filterSeries).map((series) =>
+		const seriesMap = this.state.userSeries.filter(this.filterSeries).sort(this.sortSeries).map((series) =>
 			<div key={ series.id }>
 				<Series series={ series } />
 			</div> 
@@ -212,6 +225,9 @@ export default class Board extends Component {
 						<button className="filter-toggle" onClick={ this.toggleUpcoming }>
 							<span>Bekommt neue </span>
 							<span className={ this.state.filterUpcoming ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
+						</button>
+						<button className="toggle-sort" onClick={ this.toggleSort }>
+							<span className={ this.state.sortAscending ? 'fa fa-sort-alpha-asc' : 'fa fa-sort-alpha-desc' }></span>
 						</button>
 						<div className="spacer"></div>
 						<button className="updater" onClick={ this.updateAll }>
