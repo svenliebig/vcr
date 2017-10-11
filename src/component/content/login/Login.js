@@ -5,27 +5,35 @@ import { withRouter } from "react-router-dom";
 
 class Login extends Component {
 	constructor() {
-	  super();
-	  this.fire = new Firebase();
-	  this.state = {
+		super();
+		this.fire = new Firebase();
+		this.state = {
 			email: '',
 			password: '',
 			logtext: 'not logged in',
 			error: undefined
-	  };
-	  
-	  this.submit = this.submit.bind(this);
-	  this.handleInputChange = this.handleInputChange.bind(this);
+		};
+
+		this.submit = this.submit.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
 	}
   
 	submit(event) {
 		event.preventDefault();
-		this.fire.login(this.state.email, this.state.password);
-		const error = this.fire.getError();
-		if (error) {
-			this.setState(() => ({error}))
-		}
-		this.fire.afterLogin = () => { window.location.pathname = "/"; };
+		this.fire.login(this.state.email, this.state.password).then(() => {
+		
+			// @Cedric
+			// War vorher quasi nicht möglich, hatte ich mit dieser hässlichen "afterLogin" methode gelöst, habe jetzt Promises eingebaut
+			// .then wird nach dem login aufgerufen
+			// siehe: Firebase.js Zeile 128 und 130
+			const error = this.fire.getError();
+			if (error) {
+				this.setState(() => ({error}))
+			} else {
+				window.location.pathname = "/";
+			}
+		
+		});
 	}
 
 
