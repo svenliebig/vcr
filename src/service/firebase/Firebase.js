@@ -14,12 +14,10 @@ class Firebase {
 		this.error = undefined;
 		this.db = app.database();
 		this.auth = app.auth();
-		this.afterLogin = () => {};
 		let self = this;
 		this.user = JSON.parse(localStorage.getItem('firebase-user-login'));
 		this.auth.onAuthStateChanged(user => {
 			if (user) {
-				self.afterLogin();
 				self.user = user;
 				window.localStorage.setItem('firebase-user-login', JSON.stringify(user));
 			} else {
@@ -139,10 +137,6 @@ class Firebase {
 	 */
 	createUser(email, password) {
 		this.auth.createUserWithEmailAndPassword(email, password);
-	}
-	
-	setAfterLogin(callback) {
-		this.afterLogin = callback;
 	}
 
 	/**
