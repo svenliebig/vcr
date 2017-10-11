@@ -168,7 +168,7 @@ class Firebase {
 			that.error = errorMessage;
 			return Promise.resolve();
 		})
-		.then(() => { return Promise.resolve() });;
+		.then(() => { return Promise.resolve() });
 	}
 
 	/**

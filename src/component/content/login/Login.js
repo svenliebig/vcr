@@ -56,6 +56,10 @@ class Login extends Component {
 		  <div className="App">
 				<form className="login-wrapper" onSubmit={this.submit} >
 					<div className="login-wrapper--form">
+					<div className="input">
+						<p className="input-title">
+						VCR
+						</p>
 						<div className="input-area">
 							<label
 								htmlFor="password"
@@ -66,6 +70,7 @@ class Login extends Component {
 							<input 
 								className="input-area--input"
 								id="email" 
+								placeholder="E-Mail"
 								type="text" 
 								value={this.state.email} 
 								onChange={this.handleInputChange} 
@@ -82,17 +87,20 @@ class Login extends Component {
 								className="input-area--input"
 								id="password" 
 								type="password" 
+								placeholder="Password"
 								value={this.state.password} 
 								onChange={this.handleInputChange} />
 						</div>
-							{!!this.state.error ? <p className="input-area--login-error">{this.state.error}</p> : null}
+						<div className="input-area">
 							<input 
 								className="input-area--button"
 								value="Submit" 
 								type="submit" 
 							/>
-
+								</div>
+						</div>
 					</div>
+					{!!this.state.error ? <p className="input-area--login-error">{this.state.error}</p> : null}
 				</form>
 		  </div>
 		</Skeleton>
