@@ -1,10 +1,16 @@
 import Firebase from '@service/firebase/Firebase';
 import SeriesConverter from '@service/series/SeriesConverter';
 
+/**
+ * Includes methods to communicate with the user database.
+ * 
+ * @export 
+ * @class UserRepository
+ */
 class UserRepository {
 	constructor() {
 		let self = this;
-		this.fb = Firebase;
+		this.fb = new Firebase();
 		if(this.fb.isLoggedIn()) {
 			this.uid = this.fb.user.uid;
 		} else {
@@ -19,7 +25,7 @@ class UserRepository {
 	}
 
 	isUserInDb(callback) {
-		this.fb.get(`/users/${this.uid}`, (val) => {
+		this.fb.get(`/users/${this.uid}`).then(val => {
 			if(val == null) {
 				return callback(false);
 			}
@@ -43,13 +49,13 @@ class UserRepository {
 	}
 
 	getAllSeries(callback) {
-		this.fb.get(`/users/${this.uid}/series`, (val) => {
+		this.fb.get(`/users/${this.uid}/series`).then(val => {
 			return callback(val);
 		});
 	}
 
 	getSeries(id, callback) {
-		this.fb.get(`/users/${this.uid}/series/${id}`, (val) => {
+		this.fb.get(`/users/${this.uid}/series/${id}`).then(val => {
 			return callback(val);
 		});
 	}
@@ -71,7 +77,7 @@ class UserRepository {
 	removeSeries(id, callback) {
 		if(this.uid == null || this.uid == '' || id == null)
 			throw this.exception('UID or series is not defined.');
-		this.fb.remove(`/users/${this.uid}/series/${id}`, callback);
+		this.fb.remove(`/users/${this.uid}/series/${id}`).then(callback());
 	}
 
 	updateWatchedSeries(series) {

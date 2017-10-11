@@ -13,6 +13,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 /** Services */
 import Firebase from './service/firebase/Firebase';
 
+const fb = new Firebase();
+
 /**
  * 
  * 
@@ -23,7 +25,7 @@ import Firebase from './service/firebase/Firebase';
 export default class Router extends Component {
   render() {
 	let routesArray = null;
-	if(Firebase.isLoggedIn()) {
+	if(fb.isLoggedIn()) {
 		routesArray = [
 			{ path: '/', component: Board, key: '1' },
 			{ path: '/manage', component: Manage, key: '2' },

@@ -3,6 +3,8 @@ import Firebase from '@service/firebase/Firebase';
 import { withRouter } from "react-router-dom";
 import './Options.css';
 
+const fb = new Firebase();
+
 class Options extends Component {
   constructor() {
 	super();
@@ -11,12 +13,12 @@ class Options extends Component {
   }
 
   logout() {
-		Firebase.logout();
+		fb.logout();
 		window.location.pathname = "/";
   }
 
   render() {
-		if (Firebase.isLoggedIn()) {
+		if (fb.isLoggedIn()) {
 			return (
 					<div className="options-wrapper">
 						<div className="options-container">
