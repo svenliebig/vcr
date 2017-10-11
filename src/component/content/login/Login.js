@@ -62,8 +62,8 @@ class Login extends Component {
 						</p>
 						<div className="input-area">
 							<label
-								htmlFor="password"
 								className="input-area--label"
+								htmlFor="password"
 							>	
 								E-Mail
 							</label>
@@ -72,30 +72,31 @@ class Login extends Component {
 								id="email" 
 								placeholder="E-Mail"
 								type="text" 
-								value={this.state.email} 
 								onChange={this.handleInputChange} 
+								value={this.state.email} 
 							/>
 						</div>
 						<div className="input-area">
 							<label 
-								htmlFor="password"
 								className="input-area--label"
+								htmlFor="password"
 							>	
 								Password
 							</label>
 							<input 
 								className="input-area--input"
 								id="password" 
-								type="password" 
 								placeholder="Password"
+								type="password" 
+								onChange={this.handleInputChange} 
 								value={this.state.password} 
-								onChange={this.handleInputChange} />
+							/>
 						</div>
 						<div className="input-area">
 							<input 
 								className="input-area--button"
-								value="Submit" 
 								type="submit" 
+								value="Submit" 
 							/>
 								</div>
 						</div>

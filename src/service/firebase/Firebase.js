@@ -129,20 +129,16 @@ class Firebase {
 
 			if (errorCode === "auth/invalid-email") {
 				that.error = "Your email is not vaild.";
-				return Promise.resolve();
 			} else if (errorCode === "auth/user-not-found") {
 				that.error = "No user found with matching email adddress."
-				return Promise.resolve();
 			} else if (errorCode === "auth/user-disabled") {
 				that.error = "Your account got disabled."
-				return Promise.resolve();
 			} else if (errorCode === "auth/wrong-password") {
 				that.error = "Invaild Password.";
-				return Promise.resolve();
 			} else {
 				that.error = "Something went wrong, please try again later."
-				return Promise.resolve();
 			}
+			return Promise.resolve();
 		})
 		.then(() => { return Promise.resolve() });
 	}
