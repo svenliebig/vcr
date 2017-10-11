@@ -125,13 +125,24 @@ class Firebase {
 		var that = this;
 		return this.auth.signInWithEmailAndPassword(email, password)
 		.catch(error => {
-			// Handle Errors here.
 			var errorCode = error.code;
-			var errorMessage = error.message;
 
-			console.log(errorCode);
-			that.error = errorMessage;
-			return Promise.resolve();
+			if (errorCode === "auth/invalid-email") {
+				that.error = "Your email is not vaild.";
+				return Promise.resolve();
+			} else if (errorCode === "auth/user-not-found") {
+				that.error = "No user found with matching email adddress."
+				return Promise.resolve();
+			} else if (errorCode === "auth/user-disabled") {
+				that.error = "Your account got disabled."
+				return Promise.resolve();
+			} else if (errorCode === "auth/wrong-password") {
+				that.error = "Invaild Password.";
+				return Promise.resolve();
+			} else {
+				that.error = "Something went wrong, please try again later."
+				return Promise.resolve();
+			}
 		})
 		.then(() => { return Promise.resolve() });
 	}
