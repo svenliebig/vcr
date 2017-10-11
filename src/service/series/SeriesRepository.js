@@ -2,13 +2,13 @@ import Firebase from '../firebase/Firebase';
 
 class SeriesRepository {
 	constructor() {
-		this.fb = Firebase;
+		this.fb = new Firebase();
 	}
 
 	getById(id, callback) {
 		if(id == null || id == '')
 			return callback(null);
-		this.fb.get(`/series/${id}`, callback);
+		this.fb.get(`/series/${id}`).then(val => callback(val));
 	}
 
 	addSeries(series) {

@@ -5,12 +5,15 @@ import React, { Component } from 'react'
 import Login from '@component/content/login/Login';
 import Manage from '@component/content/manage/Manage';
 import Board from '@component/content/board/Board';
+import View from '@component/content/view/View';
 
 /** Router */
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 /** Services */
 import Firebase from './service/firebase/Firebase';
+
+const fb = new Firebase();
 
 /**
  * 
@@ -22,10 +25,11 @@ import Firebase from './service/firebase/Firebase';
 export default class Router extends Component {
   render() {
 	let routesArray = null;
-	if(Firebase.isLoggedIn()) {
+	if(fb.isLoggedIn()) {
 		routesArray = [
 			{ path: '/', component: Board, key: '1' },
-			{ path: '/manage', component: Manage, key: '1' }
+			{ path: '/manage', component: Manage, key: '2' },
+			{ path: '/view/:id', component: View, key: '3' }
 		];
 	} else {
 		routesArray = [

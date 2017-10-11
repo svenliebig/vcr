@@ -18,7 +18,15 @@
 	width: @card-width;
 	margin-bottom: 10px;
     position: relative;
-    overflow: hidden;
+	overflow: hidden;
+	
+	.view-link {
+		position: absolute;
+		left: 3px;
+		z-index: 10;
+		top: -5px;
+		color: white;
+	}
 
     .series-card-container {
         .banner-wrapper {
@@ -73,7 +81,7 @@
             overflow: hidden;
 			position: absolute;
 			margin-left: 100px;
-            width: calc(100% ~"-" 300px);
+            width: calc(100% ~"-" 400px);
             bottom: 0;
 
             .season {
