@@ -1,5 +1,11 @@
 import Firebase from '../firebase/Firebase';
 
+/**
+ * asd
+ * 
+ * @export
+ * @class SeriesRepository
+ */
 class SeriesRepository {
 	constructor() {
 		this.fb = new Firebase();
@@ -37,4 +43,4 @@ class SeriesRepository {
 	}
 }
 
-export default new SeriesRepository();
+export default SeriesRepository;

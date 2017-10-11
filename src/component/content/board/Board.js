@@ -13,7 +13,7 @@ export default class Board extends Component {
   constructor() {
 		super();
 		this.ur = UserRepository;
-		this.sr = SeriesRepository;
+		this.sr = new SeriesRepository();
 		this.sapi = new SeriesapiService();
 
 		this.state = {

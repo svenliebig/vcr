@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import SeriesapiService from '@service/api/Moviedb';
 import UserRepository from '@service/user/UserRepository';
-import SeriesRepository from '@service/series/SeriesRepository'
+import SeriesRepository from '@service/series/SeriesRepository';
 
 import moment from 'moment';
 
@@ -14,7 +14,7 @@ export default class SearchResult extends Component {
 		super();
 		this.ur = UserRepository;
 		this.sapi = new SeriesapiService();
-		this.sr = SeriesRepository;
+		this.sr = new SeriesRepository();
 
 		this.state = {
 			hasSeries: false,
