@@ -11,20 +11,27 @@ const app = firebase.initializeApp(environment.firebase);
  */
 class Firebase {
 	constructor() {
+		this.error = undefined;
 		this.db = app.database();
 		this.auth = app.auth();
-		this.afterLogin = () => {};
 		let self = this;
 		this.user = JSON.parse(localStorage.getItem('firebase-user-login'));
-		this.auth.onAuthStateChanged(user => {
-			if (user) {
-				self.afterLogin();
-				self.user = user;
-				window.localStorage.setItem('firebase-user-login', JSON.stringify(user));
-			} else {
-				window.localStorage.removeItem('firebase-user-login');
-			}
-		});
+		this.auth.onAuthStateChanged(this.onAuthStateChanged);
+	}
+
+	/**
+	 * Is called when the user logs in or out.
+	 * 
+	 * @param {any} user 
+	 * @memberof Firebase
+	 */
+	onAuthStateChanged(user) {
+		if (user) {
+			this.user = user;
+			window.localStorage.setItem('firebase-user-login', JSON.stringify(user));
+		} else {
+			window.localStorage.removeItem('firebase-user-login');
+		}
 	}
 
 	/**
@@ -107,28 +114,57 @@ class Firebase {
 
 	/**
 	 * Login a user with the given credentials.
+	 * After the process, a promise is called.
 	 * 
 	 * @param {String} email email adress of the user
 	 * @param {String} password password of the user
+	 * @return {Promise.<>} and empty promise
 	 * @memberof Firebase
 	 */
 	login(email, password) {
-		this.auth.signInWithEmailAndPassword(email, password);
+		var that = this;
+		return this.auth.signInWithEmailAndPassword(email, password)
+		.catch(error => {
+			var errorCode = error.code;
+
+			if (errorCode === "auth/invalid-email") {
+				that.error = "Your email is not vaild.";
+			} else if (errorCode === "auth/user-not-found") {
+				that.error = "No user found with matching email adddress."
+			} else if (errorCode === "auth/user-disabled") {
+				that.error = "Your account got disabled."
+			} else if (errorCode === "auth/wrong-password") {
+				that.error = "Invaild Password.";
+			} else {
+				that.error = "Something went wrong, please try again later."
+			}
+			return Promise.resolve();
+		})
+		.then(() => { return Promise.resolve() });
 	}
 
 	/**
 	 * Creates a user with the given credentials.
+	 * After the process, a promise is called.
 	 * 
 	 * @param {String} email email adress of the user
 	 * @param {String} password password of the user
+	 * @return {Promise.<>} and empty promise
 	 * @memberof Firebase
 	 */
 	createUser(email, password) {
-		this.auth.createUserWithEmailAndPassword(email, password);
-	}
-	
-	setAfterLogin(callback) {
-		this.afterLogin = callback;
+		var that = this;
+		return this.auth.createUserWithEmailAndPassword(email, password)
+		.catch(error => {
+			// Handle Errors here.
+			var errorCode = error.code;
+			var errorMessage = error.message;
+
+			console.log(errorCode);
+			that.error = errorMessage;
+			return Promise.resolve();
+		})
+		.then(() => { return Promise.resolve() });
 	}
 
 	/**
@@ -138,6 +174,16 @@ class Firebase {
 	 */
 	logout() {
 		this.auth.signOut();
+	}
+	
+	/**
+	 * Returns an error string if one exists, else undefined.
+	 * 
+	 * @returns {String} the error string
+	 * @memberof Firebase
+	 */
+	getError() {
+		return this.error;
 	}
 }
 

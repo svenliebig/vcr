@@ -8,6 +8,28 @@ describe('Firebase', () => {
 		.then(done());
 	});
 
+	describe('onAuthStateChanged(object): void', () => {
+		describe('user is null', () => {
+			it('should call localStorage removeItem', () => {
+				spyOn(window.localStorage, 'removeItem');
+				classUnderTest.onAuthStateChanged(null);
+				expect(window.localStorage.removeItem).toBeCalled();
+			});
+		});
+
+		describe('user is not null', () => {
+			it('should call localStorage setItem', () => {
+				spyOn(window.localStorage, 'setItem');
+				classUnderTest.onAuthStateChanged("not null");
+				expect(window.localStorage.setItem).toBeCalled();
+			})
+
+			afterAll(() => {
+				classUnderTest.user = null;
+			});
+		})
+	})
+
 	// Firebase.write
 	describe('.write(string, value): Promise', () => {
 		it('should write the value and call the promise', (done) => {
@@ -28,7 +50,7 @@ describe('Firebase', () => {
 			it('should remove the node and call the promise', (done) => {
 				// execution
 				classUnderTest.remove('/test/')
-				.then(
+				.then(() =>
 					classUnderTest.exists('/test/val').then(val => {
 						expect(val).toBe(false);
 						done();
@@ -39,7 +61,7 @@ describe('Firebase', () => {
 			it('should not remove the node and call the promise', done => {
 				// execution
 				classUnderTest.remove('/test/val2')
-				.then(
+				.then(() =>
 					classUnderTest.exists('/test/val')
 					.then(val => {
 						expect(val).toBe(true);
@@ -51,7 +73,7 @@ describe('Firebase', () => {
 	});
 
 	describe('.exists(string): Promise', () => {
-		describe('node exists ✔', () => {
+		describe('node exists', () => {
 			beforeEach(done => {
 				classUnderTest.write('/test/', { val: 'myVal' })
 				.then(done());
@@ -60,7 +82,7 @@ describe('Firebase', () => {
 			it('should return promise with true', done => {
 				// execution
 				classUnderTest.write('/test/', { val: 'myVal' })
-				.then(
+				.then(() =>
 					classUnderTest.exists('/test/val')
 					.then(exists => {
 						expect(exists).toBe(true);
@@ -70,7 +92,7 @@ describe('Firebase', () => {
 			});
 		});
 
-		describe('node doesn\'t exists ❌', () => {
+		describe('node doesn\'t exists', () => {
 			it('should call the promise with false', done => {
 				// execution
 				classUnderTest.exists('/test/val')
@@ -139,19 +161,27 @@ describe('Firebase', () => {
 		});
 	});
 
-	describe('login()', () => {
-		it('should call signInWithEmailAndPassword', () => {
-			spyOn(classUnderTest.auth, 'signInWithEmailAndPassword');
-			classUnderTest.login('', '');
-			expect(classUnderTest.auth.signInWithEmailAndPassword).toBeCalled();
-		});
+	describe('login(string, string): Promise', () => {
+		describe('without email and password', () => {
+			it('should have error "The email address is badly formatted"', done => {
+				//spyOn(classUnderTest.auth, 'signInWithEmailAndPassword');
+				classUnderTest.login('', '').then(() => {
+					expect(classUnderTest.getError()).toBe('The email address is badly formatted.');
+					done();
+				});
+				//expect(classUnderTest.auth.signInWithEmailAndPassword).toBeCalled();
+			});
+	  	});
 	});
 
 	describe('createUser(): void', () => {
-		it('should call createUserWithEmailAndPassword', () => {
-			spyOn(classUnderTest.auth, 'createUserWithEmailAndPassword');
-			classUnderTest.createUser('', '');
-			expect(classUnderTest.auth.createUserWithEmailAndPassword).toBeCalled();
+		describe('without email and password', () => {
+			it('should have error "The email address is badly formatted"', done => {
+				classUnderTest.createUser('', '').then(() => {
+					expect(classUnderTest.getError()).toBe('The email address is badly formatted.');
+					done();
+				});
+			});
 		});
 	});
 });
