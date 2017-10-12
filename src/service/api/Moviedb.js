@@ -1,6 +1,6 @@
 import environment from "../../environment/environment";
 import axios from 'axios';
-import { Series, Season } from '../../model/Series';
+import { Series, Season } from '@model/Series';
 
 /**
  * Service for the API of themoviedb.org.
@@ -94,7 +94,7 @@ class SeriesapiService {
 		this.getSeries(id, (seriesData) => {
 			const series = Series.fromEntity(seriesData);
 			const lastSeason = seriesData.number_of_seasons;
-			
+
 			seriesData.seasons.forEach(seasonIterator => {
 				if (seasonIterator.season_number !== 0) {
 					self.getSeriesSeason(id, seasonIterator.season_number, (seasonData) => {
@@ -104,7 +104,7 @@ class SeriesapiService {
 
 						if (series.seasons.length === lastSeason) {
 							series.seasons.sort((a, b) => {
-								return a.seasonNumber - b.$seasonNumber;
+								return a.seasonNumber - b.seasonNumber;
 							});
 							callback(series);
 						}

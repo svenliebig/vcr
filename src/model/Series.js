@@ -106,7 +106,7 @@ export class Season {
 		thisSeason.seasonNumber = season.season_number;
 		thisSeason.episodeAmount = season.episodes.length;
 		thisSeason.airDate = season.air_date;
-		thisSeason.posterUrl = "https://image.tmdb.org/t/p/w300" + season.poster_path;
+		thisSeason.posterUrl = `${POSTER_URL}${season.poster_path}`;
 		season.episodes.forEach((episode) => {
 			thisSeason.episodes.push(Episode.fromEntity(episode));
 		});
@@ -153,7 +153,7 @@ export class Episode {
 		thisEpisode.airDate = episode.air_date;
 		thisEpisode.season = episode.season_number;
 		thisEpisode.episode = episode.episode_number;
-		thisEpisode.posterUrl = "https://image.tmdb.org/t/p/w300" + episode.still_path;
+		thisEpisode.posterUrl = `${POSTER_URL}${episode.still_path}`;
 		thisEpisode.watched = false;
 		return thisEpisode;
 	}
