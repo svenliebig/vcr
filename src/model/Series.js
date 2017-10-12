@@ -1,5 +1,6 @@
-
 import moment from 'moment';
+
+const POSTER_URL = 'https://image.tmdb.org/t/p/w300';
 
 /**
  * Represents a series.
@@ -31,73 +32,36 @@ export class Series {
 		this.rating = rating;
 		this.votes = votes;
 		this.seasons = seasons;
+		this.genres = [];
+		this.country = [];
+		this.status = "";
+		this.createdBy = [];
+		this.episodeDuration = [];
 		this.updated = moment().format('DD.MM.YYYY');
 	}
 
-	get $name() {
-		return this.name;
-	}
-
-	set $name(value) {
-		this.name = value;
-	}
-
-
-	get $id() {
-		return this.id;
-	}
-
-	set $id(value) {
-		this.id = value;
-	}
-
-
-	get $overview() {
-		return this.overview;
-	}
-
-	set $overview(value) {
-		this.overview = value;
-	}
-
-	get $airDate() {
-		return this.airDate;
-	}
-
-	set $airDate(value) {
-		this.airDate = value;
-	}
-
-	get $posterUrl() {
-		return this.posterUrl;
-	}
-
-	set $posterUrl(value) {
-		this.posterUrl = value;
-	}
-
-	get $rating() {
-		return this.rating;
-	}
-
-	set $rating(value) {
-		this.rating = value;
-	}
-
-	get $votes() {
-		return this.votes;
-	}
-
-	set $votes(value) {
-		this.votes = value;
-	}
-
-	get $seasons() {
-		return this.seasons;
-	}
-
-	set $seasons(value) {
-		this.seasons = value;
+	/**
+	 * Creates an instance of this class from an entity model.
+	 * 
+	 * @static
+	 * @param {any} series the entity
+	 * @returns an instance of {Series}
+	 * @memberof Series
+	 */
+	static fromEntity(series) {
+		const thisSeries = new Series(series.id);
+		thisSeries.name = series.name;
+		thisSeries.overview = series.overview;
+		thisSeries.airDate = series.first_air_date;
+		thisSeries.posterUrl = `${POSTER_URL}${series.backdrop_path}`;
+		thisSeries.rating = series.vote_average;
+		thisSeries.votes = series.vote_count;
+		thisSeries.genres = series.genres;
+		thisSeries.country = series.origin_country;
+		thisSeries.status = series.status;
+		thisSeries.createdBy = series.created_by;
+		thisSeries.episodeDuration = series.episode_run_time;
+		return thisSeries;
 	}
 }
 
@@ -127,44 +91,26 @@ export class Season {
 		this.episodeAmount = episodeAmount;
 	}
 
-	get $name() {
-		return this.name;
-	}
-
-	set $name(value) {
-		this.name = value;
-	}
-
-	get $overview() {
-		return this.overview;
-	}
-
-	set $overview(value) {
-		this.overview = value;
-	}
-
-	get $seasonNumber() {
-		return this.seasonNumber;
-	}
-
-	set $seasonNumber(value) {
-		this.seasonNumber = value;
-	}
-
-	get $episodes() {
-		return this.episodes;
-	}
-
-	set $episodes(value) {
-		this.episodes = value;
-	}
-
-	get $episodeAmout() {
-		return this.episodeAmout;
-	}
-
-	set $episodeAmout(value) {
-		this.episodeAmout = value;
+	/**
+	 * Creates an instance of this class from an entity model.
+	 * 
+	 * @static
+	 * @param {any} season the entity
+	 * @returns an instance of {Season}
+	 * @memberof Season
+	 */
+	static fromEntity(season) {
+		const thisSeason = new Season();
+		thisSeason.name = season.name;
+		thisSeason.overview = season.overview;
+		thisSeason.seasonNumber = season.season_number;
+		thisSeason.episodeAmount = season.episodes.length;
+		thisSeason.airDate = season.air_date;
+		thisSeason.posterUrl = "https://image.tmdb.org/t/p/w300" + season.poster_path;
+		season.episodes.forEach((episode) => {
+			thisSeason.episodes.push(Episode.fromEntity(episode));
+		});
+		return thisSeason;
 	}
 }
 
@@ -191,28 +137,24 @@ export class Episode {
 		this.episode = episode;
 		this.watched = false;
 	}
-
-	get $name() {
-		return this.name;
-	}
-
-	set $name(value) {
-		this.name = value;
-	}
-
-	get $overview() {
-		return this.overview;
-	}
-
-	set $overview(value) {
-		this.overview = value;
-	}
-
-	get $airDate() {
-		return this.airDate;
-	}
-
-	set $airDate(value) {
-		this.airDate = value;
+	
+	/**
+	 * Creates an instance of this class from an entity model.
+	 * 
+	 * @static
+	 * @param {any} episode the entity
+	 * @returns an instance of {Episode}
+	 * @memberof Episode
+	 */
+	static fromEntity(episode) {
+		const thisEpisode = new Episode();
+		thisEpisode.name = episode.name;
+		thisEpisode.overview = episode.overview;
+		thisEpisode.airDate = episode.air_date;
+		thisEpisode.season = episode.season_number;
+		thisEpisode.episode = episode.episode_number;
+		thisEpisode.posterUrl = "https://image.tmdb.org/t/p/w300" + episode.still_path;
+		thisEpisode.watched = false;
+		return thisEpisode;
 	}
 }
