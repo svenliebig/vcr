@@ -69,7 +69,7 @@ export default class View extends Component {
 
 		const mapGenres = (genre) => {
 			return(
-				<div className="genre-wrapper">
+				<div className="genre-badge">
 					{ genre.name }
 				</div>
 			);
@@ -79,11 +79,19 @@ export default class View extends Component {
 			if (self.state.series != null) {
 
 				return (
-					<div>
-						{ self.state.series.name }<br />
+					<div className="series-container">
+						<div className="series-header">
+							<img src={ self.getImageSrc() } alt="" />
+							<div className="series-name-wrapper">
+								<div className="series-name">
+									{ self.state.series.name }
+								</div>
+							</div>
+							<div className="genre-wrapper">
+								{ self.state.series.genres.map(mapGenres) }
+							</div>
+						</div>
 						{ self.state.series.overview }<br />
-						{ self.state.series.genres.map(mapGenres) }<br />
-						<img src={ self.getImageSrc() } alt="" />
 						{ self.state.series.seasons.map(mapSeason) }
 					</div>
 				);
@@ -92,7 +100,9 @@ export default class View extends Component {
 
 		return (
 			<Skeleton>
-				{ renderSeries() }
+				<div className="view-series-wrapper">
+					{ renderSeries() }
+				</div>
 			</Skeleton>
 		)
   }
