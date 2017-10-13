@@ -55,8 +55,8 @@ export default class View extends Component {
 		const mapEpisode = (episode) => {
 			return(
 				<div className="episode-container">
-					{buildEpisodeName(episode)}
-					{ episode.watched ? 'gesehen' : 'nicht' }
+					<span className={ 'fa ' + (episode.watched ? 'fa-check-square-o' : 'fa-square-o') }></span>
+					{ buildEpisodeName(episode) }
 				</div>
 			);
 		}
