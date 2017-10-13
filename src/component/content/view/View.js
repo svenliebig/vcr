@@ -46,11 +46,16 @@ export default class View extends Component {
   	render() {
 		let self = this;
 
+		const buildEpisodeName = (episode) => {
+			const episodeNumber = episode.episode < 10 ? `0${episode.episode}` : `${episode.episode}`;
+			const seasonNumber = episode.season < 10 ? `0${episode.season}` : `${episode.season}`;
+			return `S${seasonNumber}E${episodeNumber} - ${episode.name} vom ${episode.airDate}`;
+		}
+
 		const mapEpisode = (episode) => {
 			return(
-				<div>
-					{ episode.name } <br />
-					{ episode.overview } <br />
+				<div className="episode-container">
+					{buildEpisodeName(episode)}
 					{ episode.watched ? 'gesehen' : 'nicht' }
 				</div>
 			);
@@ -58,7 +63,7 @@ export default class View extends Component {
 
 		const mapSeason = (season) => {
 			return(
-				<div>
+				<div className="season-wrapper">
 					{season.name}
 					<div className="episodes-wrapper">
 						{ season.episodes.map(mapEpisode) }
