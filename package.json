@@ -2,6 +2,7 @@
   "name": "vcr",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://tv.slyox.de",
   "dependencies": {
     "autoprefixer": "7.1.2",
     "axios": "^0.16.2",
