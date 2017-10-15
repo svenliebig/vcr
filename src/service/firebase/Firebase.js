@@ -10,28 +10,21 @@ const app = firebase.initializeApp(environment.firebase);
  * @class Firebase
  */
 class Firebase {
+	
 	constructor() {
 		this.error = undefined;
 		this.db = app.database();
 		this.auth = app.auth();
-		let self = this;
 		this.user = JSON.parse(localStorage.getItem('firebase-user-login'));
-		this.auth.onAuthStateChanged(this.onAuthStateChanged);
-	}
-
-	/**
-	 * Is called when the user logs in or out.
-	 * 
-	 * @param {any} user 
-	 * @memberof Firebase
-	 */
-	onAuthStateChanged(user) {
-		if (user) {
-			this.user = user;
-			window.localStorage.setItem('firebase-user-login', JSON.stringify(user));
-		} else {
-			window.localStorage.removeItem('firebase-user-login');
-		}
+		let self = this;
+		this.auth.onAuthStateChanged((user) => {
+			if (user) {
+				self.user = user;
+				window.localStorage.setItem('firebase-user-login', JSON.stringify(user));
+			} else {
+				window.localStorage.removeItem('firebase-user-login');
+			}
+		});
 	}
 
 	/**
