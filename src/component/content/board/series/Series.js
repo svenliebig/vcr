@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import UserRepository from '@service/user/UserRepository';
 import moment from 'moment';
+import { Link } from "react-router-dom";
 
 import './Series.css';
 
@@ -147,7 +148,7 @@ export default class Series extends Component {
 				<div key={ index } className="episode-container">
 					<button 
 						className={ this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') } 
-						title={ this.createEpisodeTooltip(episode) }
+						title={this.createEpisodeTooltip(episode) }
 						onClick={ this.toggleEpisode.bind(this, episode) }>
 					</button>
 				</div>
@@ -207,12 +208,13 @@ export default class Series extends Component {
 		return (
 			<div className="series-card-wrapper">
 				<div className="series-card-container">
+					<Link className="view-link" to={ `/view/${this.state.series.id}` }><span className="fa fa-tv"></span></Link>
 					<div className="banner-wrapper">
 						<img src={ this.getImageSrc() } alt="" />
 						<div className="image-overlay"/>
 					</div>
 					<div className="title-wrapper">
-						{ this.state.series.name }
+						<p className="title-wrapper__text">{this.state.series.name}</p>
 					</div>
 					{ seasonMap() }
 				</div>
