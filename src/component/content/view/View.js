@@ -99,7 +99,7 @@ export default class View extends AbstractSeries {
 						</tr>
 					</thead>
 					<tbody className="episodes-wrapper">
-						{ season.episodes.map(mapEpisode) }
+						{ season.episodes ? season.episodes.map(mapEpisode) : '' }
 					</tbody>
 				</table>
 			);
