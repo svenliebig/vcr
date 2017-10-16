@@ -43,7 +43,21 @@ class SeriesRepository {
 	 * @memberof SeriesRepository
 	 */
 	getBurningSeriesLink(id) {
-		return this.fb.get(`/series/${id}`).then(val => {
+		return this.fb.get(`/series/${id}/bstolink`).then(val => {
+			return Promise.resolve(val);
+		});
+	}
+
+	/**
+	 * Writes a bs.to link into the database, to a specific series.
+	 * 
+	 * @param {number} id Of the series
+	 * @param {string} val Link of the series to bs.to
+	 * @returns {Promise.<>} called after reading the data
+	 * @memberof SeriesRepository
+	 */
+	saveBurningSeriesLink(id, val) {
+		return this.fb.write(`/series/${id}/bstolink`, val).then(val => {
 			return Promise.resolve(val);
 		});
 	}

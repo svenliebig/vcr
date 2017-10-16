@@ -31,6 +31,12 @@ export default class View extends AbstractSeries {
 			});
 		});
 
+		this.sr.getBurningSeriesLink(props.match.params.id).then(bstolink => {
+			self.setState({
+				bstolink: bstolink ? bstolink : ''
+			});
+		});
+
 		this.handleBurningSeriesInput = this.handleBurningSeriesInput.bind(this);
 		this.savePreferences = this.savePreferences.bind(this);
 	}
@@ -46,10 +52,10 @@ export default class View extends AbstractSeries {
 	}
 
 	savePreferences() {
-		// series repository
-
-		this.setState({
-			changed: false
+		this.sr.saveBurningSeriesLink(this.state.series.id, this.state.bstolink).then(() => {
+			this.setState({
+				changed: false
+			});
 		});
 	}
 
@@ -128,7 +134,7 @@ export default class View extends AbstractSeries {
 						<div className="series-actions">
 							<div className="input-container">
 								<label>bs.to</label>
-								<input type="type" value={ this.state.bstolink } onChange={ this.handleBurningSeriesInput } />
+								<input type="type" placeholder="https://bs.to/example" value={ this.state.bstolink } onChange={ this.handleBurningSeriesInput } />
 							</div>
 							<div className="spacer"></div>
 							{ this.state.changed ? <button className="save" onClick={ this.savePreferences }>Speichern</button> : '' }
