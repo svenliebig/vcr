@@ -1,15 +1,16 @@
-import React, { Component } from 'react'
-import UserRepository from '@service/user/UserRepository';
+import React from 'react'
+import SeriesRepository from '@service/series/SeriesRepository';
 
 import Skeleton from '@component/Skeleton';
+import AbstractSeries from '@component/abstract/AbstractSeries';
 
 import './View.css';
 
-export default class View extends Component {
+export default class View extends AbstractSeries {
 
 	constructor(props) {
 		super();
-		this.ur = UserRepository;
+		this.sr = new SeriesRepository();
 
 		this.state = {
 			series: null,
@@ -46,35 +47,53 @@ export default class View extends Component {
   	render() {
 		let self = this;
 
-		const buildEpisodeName = (episode) => {
+		const buildEpisodeNumber = (episode) => {
 			const episodeNumber = episode.episode < 10 ? `0${episode.episode}` : `${episode.episode}`;
 			const seasonNumber = episode.season < 10 ? `0${episode.season}` : `${episode.season}`;
-			return `S${seasonNumber}E${episodeNumber} - ${episode.name} vom ${episode.airDate}`;
+			return `S${seasonNumber}E${episodeNumber}`;
 		}
 
 		const mapEpisode = (episode) => {
 			return(
-				<div className="episode-container">
-					<span className={ 'fa ' + (episode.watched ? 'fa-check-square-o' : 'fa-square-o') }></span>
-					{ buildEpisodeName(episode) }
-				</div>
+				<tr key={ episode.episode }>
+					<td>
+						<button onClick={ this.toggleEpisode.bind(this, episode) }>
+							<span className={ 'fa ' + (episode.watched ? 'fa-check-square-o' : 'fa-square-o') }></span>
+						</button>
+					</td>
+					<td>
+						{ buildEpisodeNumber(episode) }
+					</td>
+					<td>
+						{episode.name}
+					</td>
+					<td>
+						{episode.airDate}
+					</td>
+				</tr>
 			);
 		}
 
 		const mapSeason = (season) => {
 			return(
-				<div className="season-wrapper">
-					{season.name}
-					<div className="episodes-wrapper">
+				<table key={ season.seasonNumber } className="season-wrapper">
+					<thead>
+						<tr>
+							<th colSpan="4">
+								{season.name}
+							</th>
+						</tr>
+					</thead>
+					<tbody className="episodes-wrapper">
 						{ season.episodes.map(mapEpisode) }
-					</div>
-				</div>
+					</tbody>
+				</table>
 			);
 		}
 
 		const mapGenres = (genre) => {
 			return(
-				<div className="genre-badge">
+				<div key={ genre.id } className="genre-badge">
 					{ genre.name }
 				</div>
 			);
@@ -96,8 +115,13 @@ export default class View extends Component {
 								{ self.state.series.genres.map(mapGenres) }
 							</div>
 						</div>
-						{ self.state.series.overview }<br />
-						{ self.state.series.seasons.map(mapSeason) }
+						<div className="series-actions">
+
+						</div>
+						<div className="series-content">
+							{ self.state.series.overview }<br />
+							{ self.state.series.seasons.map(mapSeason) }
+						</div>
 					</div>
 				);
 			}

@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import UserRepository from '@service/user/UserRepository';
 import moment from 'moment';
 import { Link } from "react-router-dom";
+import AbstractSeries from '@component/abstract/AbstractSeries';
 
 import './Series.css';
 
-export default class Series extends Component {
+export default class Series extends AbstractSeries {
 	constructor(props) {
 		super();
 		this.ur = UserRepository;
