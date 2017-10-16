@@ -84,7 +84,7 @@ export default class Board extends Component {
 	checkDeprecated() {
 		let self = this;
 		this.state.userSeries.forEach(series => {
-			self.sr.getById(series.id, (val) => {
+			self.sr.getSeries(series.id).then((val) => {
 				if(moment(series.updated, 'DD.MM.YYYY').isBefore(moment(val.updated, 'DD.MM.YYYY'))) {
 					let tempArray = self.state.deprecatedArray;
 					tempArray.push(series.name);
@@ -212,7 +212,7 @@ export default class Board extends Component {
 				var placeholder = [];
 				for (let x = 0; x < 9; x++) {
 					placeholder.push(
-						<div className="series-placeholder">
+						<div key={ 'placeholder-' + x } className="series-placeholder">
 							<div className="image" />
 							<div className="season" />
 							<div className="season" />

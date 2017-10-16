@@ -20,17 +20,25 @@
     position: relative;
 	overflow: hidden;
 
-	.view-link {
+	.view-link, .bs-link {
 		z-index: 10;
 		color: white;
 		position: absolute;
-		top: -6px;
 		color: #fff;
 		background-color: rgba(66,66,66,.7);
 		width: 21px;
+		top: -6px;
 		padding-left: 3px;
-		left: 0;
 		height: 25px;
+		text-decoration: none;
+	}
+
+	.view-link {
+		left: 0;
+	}
+
+	.bs-link {
+		left: 24px;
 	}
 
     .series-card-container {

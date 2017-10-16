@@ -14,26 +14,24 @@ export default class View extends AbstractSeries {
 
 		this.state = {
 			series: null,
-			bstolink: "",
-			changed: false
+			changed: false,
+			bstolink: ''
 		}
 
-		let self = this;
-
 		this.ur.getSeries(props.match.params.id, (series) => {
-			self.setState({
+			this.setState({
 				series: series
-			});
-		});
-
-		this.sr.getBurningSeriesLink(props.match.params.id).then(bstolink => {
-			self.setState({
-				bstolink: bstolink ? bstolink : ''
 			});
 		});
 
 		this.handleBurningSeriesInput = this.handleBurningSeriesInput.bind(this);
 		this.savePreferences = this.savePreferences.bind(this);
+		
+		this.sr.getBurningSeriesLink(props.match.params.id).then(bstolink => {
+			this.setState({
+				bstolink: bstolink ? bstolink : ''
+			});
+		});
 	}
 
 	componentDidMount() {

@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import { Component } from 'react'
 import UserRepository from '@service/user/UserRepository';
 
 import moment from 'moment';
@@ -23,7 +22,7 @@ export default class AbstractSeries extends Component {
 		this.ur = UserRepository;
 		
 		this.state = {
-			series: null,
+			series: null
 		};
 
 		this.toggleEpisode = this.toggleEpisode.bind(this);

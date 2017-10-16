@@ -37,6 +37,7 @@ export class Series {
 		this.status = "";
 		this.createdBy = [];
 		this.episodeDuration = [];
+		this.bstolink = '';
 		this.updated = moment().format('DD.MM.YYYY');
 	}
 

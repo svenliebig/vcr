@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types';
-import UserRepository from '@service/user/UserRepository';
+import SeriesRepository from '@service/series/SeriesRepository';
 import moment from 'moment';
 import { Link } from "react-router-dom";
 import AbstractSeries from '@component/abstract/AbstractSeries';
@@ -10,17 +10,24 @@ import './Series.css';
 export default class Series extends AbstractSeries {
 	constructor(props) {
 		super();
-		this.ur = UserRepository;
+		this.sr = new SeriesRepository();
 
 		this.state = {
 			activeSeason: 0,
-			series: props.series
+			series: props.series,
+			bstolink: ''
 		}
 
 		this.getActiveSeason = this.getActiveSeason.bind(this);
 		this.incrementActiveSeason = this.incrementActiveSeason.bind(this);
 		this.decrementActiveSeason = this.decrementActiveSeason.bind(this);
 		this.seasonScroll = this.seasonScroll.bind(this);
+
+		this.sr.getBurningSeriesLink(props.series.id).then(bstolink => {
+			this.setState({
+				bstolink: bstolink ? bstolink : ''
+			});
+		});
 	}
 
 	componentDidMount() {
@@ -164,6 +171,11 @@ export default class Series extends AbstractSeries {
 			<div className="series-card-wrapper">
 				<div className="series-card-container">
 					<Link className="view-link" to={ `/view/${this.state.series.id}` }><span className="fa fa-tv"></span></Link>
+					{
+						this.state.bstolink ? 
+						<a className="bs-link" href={ this.state.bstolink } target="_blank">bs</a>
+						: ''
+					}
 					<div className="banner-wrapper">
 						<img src={ this.getImageSrc() } alt="" />
 						<div className="image-overlay"/>

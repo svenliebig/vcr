@@ -38,7 +38,7 @@ class Firebase {
 	 */
 	write(node, value) {
 		return this.db.ref(node).set(value)
-		.then((val) => {
+		.then(() => {
 			return Promise.resolve()
 		});
 	}
