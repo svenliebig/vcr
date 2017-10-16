@@ -64,8 +64,35 @@
 
 			}
 
-			.season-wrapper {
+			table.season-wrapper {
+				color: white;
+				border-collapse: collapse;
+
+				thead {
+					tr {
+						th {
+							text-align: left;
+							padding: 5px;
+						}
+					}
+				}
+
 				.episodes-wrapper {
+					tr {
+						line-height: 13px;
+
+						td {
+							border-spacing: 0;
+							border-collapse: unset;
+							padding: 5px;
+							border: 0px solid rgba(66, 66, 66, 0.7);
+						}
+
+						&:nth-child(odd) {
+							background-color: rgba(66, 66, 66, 0.7);
+						}
+					}
+
 					button {
 						background: none;
 						border: none;

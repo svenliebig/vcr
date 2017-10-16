@@ -28,20 +28,9 @@ export default class View extends AbstractSeries {
 				series: series
 			});
 		});
-		
-		this.getImageSrc = this.getImageSrc.bind(this);
 	}
 
 	componentDidMount() {
-	}
-	
-	getImageSrc() {
-		const url = this.state.series.posterUrl;
-		if (url.endsWith('jpg')) {
-			return url.replace('w300', 'w500');
-		} else {
-			return 'bright-squares.53c1ec5f96d716d4265e.png';
-		}
 	}
 
   	render() {
@@ -79,7 +68,8 @@ export default class View extends AbstractSeries {
 				<table key={ season.seasonNumber } className="season-wrapper">
 					<thead>
 						<tr>
-							<th colSpan="4">
+							<th></th>
+							<th colSpan="3">
 								{season.name}
 							</th>
 						</tr>
