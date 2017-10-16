@@ -17,12 +17,9 @@ export default class Series extends AbstractSeries {
 			series: props.series
 		}
 
-		this.getImageSrc = this.getImageSrc.bind(this);
 		this.getActiveSeason = this.getActiveSeason.bind(this);
 		this.incrementActiveSeason = this.incrementActiveSeason.bind(this);
 		this.decrementActiveSeason = this.decrementActiveSeason.bind(this);
-		this.toggleEpisode = this.toggleEpisode.bind(this);
-		this.toggleSeason = this.toggleSeason.bind(this);
 		this.seasonScroll = this.seasonScroll.bind(this);
 	}
 
@@ -47,15 +44,6 @@ export default class Series extends AbstractSeries {
 		}
 
 		return activeSeason;
-	}
-
-	getImageSrc() {
-		const url = this.props.series.posterUrl;
-		if (url.endsWith('jpg')) {
-			return url;
-		} else {
-			return 'bright-squares.53c1ec5f96d716d4265e.png';
-		}
 	}
 
 	decrementActiveSeason() {
@@ -96,40 +84,6 @@ export default class Series extends AbstractSeries {
 		} else {
 			return `S${episode.season}E${episode.episode} - ${episode.name} vom ${moment(episode.airDate).format('DD.MM.YYYY')}`;
 		}
-	}
-
-	toggleEpisode(episode) {
-		let updated = this.state.series;
-		const snum = episode.season - 1;
-		const epnum = episode.episode - 1;
-		updated.seasons[snum].episodes[epnum].watched = !updated.seasons[snum].episodes[epnum].watched;
-		this.ur.updateWatchedSeries(updated);
-		this.setState({
-			series: updated
-		});
-	}
-	
-	toggleSeason(season) {
-		let updated = this.state.series;
-		const snum = season.seasonNumber - 1;
-		let changed = false;
-		updated.seasons[snum].episodes.forEach(episode => {
-			if(!episode.watched) {
-				changed = true;
-			}
-			episode.watched = true;
-		});
-		
-		if (!changed) {
-			updated.seasons[snum].episodes.forEach(episode => {
-				episode.watched = false;
-			});
-		}
-
-		this.ur.updateWatchedSeries(updated);
-		this.setState({
-			series: updated
-		});
 	}
 
 	seasonScroll(event) {

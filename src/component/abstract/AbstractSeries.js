@@ -65,10 +65,10 @@ export default class AbstractSeries extends Component {
 		});
 	}
 	
-	getImageSrc() {
+	getImageSrc(width = 300) {
 		const url = this.state.series.posterUrl;
 		if (url.endsWith('jpg')) {
-			return url.replace('w300', 'w500');
+			return url.replace(`w300`, `w${width}`);
 		} else {
 			return 'bright-squares.53c1ec5f96d716d4265e.png';
 		}

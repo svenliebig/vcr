@@ -20,11 +20,6 @@ export default class View extends AbstractSeries {
 
 		let self = this;
 
-		// TODO
-		// Checken ob der nutzer die Serie hat, falls nicht lade die 
-		// Series aus dem SeriesRepository, falls doch lade sie vom Nutzer
-		// Und zeige gleichzeitig an ob er schon was gesehen hat etc.
-
 		this.ur.getSeries(props.match.params.id, (series) => {
 			self.setState({
 				series: series
@@ -126,7 +121,7 @@ export default class View extends AbstractSeries {
 				return (
 					<div className="series-container">
 						<div className="series-header">
-							<img src={ self.getImageSrc() } alt="" />
+							<img src={ self.getImageSrc(500) } alt="" />
 							<div className="series-name-wrapper">
 								<div className="series-name">
 									{ self.state.series.name }
