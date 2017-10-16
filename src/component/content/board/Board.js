@@ -48,7 +48,7 @@ export default class Board extends Component {
 			}
 			self.setState({
 				userSeries: tempArray,
-				loaded: false
+				loaded: true
 			});
 			self.checkDeprecated();
 		});

@@ -14,7 +14,7 @@ export default class Skeleton extends Component {
 	return (
 			<div>
 				<Header />
-				<div className="content" style={{ padding: '30px' }}>
+				<div className="content" style={{ padding: '30px', marginTop: '50px' }}>
 					{ this.props.children }
 				</div>
 			</div>
