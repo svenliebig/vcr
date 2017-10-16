@@ -94,7 +94,12 @@ export default class View extends AbstractSeries {
 				<table key={ season.seasonNumber } className="season-wrapper">
 					<thead>
 						<tr>
-							<th></th>
+							<th>
+								<button 
+									className="fa fa-eye" 
+									onClick={ this.toggleSeason.bind(this, season) }>
+								</button>
+							</th>
 							<th colSpan="3">
 								{season.name}
 							</th>
