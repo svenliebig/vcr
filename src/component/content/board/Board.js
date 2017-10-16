@@ -24,7 +24,8 @@ export default class Board extends Component {
 			filterNotWatched: false,
 			sortAscending: true,
 			updateIndex: 0,
-			processing: false
+			processing: false,
+			loaded: false
 		}
 
 		this.checkDeprecated = this.checkDeprecated.bind(this);
@@ -43,10 +44,11 @@ export default class Board extends Component {
 		this.ur.getAllSeries(series => {
 			const tempArray = [];
 			for(let key in series) { 
-				tempArray.push(series[key]); 
+				tempArray.push(series[key]);
 			}
 			self.setState({
-				userSeries: tempArray
+				userSeries: tempArray,
+				loaded: false
 			});
 			self.checkDeprecated();
 		});
@@ -204,6 +206,26 @@ export default class Board extends Component {
 				);
 			}
 		}
+
+		const seriesPlaceholder = () => {
+			if (!this.state.loaded) {
+				var placeholder = [];
+				for (let x = 0; x < 9; x++) {
+					placeholder.push(
+						<div className="series-placeholder">
+							<div className="image" />
+							<div className="season" />
+							<div className="season" />
+						</div>
+					)
+				}
+				return (
+					<div>
+						{ placeholder }
+					</div>
+				);
+			}
+		}
 		
 		return (
 			<Skeleton>
@@ -237,6 +259,7 @@ export default class Board extends Component {
 					</div>
 					<div className="series-table-content">
 					{ seriesMap }
+					{ seriesPlaceholder() }
 					</div>
 				</div>
 			</Skeleton>

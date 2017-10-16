@@ -37,7 +37,7 @@ export default class View extends Component {
 	getImageSrc() {
 		const url = this.state.series.posterUrl;
 		if (url.endsWith('jpg')) {
-			return url.replace('w300', 'w1000');
+			return url.replace('w300', 'w500');
 		} else {
 			return 'bright-squares.53c1ec5f96d716d4265e.png';
 		}
