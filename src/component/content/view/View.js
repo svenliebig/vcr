@@ -14,6 +14,8 @@ export default class View extends AbstractSeries {
 
 		this.state = {
 			series: null,
+			bstolink: "",
+			changed: false
 		}
 
 		let self = this;
@@ -28,9 +30,27 @@ export default class View extends AbstractSeries {
 				series: series
 			});
 		});
+
+		this.handleBurningSeriesInput = this.handleBurningSeriesInput.bind(this);
+		this.savePreferences = this.savePreferences.bind(this);
 	}
 
 	componentDidMount() {
+	}
+
+	handleBurningSeriesInput(e) {
+		this.setState({
+			bstolink: e.target.value,
+			changed: true
+		});
+	}
+
+	savePreferences() {
+		// series repository
+
+		this.setState({
+			changed: false
+		});
 	}
 
   	render() {
@@ -54,10 +74,10 @@ export default class View extends AbstractSeries {
 						{ buildEpisodeNumber(episode) }
 					</td>
 					<td>
-						{episode.name}
+						{ episode.name }
 					</td>
 					<td>
-						{episode.airDate}
+						{ this.dateFormat(episode.airDate) }
 					</td>
 				</tr>
 			);
@@ -106,7 +126,12 @@ export default class View extends AbstractSeries {
 							</div>
 						</div>
 						<div className="series-actions">
-
+							<div className="input-container">
+								<label>bs.to</label>
+								<input type="type" value={ this.state.bstolink } onChange={ this.handleBurningSeriesInput } />
+							</div>
+							<div className="spacer"></div>
+							{ this.state.changed ? <button className="save" onClick={ this.savePreferences }>Speichern</button> : '' }
 						</div>
 						<div className="series-content">
 							{ self.state.series.overview }<br />

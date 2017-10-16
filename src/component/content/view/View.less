@@ -1,8 +1,10 @@
+@import "src/resources/default.less";
+
 .view-series-wrapper {
 	.series-container {
 		.series-header {
 			position: relative;
-			display: inline-block;
+			float: left;
 
 			img {
 
@@ -57,6 +59,67 @@
 
 		.series-actions {
 			display: inline-block;
+			height: 281px;
+			margin: 0 0 10px 8px;
+			border-left: 1px solid rgba(181, 181, 181, 0.3);
+			color: white;
+			padding-left: 10px;
+			width: calc(100% ~"-" 519px);
+
+			flex-direction: column;
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			align-items: flex-start;
+			display: flex;
+
+			.input-container {
+				.flex-item(1, 0, 1, auto, auto);
+
+				label {
+					&, input {
+						float: left;
+						width: 100%;
+					}
+					margin-left: 9px;
+				}
+	
+				input {
+					background: none;
+					border: none;
+					height: 32px;
+					padding: 1px 10px 1px 10px;
+					border-radius: .28571429rem;
+					color: white;
+
+					&:focus {
+						background: #FFF;
+						border: 1px solid rgba(34,36,38,.15);
+						color: #2c3e50;
+					}
+				}
+			}
+
+			.spacer {
+				.flex-item(2, 1, 1, auto, auto);
+			}
+
+			button.save {
+				background-color: #FFF;
+				border: none;
+				border-radius: .28571429rem;
+				color: #2c3e50;
+				height: 36px;
+				margin-top: 30px;
+				text-shadow: none;
+				width: 80px;
+				cursor: pointer;
+
+				.flex-item(3, 0, 1, auto, flex-end);
+
+				&:hover {
+					background: #e2e2e2;
+				}
+			}
 		}
 
 		.series-content {

@@ -35,6 +35,19 @@ class SeriesRepository {
 		this.fb.write(`/series/${series.id}`, series);
 	}
 
+	/**
+	 * Returns the bs.to links from this series if one exists. If not it returns null.
+	 * 
+	 * @param {number} id Of the series
+	 * @returns {Promise.<string>} called after reading the data
+	 * @memberof SeriesRepository
+	 */
+	getBurningSeriesLink(id) {
+		return this.fb.get(`/series/${id}`).then(val => {
+			return Promise.resolve(val);
+		});
+	}
+
 	exception(str) {
 		return {
 			message: str,

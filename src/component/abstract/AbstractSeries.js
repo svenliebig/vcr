@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import UserRepository from '@service/user/UserRepository';
 
+import moment from 'moment';
+
 /**
  * Component Class of AbstractSeries.
  * 
@@ -70,5 +72,9 @@ export default class AbstractSeries extends Component {
 		} else {
 			return 'bright-squares.53c1ec5f96d716d4265e.png';
 		}
+	}
+
+	dateFormat(date) {
+		return moment(date).format("DD.MM.YYYY");
 	}
 }
