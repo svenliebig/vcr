@@ -22,15 +22,15 @@ export default class Series extends AbstractSeries {
 		this.incrementActiveSeason = this.incrementActiveSeason.bind(this);
 		this.decrementActiveSeason = this.decrementActiveSeason.bind(this);
 		this.seasonScroll = this.seasonScroll.bind(this);
+	}
 
-		this.sr.getBurningSeriesLink(props.series.id).then(bstolink => {
+	componentDidMount() {
+		this.sr.getBurningSeriesLink(this.props.series.id).then(bstolink => {
 			this.setState({
 				bstolink: bstolink ? bstolink : ''
 			});
 		});
-	}
 
-	componentDidMount() {
 		this.setState({
 			activeSeason: this.getActiveSeason(),
 			series: this.props.series

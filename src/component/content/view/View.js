@@ -4,6 +4,8 @@ import SeriesRepository from '@service/series/SeriesRepository';
 import Skeleton from '@component/Skeleton';
 import AbstractSeries from '@component/abstract/AbstractSeries';
 
+import { Tabs, Tab } from '@component/utils/Tabs';
+
 import './View.css';
 
 export default class View extends AbstractSeries {
@@ -82,40 +84,38 @@ export default class View extends AbstractSeries {
 			);
 		}
 
-		const mapSeason = (season) => {
+		const mapSeason = (season, index) => {
 			return(
-				<table key={ season.seasonNumber } className="season-wrapper">
-					<thead>
-						<tr>
-							<th>
-								<button 
-									className="fa fa-eye" 
-									onClick={ this.toggleSeason.bind(this, season) }>
-								</button>
-							</th>
-							<th colSpan="3">
-								{season.name}
-							</th>
-						</tr>
-					</thead>
-					<tbody className="episodes-wrapper">
-						{ season.episodes ? season.episodes.map(mapEpisode) : '' }
-					</tbody>
-				</table>
+				<Tab key={ season.seasonNumber } title={ `Staffel ${index + 1}` }>
+					<table key={ season.seasonNumber } className="season-wrapper">
+						<thead>
+							<tr>
+								<th>
+									<button 
+										className="fa fa-eye" 
+										onClick={ this.toggleSeason.bind(this, season) }>
+									</button>
+								</th>
+							</tr>
+						</thead>
+						<tbody className="episodes-wrapper">
+							{ season.episodes ? season.episodes.map(mapEpisode) : '' }
+						</tbody>
+					</table>
+				</Tab>
 			);
 		}
 
-		const mapGenres = (genre) => {
+		const mapGenres = (genre, index) => {
 			return(
-				<div key={ genre.id } className="genre-badge">
-					{ genre.name }
+				<div key={ index } className="genre-badge">
+					{ genre }
 				</div>
 			);
 		}
 
 		const renderSeries = () => {
 			if (self.state.series != null) {
-
 				return (
 					<div className="series-container">
 						<div className="series-header">
@@ -139,7 +139,9 @@ export default class View extends AbstractSeries {
 						</div>
 						<div className="series-content">
 							{ self.state.series.overview }<br />
-							{ self.state.series.seasons.map(mapSeason) }
+							<Tabs defaultActiveTabIndex={ 0 }>
+								{ self.state.series.seasons.map(mapSeason) }
+							</Tabs>
 						</div>
 					</div>
 				);

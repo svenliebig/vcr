@@ -46,7 +46,7 @@ export default class Board extends Component {
 				userSeries: series,
 				loaded: true
 			});
-			self.checkDeprecated();
+			// self.checkDeprecated();
 		});
 	}
 

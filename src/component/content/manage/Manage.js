@@ -40,6 +40,10 @@ export default class Manage extends Component {
 		this.searchStringChanged = this.searchStringChanged.bind(this);
 	}
 
+	componentDidMount(){
+		this.searchInput.focus();
+	}
+
 	searchStringChanged(event) {
 		this.setState({
 			searchString: event.target.value
@@ -62,7 +66,7 @@ export default class Manage extends Component {
 		return (
 		<Skeleton>
 			<div className="manage-wrapper">
-				<input placeholder="Suche. ." type="text" onChange={ this.searchStringChanged } value={ this.state.searchString} />
+				<input ref={(input) => { this.searchInput = input; }} placeholder="Suche. ." type="text" onChange={ this.searchStringChanged } value={ this.state.searchString} />
 			</div>
 			{ searchResults }
 		</Skeleton>

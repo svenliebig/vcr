@@ -5,6 +5,8 @@ import SeriesapiService from '@service/api/Moviedb';
 import UserRepository from '@service/user/UserRepository';
 import SeriesRepository from '@service/series/SeriesRepository';
 
+import { Link } from "react-router-dom";
+
 import moment from 'moment';
 
 import './SearchResult.css';
@@ -83,6 +85,7 @@ export default class SearchResult extends Component {
 					<div>
 						<button onClick={ this.addSeries }><span className="fa fa-refresh"></span></button>
 						<button onClick={ this.removeSeries }><span className="fa fa-trash"></span></button>
+						<Link className="view-link" to={ `/view/${series.id}` }><span className="fa fa-tv"></span></Link>
 					</div>
 				);
 			}
@@ -92,12 +95,14 @@ export default class SearchResult extends Component {
 		return (
 			<div className="series-result">
 				<img src={ this.getImageSrc(series) } alt="" />
-				<div className="series-title">{ series.name }</div>
-				<div className="series-description">{ series.overview }</div>
+				<div className="series-title-wrapper">
+					<div className="series-title">{ series.name }</div>
+				</div>
 				<div className="airing">{ moment(series.first_air_date).format('DD.MM.YYYY') }</div>
 				<div className="actions">
 					{ actions() }
 				</div>
+				<div className="series-description">{ series.overview }</div>
 	  		</div>
 		)
 	}
