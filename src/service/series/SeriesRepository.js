@@ -1,5 +1,4 @@
 import Firebase from '../firebase/Firebase';
-import SeriesConverter from '@service/series/SeriesConverter';
 
 /**
  * asd

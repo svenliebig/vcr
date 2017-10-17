@@ -12,7 +12,7 @@ import './SearchResult.css';
 export default class SearchResult extends Component {
 	constructor() {
 		super();
-		this.ur = UserRepository;
+		this.ur = new UserRepository();
 		this.sapi = new SeriesapiService();
 		this.sr = new SeriesRepository();
 

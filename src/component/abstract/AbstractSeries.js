@@ -19,7 +19,7 @@ export default class AbstractSeries extends Component {
 	constructor() {
 		super();
 
-		this.ur = UserRepository;
+		this.ur = new UserRepository();
 		
 		this.state = {
 			series: null

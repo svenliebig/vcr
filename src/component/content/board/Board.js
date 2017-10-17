@@ -12,7 +12,7 @@ import moment from 'moment';
 export default class Board extends Component {
   constructor() {
 		super();
-		this.ur = UserRepository;
+		this.ur = new UserRepository();
 		this.sr = new SeriesRepository();
 		this.sapi = new SeriesapiService();
 
@@ -41,13 +41,9 @@ export default class Board extends Component {
 	
 	componentDidMount() {
 		let self = this;
-		this.ur.getAllSeries(series => {
-			const tempArray = [];
-			for(let key in series) { 
-				tempArray.push(series[key]);
-			}
+		this.ur.getAllSeries().then(series => {
 			self.setState({
-				userSeries: tempArray,
+				userSeries: series,
 				loaded: true
 			});
 			self.checkDeprecated();

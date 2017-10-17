@@ -6,6 +6,7 @@ import Login from '@component/content/login/Login';
 import Manage from '@component/content/manage/Manage';
 import Board from '@component/content/board/Board';
 import View from '@component/content/view/View';
+import Statistic from '@component/content/statistic/Statistic';
 
 /** Router */
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -29,7 +30,8 @@ export default class Router extends Component {
 		routesArray = [
 			{ path: '/', component: Board, key: '1' },
 			{ path: '/manage', component: Manage, key: '2' },
-			{ path: '/view/:id', component: View, key: '3' }
+			{ path: '/view/:id', component: View, key: '3' },
+			{ path: '/statistics', component: Statistic, key: '4' }
 		];
 	} else {
 		routesArray = [

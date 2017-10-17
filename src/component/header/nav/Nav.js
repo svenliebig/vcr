@@ -10,6 +10,7 @@ class Nav extends Component {
 				<ul>
 					<li><Link to="/">Board</Link></li>
 					<li><Link to="/manage">Manage</Link></li>
+					<li><Link to="/statistics">Statistics</Link></li>
 				</ul>
 			</div>
 	  </div>
