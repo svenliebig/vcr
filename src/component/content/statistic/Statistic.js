@@ -57,6 +57,11 @@ export default class Statistic extends Component {
 
 			durationAverage /= series.episodeDuration.length;
 
+			if(!series.seasons) {
+				console.log(`Keine Staffeln bei: ${series.name}`);
+				return;
+			}
+
 			series.seasons.forEach(season => {
 				if (!season.episodes)
 					return
