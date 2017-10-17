@@ -27,6 +27,8 @@ export default class Statistic extends Component {
 			noduration: []
 		};
 
+		// Charts mit Genre Abhängigkeiten
+
 		this.calcSeries = this.calcSeries.bind(this);
 		
 		this.ur.getAllSeries().then(val => this.calcSeries(val));

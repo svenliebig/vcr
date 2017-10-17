@@ -3,6 +3,8 @@ import UserRepository from '@service/user/UserRepository';
 
 import moment from 'moment';
 
+const POSTER_URL = 'https://image.tmdb.org/t/p/w300';
+
 /**
  * Component Class of AbstractSeries.
  * 
@@ -65,7 +67,7 @@ export default class AbstractSeries extends Component {
 	}
 	
 	getImageSrc(width = 300) {
-		const url = this.state.series.posterUrl;
+		const url = `${POSTER_URL}${this.state.series.posterUrl}`;
 		if (url.endsWith('jpg')) {
 			return url.replace(`w300`, `w${width}`);
 		} else {

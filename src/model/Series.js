@@ -1,7 +1,5 @@
 import moment from 'moment';
 
-const POSTER_URL = 'https://image.tmdb.org/t/p/w300';
-
 /**
  * Represents a series.
  * 
@@ -54,10 +52,13 @@ export class Series {
 		thisSeries.name = series.name;
 		thisSeries.overview = series.overview;
 		thisSeries.airDate = series.first_air_date;
-		thisSeries.posterUrl = `${POSTER_URL}${series.backdrop_path}`;
+		thisSeries.posterUrl = `${series.backdrop_path}`;
 		thisSeries.rating = series.vote_average;
 		thisSeries.votes = series.vote_count;
-		thisSeries.genres = series.genres;
+		thisSeries.genres = [];
+
+		if (series.genres)
+			series.genres.forEach(val => thisSeries.genres.push(val.name))
 		thisSeries.country = series.origin_country;
 		thisSeries.status = series.status;
 		thisSeries.createdBy = series.created_by;
@@ -84,9 +85,7 @@ export class Season {
 	 * @param {number} [episodeAmount=0] Number of total episodes of this season.
 	 * @memberof Season
 	 */
-	constructor(name = '', overview = '', seasonNumber = 0, episodes = [], episodeAmount = 0) {
-		this.name = name;
-		this.overview = overview;
+	constructor(seasonNumber = 0, episodes = [], episodeAmount = 0) {
 		this.seasonNumber = seasonNumber;
 		this.episodes = episodes;
 		this.episodeAmount = episodeAmount;
@@ -102,12 +101,8 @@ export class Season {
 	 */
 	static fromEntity(season) {
 		const thisSeason = new Season();
-		thisSeason.name = season.name;
-		thisSeason.overview = season.overview;
 		thisSeason.seasonNumber = season.season_number;
 		thisSeason.episodeAmount = season.episodes.length;
-		thisSeason.airDate = season.air_date;
-		thisSeason.posterUrl = `${POSTER_URL}${season.poster_path}`;
 		season.episodes.forEach((episode) => {
 			thisSeason.episodes.push(Episode.fromEntity(episode));
 		});
@@ -126,13 +121,11 @@ export class Episode {
 	/**
 	 * Creates an instance of Episode.
 	 * @param {string} [name=''] Name of this episode.
-	 * @param {string} [overview=''] Description of this episode.
 	 * @param {string} [airdate=''] Air date of this episode.
 	 * @memberof Episode
 	 */
-	constructor(name = '', overview = '', airdate = '', season = 0, episode = 0) {
+	constructor(name = '', airdate = '', season = 0, episode = 0) {
 		this.name = name;
-		this.overview = overview;
 		this.airDate = airdate;
 		this.season = season;
 		this.episode = episode;
@@ -150,11 +143,9 @@ export class Episode {
 	static fromEntity(episode) {
 		const thisEpisode = new Episode();
 		thisEpisode.name = episode.name;
-		thisEpisode.overview = episode.overview;
 		thisEpisode.airDate = episode.air_date;
 		thisEpisode.season = episode.season_number;
 		thisEpisode.episode = episode.episode_number;
-		thisEpisode.posterUrl = `${POSTER_URL}${episode.still_path}`;
 		thisEpisode.watched = false;
 		return thisEpisode;
 	}
