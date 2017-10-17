@@ -140,10 +140,10 @@ export default class Series extends AbstractSeries {
 		const createSeasons = (season, index) => {
 			return(
 				<div key={ index } className={ 'season ' + this.getSeasonClass(season.seasonNumber) }>
+					{ createSeasonToggle(season) }
 					<div className="season-title">{ 'Staffel ' + season.seasonNumber }</div>
 					<div className="episodes-wrapper" season={ season.seasonNumber }>
 						{ (season.episodes != undefined ? season.episodes.map(createEpisodes) : '')}
-						{ createSeasonToggle(season) }
 					</div>
 				</div>
 			);
@@ -173,7 +173,7 @@ export default class Series extends AbstractSeries {
 					<Link className="view-link" to={ `/view/${this.state.series.id}` }><span className="fa fa-tv"></span></Link>
 					{
 						this.state.bstolink ? 
-						<a className="bs-link" href={ this.state.bstolink } target="_blank">bs</a>
+						<a className="bs-link" href={ `${this.state.bstolink}/${this.state.activeSeason}` } target="_blank">bs</a>
 						: ''
 					}
 					<div className="banner-wrapper">

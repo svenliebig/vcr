@@ -107,6 +107,22 @@
 				align-items: flex-start;
 				overflow: hidden;
 
+				button.fa-eye {
+					background: none;
+					border: none;
+					color: #b5b5b5;
+					padding: 0;
+					transition: color 0.3s ease;
+					cursor: pointer;
+					outline: none;
+					padding-top: 2px;
+
+					&:hover {
+						color: white;
+					}
+					margin-right: 5px;
+				}
+
                 &.active {
                     height: 23px;
 					font-size: 16px;
@@ -177,21 +193,6 @@
 							&.fa-square-o:hover {
 								color: white;
 							}
-						}
-					}
-
-					button.fa-eye {
-						background: none;
-						border: none;
-						color: #b5b5b5;
-						padding: 0;
-						transition: color 0.3s ease;
-						cursor: pointer;
-						outline: none;
-						padding-left: 15px;
-
-						&:hover {
-							color: white;
 						}
 					}
                 }
