@@ -63,11 +63,11 @@ export default class View extends AbstractSeries {
 			return `S${seasonNumber}E${episodeNumber}`;
 		}
 
-		const mapEpisode = (episode) => {
+		const mapEpisode = (episode, index) => {
 			return(
 				<tr key={ episode.episode }>
 					<td>
-						<button onClick={ this.toggleEpisode.bind(this, episode) }>
+						<button onClick={ this.toggleEpisode.bind(this, episode, index) }>
 							<span className={ 'fa ' + (episode.watched ? 'fa-check-square-o' : 'fa-square-o') }></span>
 						</button>
 					</td>

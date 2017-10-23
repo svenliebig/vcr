@@ -1,3 +1,5 @@
+@import "src/resources/default.less";
+
 @keyframes placeHolderShimmer{
     0%{
         background-position: -468px 0
@@ -68,7 +70,7 @@
 				margin-right: 8px;
 				order: 1;
 			}
-			
+
 			&.updater {
 				order: 3;
 				flex-grow: 0;
@@ -76,6 +78,10 @@
 				padding-bottom: 4px;
 				padding-right: 0;
 			}
+		}
+
+		.dropdown-container {
+			.flex-item(2, 0, 0, auto, auto);
 		}
 	}
 

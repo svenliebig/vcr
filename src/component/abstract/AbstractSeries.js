@@ -32,10 +32,10 @@ export default class AbstractSeries extends Component {
 		this.getImageSrc = this.getImageSrc.bind(this);
 	}
 
-	toggleEpisode(episode) {
+	toggleEpisode(episode, index) {
 		let updated = this.state.series;
 		const snum = episode.season - 1;
-		const epnum = episode.episode - 1;
+		const epnum = index ? index : episode.episode - 1;
 		updated.seasons[snum].episodes[epnum].watched = !updated.seasons[snum].episodes[epnum].watched;
 		this.ur.updateWatchedSeries(updated);
 		this.setState({

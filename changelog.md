@@ -32,3 +32,11 @@ All notable changes to this project will be documented in this file.
 - bs.to Link appends the season number
 - season toggle now in front of episodes
 - changelog
+
+## [0.9.6] - 23.10.2017
+
+### Added
+
+- filter for animes or normal series by a dropdown
+- fixed a bug where large animes wasn't toggleable
+- fixed if not bs.to link, then dont append season (for example onepiece-tube)

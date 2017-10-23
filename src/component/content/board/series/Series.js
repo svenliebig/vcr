@@ -21,6 +21,7 @@ export default class Series extends AbstractSeries {
 		this.getActiveSeason = this.getActiveSeason.bind(this);
 		this.incrementActiveSeason = this.incrementActiveSeason.bind(this);
 		this.decrementActiveSeason = this.decrementActiveSeason.bind(this);
+		this.createSeriesLink = this.createSeriesLink.bind(this);
 		this.seasonScroll = this.seasonScroll.bind(this);
 	}
 
@@ -102,6 +103,13 @@ export default class Series extends AbstractSeries {
 		}
 	}
 	
+	createSeriesLink() {
+		if (this.state.bstolink.match(/https:\/\/bs\.to\/serie/))
+			return `${this.state.bstolink}/${this.state.activeSeason}`;
+		else
+			return `${this.state.bstolink}`;
+	}
+	
 	render() {
 		let self = this;
 
@@ -111,7 +119,7 @@ export default class Series extends AbstractSeries {
 					<button 
 						className={ this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') } 
 						title={this.createEpisodeTooltip(episode) }
-						onClick={ this.toggleEpisode.bind(this, episode) }>
+						onClick={ this.toggleEpisode.bind(this, episode, index) }>
 					</button>
 				</div>
 			);
@@ -173,7 +181,7 @@ export default class Series extends AbstractSeries {
 					<Link className="view-link" to={ `/view/${this.state.series.id}` }><span className="fa fa-tv"></span></Link>
 					{
 						this.state.bstolink ? 
-						<a className="bs-link" href={ `${this.state.bstolink}/${this.state.activeSeason}` } target="_blank">bs</a>
+						<a className="bs-link" href={ this.createSeriesLink() } target="_blank">bs</a>
 						: ''
 					}
 					<div className="banner-wrapper">

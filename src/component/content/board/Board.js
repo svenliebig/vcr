@@ -4,8 +4,19 @@ import Series from '@component/content/board/series/Series';
 import UserRepository from '@service/user/UserRepository';
 import SeriesRepository from '@service/series/SeriesRepository';
 import SeriesapiService from '@service/api/Moviedb';
+import Dropdown from '@component/utils/Dropdown';
 
 import './Board.css';
+
+
+		
+let selectableGenres = [{
+	name: "Alle"
+  }, {
+	name: "Anime"
+  }, {
+	name: "Serien"
+  }];
 
 import moment from 'moment';
 
@@ -25,7 +36,8 @@ export default class Board extends Component {
 			sortAscending: true,
 			updateIndex: 0,
 			processing: false,
-			loaded: false
+			loaded: false,
+			selectedFilter: selectableGenres[0]
 		}
 
 		this.checkDeprecated = this.checkDeprecated.bind(this);
@@ -37,6 +49,7 @@ export default class Board extends Component {
 		this.sortSeries = this.sortSeries.bind(this);
 		this.updateAll = this.updateAll.bind(this);
 		this.updateLoop = this.updateLoop.bind(this);
+		this.selectGenre = this.selectGenre.bind(this);
 	}
 	
 	componentDidMount() {
@@ -114,6 +127,11 @@ export default class Board extends Component {
 		this.setState({ sortAscending: !this.state.sortAscending })
 	}
 
+	selectGenre(selected) {
+		console.log(selected);
+		this.setState({ selectedFilter: selected });
+	}
+
 	isCompleteWatched(series) {
 		let result = true;
 		series.seasons.forEach(season => {
@@ -157,7 +175,38 @@ export default class Board extends Component {
 		return result;
 	};
 
+	isAnimeGenre(series) {
+		if (series.genres == null || series.country == null)
+			return false;
+	
+		let resultGenre = false;
+		let resultCountry = false;
+
+		series.genres.forEach((genre) => {
+			if (genre == "Animation") {
+				resultGenre = true;
+			}
+		});
+
+		series.country.forEach((country) => {
+			if (country == "JP") {
+				resultCountry = true;
+			}
+		});
+
+		return resultGenre && resultCountry;
+	}
+
 	filterSeries(series) {
+		if (this.state.selectedFilter.name == "Anime") {
+			if (!this.isAnimeGenre(series)) {
+				return false;
+			}
+		} else if (this.state.selectedFilter.name == "Serien") {
+			if (this.isAnimeGenre(series)) {
+				return false;
+			}
+		}
 		if (this.state.filterWatched) {
 			if (this.isCompleteWatched(series)) {
 				return false;
@@ -247,6 +296,7 @@ export default class Board extends Component {
 						<button className="toggle-sort" onClick={ this.toggleSort }>
 							<span className={ this.state.sortAscending ? 'fa fa-sort-alpha-asc' : 'fa fa-sort-alpha-desc' }></span>
 						</button>
+						<Dropdown list={ selectableGenres } selected={ selectableGenres[0] } onclick={ this.selectGenre } />
 						<div className="spacer"></div>
 						<button className="updater" onClick={ this.updateAll }>
 							<span>Alles updaten </span>

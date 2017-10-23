@@ -1,0 +1,109 @@
+@import "src/resources/default.less";
+
+@height: 27px;
+@spacing: 10px;
+@select-colour: #2875C7;
+@font-size: 14px;
+@border-colour: rgba(181, 181, 181, 0.9);
+
+.transform(@val) {
+  -webkit-transform: @val;
+  -moz-transform: @val;
+  -ms-transform: @val;
+  -o-transform: @val;
+  transform: @val;
+}
+      
+div.dropdown-container {
+
+  &.show > div.dropdown-list {
+    .transform(scale(1, 1));
+  }
+
+  @icon-width:14px;
+        
+  >div.dropdown-display {
+    float: left;
+    height: @height;
+    border: solid 1px @border-colour;
+    cursor: pointer;
+    .invisbox();
+
+    &:hover {
+      .white-text();
+    }
+
+    >* {
+      float:left;
+      height:100%;
+    }
+    
+    >span {
+      font-size: @font-size;
+      position: relative;
+      padding-right: 10px;
+    }
+    
+    >i {
+      position: relative;
+      width: @icon-width;
+      font-size: 1.125em;
+      font-weight: bold;
+      padding-right: @spacing;
+      padding-top: 5px;
+      text-align: right;
+    }
+  }
+
+  >div.dropdown-list {
+    float:left;
+    width:100%;
+    position:relative;
+    width:100%;
+    z-index: 10;
+	  .transform(scale(1, 0));
+    transition: transform ease 250ms;
+    margin-left: -5px;
+    //.transition(-webkit-transform ease 250ms);
+    //.transition(transform ease 250ms);
+
+    >div {
+      position:absolute;
+      width:100%;
+      z-index:2;
+      cursor:pointer;
+      transition: background 0.3s ease;
+      background:rgba(181, 181, 181, 0.5);
+
+      >div {
+        float:left;
+        width: calc(100% ~"-" 20px);
+        padding:0 @spacing;
+        font-size:@font-size;
+        border-bottom: solid 1px @border-colour;
+        border-top:none;
+
+        @icon-width:20px;
+
+      .white-text();
+        &:hover {
+          background:rgba(181, 181, 181, 0.8);
+        }
+
+        &.selected {
+          background:@select-colour;
+          color:white;
+        }
+
+        >* {
+          //.vertical-centre(@height);
+        }
+
+        >span {
+          float:left;
+          width:100%;
+        }
+      }
+    }
+  }
+}
