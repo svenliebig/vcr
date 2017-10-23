@@ -31,6 +31,7 @@ class Login extends Component {
 			const error = this.fire.getError();
 			if (error) {
 				this.setState(() => ({error}))
+				this.fire.clearError();
 			} else {
 				window.location.pathname = "/";
 			}

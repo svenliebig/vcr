@@ -40,3 +40,9 @@ All notable changes to this project will be documented in this file.
 - filter for animes or normal series by a dropdown
 - fixed a bug where large animes wasn't toggleable
 - fixed if not bs.to link, then dont append season (for example onepiece-tube)
+
+## [0.9.7] - 24.10.2017
+
+### Added
+
+- fixed login didn't forward after an error

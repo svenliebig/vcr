@@ -178,6 +178,15 @@ class Firebase {
 	getError() {
 		return this.error;
 	}
+
+	/**
+	 * Clears the error array.
+	 * 
+	 * @memberof Firebase
+	 */
+	clearError() {
+		this.error = null;
+	}
 }
 
 export default Firebase;
