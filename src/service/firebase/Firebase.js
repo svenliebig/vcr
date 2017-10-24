@@ -151,10 +151,16 @@ class Firebase {
 		.catch(error => {
 			// Handle Errors here.
 			var errorCode = error.code;
-			var errorMessage = error.message;
 
-			console.log(errorCode);
-			that.error = errorMessage;
+			if (errorCode === "auth/invalid-email") {
+				that.error = "Your email is not vaild.";
+			} else if (errorCode === "auth/weak-password") {
+				that.error = "Password is not long enough or not complex enough."
+			} else if (errorCode === "auth/wrong-password") {
+				that.error = "Invaild Password.";
+			} else {
+				that.error = "Something went wrong, please try again later."
+			}
 			return Promise.resolve();
 		})
 		.then(() => { return Promise.resolve() });

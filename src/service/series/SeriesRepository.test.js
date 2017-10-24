@@ -2,7 +2,7 @@ import SeriesRepository from './SeriesRepository';
 
 describe('SeriesRepository', () => {
 	
-	it('random id 🎉  should get no series', (done) => {
+	xit('random id 🎉  should get no series', (done) => {
 		// preparation
 		let repo = new SeriesRepository();
 		
@@ -13,7 +13,7 @@ describe('SeriesRepository', () => {
 		});
 	});
 
-	it('empty id 🎉  should get no series', (done) => {
+	xit('empty id 🎉  should get no series', (done) => {
 		// preparation
 		let repo = new SeriesRepository();
 	
@@ -24,7 +24,7 @@ describe('SeriesRepository', () => {
 		});
 	});
 
-	it('null 🎉  should get no series', (done) => {
+	xit('null 🎉  should get no series', (done) => {
 		// preparation
 		let repo = new SeriesRepository();
 	
@@ -35,7 +35,7 @@ describe('SeriesRepository', () => {
 		});
 	});
 
-	it('id and value given 🎉  should add a series', (done) => {
+	xit('id and value given 🎉  should add a series', (done) => {
 		// preparation
 		let repo = new SeriesRepository();
 		let id = "myownid";
@@ -50,7 +50,7 @@ describe('SeriesRepository', () => {
 		});
 	});
 
-	it('id and value null 🎉  should throw exception', (done) => {
+	xit('id and value null 🎉  should throw exception', (done) => {
 		// preparation
 		let repo = new SeriesRepository();
 

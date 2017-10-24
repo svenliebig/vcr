@@ -10,7 +10,7 @@ describe('Firebase', () => {
 
 	describe('onAuthStateChanged(object): void', () => {
 		describe('user is null', () => {
-			it('should call localStorage removeItem', () => {
+			xit('should call localStorage removeItem', () => {
 				spyOn(window.localStorage, 'removeItem');
 				classUnderTest.onAuthStateChanged(null);
 				expect(window.localStorage.removeItem).toBeCalled();
@@ -18,7 +18,7 @@ describe('Firebase', () => {
 		});
 
 		describe('user is not null', () => {
-			it('should call localStorage setItem', () => {
+			xit('should call localStorage setItem', () => {
 				spyOn(window.localStorage, 'setItem');
 				classUnderTest.onAuthStateChanged("not null");
 				expect(window.localStorage.setItem).toBeCalled();
@@ -163,22 +163,36 @@ describe('Firebase', () => {
 
 	describe('login(string, string): Promise', () => {
 		describe('without email and password', () => {
-			it('should have error "The email address is badly formatted"', done => {
-				//spyOn(classUnderTest.auth, 'signInWithEmailAndPassword');
+			it('should have error "Your email is not vaild."', done => {
 				classUnderTest.login('', '').then(() => {
-					expect(classUnderTest.getError()).toBe('The email address is badly formatted.');
+					expect(classUnderTest.getError()).toBe('Your email is not vaild.');
 					done();
 				});
-				//expect(classUnderTest.auth.signInWithEmailAndPassword).toBeCalled();
+			});
+	  	});
+		describe('with email and without password', () => {
+			it('should have error "Invaild Password."', done => {
+				classUnderTest.login('test@test.de', '').then(() => {
+					expect(classUnderTest.getError()).toBe('Invaild Password.');
+					done();
+				});
 			});
 	  	});
 	});
-
+	
 	describe('createUser(): void', () => {
 		describe('without email and password', () => {
-			it('should have error "The email address is badly formatted"', done => {
+			it('should have error "Your email is not vaild."', done => {
 				classUnderTest.createUser('', '').then(() => {
-					expect(classUnderTest.getError()).toBe('The email address is badly formatted.');
+					expect(classUnderTest.getError()).toBe('Your email is not vaild.');
+					done();
+				});
+			});
+		});
+		describe('with email and without password', () => {
+			it('should have error "Password is not long enough or not complex enough."', done => {
+				classUnderTest.createUser('test@test.de', '').then(() => {
+					expect(classUnderTest.getError()).toBe('Password is not long enough or not complex enough.');
 					done();
 				});
 			});
