@@ -20,15 +20,46 @@
   opacity: .7;
 }
 
-
 .login-wrapper {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 600px;
+  height: 700px;
+
+  &--tab {
+    color: red;
+  }
+
+  &--tabs {
+    width: 100%;
+    
+    ul.tabs-nav {
+      padding: 0 10%;
+
+      li.tab {
+        margin-left: 5px;
+        width: calc(50% ~"-" 5px);
+        
+        &:last-child {
+          width: calc(50% ~"-" 0px);
+          text-align: right;
+          margin-left: 0px;
+        }
+
+        a.active {
+          color: #b5b5b5;
+          border-bottom: 1px solid rgba(181, 181, 181, 0.3);
+        }
+
+        a:hover {
+          border-bottom: 1px solid rgba(181, 181, 181, 0.3);
+        }
+      }
+    }
+  }
 }
 
-.login-wrapper--form {
+.login-wrapper--container {
   align-items: center;
   background-color: white;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, .4);
@@ -38,6 +69,12 @@
   margin-top: 100px;
   max-width: 580px;
   width: 100%;
+}
+
+.login-wrapper--form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .input {
@@ -81,7 +118,7 @@
   height: 36px;
   margin-top: 30px;
   text-shadow: none;
-  width: 80px;
+  width: 120px;
 }
 
 .input-area--button:hover {

@@ -13,7 +13,7 @@ export default class Skeleton extends Component {
   render() {
 	return (
 			<div>
-				<Header />
+				{ this.props.dontRenderHeader ? '' : <Header /> }
 				<div className="content" style={{ padding: '30px', marginTop: '50px' }}>
 					{ this.props.children }
 				</div>

@@ -1,7 +1,7 @@
 @import "src/resources/default.less";
 
 @height: 27px;
-@spacing: 10px;
+@spacing: 30px;
 @select-colour: #2875C7;
 @font-size: 14px;
 @border-colour: rgba(181, 181, 181, 0.9);
@@ -59,7 +59,6 @@ div.dropdown-container {
     float:left;
     width:100%;
     position:relative;
-    width:100%;
     z-index: 10;
 	  .transform(scale(1, 0));
     transition: transform ease 250ms;
@@ -73,30 +72,25 @@ div.dropdown-container {
       z-index:2;
       cursor:pointer;
       transition: background 0.3s ease;
-      background:rgba(181, 181, 181, 0.5);
-
+      
       >div {
+        background:rgba(59, 70, 82, 0.9);
         float:left;
-        width: calc(100% ~"-" 20px);
-        padding:0 @spacing;
-        font-size:@font-size;
         border-bottom: solid 1px @border-colour;
-        border-top:none;
-
-        @icon-width:20px;
+        width: calc(100% ~"-" 20px);
+        padding: 0 20px 0 5px;
+        font-size: @font-size;
+        border-top: none;
+        @icon-width: 20px;
 
       .white-text();
         &:hover {
-          background:rgba(181, 181, 181, 0.8);
+          background: rgba(181, 181, 181, 0.8);
         }
 
         &.selected {
-          background:@select-colour;
-          color:white;
-        }
-
-        >* {
-          //.vertical-centre(@height);
+          background: @select-colour;
+          color: white;
         }
 
         >span {

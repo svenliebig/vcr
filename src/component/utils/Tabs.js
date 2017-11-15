@@ -59,7 +59,7 @@ export class Tabs extends Component {
 	 */
 	render() {
 		return (
-            <div className="tabs">
+            <div className={ `tabs ${this.props.className}` }>
                 <ul className="tabs-nav nav navbar-nav navbar-left">
                     { this.renderChildrenWithTabsApiAsProps() }
                 </ul>
@@ -82,7 +82,7 @@ export class Tabs extends Component {
 
 export const Tab = (props) => {
     return (
-        <li className="tab">
+        <li className={ `tab ${props.className}` }>
             <a className={`tab-link ${props.isActive ? 'active' : ''}`}
                 onClick={(event) => {
                     event.preventDefault();
