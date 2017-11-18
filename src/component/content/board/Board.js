@@ -41,20 +41,20 @@ export default class Board extends Component {
 		}
 
 		this.toggleNotWatched = this.toggleNotWatched.bind(this);
-		this.checkDeprecated = this.checkDeprecated.bind(this);
 		this.toggleUpcoming = this.toggleUpcoming.bind(this);
 		this.toggleWatched = this.toggleWatched.bind(this);
 		this.filterSeries = this.filterSeries.bind(this);
 		this.selectGenre = this.selectGenre.bind(this);
 		this.toggleSort = this.toggleSort.bind(this);
 		this.sortSeries = this.sortSeries.bind(this);
+		// this.checkDeprecated = this.checkDeprecated.bind(this);
 		// this.updateLoop = this.updateLoop.bind(this);
 		// this.updateAll = this.updateAll.bind(this);
 	}
 	
 	componentDidMount() {
 		this.ur.getAllSeries().then(series => {
-			self.setState({
+			this.setState({
 				userSeries: series,
 				loaded: true
 			});
@@ -173,7 +173,7 @@ export default class Board extends Component {
 	};
 
 	isAnimeGenre(series) {
-		if (series.genres == null || series.country == null)
+		if (!series.genres || !series.country)
 			return false;
 	
 		let resultGenre = false;
