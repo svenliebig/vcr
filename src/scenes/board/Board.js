@@ -5,6 +5,7 @@ import UserRepository from '@service/user/UserRepository';
 import SeriesRepository from '@service/series/SeriesRepository';
 import SeriesapiService from '@service/api/Moviedb';
 import Dropdown from '@components/utils/Dropdown';
+import ButtonToggle from '@components/button/toggle/ButtonToggle'
 
 import './Board.css';
 
@@ -31,11 +32,8 @@ export default class Board extends Component {
 			selectedFilter: selectableGenres[0],
 			filterNotWatched: false,
 			filterUpcoming: true,
-			deprecatedArray: [],
 			sortAscending: true,
 			filterWatched: true,
-			processing: false,
-			updateIndex: 0,
 			userSeries: [],
 			loaded: false
 		}
@@ -47,9 +45,6 @@ export default class Board extends Component {
 		this.selectGenre = this.selectGenre.bind(this);
 		this.toggleSort = this.toggleSort.bind(this);
 		this.sortSeries = this.sortSeries.bind(this);
-		// this.checkDeprecated = this.checkDeprecated.bind(this);
-		// this.updateLoop = this.updateLoop.bind(this);
-		// this.updateAll = this.updateAll.bind(this);
 	}
 	
 	componentDidMount() {
@@ -61,68 +56,20 @@ export default class Board extends Component {
 		});
 	}
 
-	// updateAll() {
-	// 	if(this.state.userSeries.length == 0)
-	// 		return
-
-	// 	this.setState({
-	// 		updateIndex: 0,
-	// 		processing: true
-	// 	}, () => {
-	// 		this.sapi.getCompleteSeries(this.state.userSeries[this.state.updateIndex].id, this.updateLoop);
-	// 	});
-	// }
-
-	// updateLoop(series) {
-	// 	this.ur.addSeries(series);
-	// 	this.sr.addSeries(series);
-
-	// 	this.setState({
-	// 		updateIndex: (this.state.userSeries.length > (this.state.updateIndex + 1) ? this.state.updateIndex + 1 : 0)
-	// 	}, () => {
-	// 		if (this.state.updateIndex != 0) {
-	// 			this.sapi.getCompleteSeries(this.state.userSeries[this.state.updateIndex].id, this.updateLoop);
-	// 		} else {
-	// 			window.location.pathname = "/";
-	// 		}
-	// 	});
-	// }
-
-	// checkDeprecated() {
-	// 	let self = this;
-	// 	this.state.userSeries.forEach(series => {
-	// 		self.sr.getSeries(series.id).then((val) => {
-	// 			if(moment(series.updated, 'DD.MM.YYYY').isBefore(moment(val.updated, 'DD.MM.YYYY'))) {
-	// 				let tempArray = self.state.deprecatedArray;
-	// 				tempArray.push(series.name);
-	// 				self.setState({
-	// 					deprecatedArray: tempArray
-	// 				});
-	// 			}
-	// 		});
-	// 	})
-	// }
-
-	toggleWatched() {
-		this.setState({
-			filterWatched: !this.state.filterWatched
-		})
+	toggleWatched(filterWatched) {
+		this.setState({ filterWatched })
 	}
 
-	toggleNotWatched() {
-		this.setState({
-			filterNotWatched: !this.state.filterNotWatched
-		})
+	toggleNotWatched(filterNotWatched) {
+		this.setState({ filterNotWatched })
 	}
 	
-	toggleUpcoming() {
-		this.setState({
-			filterUpcoming: !this.state.filterUpcoming
-		})
+	toggleUpcoming(filterUpcoming) {
+		this.setState({ filterUpcoming })
 	}
 
-	toggleSort() {
-		this.setState({ sortAscending: !this.state.sortAscending })
+	toggleSort(sortAscending) {
+		this.setState({ sortAscending })
 	}
 
 	selectGenre(selected) {
@@ -237,18 +184,6 @@ export default class Board extends Component {
 			</div> 
 		);
 
-		const updateBlocker = () => {
-			if (self.state.processing) {
-				return (
-					<div className="updateBlocker">
-						<div className="updateBlockerText">
-							{ `Aktualisiere:  ${self.state.userSeries[self.state.updateIndex].name} [${self.state.updateIndex}/${self.state.userSeries.length}]` }
-						</div>
-					</div>
-				);
-			}
-		}
-
 		const seriesPlaceholder = () => {
 			if (!this.state.loaded) {
 				var placeholder = [];
@@ -271,34 +206,16 @@ export default class Board extends Component {
 		
 		return (
 			<Skeleton>
-				{ updateBlocker() }
 				<div className="series-table-wrapper">
 					<div className="series-table-header">
-						{ 
-							this.state.deprecatedArray.length > 0 ? 
-							<span className='fa fa-exclamation-triangle' title={ this.state.deprecatedArray.join(' ,') }></span> : '' 
-						}
-						<button className="filter-toggle" onClick={ this.toggleWatched }>
-							<span>Gesehen </span>
-							<span className={ this.state.filterWatched ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
-						</button>
-						<button className="filter-toggle" onClick={ this.toggleNotWatched }>
-							<span>Offene </span>
-							<span className={ this.state.filterNotWatched ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
-						</button>
-						<button className="filter-toggle" onClick={ this.toggleUpcoming }>
-							<span>Bekommt neue </span>
-							<span className={ this.state.filterUpcoming ? 'fa fa-toggle-on' : 'fa fa-toggle-off' }></span>
-						</button>
-						<button className="toggle-sort" onClick={ this.toggleSort }>
-							<span className={ this.state.sortAscending ? 'fa fa-sort-alpha-asc' : 'fa fa-sort-alpha-desc' }></span>
-						</button>
+
+						<ButtonToggle text="Gesehen" className="filter-toggle" handler={ this.toggleWatched } initial={ this.state.filterWatched } />
+						<ButtonToggle text="Offene" className="filter-toggle" handler={ this.toggleNotWatched } initial={ this.state.filterNotWatched } />
+						<ButtonToggle text="Bekommt neue" className="filter-toggle" handler={  this.toggleUpcoming } initial={ this.state.filterUpcoming } />
+						<ButtonToggle className="toggle-sort" handler={ this.toggleSort } initial={ this.state.sortAscending } activeIcon='fa fa-sort-alpha-asc' inactiveIcon='fa fa-sort-alpha-desc' />
+
 						<Dropdown list={ selectableGenres } selected={ selectableGenres[0] } onclick={ this.selectGenre } />
 						<div className="spacer"></div>
-						<button className="updater" onClick={ this.updateAll }>
-							<span>Alles updaten </span>
-							<span className="fa fa-refresh"></span>
-						</button>
 					</div>
 					<div className="series-table-content">
 					{ seriesMap }

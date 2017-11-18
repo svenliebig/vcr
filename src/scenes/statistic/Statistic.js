@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Skeleton from '@scenes/skeleton/Skeleton';
 import UserRepository from '@service/user/UserRepository';
-
 import './Statistic.css';
 
 /**

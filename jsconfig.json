@@ -6,7 +6,8 @@
 		"baseUrl": "src/",
         "paths": {
           "@service/*": ["service/*"],
-          "@component/*": ["component/*"],
+          "@components/*": ["components/*"],
+          "@scenes/*": ["scenes/*"],
           "@model/*": ["model/*"]
         }
     }
