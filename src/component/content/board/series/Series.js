@@ -178,16 +178,15 @@ export default class Series extends AbstractSeries {
 		return (
 			<div className="series-card-wrapper">
 				<div className="series-card-container">
-					<Link className="view-link" to={ `/view/${this.state.series.id}` }><span className="fa fa-tv"></span></Link>
 					{
 						this.state.bstolink ? 
 						<a className="bs-link" href={ this.createSeriesLink() } target="_blank">bs</a>
 						: ''
 					}
-					<div className="banner-wrapper">
+					<Link className="banner-wrapper" to={ `/view/${this.state.series.id}` }>
 						<img src={ this.getImageSrc() } alt="" />
 						<div className="image-overlay"/>
-					</div>
+					</Link>
 					<div className="title-wrapper">
 						<p className="title-wrapper__text">{this.state.series.name}</p>
 					</div>
