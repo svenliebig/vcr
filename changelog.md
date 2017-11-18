@@ -60,3 +60,15 @@ All notable changes to this project will be documented in this file.
 - Update All button, because there is a dayli job that updates all series at 1 AM EST
 - All methods related to this feature
 - link to the view series page, it is now available by clicking the image
+
+## [0.9.9] - 19.11.2017
+
+### Added
+
+- toggle complete series in the board now
+- restructured the complete project and replaced some duplicated code
+
+### Removed
+
+- Arrows in the board series navigation
+- unused functions
