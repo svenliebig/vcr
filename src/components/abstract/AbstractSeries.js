@@ -27,9 +27,10 @@ export default class AbstractSeries extends Component {
 			series: null
 		};
 
-		this.toggleEpisode = this.toggleEpisode.bind(this);
-		this.toggleSeason = this.toggleSeason.bind(this);
-		this.getImageSrc = this.getImageSrc.bind(this);
+		this.toggleEpisode = this.toggleEpisode.bind(this)
+		this.toggleSeason = this.toggleSeason.bind(this)
+		this.getImageSrc = this.getImageSrc.bind(this)
+		this.toggleSeries = this.toggleSeries.bind(this)
 	}
 
 	toggleEpisode(episode, index) {
@@ -57,6 +58,36 @@ export default class AbstractSeries extends Component {
 		if (!changed) {
 			updated.seasons[snum].episodes.forEach(episode => {
 				episode.watched = false;
+			});
+		}
+
+		this.ur.updateWatchedSeries(updated);
+		this.setState({
+			series: updated
+		});
+	}
+
+	toggleSeries() {
+		let updated = this.state.series;
+		let changed = false;
+		updated.seasons.forEach(season => {
+			if (!season.episodes)
+				return
+			season.episodes.forEach(episode => {
+				if(!episode.watched) {
+					changed = true;
+				}
+				episode.watched = true;
+			});
+		});
+		
+		if (!changed) {
+			updated.seasons.forEach(season => {
+				if (!season.episodes)
+					return
+				season.episodes.forEach(episode => {
+					episode.watched = false;
+				});
 			});
 		}
 

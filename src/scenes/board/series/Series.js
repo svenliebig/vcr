@@ -172,14 +172,14 @@ export default class Series extends AbstractSeries {
 					<div className="season-container" onWheel={ this.seasonScroll }>
 						{ this.state.series.seasons.map(createSeasons) }
 					</div>
-					<div className="season-navigation">
+					{/* <div className="season-navigation">
 						<button onClick={ this.decrementActiveSeason }>
 							<span className="fa fa-arrow-up"></span>
 						</button>
 						<button onClick={ this.incrementActiveSeason }>
 							<span className="fa fa-arrow-down"></span>
 						</button>
-					</div>
+					</div> */}
 				</div>
 			)
 		};
@@ -198,6 +198,12 @@ export default class Series extends AbstractSeries {
 					</Link>
 					<div className="title-wrapper">
 						<p className="title-wrapper__text">{this.state.series.name}</p>
+						<button 
+							className="fa fa-eye"
+							style={{ position: "absolute", right: 0, top: 10, background: "none", color: "inherit", border: "none", outline: "none", cursor: "pointer" }}
+							title="Alle Folgen der Serie als gesehen markieren."
+							onClick={ this.toggleSeries }>
+						</button>
 					</div>
 					{ seasonMap() }
 				</div>
