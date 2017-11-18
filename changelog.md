@@ -46,3 +46,17 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - fixed login didn't forward after an error
+
+## [0.9.8] - 18.11.2017
+
+### Added
+
+- dayli update job for the series
+- back - link from the view page
+- link on image of the series to the view
+
+### Removed
+
+- Update All button, because there is a dayli job that updates all series at 1 AM EST
+- All methods related to this feature
+- link to the view series page, it is now available by clicking the image
