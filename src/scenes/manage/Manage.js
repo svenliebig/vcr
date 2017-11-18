@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Skeleton from '@component/Skeleton';
-import SearchResult from '@component/content/manage/searchresult/SearchResult';
-import SeriesapiService from '@service/api/Moviedb';
+import Skeleton from '@scenes/skeleton/Skeleton'
+import SearchResult from '@scenes/manage/searchresult/SearchResult'
+import SeriesapiService from '@service/api/Moviedb'
 
 import './Manage.css';
 

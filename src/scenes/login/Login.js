@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import Skeleton from '@component/Skeleton';
+import Skeleton from '@scenes/skeleton/Skeleton';
 import Firebase from '@service/firebase/Firebase';
 import { withRouter } from "react-router-dom";
 
 import './Login.css';
-import { Tab, Tabs } from '@component/utils/Tabs';
+import { Tab, Tabs } from '@components/utils/Tabs';
 
 /**
  * Login View.

@@ -1,12 +1,21 @@
+/** React Imports */
 import React from 'react'
+import { Link } from "react-router-dom"
 import PropTypes from 'prop-types';
-import SeriesRepository from '@service/series/SeriesRepository';
-import moment from 'moment';
-import { Link } from "react-router-dom";
-import AbstractSeries from '@component/abstract/AbstractSeries';
 
+/** Other Libraries */
+import moment from 'moment'
+
+/** Imports */
+import SeriesRepository from '@service/series/SeriesRepository'
+import AbstractSeries from '@components/abstract/AbstractSeries'
+
+/** CSS */
 import './Series.css';
 
+/**
+ * Represents a Series.
+ */
 export default class Series extends AbstractSeries {
 	constructor(props) {
 		super();

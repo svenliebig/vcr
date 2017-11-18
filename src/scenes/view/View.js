@@ -1,13 +1,15 @@
 import React from 'react'
+import { Link } from "react-router-dom";
+
 import SeriesRepository from '@service/series/SeriesRepository';
 
-import Skeleton from '@component/Skeleton';
-import AbstractSeries from '@component/abstract/AbstractSeries';
+import AbstractSeries from '@components/abstract/AbstractSeries';
 
-import { Tabs, Tab } from '@component/utils/Tabs';
+import { Tabs, Tab } from '@components/utils/Tabs';
+
+import Skeleton from '@scenes/skeleton/Skeleton';
 
 import './View.css';
-import { Link } from "react-router-dom";
 
 export default class View extends AbstractSeries {
 

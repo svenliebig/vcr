@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import Skeleton from '@component/Skeleton';
-import Series from '@component/content/board/series/Series';
+import Skeleton from '@scenes/skeleton/Skeleton';
+import Series from '@scenes/board/series/Series';
 import UserRepository from '@service/user/UserRepository';
 import SeriesRepository from '@service/series/SeriesRepository';
 import SeriesapiService from '@service/api/Moviedb';
-import Dropdown from '@component/utils/Dropdown';
+import Dropdown from '@components/utils/Dropdown';
 
 import './Board.css';
 

@@ -2,11 +2,11 @@
 import React, { Component } from 'react'
 
 /** Components */
-import Login from '@component/content/login/Login';
-import Manage from '@component/content/manage/Manage';
-import Board from '@component/content/board/Board';
-import View from '@component/content/view/View';
-import Statistic from '@component/content/statistic/Statistic';
+import Login from '@scenes/login/Login';
+import Manage from '@scenes/manage/Manage';
+import Board from '@scenes/board/Board';
+import View from '@scenes/view/View';
+import Statistic from '@scenes/statistic/Statistic';
 
 /** Router */
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
