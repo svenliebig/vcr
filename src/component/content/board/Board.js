@@ -16,7 +16,7 @@ let selectableGenres = [{
 	name: "Anime"
   }, {
 	name: "Serien"
-  }];
+}]
 
 import moment from 'moment';
 
@@ -28,82 +28,80 @@ export default class Board extends Component {
 		this.sapi = new SeriesapiService();
 
 		this.state = {
-			userSeries: [],
-			deprecatedArray: [],
-			filterWatched: true,
-			filterUpcoming: true,
+			selectedFilter: selectableGenres[0],
 			filterNotWatched: false,
+			filterUpcoming: true,
+			deprecatedArray: [],
 			sortAscending: true,
-			updateIndex: 0,
+			filterWatched: true,
 			processing: false,
-			loaded: false,
-			selectedFilter: selectableGenres[0]
+			updateIndex: 0,
+			userSeries: [],
+			loaded: false
 		}
 
-		this.checkDeprecated = this.checkDeprecated.bind(this);
-		this.toggleWatched = this.toggleWatched.bind(this);
 		this.toggleNotWatched = this.toggleNotWatched.bind(this);
+		this.checkDeprecated = this.checkDeprecated.bind(this);
 		this.toggleUpcoming = this.toggleUpcoming.bind(this);
-		this.toggleSort = this.toggleSort.bind(this);
+		this.toggleWatched = this.toggleWatched.bind(this);
 		this.filterSeries = this.filterSeries.bind(this);
-		this.sortSeries = this.sortSeries.bind(this);
-		this.updateAll = this.updateAll.bind(this);
-		this.updateLoop = this.updateLoop.bind(this);
 		this.selectGenre = this.selectGenre.bind(this);
+		this.toggleSort = this.toggleSort.bind(this);
+		this.sortSeries = this.sortSeries.bind(this);
+		// this.updateLoop = this.updateLoop.bind(this);
+		// this.updateAll = this.updateAll.bind(this);
 	}
 	
 	componentDidMount() {
-		let self = this;
 		this.ur.getAllSeries().then(series => {
 			self.setState({
 				userSeries: series,
 				loaded: true
 			});
-			// self.checkDeprecated();
 		});
 	}
 
-	updateAll() {
-		if(this.state.userSeries.length == 0)
-			return
+	// updateAll() {
+	// 	if(this.state.userSeries.length == 0)
+	// 		return
 
-		this.setState({
-			updateIndex: 0,
-			processing: true
-		}, () => {
-			this.sapi.getCompleteSeries(this.state.userSeries[this.state.updateIndex].id, this.updateLoop);
-		});
-	}
+	// 	this.setState({
+	// 		updateIndex: 0,
+	// 		processing: true
+	// 	}, () => {
+	// 		this.sapi.getCompleteSeries(this.state.userSeries[this.state.updateIndex].id, this.updateLoop);
+	// 	});
+	// }
 
-	updateLoop(series) {
-		this.ur.addSeries(series);
-		this.sr.addSeries(series);
+	// updateLoop(series) {
+	// 	this.ur.addSeries(series);
+	// 	this.sr.addSeries(series);
 
-		this.setState({
-			updateIndex: (this.state.userSeries.length > (this.state.updateIndex + 1) ? this.state.updateIndex + 1 : 0)
-		}, () => {
-			if (this.state.updateIndex != 0) {
-				this.sapi.getCompleteSeries(this.state.userSeries[this.state.updateIndex].id, this.updateLoop);
-			} else {
-				window.location.pathname = "/";
-			}
-		});
-	}
+	// 	this.setState({
+	// 		updateIndex: (this.state.userSeries.length > (this.state.updateIndex + 1) ? this.state.updateIndex + 1 : 0)
+	// 	}, () => {
+	// 		if (this.state.updateIndex != 0) {
+	// 			this.sapi.getCompleteSeries(this.state.userSeries[this.state.updateIndex].id, this.updateLoop);
+	// 		} else {
+	// 			window.location.pathname = "/";
+	// 		}
+	// 	});
+	// }
 
-	checkDeprecated() {
-		let self = this;
-		this.state.userSeries.forEach(series => {
-			self.sr.getSeries(series.id).then((val) => {
-				if(moment(series.updated, 'DD.MM.YYYY').isBefore(moment(val.updated, 'DD.MM.YYYY'))) {
-					let tempArray = self.state.deprecatedArray;
-					tempArray.push(series.name);
-					self.setState({
-						deprecatedArray: tempArray
-					});
-				}
-			});
-		})
-	}
+	// checkDeprecated() {
+	// 	let self = this;
+	// 	this.state.userSeries.forEach(series => {
+	// 		self.sr.getSeries(series.id).then((val) => {
+	// 			if(moment(series.updated, 'DD.MM.YYYY').isBefore(moment(val.updated, 'DD.MM.YYYY'))) {
+	// 				let tempArray = self.state.deprecatedArray;
+	// 				tempArray.push(series.name);
+	// 				self.setState({
+	// 					deprecatedArray: tempArray
+	// 				});
+	// 			}
+	// 		});
+	// 	})
+	// }
 
 	toggleWatched() {
 		this.setState({
@@ -128,7 +126,6 @@ export default class Board extends Component {
 	}
 
 	selectGenre(selected) {
-		console.log(selected);
 		this.setState({ selectedFilter: selected });
 	}
 
