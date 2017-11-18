@@ -7,6 +7,7 @@ import AbstractSeries from '@component/abstract/AbstractSeries';
 import { Tabs, Tab } from '@component/utils/Tabs';
 
 import './View.css';
+import { Link } from "react-router-dom";
 
 export default class View extends AbstractSeries {
 
@@ -120,6 +121,9 @@ export default class View extends AbstractSeries {
 					<div className="series-container">
 						<div className="series-header">
 							<img src={ self.getImageSrc(500) } alt="" />
+							<Link className="series-header--link" to="/">
+								<span className="fa fa-arrow-left fa-2x"></span>
+							</Link>
 							<div className="series-name-wrapper">
 								<div className="series-name">
 									{ self.state.series.name }
