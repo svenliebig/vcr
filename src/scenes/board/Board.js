@@ -9,6 +9,7 @@ import ButtonToggle from '@components/button/toggle/ButtonToggle'
 
 import './Board.css';
 
+import moment from 'moment';
 
 		
 let selectableGenres = [{
@@ -19,8 +20,9 @@ let selectableGenres = [{
 	name: "Serien"
 }]
 
-import moment from 'moment';
-
+/**
+ * {@link Board}
+ */
 export default class Board extends Component {
   constructor() {
 		super();

@@ -57,7 +57,7 @@ class Login extends Component {
   
 	render() {
 	  return (
-		<Skeleton dontRenderHeader="true">
+		<Skeleton dontRenderHeader={ true }>
 			<div className="login-wrapper">
 				<div className="login-wrapper--container">
 				<Tabs defaultActiveTabIndex={ 0 } className="login-wrapper--tabs">

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Header from './header/Header'
+import PropTypes from 'prop-types'
 
 /**
  * 
@@ -20,4 +21,11 @@ export default class Skeleton extends Component {
 			</div>
 		)
 	}
+}
+
+Skeleton.propTypes = {
+	/** Turn on or off the header, default true */
+	dontRenderHeader: PropTypes.bool,
+	/** Children are rendered within the {@link Skelleton} */
+	children: PropTypes.children
 }

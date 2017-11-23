@@ -72,3 +72,9 @@ All notable changes to this project will be documented in this file.
 
 - Arrows in the board series navigation
 - unused functions
+
+## [0.9.10] - 23.11.2017
+
+### Added
+
+- PropTypes to some components
