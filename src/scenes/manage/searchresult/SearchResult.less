@@ -1,7 +1,10 @@
+@import "src/resources/mixins.less";
+@import "src/resources/definitions.less";
+
 .white-text() {
-	color: white;
+	color: @text-color-1;
 	font-weight: 500;
-	text-shadow: 0px 2px 4px #000000;
+	text-shadow: @text-color-1-text-shadow;
 }
 
 .series-result {
@@ -17,7 +20,7 @@
 	}
 
 	.series-title-wrapper {
-		background-color: rgba(66, 66, 66, 0.7);
+		background-color: @text-color-1-background;
 		bottom: 0px;
 		height:40px;
 		max-width: 300px;
@@ -41,10 +44,10 @@
 		position: absolute;
 		left: 225px;
 		top: 0;
-		text-shadow: 2px 2px 2px rgb(0, 0, 0);
 	}
 
 	.series-description {
+		color: @text-color-2;
 		float: left;
 		margin-left: 10px;
 		width: calc(100% ~"-" 310px);
@@ -67,14 +70,12 @@
 		height: 27px;
 
 		button, a {
-			cursor: pointer;
+			.clear-button();
 			height: 31px;
 			width: 33px;
-			padding: 0;
-			background: rgba(80, 80, 80, 0.774);
-			color: white;
-			outline: none;
-			border: none;
+			background: @text-color-1-background;
+			color: @text-color-1;
+			text-shadow: @text-color-1-text-shadow;
 			border-radius: 2px;
 			margin-right: 5px;
 			display: block;

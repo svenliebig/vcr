@@ -1,4 +1,5 @@
 @import "src/resources/default.less";
+@import "src/resources/definitions.less";
 
 @keyframes placeHolderShimmer{
     0%{
@@ -9,36 +10,9 @@
     }
 }
 
-.updateBlocker {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: flex-start;
-	background: rgba(51, 51, 51, 0.8);
-	z-index: 999;
-
-	.updateBlockerText {
-		order: 0;
-		flex-grow: 1;
-		flex-shrink: 1;
-		flex-basis: auto;
-		text-align: center;
-		align-self: center;
-		font-family: 'palanquin-bold';
-		font-size: 46px;
-		margin-top: -50px;
-	}
-}
-
 .series-table-wrapper {
 	.series-table-header {
-		border-bottom: 1px solid rgba(181, 181, 181, 0.3);
+		border-bottom: 1px solid @border-color;
 		margin-bottom: 5px;
 		display: flex;
 		flex-direction: row;
@@ -52,23 +26,23 @@
 			background: none;
 			border: none;
 			outline: none;
-			color: rgb(181, 181, 181);
+			color: @text-color-2;
 			cursor: pointer;
-			transition: color 0.3s ease;
+			transition: @text-color-2-transition;
 
 			&:hover {
-				color: white;
+				color: @text-color-2-hover;
 			}
 
 			&.filter-toggle, &.toggle-sort {
+				order: 1;
 				flex-grow: 0;
 				text-align: left;
 				padding-left: 0;
 				padding-right: 8px;
 				padding-bottom: 4px;
-				border-right: 1px solid rgba(181, 181, 181, 0.3);
+				border-right: 1px solid @border-color;
 				margin-right: 8px;
-				order: 1;
 			}
 
 			&.updater {
@@ -91,13 +65,11 @@
 			overflow: auto;
 
 			.image {
-				height: 110px;
 				width: 300px;
 				margin-bottom: 10px;
 				position: relative;
 				overflow: hidden;
 				height: 96px;
-				position: relative;
 				float: left;
 				
 				animation-duration: 1s;

@@ -78,3 +78,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - PropTypes to some components
+
+## [0.9.11] - 24.11.2017
+
+### Added
+
+- Implement a definition less file, to manage the colors in one file

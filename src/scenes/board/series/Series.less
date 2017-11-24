@@ -1,17 +1,9 @@
+@import "src/resources/mixins.less";
+@import "src/resources/definitions.less";
+
 // @card-height: 169px;
 @card-height: 110px;
 @card-width: 100%;
-
-.not-selectable() {
-	cursor: default;
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none; /* Safari */
-	 -khtml-user-select: none; /* Konqueror HTML */
-	   -moz-user-select: none; /* Firefox */
-		-ms-user-select: none; /* Internet Explorer/Edge */
-			user-select: none; /* Non-prefixed version, currently
-								  supported by Chrome and Opera */
-}
 
 .series-card-wrapper {
 	height: @card-height;
@@ -20,25 +12,17 @@
     position: relative;
 	overflow: hidden;
 
-	.view-link, .bs-link {
-		z-index: 10;
-		color: white;
+	.bs-link {
 		position: absolute;
-		color: #fff;
+		z-index: 10;
+		color: @text-color-1;
 		background-color: rgba(66,66,66,.7);
 		width: 21px;
-		top: -6px;
-		padding-left: 3px;
 		height: 25px;
+		top: -6px;
+		left: 0;
+		padding-left: 3px;
 		text-decoration: none;
-	}
-
-	.view-link {
-		left: 0;
-	}
-
-	.bs-link {
-		left: 0;
 	}
 
     .series-card-container {
@@ -67,7 +51,7 @@
         }
 
         .title-wrapper {
-			background-color: rgba(66, 66, 66, 0.7);
+			background-color: @text-color-1-background;
         	bottom: 0px;
 			height:40px;
 			max-width: 300px;
@@ -79,12 +63,11 @@
 		}
 
 		.title-wrapper__text {
-			color: white;
+			color: @text-color-1;
 			font-size: 22px;
 			font-weight: 500;
 			margin: 0 10px 0px 10px;
-			opacity: 1;
-			text-shadow: 0px 2px 4px #000000;
+			text-shadow: @text-color-1-text-shadow;
 		}
 
         .seasons-wrapper {
@@ -97,28 +80,20 @@
             bottom: 0;
 
             .season {
+				.flex-container-row(nowrap, flex-start, flex-start);
                 height: 0;
                 font-size: 6px;
 				transition: all 0.2s ease;
-				display: flex;
-				flex-direction: row;
-				flex-wrap: nowrap;
-				justify-content: flex-start;
-				align-items: flex-start;
 				overflow: hidden;
 
 				button.fa-eye {
-					background: none;
-					border: none;
-					color: #b5b5b5;
-					padding: 0;
-					transition: color 0.3s ease;
-					cursor: pointer;
-					outline: none;
+					.clear-button();
+					color: @text-color-2;
+					transition: @text-color-2-transition;
 					padding-top: 2px;
 
 					&:hover {
-						color: white;
+						color: @text-color-2-hover;
 					}
 					margin-right: 5px;
 				}
@@ -153,25 +128,18 @@
                 }
 
                 .season-title {
+					.not-selectable();
+					.flex-item(0, 0, 1, auto, auto);
 					display: table;
 					width: 48px;
 					transition: width 0.2s ease;
-					order: 0;
-					flex-grow: 0;
-					flex-shrink: 1;
-					flex-basis: auto;
-					align-self: auto;
-					.not-selectable();
+					color: @text-color-2;
                 }
 
                 .episodes-wrapper {
+					.flex-item(0, 1, 1, auto, auto);
 					display: inline-block;
 					margin-left: 5px;
-					order: 0;
-					flex-grow: 1;
-					flex-shrink: 1;
-					flex-basis: auto;
-					align-self: auto;
 					height: 14px;
 					overflow: hidden;
 
@@ -182,56 +150,16 @@
 						transition: width 0.2s ease;
 
 						button {
-							background: none;
-							border: none;
-							color: #b5b5b5;
-							padding: 0;
-							transition: color 0.3s ease;
-							cursor: pointer;
-							outline: none;
+							.clear-button();
+							color: @text-color-2;
+							transition: @text-color-2-transition;
 
 							&.fa-square-o:hover {
-								color: white;
+								color: @text-color-2-hover;
 							}
 						}
 					}
                 }
-            }
-
-            .season-navigation {
-                position: absolute;
-				right: 5px;
-				padding-top: 4px;
-				top: 0;
-				flex-direction: column;
-				flex-wrap: nowrap;
-				justify-content: flex-start;
-				align-items: flex-start;
-				display: flex;
-
-                div {
-                  -webkit-touch-callout: none; /* iOS Safari */
-                    -webkit-user-select: none; /* Safari */
-                     -khtml-user-select: none; /* Konqueror HTML */
-                       -moz-user-select: none; /* Firefox */
-                        -ms-user-select: none; /* Internet Explorer/Edge */
-                            user-select: none; /* Non-prefixed version, currently
-                                                  supported by Chrome and Opera */
-				}
-
-				button {
-					background: none;
-					border: none;
-					color: #b5b5b5;
-					padding: 0;
-					transition: color 0.3s ease;
-					cursor: pointer;
-					outline: none;
-
-					&:hover {
-						color: white;
-					}
-				}
             }
         }
     }

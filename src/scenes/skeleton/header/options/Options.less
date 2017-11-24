@@ -1,16 +1,19 @@
+@import "src/resources/mixins.less";
+@import "src/resources/definitions.less";
+
 .options-wrapper {
 	.options-container {
 		button {
 			background: none;
 			border: none;
-			color: #b5b5b5;
+			color: @text-color-2;
 			padding: 0;
-			transition: color 0.3s ease;
+			transition: @text-color-2-transition;
 			cursor: pointer;
 			outline: none;
 
 			&:hover {
-				color: white;
+				color: @text-color-2-hover;
 			}
 		}
 	}

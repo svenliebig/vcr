@@ -1,0 +1,42 @@
+.flex-item(@order, @grow, @shrink, @basis, @self) {
+	order: @order;
+	flex-grow: @grow;
+	flex-shrink: @shrink;
+	flex-basis: @basis;
+	align-self: @self;
+}
+
+.flex-container-row(@wrap, @justify, @align) {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: @wrap;
+	justify-content: @justify;
+	align-items: @align;
+}
+
+.flex-container-column(@wrap, @justify, @align) {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: @wrap;
+	justify-content: @justify;
+	align-items: @align;
+}
+
+.not-selectable() {
+	cursor: default;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	 -khtml-user-select: none; /* Konqueror HTML */
+	   -moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* Internet Explorer/Edge */
+			user-select: none; /* Non-prefixed version, currently
+								  supported by Chrome and Opera */
+}
+
+.clear-button() {
+	background: none;
+	border: none;
+	cursor: pointer;
+	outline: none;
+	padding: 0;
+}

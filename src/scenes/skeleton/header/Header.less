@@ -1,14 +1,13 @@
+@import "src/resources/mixins.less";
+@import "src/resources/definitions.less";
+
 .header-wrapper {
-	border-bottom: 1px solid rgba(181, 181, 181, 0.3);
+	.flex-container-row(nowrap, flex-start, flex-start);
+	border-bottom: 1px solid @border-color;
 	padding: 15px 30px;
-	flex-direction: row;
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: flex-start;
+	height: 29px;
 	position: fixed;
 	top: 0;
-	height: 29px;
     left: 0;
 	right: 0;
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#151e28+0,293541+31,3a4551+67,3e4854+100 */
@@ -26,6 +25,7 @@
     	line-height: 35px;
 		margin-top: -3px;
 		margin-bottom: -3px;
+		color: @text-color-2;
 
 		&::-webkit-scrollbar { width: 5px; }
 		&::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); -webkit-border-radius: 0px; border-radius: 0px; width: 5px; }

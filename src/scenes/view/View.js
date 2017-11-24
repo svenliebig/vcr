@@ -144,7 +144,9 @@ export default class View extends AbstractSeries {
 							{ this.state.changed ? <button className="save" onClick={ this.savePreferences }>Speichern</button> : '' }
 						</div>
 						<div className="series-content">
-							{ self.state.series.overview }<br />
+							<div className="series-content--description">
+								{ self.state.series.overview }
+							</div>
 							<Tabs defaultActiveTabIndex={ 0 }>
 								{ self.state.series.seasons.map(mapSeason) }
 							</Tabs>

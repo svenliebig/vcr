@@ -1,27 +1,17 @@
+@import "src/resources/mixins.less";
+@import "src/resources/definitions.less";
+
 .nav-wrapper {
-	order: 0;
-	flex-grow: 1;
-	flex-shrink: 1;
-	flex-basis: auto;
-	align-self: flex-end;
+	.flex-item(0, 1, 1, auto, flex-end);
 
 	.nav-container {
-		flex-direction: row;
-		flex-wrap: nowrap;
-		justify-content: flex-end;
-		align-items: flex-start;
-		display: flex;
+		.flex-container-row(nowrap, flex-end, flex-start);
 		
 		ul {
-			order: 0;
-			flex-grow: 0;
-			flex-shrink: 1;
-			flex-basis: auto;
-			align-self: flex-start;
-			list-style: none;
-			padding: 0;
-			margin: 0;
 			display: flex;
+			margin: 0;
+			padding: 0;
+			list-style: none;
 			
 			li {
 				padding: 0 15px;
@@ -30,11 +20,11 @@
 			
 			a {
 				text-decoration: none;
-				color: #b5b5b5;
-				transition: color 0.3s ease;
+				color: @text-color-2;
+				transition: @text-color-2-transition;
 				
 				&:hover {
-					color: white;
+					color: @text-color-2-hover;
 				}
 			}
 		}
