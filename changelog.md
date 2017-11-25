@@ -84,3 +84,14 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Implement a definition less file, to manage the colors in one file
+
+## [0.9.12] - 25.11.2017
+
+### Added
+
+- Move the dropdown component into a subfolder of component
+- Stylings outside of the dropdown.less
+
+### Removed
+
+- Color styling from dropdown.less, a component should not inherit his own colors

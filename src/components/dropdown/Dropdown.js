@@ -64,7 +64,7 @@ export default class Dropdown extends Component {
 			for (var i = 0; i < this.props.list.length; i++) {
 				var item = this.props.list[i];
 				items.push(
-					<div key={ item.name } onClick={ this.select.bind(null, item) }>
+					<div className={ 'dropdown--list-item' + (this.state.selected == item ? ' selected' : '') } key={ item.name } onClick={ this.select.bind(null, item) }>
 						<span>{ item.name }</span>
 					</div>
 					);
@@ -73,13 +73,13 @@ export default class Dropdown extends Component {
 		}
 
 		return (
-			<div className={"dropdown-container" + ( this.state.listVisible ? " show" : "")}>
-				<div className={"dropdown-display" + ( this.state.listVisible ? " clicked": "")} onClick={ this.show }>
+			<div className={'dropdown' + ( this.state.listVisible ? ' show' : '')}>
+				<div className={'dropdown--button' + ( this.state.listVisible ? ' clicked': '')} onClick={ this.show }>
 					<span>{ this.state.selected.name }</span>
-					<i className="fa fa-angle-down"></i>
+					<i className='fa fa-angle-down'></i>
 				</div>
-				<div className="dropdown-list">
-					<div>
+				<div className='dropdown--list'>
+					<div className='dropdown--list-wrapper'>
 						{ renderListItems() }
 					</div>
 				</div>

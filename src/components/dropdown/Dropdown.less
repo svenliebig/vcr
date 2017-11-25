@@ -1,0 +1,80 @@
+@import "src/resources/default.less";
+
+@height: 27px;
+@spacing: 30px;
+@select-colour: #2875C7;
+@font-size: 14px;
+@border-colour: rgba(181, 181, 181, 0.9);
+
+.transform(@val) {
+	-webkit-transform: @val;
+	-moz-transform: @val;
+	-ms-transform: @val;
+	-o-transform: @val;
+	transform: @val;
+}
+			
+.dropdown {
+
+	&.show > .dropdown--list {
+		.transform(scale(1, 1));
+	}
+
+	@icon-width:14px;
+				
+	&--button {
+		float: left;
+		height: @height;
+		cursor: pointer;
+		.invisbox();
+
+		* {
+			float:left;
+			height:100%;
+		}
+		
+		span {
+			font-size: @font-size;
+			padding-right: 10px;
+		}
+		
+		i {
+			width: @icon-width;
+			font-size: 1.125em;
+			font-weight: bold;
+			padding-right: @spacing;
+			padding-top: 5px;
+			text-align: right;
+		}
+	}
+
+	&--list {
+		float:left;
+		width:100%;
+		position:relative;
+		z-index: 10;
+		.transform(scale(1, 0));
+		transition: transform ease 250ms;
+		margin-left: -5px;
+
+		&-wrapper {
+			position:absolute;
+			width:100%;
+			z-index:2;
+			cursor:pointer;
+		}
+			
+		&-item {
+			float:left;
+			width: calc(100% ~"-" 20px);
+			padding: 0 20px 0 5px;
+			font-size: @font-size;
+			@icon-width: 20px;
+
+			span {
+				float:left;
+				width:100%;
+			}
+		}
+	}
+}

@@ -4,7 +4,7 @@ import Series from '@scenes/board/series/Series';
 import UserRepository from '@service/user/UserRepository';
 import SeriesRepository from '@service/series/SeriesRepository';
 import SeriesapiService from '@service/api/Moviedb';
-import Dropdown from '@components/utils/Dropdown';
+import Dropdown from '@components/dropdown';
 import ButtonToggle from '@components/button/toggle/ButtonToggle'
 
 import './Board.css';
@@ -178,8 +178,6 @@ export default class Board extends Component {
 	}
 	
 	render() {
-		let self = this;
-
 		const seriesMap = this.state.userSeries.filter(this.filterSeries).sort(this.sortSeries).map((series) =>
 			<div key={ series.id }>
 				<Series series={ series } />
