@@ -84,3 +84,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Implement a definition less file, to manage the colors in one file
+
+## [0.9.12] - 04.12.2017
+
+### Added
+
+- Travis + Docker + Codeclimate
