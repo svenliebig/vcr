@@ -24,7 +24,7 @@ RUN npm install --loglevel=warn
 RUN npm i -g gulp
 
 # Run Tests
-RUN npm testc
+RUN npm run testc
 
 # Installing Code Climate
 # RUN npm install -g codeclimate-test-reporter
