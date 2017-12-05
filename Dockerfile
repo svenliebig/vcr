@@ -26,6 +26,8 @@ RUN npm i -g gulp
 # Run Tests
 RUN npm run testc
 
+RUN bash -c 'echo -e codeclimate=$CODECLIMATE_REPO_TOKEN'
+
 # Installing Code Climate
 RUN npm install -g codeclimate-test-reporter
 RUN codeclimate-test-reporter < coverage/lcov.info
