@@ -3,7 +3,7 @@ FROM node:latest
 
 # set the loglevel for npm with environment variable
 ENV NPM_CONFIG_LOGLEVEL=warn
-# ENV CODECLIMATE_REPO_TOKEN=
+ENV CODECLIMATE_REPO_TOKEN=$TRAVIS_CODECLIMATE_TOKEN
 
 # Install Google Chrome
 # RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -11,6 +11,8 @@ ENV NPM_CONFIG_LOGLEVEL=warn
 # RUN apt-get -qq update && apt-get -qq install -y google-chrome-stable
 
 # RUN RUN npm install -g yarn
+RUN echo $TRAVIS_BRANCH
+RUN echo $TRAVIS_JOB_ID
 
 # Create the target directory in the image.
 RUN mkdir -p /usr/src/app
@@ -27,8 +29,8 @@ RUN npm i -g gulp
 RUN npm run testc
 
 # Installing Code Climate
-# RUN npm install -g codeclimate-test-reporter
-# RUN codeclimate-test-reporter < coverage/lcov.info
+RUN npm install -g codeclimate-test-reporter
+RUN codeclimate-test-reporter < coverage/lcov.info
 
 # Open port 4200. This is the port that our development server uses
 EXPOSE 4200
