@@ -11,8 +11,10 @@ ENV CODECLIMATE_REPO_TOKEN=$TRAVIS_CODECLIMATE_TOKEN
 # RUN apt-get -qq update && apt-get -qq install -y google-chrome-stable
 
 # RUN RUN npm install -g yarn
-RUN echo $TRAVIS_BRANCH
+RUN echo $TRAVIS_BUILD_NUMBER
 RUN echo $TRAVIS_JOB_ID
+RUN echo $TRAVIS_CODECLIMATE_TOKEN
+RUN echo $CODECLIMATE_REPO_TOKEN
 
 # Create the target directory in the image.
 RUN mkdir -p /usr/src/app
