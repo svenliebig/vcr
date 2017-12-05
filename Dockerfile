@@ -1,20 +1,16 @@
 # Create a new image from the base nodejs image.
 FROM node:latest
 
+ARG CODECLIMATE_REPO_TOKEN
+
 # set the loglevel for npm with environment variable
 ENV NPM_CONFIG_LOGLEVEL=warn
-ENV CODECLIMATE_REPO_TOKEN=$TRAVIS_CODECLIMATE_TOKEN
+ENV CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN
 
 # Install Google Chrome
 # RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 # RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 # RUN apt-get -qq update && apt-get -qq install -y google-chrome-stable
-
-# RUN RUN npm install -g yarn
-RUN echo $TRAVIS_BUILD_NUMBER
-RUN echo $TRAVIS_JOB_ID
-RUN echo $TRAVIS_CODECLIMATE_TOKEN
-RUN echo $CODECLIMATE_REPO_TOKEN
 
 # Create the target directory in the image.
 RUN mkdir -p /usr/src/app
