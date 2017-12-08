@@ -1,11 +1,9 @@
 # Create a new image from the base nodejs image.
 FROM node:latest
 
-ARG CC_TEST_REPORTER_ID
-
 # set the loglevel for npm with environment variable
 ENV NPM_CONFIG_LOGLEVEL=warn
-ENV CC_TEST_REPORTER_ID=b2d7e5a86aa7d9734f55f2c0ea88e824522a90f11d147b2ad4b2f128528c43a8
+ENV CC_TEST_REPORTER_ID=""
 
 # Install Google Chrome
 # RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -37,7 +35,7 @@ RUN npm run testc
 
 RUN sh -c './cc-test-reporter format-coverage --output "coverage/lcov.info"'
 
-RUN sh -c './cc-test-reporter after-build --exit-code 0 -t "lcov" '
+# RUN sh -c './cc-test-reporter after-build --exit-code 0 -t "lcov" '
 
 #RUN codeclimate-test-reporter < coverage/lcov.info
 
