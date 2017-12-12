@@ -72,30 +72,38 @@ export class Tabs extends Component {
 }
 
 /** The Prop Types */
-// Tabs.propTypes = {
-// 	selected: PropTypes.number.isRequired,
-// 	children: PropTypes.oneOfType([
-// 		PropTypes.array,
-// 		PropTypes.element
-// 	]).isRequired
-// }
+Tabs.propTypes = {
+	selected: PropTypes.number.isRequired,
+    defaultActiveTabIndex: PropTypes.number,
+    className: PropTypes.string,
+	children: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.element
+	]).isRequired
+}
 
-export const Tab = (props) => {
-    return (
-        <li className={ `tab ${props.className}` }>
-            <a className={`tab-link ${props.isActive ? 'active' : ''}`}
-                onClick={(event) => {
-                    event.preventDefault();
-                    props.onClick(props.tabIndex);
-                }}>
-                <i className={`tab-icon ${props.icon}`}/>
-				<div>{ props.title }</div>
-            </a>
-        </li>
-    )
+export class Tab extends Component {
+	render() {
+        return (
+            <li className={ `tab ${this.props.className}` }>
+                <a className={`tab-link ${this.props.isActive ? 'active' : ''}`}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        this.props.onClick(this.props.tabIndex);
+                    }}>
+                    <i className={`tab-icon ${this.props.icon}`}/>
+                    <div>{ this.props.title }</div>
+                </a>
+            </li>
+        )
+    }
 }
 
 Tab.propTypes = {
 	icon: PropTypes.string,
-	title: PropTypes.string
+    title: PropTypes.string,
+    className: PropTypes.string,
+    isActive: PropTypes.bool,
+    tabIndex: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired
 }

@@ -5,7 +5,7 @@ import SeriesRepository from '@service/series/SeriesRepository';
 
 import AbstractSeries from '@components/abstract/AbstractSeries';
 
-import { Tabs, Tab } from '@components/utils/Tabs';
+import { Tabs, Tab } from '@components/tabs';
 
 import Skeleton from '@scenes/skeleton/Skeleton';
 
@@ -23,8 +23,10 @@ export default class View extends AbstractSeries {
 			bstolink: ''
 		}
 
+		const self = this;
+
 		this.ur.getSeries(props.match.params.id, (series) => {
-			this.setState({
+			self.setState({
 				series: series
 			});
 		});

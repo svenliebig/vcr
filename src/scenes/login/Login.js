@@ -4,7 +4,7 @@ import Firebase from '@service/firebase/Firebase';
 import { withRouter } from "react-router-dom";
 
 import './Login.css';
-import { Tab, Tabs } from '@components/utils/Tabs';
+import { Tab, Tabs } from '@components/tabs';
 
 /**
  * Login View.
@@ -65,7 +65,7 @@ class Login extends Component {
 						<form onSubmit={this.submitLogin} className="login-wrapper--form" >
 							<div className="input">
 								<p className="input-title">
-								VCR
+									VCR
 								</p>
 								<div className="input-area">
 									<label
