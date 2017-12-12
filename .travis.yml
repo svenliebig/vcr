@@ -12,8 +12,8 @@ services:
 
 before_script: 
 # - greenkeeper-lockfile-update
-- docker build -t vcr/latest .
-- docker run -d --name vc-react-container -e CC_TEST_REPORTER_ID=$TRAVIS_CODECLIMATE_TOKEN vcr/latest
+- docker build --build-arg cc_test_report_id_travis=$TRAVIS_CODECLIMATE_TOKEN -t vcr/latest .
+- docker run -d --name vc-react-container vcr/latest
 
 script:
 - docker ps -a
