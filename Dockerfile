@@ -33,9 +33,11 @@ RUN npm run testc
 # Installing Code Climate
 #RUN npm install -g codeclimate-test-reporter
 
-RUN sh -c './cc-test-reporter format-coverage --output "coverage/lcov.info"'
+RUN sh -c './cc-test-reporter format-coverage --output coverage/lcov.info'
 
-# RUN sh -c './cc-test-reporter after-build --exit-code 0 -t "lcov" '
+# RUN sh -c './cc-test-reporter after-build --exit-code 0'
+
+RUN sh -c './cc-test-reporter upload-coverage'
 
 #RUN codeclimate-test-reporter < coverage/lcov.info
 
