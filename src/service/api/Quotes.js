@@ -38,11 +38,11 @@ const quotes = [
     {quote: "I understand that if anymore words come pouring out your cunt mouth, I'm going to have to eat every fucking chicken in this room.", character: "The Hound"},
     {quote: "Yes, all Lannisters are lions. And when a Tyrell farts, it smells like a rose. But how kind is he? How clever? Has he a good heart, a gentle hand?", character: "Olenna Tyrell"},
     {quote: "It's not easy being drunk all the time. If it were easy, everyone would do it.", character: "Tyrion"},
-    {quote: "Why are all the gods such vicious cunts? Where's the god of tits and wine?", character: "Tyrion"},
+    {quote: "Why are all the gods such vicious cunts? Where's the god of tits and wine?", character: "Tyrion"}
 ];
 
 function getRandomQuote() {
-	const quote = quotes[parseInt(Math.random() * quotes.length)];
+	const quote = quotes[parseInt(Math.random() * quotes.length, 10)];
 	return `"${quote.quote}" - ${quote.character}`;
 }
 
@@ -51,5 +51,7 @@ let quote = getRandomQuote();
 function getQuote() {
 	return quote;
 }
+
+// FIXME test the fixme
 
 export default getQuote;

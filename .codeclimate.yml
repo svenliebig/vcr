@@ -38,17 +38,21 @@ checks:
     enabled: true
 
 plugins:
+  eslint:
+    enabled: true
+    config:
+      extensions:
+        - .js
+      config: "./.eslintrc.json"
   stylelint:
     enabled: true   
   fixme:
     enabled: true
-  eslint:
-    enabled: true
 
 ratings:
   paths:
-    - "src/**.js"
-    - "src/**.less"
+    - "**.js"
+    - "**.less"
 
 exclude_paths:
   - "bin"

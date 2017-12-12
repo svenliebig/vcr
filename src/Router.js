@@ -2,14 +2,14 @@
 import React, { Component } from 'react'
 
 /** Components */
-import Login from '@scenes/login/Login';
-import Manage from '@scenes/manage/Manage';
-import Board from '@scenes/board/Board';
-import View from '@scenes/view/View';
-import Statistic from '@scenes/statistic/Statistic';
+import Login from '@scenes/login/Login'
+import Manage from '@scenes/manage/Manage'
+import Board from '@scenes/board/Board'
+import View from '@scenes/view/View'
+import Statistic from '@scenes/statistic/Statistic'
 
 /** Router */
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 /** Services */
 import Firebase from './service/firebase/Firebase';
