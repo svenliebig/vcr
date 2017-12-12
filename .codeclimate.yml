@@ -58,3 +58,5 @@ exclude_paths:
   - "dist"
   - "config/"
   - "**/*test.js"
+  - "**/*.yml"
+  - "cc-test-reporter"
