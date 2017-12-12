@@ -41,7 +41,7 @@ export default class View extends AbstractSeries {
 			})
 		})
 
-		this.sr.getLinksOfSeries(props.match.params.id).then(links =>{
+		this.sr.getLinksOfSeries(props.match.params.id).then(links => {
 			if (links)
 				this.setState({
 					otaku: links.otaku || '',

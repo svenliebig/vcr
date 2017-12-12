@@ -1,32 +1,48 @@
 version: "2"
 checks:
   argument-count:
-    enabled: false
+    enabled: true
+    config:
+      threshold: 4
   complex-logic:
-    enabled: false
+    enabled: true
+    config:
+      threshold: 4
   file-lines:
-    enabled: false
+    enabled: true
+    config:
+      threshold: 500
   method-complexity:
-    enabled: false
+    enabled: true
+    config:
+      threshold: 5
   method-count:
-    enabled: false
+    enabled: true
+    config:
+      threshold: 20
   method-lines:
-    enabled: false
+    enabled: true
+    config:
+      threshold: 50
   nested-control-flow:
-    enabled: false
+    enabled: true
+    config:
+      threshold: 4
   return-statements:
-    enabled: false
+    enabled: true
+    config:
+      threshold: 1
   similar-code:
-    enabled: false
+    enabled: true
   identical-code:
-    enabled: false
+    enabled: true
 
-engines:
+plugins:
   stylelint:
     enabled: true   
-  eslint:
-    enabled: true
   fixme:
+    enabled: true
+  eslint:
     enabled: true
 
 ratings:
@@ -35,8 +51,8 @@ ratings:
     - "src/**.less"
 
 exclude_paths:
-  - bin
-  - node_modules
-  - typings
-  - coverage
-  - dist
+  - "bin"
+  - "node_modules"
+  - "typings"
+  - "coverage"
+  - "dist"
