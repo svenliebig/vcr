@@ -31,7 +31,7 @@ checks:
   return-statements:
     enabled: true
     config:
-      threshold: 1
+      threshold: 4
   similar-code:
     enabled: true
   identical-code:
@@ -56,3 +56,5 @@ exclude_paths:
   - "typings"
   - "coverage"
   - "dist"
+  - "config/"
+  - "**/*test.js"
