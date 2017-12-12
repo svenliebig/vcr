@@ -81,7 +81,7 @@ export default class Board extends Component {
 	isCompleteWatched(series) {
 		let result = true;
 		series.seasons.forEach(season => {
-			if (season.episodeAmount != 0)
+			if (season.episodeAmount !== 0)
 				season.episodes.forEach(episode => {
 					if (!episode.watched) {
 						result = false;
@@ -95,7 +95,7 @@ export default class Board extends Component {
 		let result = false;
 		let completlyWatched = true;
 		series.seasons.forEach(season => {
-			if (season.episodeAmount != 0)
+			if (season.episodeAmount !== 0)
 				season.episodes.forEach(episode => {
 					if (moment(episode.airDate).isAfter()) {
 						result = true;
@@ -111,7 +111,7 @@ export default class Board extends Component {
 	hasNotWatched(series) {
 		let result = false;
 		series.seasons.forEach(season => {
-			if (season.episodeAmount != 0)
+			if (season.episodeAmount !== 0)
 				season.episodes.forEach(episode => {
 					if (!episode.watched && moment(episode.airDate).isBefore()) {
 						result = true;
@@ -129,13 +129,13 @@ export default class Board extends Component {
 		let resultCountry = false;
 
 		series.genres.forEach((genre) => {
-			if (genre == "Animation") {
+			if (genre === "Animation") {
 				resultGenre = true;
 			}
 		});
 
 		series.country.forEach((country) => {
-			if (country == "JP") {
+			if (country === "JP") {
 				resultCountry = true;
 			}
 		});
@@ -144,11 +144,11 @@ export default class Board extends Component {
 	}
 
 	filterSeries(series) {
-		if (this.state.selectedFilter.name == "Anime") {
+		if (this.state.selectedFilter.name === "Anime") {
 			if (!this.isAnimeGenre(series)) {
 				return false;
 			}
-		} else if (this.state.selectedFilter.name == "Serien") {
+		} else if (this.state.selectedFilter.name === "Serien") {
 			if (this.isAnimeGenre(series)) {
 				return false;
 			}

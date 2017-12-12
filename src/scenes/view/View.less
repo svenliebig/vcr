@@ -70,26 +70,38 @@
 
 			.flex-container-column(nowrap, flex-start, flex-start);
 
-			.input-container {
-				.flex-item(1, 0, 1, auto, auto);
-				.flex-container-column(nowrap, flex-start, flex-start);
-	
-				input {
-					background: none;
-					border: none;
-					border-bottom: 2px solid rgba(34,36,38,.15);
-					height: 32px;
-					// padding: 1px 10px 1px 10px;
-					border-radius:0;
-					color: white;
-					width: 300px;
-					transition: color,background,border-bottom 0.3s ease;
+			.head {
+				.flex-container-row(nowrap, flex-start, flex-start);
+				width: 100%;
 
-					&:focus {
-						border-bottom: 2px solid white;
-						color: white;
-						outline: none;
+				.input-wrapper {
+					.flex-item(1, 1, 1, auto, auto);
+
+					.input-container {
+						.flex-container-column(nowrap, flex-start, flex-start);
+			
+						input {
+							background: none;
+							border: none;
+							border-bottom: 2px solid rgba(34,36,38,.15);
+							height: 32px;
+							// padding: 1px 10px 1px 10px;
+							border-radius:0;
+							color: white;
+							width: 300px;
+							transition: color,background,border-bottom 0.3s ease;
+		
+							&:focus {
+								border-bottom: 2px solid white;
+								color: white;
+								outline: none;
+							}
+						}
 					}
+				}
+
+				.action-wrapper {
+					.flex-item(2, 0, 1, auto, auto);
 				}
 			}
 

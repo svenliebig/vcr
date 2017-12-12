@@ -1,6 +1,90 @@
 import moment from 'moment';
 
 /**
+ * Represents an episode of a series.
+ * 
+ * @export
+ * @class Episode
+ */
+export class Episode {
+	
+		/**
+		 * Creates an instance of Episode.
+		 * @param {string} [name=''] Name of this episode.
+		 * @param {string} [airdate=''] Air date of this episode.
+		 * @memberof Episode
+		 */
+		constructor(name = '', airdate = '', season = 0, episode = 0) {
+			this.name = name;
+			this.airDate = airdate;
+			this.season = season;
+			this.episode = episode;
+			this.watched = false;
+		}
+		
+		/**
+		 * Creates an instance of this class from an entity model.
+		 * 
+		 * @static
+		 * @param {any} episode the entity
+		 * @returns an instance of {Episode}
+		 * @memberof Episode
+		 */
+		static fromEntity(episode) {
+			const thisEpisode = new Episode();
+			thisEpisode.name = episode.name;
+			thisEpisode.airDate = episode.air_date;
+			thisEpisode.season = episode.season_number;
+			thisEpisode.episode = episode.episode_number;
+			thisEpisode.watched = false;
+			return thisEpisode;
+		}
+	}
+
+/**
+ * Represents a series season.
+ * 
+ * @export
+ * @class Season
+ */
+export class Season {
+
+	/**
+	 * Creates an instance of Season.
+	 * 
+	 * @param {string} [name=''] Name of the season.
+	 * @param {string} [overview=''] Description of this season.
+	 * @param {number} [seasonNumber=0] Number of this season.
+	 * @param {any} [episodes=new Array<Episode>()] Array of episodes that are in this season.
+	 * @param {number} [episodeAmount=0] Number of total episodes of this season.
+	 * @memberof Season
+	 */
+	constructor(seasonNumber = 0, episodes = [], episodeAmount = 0) {
+		this.seasonNumber = seasonNumber;
+		this.episodes = episodes;
+		this.episodeAmount = episodeAmount;
+	}
+
+	/**
+	 * Creates an instance of this class from an entity model.
+	 * 
+	 * @static
+	 * @param {any} season the entity
+	 * @returns an instance of {Season}
+	 * @memberof Season
+	 */
+	static fromEntity(season) {
+		const thisSeason = new Season();
+		thisSeason.seasonNumber = season.season_number;
+		thisSeason.episodeAmount = season.episodes.length;
+		season.episodes.forEach((episode) => {
+			thisSeason.episodes.push(Episode.fromEntity(episode));
+		});
+		return thisSeason;
+	}
+}
+
+/**
  * Represents a series.
  * 
  * @export
@@ -64,89 +148,5 @@ export class Series {
 		thisSeries.createdBy = series.created_by;
 		thisSeries.episodeDuration = series.episode_run_time;
 		return thisSeries;
-	}
-}
-
-/**
- * Represents a series season.
- * 
- * @export
- * @class Season
- */
-export class Season {
-
-	/**
-	 * Creates an instance of Season.
-	 * 
-	 * @param {string} [name=''] Name of the season.
-	 * @param {string} [overview=''] Description of this season.
-	 * @param {number} [seasonNumber=0] Number of this season.
-	 * @param {any} [episodes=new Array<Episode>()] Array of episodes that are in this season.
-	 * @param {number} [episodeAmount=0] Number of total episodes of this season.
-	 * @memberof Season
-	 */
-	constructor(seasonNumber = 0, episodes = [], episodeAmount = 0) {
-		this.seasonNumber = seasonNumber;
-		this.episodes = episodes;
-		this.episodeAmount = episodeAmount;
-	}
-
-	/**
-	 * Creates an instance of this class from an entity model.
-	 * 
-	 * @static
-	 * @param {any} season the entity
-	 * @returns an instance of {Season}
-	 * @memberof Season
-	 */
-	static fromEntity(season) {
-		const thisSeason = new Season();
-		thisSeason.seasonNumber = season.season_number;
-		thisSeason.episodeAmount = season.episodes.length;
-		season.episodes.forEach((episode) => {
-			thisSeason.episodes.push(Episode.fromEntity(episode));
-		});
-		return thisSeason;
-	}
-}
-
-/**
- * Represents an episode of a series.
- * 
- * @export
- * @class Episode
- */
-export class Episode {
-
-	/**
-	 * Creates an instance of Episode.
-	 * @param {string} [name=''] Name of this episode.
-	 * @param {string} [airdate=''] Air date of this episode.
-	 * @memberof Episode
-	 */
-	constructor(name = '', airdate = '', season = 0, episode = 0) {
-		this.name = name;
-		this.airDate = airdate;
-		this.season = season;
-		this.episode = episode;
-		this.watched = false;
-	}
-	
-	/**
-	 * Creates an instance of this class from an entity model.
-	 * 
-	 * @static
-	 * @param {any} episode the entity
-	 * @returns an instance of {Episode}
-	 * @memberof Episode
-	 */
-	static fromEntity(episode) {
-		const thisEpisode = new Episode();
-		thisEpisode.name = episode.name;
-		thisEpisode.airDate = episode.air_date;
-		thisEpisode.season = episode.season_number;
-		thisEpisode.episode = episode.episode_number;
-		thisEpisode.watched = false;
-		return thisEpisode;
 	}
 }

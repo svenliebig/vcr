@@ -133,7 +133,7 @@ class SeriesapiService {
 		let self = this;
 		axios.get(url, { headers: this.headers })
 		.then(data => {
-			if(data.status == 200) {
+			if(data.status === 200) {
 				callback(data.data);
 			} else {
 				callback(null);

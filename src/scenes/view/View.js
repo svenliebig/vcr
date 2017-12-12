@@ -1,13 +1,16 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
+import Skeleton from '@scenes/skeleton/Skeleton';
+
+/** Services */
 import SeriesRepository from '@service/series/SeriesRepository';
 
-import AbstractSeries from '@components/abstract/AbstractSeries';
-
+/** Components */
 import { Tabs, Tab } from '@components/tabs';
+import AbstractSeries from '@components/abstract/AbstractSeries';
+import ButtonRemove from '@components/button/remove/ButtonRemove';
 
-import Skeleton from '@scenes/skeleton/Skeleton';
 
 import './View.css';
 
@@ -34,6 +37,7 @@ export default class View extends AbstractSeries {
 
 		this.handleLinkInput = this.handleLinkInput.bind(this)
 		this.savePreferences = this.savePreferences.bind(this)
+		this.removeSeries = this.removeSeries.bind(this)
 		
 		this.sr.getBurningSeriesLink(props.match.params.id).then(bsto => {
 			this.setState({
@@ -51,6 +55,16 @@ export default class View extends AbstractSeries {
 	}
 
 	componentDidMount() {
+	}
+
+	removeSeries() {
+		// let self = this;
+		// self.setState({
+		// 	processing: true
+		// });
+		this.ur.removeSeries(this.props.match.params.id, () => {
+			window.location.pathname = "/";
+		})
 	}
 
 	handleLinkInput(e) {
@@ -161,11 +175,18 @@ export default class View extends AbstractSeries {
 							</div>
 						</div>
 						<div className="series-actions">
-							<div className="input-container">
-								<label>bs.to</label>
-								<input id="bsto" type="type" placeholder="https://bs.to/example" value={ this.state.bsto } onChange={ this.handleLinkInput } />
-								<label>otakustream</label>
-								<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={ this.state.otaku } onChange={ this.handleLinkInput } />
+							<div className="head">
+								<div className="input-wrapper">
+									<div className="input-container">
+										<label>bs.to</label>
+										<input id="bsto" type="type" placeholder="https://bs.to/example" value={ this.state.bsto } onChange={ this.handleLinkInput } />
+										<label>otakustream</label>
+										<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={ this.state.otaku } onChange={ this.handleLinkInput } />
+									</div>
+								</div>
+								<div className="action-wrapper">
+									<ButtonRemove onClick={ this.removeSeries } />
+								</div>
 							</div>
 							<div className="spacer"></div>
 							{ this.state.changed ? <button className="save" onClick={ this.savePreferences }>Speichern</button> : '' }

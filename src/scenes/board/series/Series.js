@@ -43,11 +43,12 @@ export default class Series extends AbstractSeries {
 		});
 
 		this.sr.getLinksOfSeries(this.props.series.id).then(links => {
-			if (links)
+			if (links) {
 				this.setState({
 					otaku: links.otaku || '',
 					bsto: links.bsto || (this.state.bsto || '')
 				})
+			}
 		})
 
 		this.setState({
@@ -61,7 +62,7 @@ export default class Series extends AbstractSeries {
 
 		if (this.state.series) {
 			this.state.series.seasons.some(season => {
-				if (season.episodes != undefined)
+				if (season.episodes !== undefined)
 					return season.episodes.some(episode => {
 						activeSeason = season.seasonNumber;
 						return !episode.watched;
@@ -122,10 +123,11 @@ export default class Series extends AbstractSeries {
 	}
 	
 	createSeriesLink() {
-		if (this.state.bsto.match(/https:\/\/bs\.to\/serie/))
+		if (this.state.bsto.match(/https:\/\/bs\.to\/serie/)) {
 			return `${this.state.bsto}/${this.state.activeSeason}`;
-		else
+		} else {
 			return `${this.state.bsto}`;
+		}
 	}
 	
 	render() {
@@ -146,7 +148,7 @@ export default class Series extends AbstractSeries {
 		const createSeasonToggle = (season) => {
 			let render = true;
 
-			if(season.episodes == undefined)
+			if (season.episodes === undefined)
 				return '';
 
 			season.episodes.forEach(episode => {
@@ -169,7 +171,7 @@ export default class Series extends AbstractSeries {
 					{ createSeasonToggle(season) }
 					<div className="season-title">{ 'Staffel ' + season.seasonNumber }</div>
 					<div className="episodes-wrapper" season={ season.seasonNumber }>
-						{ (season.episodes != undefined ? season.episodes.map(createEpisodes) : '')}
+						{ (season.episodes !== undefined ? season.episodes.map(createEpisodes) : '')}
 					</div>
 				</div>
 			);
