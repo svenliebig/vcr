@@ -1,0 +1,22 @@
+sudo: required
+# language: node_js
+# node_js:
+# - "6"
+
+services:
+- docker
+
+# before_install:
+# - npm install -g npm
+# - npm install -g greenkeeper-lockfile@1
+
+before_script: 
+# - greenkeeper-lockfile-update
+- docker build -t vcr/latest .
+- docker run -d --name vc-react-container -e CC_TEST_REPORTER_ID=$TRAVIS_CODECLIMATE_TOKEN vcr/latest
+
+script:
+- docker ps -a
+
+# after_script: 
+# - greenkeeper-lockfile-upload

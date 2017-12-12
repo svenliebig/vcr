@@ -1,6 +1,6 @@
 import environment from "../../environment/environment";
 import axios from 'axios';
-import { Series, Season } from '@model/Series';
+import { Series, Season } from '../../model/Series';
 
 /**
  * Service for the API of themoviedb.org.

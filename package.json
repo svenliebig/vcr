@@ -64,7 +64,7 @@
     "start": "npm run build-css && npm-run-all -p watch-css start-js",
     "build": "npm run build-css && npm run build-js",
     "test": "npm run build-css && node scripts/test.js --env=jsdom",
-    "testc": "npm run build-css && node scripts/test.js --env=jsdom --coverage"
+    "testc": "npm run build-css && node scripts/test.js --coverage --env=jsdom --forceExit"
   },
   "jest": {
     "collectCoverageFrom": [
