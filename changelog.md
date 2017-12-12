@@ -95,8 +95,17 @@ All notable changes to this project will be documented in this file.
 ### Removed
 
 - Color styling from dropdown.less, a component should not inherit his own colors
-## [0.9.12] - 04.12.2017
+## [0.9.13] - 04.12.2017
 
 ### Added
 
 - Travis + Docker + Codeclimate
+
+## [0.9.14] - 12.12.2017
+
+### Added
+
+- New link for otaku stream
+- CSS adjustments
+- Project structure
+
