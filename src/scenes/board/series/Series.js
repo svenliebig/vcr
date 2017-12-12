@@ -24,7 +24,8 @@ export default class Series extends AbstractSeries {
 		this.state = {
 			activeSeason: 0,
 			series: props.series,
-			bstolink: ''
+			bsto: '',
+			otaku: ''
 		}
 
 		this.getActiveSeason = this.getActiveSeason.bind(this);
@@ -35,11 +36,19 @@ export default class Series extends AbstractSeries {
 	}
 
 	componentDidMount() {
-		this.sr.getBurningSeriesLink(this.props.series.id).then(bstolink => {
+		this.sr.getBurningSeriesLink(this.props.series.id).then(bsto => {
 			this.setState({
-				bstolink: bstolink ? bstolink : ''
+				bsto: bsto ? bsto : ''
 			});
 		});
+
+		this.sr.getLinksOfSeries(this.props.series.id).then(links => {
+			if (links)
+				this.setState({
+					otaku: links.otaku || '',
+					bsto: links.bsto || (this.state.bsto || '')
+				})
+		})
 
 		this.setState({
 			activeSeason: this.getActiveSeason(),
@@ -113,10 +122,10 @@ export default class Series extends AbstractSeries {
 	}
 	
 	createSeriesLink() {
-		if (this.state.bstolink.match(/https:\/\/bs\.to\/serie/))
-			return `${this.state.bstolink}/${this.state.activeSeason}`;
+		if (this.state.bsto.match(/https:\/\/bs\.to\/serie/))
+			return `${this.state.bsto}/${this.state.activeSeason}`;
 		else
-			return `${this.state.bstolink}`;
+			return `${this.state.bsto}`;
 	}
 	
 	render() {
@@ -188,8 +197,13 @@ export default class Series extends AbstractSeries {
 			<div className="series-card-wrapper">
 				<div className="series-card-container">
 					{
-						this.state.bstolink ? 
+						this.state.bsto ? 
 						<a className="bs-link" href={ this.createSeriesLink() } target="_blank">bs</a>
+						: ''
+					}
+					{
+						this.state.otaku ? 
+						<a className="otaku-link" href={ this.state.otaku } target="_blank">otk</a>
 						: ''
 					}
 					<Link className="banner-wrapper" to={ `/view/${this.state.series.id}` }>
