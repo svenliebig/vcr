@@ -58,6 +58,28 @@ class SeriesRepository {
 		});
 	}
 
+	/**
+	 * 
+	 * @param {*} id 
+	 * @param {*} link 
+	 * @param {*} val 
+	 */
+	saveLinkToSeries(id, type, val) {
+		return this.fb.write(`/series/${id}/links/${type}`, val).then(val => {
+			return Promise.resolve(val);
+		});
+	}
+
+	/**
+	 * 
+	 * @param {*} id 
+	 */
+	getLinksOfSeries(id) {
+		return this.fb.get(`/series/${id}/links`).then(val => {
+			return Promise.resolve(val);
+		});
+	}
+
 	exception(str) {
 		return {
 			message: str,

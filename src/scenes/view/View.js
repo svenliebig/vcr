@@ -20,7 +20,8 @@ export default class View extends AbstractSeries {
 		this.state = {
 			series: null,
 			changed: false,
-			bstolink: ''
+			bsto: '',
+			otaku: ''
 		}
 
 		const self = this;
@@ -31,28 +32,50 @@ export default class View extends AbstractSeries {
 			});
 		});
 
-		this.handleBurningSeriesInput = this.handleBurningSeriesInput.bind(this);
-		this.savePreferences = this.savePreferences.bind(this);
+		this.handleLinkInput = this.handleLinkInput.bind(this)
+		this.savePreferences = this.savePreferences.bind(this)
 		
-		this.sr.getBurningSeriesLink(props.match.params.id).then(bstolink => {
+		this.sr.getBurningSeriesLink(props.match.params.id).then(bsto => {
 			this.setState({
-				bstolink: bstolink ? bstolink : ''
-			});
-		});
+				bsto: bsto || ''
+			})
+		})
+
+		this.sr.getLinksOfSeries(props.match.params.id).then(links =>{
+			if (links)
+				this.setState({
+					otaku: links.otaku || '',
+					bsto: links.bsto || (this.state.bsto || '')
+				})
+		})
 	}
 
 	componentDidMount() {
 	}
 
-	handleBurningSeriesInput(e) {
-		this.setState({
-			bstolink: e.target.value,
-			changed: true
-		});
+	handleLinkInput(e) {
+		switch (e.target.id) {
+			case "otaku":
+				this.setState({
+					otaku: e.target.value,
+					changed: true
+				});
+				break;
+			case "bsto":
+				this.setState({
+					bsto: e.target.value,
+					changed: true
+				});
+				break;
+		}
 	}
 
 	savePreferences() {
-		this.sr.saveBurningSeriesLink(this.state.series.id, this.state.bstolink).then(() => {
+		const links = {
+			bsto: this.state.bsto,
+			otaku: this.state.otaku
+		}
+		this.sr.saveLinkToSeries(this.state.series.id, '', links).then(() => {
 			this.setState({
 				changed: false
 			});
@@ -140,7 +163,9 @@ export default class View extends AbstractSeries {
 						<div className="series-actions">
 							<div className="input-container">
 								<label>bs.to</label>
-								<input type="type" placeholder="https://bs.to/example" value={ this.state.bstolink } onChange={ this.handleBurningSeriesInput } />
+								<input id="bsto" type="type" placeholder="https://bs.to/example" value={ this.state.bsto } onChange={ this.handleLinkInput } />
+								<label>otakustream</label>
+								<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={ this.state.otaku } onChange={ this.handleLinkInput } />
 							</div>
 							<div className="spacer"></div>
 							{ this.state.changed ? <button className="save" onClick={ this.savePreferences }>Speichern</button> : '' }
