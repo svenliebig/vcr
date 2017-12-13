@@ -109,3 +109,12 @@ All notable changes to this project will be documented in this file.
 - CSS adjustments
 - Project structure
 
+## [0.9.15] - 13.12.2017
+
+### Added
+
+- Remove button in series view
+- Test Coverage
+- Test for toggleButton
+
+

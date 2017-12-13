@@ -1,7 +1,9 @@
-# VCR 0.9.14
+# VCR 0.9.15
 
 Project, written in React with Firebase as Database.
 Helps you to manage your watched series.
+
+[Register here](http://tv.slyox.de/)
 
 ---
 
