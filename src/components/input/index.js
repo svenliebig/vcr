@@ -1,0 +1,1 @@
+export { InputText as InputText } from './text/InputText'
