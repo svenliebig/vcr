@@ -24,11 +24,6 @@ export default class ButtonRemove extends Component {
 			props
 		}
 	}
-
-	componentDidMount() {
-		// this.setState({})
-	}
-
 	/**
 	 * Renders the Component.
 	 * 

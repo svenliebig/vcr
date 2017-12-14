@@ -117,4 +117,13 @@ All notable changes to this project will be documented in this file.
 - Test Coverage
 - Test for toggleButton
 
+## [0.9.16] - 14.12.2017
 
+
+### Added
+
+- Unit tests
+
+### Fixed
+
+- Bug where data was corrupted when season number -1 came from moviedb

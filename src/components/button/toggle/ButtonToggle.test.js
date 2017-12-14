@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { shallow } from 'enzyme'
 import ButtonToggle from './ButtonToggle'
 
-
 describe('ButtonToggle', () => {
 	
 	it('renders without crashing', () => {
@@ -29,18 +28,23 @@ describe('ButtonToggle', () => {
 	})
 
 	describe('render', () => {
-		it('should render a button', () => {
-			// preparation
-		
-			// execution
+
+		it('should toggle the button after click', () => {
 			const html = shallow(<ButtonToggle />)
 			html.find('button').simulate('click')
-
 			expect(html.exists('.fa fa-toggle-on')).toEqual(true); 
-			// testing
-			// setImmediate(() => { 
-			// 	done(); 
-			// });
+		});
+
+		it('should call the handler function after the click', (done) => {
+			const html = shallow(<ButtonToggle handler={ done } />)
+			html.find('button').simulate('click')
+		});
+		
+		it('should have a span with the given text inside the button', () => {
+			const TEXT = 'Mein Test Text';
+			const html = shallow(<ButtonToggle text={ TEXT } />)
+
+			expect(html.contains(<span>{ TEXT } </span>)).toEqual(true)
 		});
 	})
 })

@@ -64,7 +64,7 @@ export default class Dropdown extends Component {
 			for (var i = 0; i < this.props.list.length; i++) {
 				var item = this.props.list[i];
 				items.push(
-					<div className={ 'dropdown--list-item' + (this.state.selected === item ? ' selected' : '') } key={ item.name } onClick={ this.select.bind(null, item) }>
+					<div key={ `dropdown-item-${i}` } className={ 'dropdown--list-item' + (this.state.selected === item ? ' selected' : '') } onClick={ this.select.bind(null, item) }>
 						<span>{ item.name }</span>
 					</div>
 					);
@@ -89,7 +89,9 @@ export default class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
+	// FIXME should be onClick
 	onclick: PropTypes.func.isRequired,
+	// FIXME should not be required
 	selected: PropTypes.number.isRequired,
 	list: PropTypes.array.isRequired
 }

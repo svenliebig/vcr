@@ -1,4 +1,5 @@
 import SeriesapiService from './Moviedb'
+import axios from 'axios'
 
 
 describe('MovieDatabase', () => {
@@ -54,5 +55,29 @@ describe('MovieDatabase', () => {
 			expect(res).toBeDefined();
 			done();
 		});
-	});
+	})
+	
+	describe('rest api returns null as value', () => {
+		beforeEach(() => {
+			spyOn(axios, 'get').and.callFake(() => Promise.resolve(null))
+		})
+
+		it('should call the callback with a value that is equal to null', (done) => {
+			var mock = { func: (val) => {
+					expect(val).toBe(null)
+					done()
+				}
+			}
+			classUnderTest.callApi(null, mock.func)
+		});
+		
+		it('should call the setTimeout function when a error was thrown in the promise', (done) => {
+			var mock = { func: () => {
+					throw ""
+				}
+			}
+			spyOn(window, 'setTimeout').and.callFake(() => done())
+			classUnderTest.callApi(null, mock.func)
+		});
+	})
 });

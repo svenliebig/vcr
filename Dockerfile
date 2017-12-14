@@ -30,7 +30,7 @@ RUN npm i -g gulp
 RUN sh -c './cc-test-reporter before-build'
 
 # Run Tests
-RUN npm run testc
+RUN npm run testc -- --verbose
 
 # Installing Code Climate
 #RUN npm install -g codeclimate-test-reporter
