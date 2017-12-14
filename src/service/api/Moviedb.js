@@ -93,9 +93,14 @@ class SeriesapiService {
 		const self = this;
 		this.getSeries(id, (seriesData) => {
 			const series = Series.fromEntity(seriesData);
-			const lastSeason = seriesData.number_of_seasons;
+			let lastSeason = seriesData.number_of_seasons;
 
 			seriesData.seasons.forEach(seasonIterator => {
+				// Fix for Moviedb - 0.9.16
+				if (seasonIterator.season_number === -1) {
+					lastSeason--
+					return
+				}
 				if (seasonIterator.season_number !== 0) {
 					self.getSeriesSeason(id, seasonIterator.season_number, (seasonData) => {
 						
