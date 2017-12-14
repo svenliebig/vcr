@@ -10,7 +10,19 @@ import 'font-awesome/css/font-awesome.css';
 
 storiesOf('InputText', module)
   .add('input with label', () => (
-      <InputText label='Label' />
+      <InputText id="input" label='With Label' />
+  ))
+
+  .add('input with value', () => (
+      <InputText id="input" label='With Label' value='initial value' />
+  ))
+
+  .add('input with change listener', () => (
+    <InputText id="input" label='With Change Listener' onChange={ action('change') } />
+  ))
+
+  .add('input with throttled change listener', () => (
+    <InputText id="input" label='With Throttled (1 second)' onChange={ action('change') } throttled={ 1000 } />
   ))
   
 storiesOf('ButtonRemove', module)

@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 
 import './InputText.css'
 
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
+
 /**
  * Component Class of InputText.
  * 
@@ -19,14 +22,26 @@ export default class InputText extends Component {
 	 */
 	constructor(props) {
 		super()
+		const self = this
 
 		this.state = {
-			props
+			value: props.value || '',
+			observer: new Subject()
 		}
+
+		this.onChange = this.onChange.bind(this)
+		
+		this.state.observer.debounceTime(props.throttled || 0).subscribe(() => {
+				self.props.onChange(self.state.value)
+			}
+		);
 	}
 
-	componentDidMount() {
-		// this.setState({})
+	onChange(e) {
+		const { value } = e.target
+		this.setState({ value: value })
+		if (this.props.onChange)
+			this.state.observer.next(value)
 	}
 
 	/**
@@ -38,15 +53,19 @@ export default class InputText extends Component {
 	render() {
 		return (
 			<div className="input-text--wrapper">
-				<label className="input-text--label">
+				<label htmlFor={ this.props.id } className="input-text--label">
 					{ this.props.label }
 				</label>
-				<input className="input-text" />
+				<input id={ this.props.id } className="input-text" value={ this.state.value } onChange={ this.onChange } />
 			</div>
 		)
 	}
 }
 
 InputText.propTypes = {
-	label: PropTypes.string
+	id: PropTypes.string.isRequired,
+	label: PropTypes.string,
+	onChange: PropTypes.func,
+	throttled: PropTypes.number,
+	value: PropTypes.string
 }
