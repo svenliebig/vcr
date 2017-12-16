@@ -18,7 +18,7 @@ export default class ButtonToggle extends Component {
 	 * @memberof ButtonToggle
 	 */
 	constructor(props) {
-		super()
+		super(props)
 
 		this.state = {
 			toggled: props.initial || false,
@@ -37,8 +37,8 @@ export default class ButtonToggle extends Component {
 		this.setState({ 
 			toggled: !this.state.toggled 
 		}, () => { 
-			if (this.props.handler)
-				this.props.handler(this.state.toggled)
+			if (this.props.onClick)
+				this.props.onClick(this.state.toggled)
 		});
 	}
 
@@ -65,7 +65,7 @@ ButtonToggle.propTypes = {
 	/** Text that is display before the toggle */
 	text: PropTypes.string,
 	/** Function that is called with the new value after the toggle is triggered, value is false | true */
-	handler: PropTypes.func,
+	onClick: PropTypes.func,
 	/** Classname of the button */
 	className: PropTypes.string,
 	/** Initial State */

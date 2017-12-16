@@ -36,7 +36,7 @@ describe('ButtonToggle', () => {
 		});
 
 		it('should call the handler function after the click', (done) => {
-			const html = shallow(<ButtonToggle handler={ done } />)
+			const html = shallow(<ButtonToggle onClick={ () => done() } />)
 			html.find('button').simulate('click')
 		});
 		

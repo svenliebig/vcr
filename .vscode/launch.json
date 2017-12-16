@@ -1,0 +1,64 @@
+{
+	// Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+	// Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+	// Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "Launch Chrome against localhost",
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceRoot}"
+		},
+		// {
+		// 	"type": "node",
+		// 	"request": "launch",
+		// 	"name": "Jest Tests",
+		// 	"program": "${workspaceRoot}\\scripts\\test.js",
+		// 	"args": [
+		// 		"-i"
+		// 	],
+		// 	// "preLaunchTask": "build",
+		// 	"internalConsoleOptions": "openOnSessionStart",
+		// 	"outFiles": [
+		// 		"${workspaceRoot}/dist/**/*"
+		// 	],
+		// 	"envFile": "${workspaceRoot}/config/env.js"
+		// },
+		// {
+		// 	"name": "Debug CRA Tests",
+		// 	"type": "node",
+		// 	"request": "launch",
+		// 	"runtimeExecutable": "${workspaceRoot}\\scripts\\test.js",
+		// 	"runtimeArgs": [
+		// 		"--inspect-brk",
+		// 		"test"
+		// 	],
+		// 	"args": [
+		// 		"--runInBand",
+		// 		"--no-cache",
+		// 		"--env=jsdom"
+		// 	],
+		// 	"cwd": "${workspaceRoot}",
+		// 	"protocol": "inspector",
+		// 	"console": "integratedTerminal",
+		// 	"internalConsoleOptions": "neverOpen"
+		// },
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Launch Jest",
+			"program": "${workspaceRoot}/scripts/test.js",
+			"cwd": "${workspaceRoot}",
+			"args": ["--runInBand", "--env=jsdom", "--verbose"],
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+			"NODE_ENV": "development"
+			},
+			"sourceMaps": true
+		}
+	]
+}
