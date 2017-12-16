@@ -127,3 +127,11 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Bug where data was corrupted when season number -1 came from moviedb
+
+## [0.9.17] - 16.12.2017
+
+
+### Added
+
+- Upgraded Dependencies in package.json
+- Created a debug launch option for the unit tests
