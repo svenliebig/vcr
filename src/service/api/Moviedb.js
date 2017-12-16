@@ -35,7 +35,7 @@ class SeriesapiService {
 		/** Setzt die Ausgabesprache der API als Parameter, default: Deutsch */
 		this.LANG_PARAM = '&language=de';
 
-		this.headers  = { 
+		this.headers  = {
 			'Content-Type': 'application/json',
 			'Accept': 'application/json'
 		};
@@ -43,7 +43,7 @@ class SeriesapiService {
 
 	/**
 	 * Calls the API and returns a Series.
-	 * 
+	 *
 	 * @param {number} id ID of the series
 	 * @param {*} callback Callback with parameter that returns the data
 	 * @memberof SeriesapiService
@@ -55,7 +55,7 @@ class SeriesapiService {
 
 	/**
 	 * Calls the API and returns a Season.
-	 * 
+	 *
 	 * @param {number} id ID of the series
 	 * @param {number} season Number of the season
 	 * @param {*} callback Callback with parameter that returns the data
@@ -68,7 +68,7 @@ class SeriesapiService {
 
 	/**
 	 * Calls the API and returns a Episode
-	 * 
+	 *
 	 * @param {number} id ID of the series
 	 * @param {number} season Number of the season
 	 * @param {number} episode Number of the episode
@@ -82,9 +82,9 @@ class SeriesapiService {
 	}
 
 	/**
-	 * 
+	 *
 	 * Returns a complete {@link Series} object with seasons and episodes.
-	 * 
+	 *
 	 * @param {number} id ID of the Series
 	 * @param {*} [callback=(series: Series) void => {}]  Callback with Series as parameter
 	 * @memberof SeriesapiService
@@ -103,7 +103,7 @@ class SeriesapiService {
 				}
 				if (seasonIterator.season_number !== 0) {
 					self.getSeriesSeason(id, seasonIterator.season_number, (seasonData) => {
-						
+
 						const season = Season.fromEntity(seasonData);
 						series.seasons.push(season);
 
