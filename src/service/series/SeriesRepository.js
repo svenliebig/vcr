@@ -2,7 +2,7 @@ import Firebase from '../firebase/Firebase';
 
 /**
  * asd
- * 
+ *
  * @export
  * @class SeriesRepository
  */
@@ -23,9 +23,9 @@ class SeriesRepository {
 		if (series == null || series.id === '')
 			throw this.exception('series or VALUE is not defined.');
 
-		this.getBurningSeriesLink(series.id).then((link) => {
-			if (link) {
-				series.bstolink = link;
+		this.getLinksOfSeries(series.id).then((links) => {
+			if (links) {
+				series.links = links;
 			}
 			this.fb.write(`/series/${series.id}`, series);
 		});
@@ -33,7 +33,7 @@ class SeriesRepository {
 
 	/**
 	 * Returns the bs.to links from this series if one exists. If not it returns null.
-	 * 
+	 *
 	 * @param {number} id Of the series
 	 * @returns {Promise.<string>} called after reading the data
 	 * @memberof SeriesRepository
@@ -46,7 +46,7 @@ class SeriesRepository {
 
 	/**
 	 * Writes a bs.to link into the database, to a specific series.
-	 * 
+	 *
 	 * @param {number} id Of the series
 	 * @param {string} val Link of the series to bs.to
 	 * @returns {Promise.<>} called after reading the data
@@ -59,10 +59,10 @@ class SeriesRepository {
 	}
 
 	/**
-	 * 
-	 * @param {*} id 
-	 * @param {*} link 
-	 * @param {*} val 
+	 *
+	 * @param {*} id
+	 * @param {*} link
+	 * @param {*} val
 	 */
 	saveLinkToSeries(id, type, val) {
 		return this.fb.write(`/series/${id}/links/${type}`, val).then(val => {
@@ -71,8 +71,8 @@ class SeriesRepository {
 	}
 
 	/**
-	 * 
-	 * @param {*} id 
+	 *
+	 * @param {*} id
 	 */
 	getLinksOfSeries(id) {
 		return this.fb.get(`/series/${id}/links`).then(val => {

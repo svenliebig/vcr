@@ -135,3 +135,10 @@ All notable changes to this project will be documented in this file.
 
 - Upgraded Dependencies in package.json
 - Created a debug launch option for the unit tests
+
+## [0.9.18] - 23.12.2017
+
+
+### Fix
+
+- New links got cleared when series was added again
