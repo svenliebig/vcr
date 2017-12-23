@@ -5,7 +5,7 @@ import './Tabs.css'
 
 /**
  * Component Class of Tabs.
- * 
+ *
  * @export
  * @class Tabs
  * @extends {Component}
@@ -18,9 +18,9 @@ export class Tabs extends Component {
 	 */
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
-			activeTabIndex: this.props.defaultActiveTabIndex			
+			activeTabIndex: this.props.defaultActiveTabIndex
 		};
 
         this.handleTabClick = this.handleTabClick.bind(this);
@@ -41,7 +41,7 @@ export class Tabs extends Component {
             });
         });
     }
-	
+
     // Render current active tab content
     renderActiveTabContent() {
         const { children } = this.props;
@@ -53,8 +53,8 @@ export class Tabs extends Component {
 
 	/**
 	 * Renders the Component.
-	 * 
-	 * @returns 
+	 *
+	 * @returns
 	 * @memberof Tabs
 	 */
 	render() {
