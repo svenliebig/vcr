@@ -29,7 +29,7 @@ export default class Preferences extends Component {
 		return (
 			<Dialog title="Einstellungen">
 				{ this.state.loading ? '' :
-					<InputText value={ this.state.name } label="Name" onChange={ this.changed.bind(this) } throttled={ 500 } />
+					<InputText id="name-input" value={ this.state.name } label="Name" onChange={ this.changed.bind(this) } throttled={ 500 } />
 				}
 			</Dialog>
 		)

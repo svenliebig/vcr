@@ -6,7 +6,7 @@ import './ButtonToggle.css'
 
 /**
  * Component Class of ButtonToggle.
- * 
+ *
  * @export
  * @class ButtonToggle
  * @extends {Component}
@@ -29,29 +29,26 @@ export default class ButtonToggle extends Component {
 		this.toggle = this.toggle.bind(this)
 	}
 
-	componentDidMount() {
-		// this.setState({})
-	}
-
 	toggle() {
-		this.setState({ 
-			toggled: !this.state.toggled 
-		}, () => { 
-			if (this.props.onClick)
+		this.setState({
+			toggled: !this.state.toggled
+		}, () => {
+			if (this.props.onClick) {
 				this.props.onClick(this.state.toggled)
+			}
 		});
 	}
 
 	/**
 	 * Renders the Component.
-	 * 
-	 * @returns 
+	 *
+	 * @returns
 	 * @memberof ButtonToggle
 	 */
 	render() {
 		return (
-			<button 
-				className={ `button-toggle ${this.props.className}` } 
+			<button
+				className={ `button-toggle ${this.props.className}` }
 				onClick={ this.toggle }
 			>
 				{  this.props.text ? <span>{ this.props.text } </span> : '' }

@@ -7,7 +7,7 @@ const POSTER_URL = 'https://image.tmdb.org/t/p/w300';
 
 /**
  * Component Class of AbstractSeries.
- * 
+ *
  * @export
  * @class AbstractSeries
  * @extends {Component}
@@ -22,7 +22,7 @@ export default class AbstractSeries extends Component {
 		super();
 
 		this.ur = new UserRepository();
-		
+
 		this.state = {
 			series: null
 		};
@@ -43,7 +43,7 @@ export default class AbstractSeries extends Component {
 			series: updated
 		});
 	}
-	
+
 	toggleSeason(season) {
 		let updated = this.state.series;
 		const snum = season.seasonNumber - 1;
@@ -54,7 +54,7 @@ export default class AbstractSeries extends Component {
 			}
 			episode.watched = true;
 		});
-		
+
 		if (!changed) {
 			updated.seasons[snum].episodes.forEach(episode => {
 				episode.watched = false;
@@ -71,8 +71,9 @@ export default class AbstractSeries extends Component {
 		let updated = this.state.series;
 		let changed = false;
 		updated.seasons.forEach(season => {
-			if (!season.episodes)
+			if (!season.episodes) {
 				return
+			}
 			season.episodes.forEach(episode => {
 				if(!episode.watched) {
 					changed = true;
@@ -80,11 +81,12 @@ export default class AbstractSeries extends Component {
 				episode.watched = true;
 			});
 		});
-		
+
 		if (!changed) {
 			updated.seasons.forEach(season => {
-				if (!season.episodes)
+				if (!season.episodes) {
 					return
+				}
 				season.episodes.forEach(episode => {
 					episode.watched = false;
 				});
@@ -96,7 +98,7 @@ export default class AbstractSeries extends Component {
 			series: updated
 		});
 	}
-	
+
 	getImageSrc(width = 300) {
 		const url = `${POSTER_URL}${this.state.series.posterUrl}`;
 		if (url.endsWith('jpg')) {

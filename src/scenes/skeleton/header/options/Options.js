@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
-import Firebase from '@service/firebase/Firebase';
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react'
+import Firebase from '@service/firebase/Firebase'
+import { withRouter } from "react-router-dom"
 
 import './Options.css';
 

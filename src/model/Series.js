@@ -2,12 +2,12 @@ import moment from 'moment';
 
 /**
  * Represents an episode of a series.
- * 
+ *
  * @export
  * @class Episode
  */
 export class Episode {
-	
+
 		/**
 		 * Creates an instance of Episode.
 		 * @param {string} [name=''] Name of this episode.
@@ -21,10 +21,10 @@ export class Episode {
 			this.episode = episode;
 			this.watched = false;
 		}
-		
+
 		/**
 		 * Creates an instance of this class from an entity model.
-		 * 
+		 *
 		 * @static
 		 * @param {any} episode the entity
 		 * @returns an instance of {Episode}
@@ -43,7 +43,7 @@ export class Episode {
 
 /**
  * Represents a series season.
- * 
+ *
  * @export
  * @class Season
  */
@@ -51,7 +51,7 @@ export class Season {
 
 	/**
 	 * Creates an instance of Season.
-	 * 
+	 *
 	 * @param {string} [name=''] Name of the season.
 	 * @param {string} [overview=''] Description of this season.
 	 * @param {number} [seasonNumber=0] Number of this season.
@@ -67,7 +67,7 @@ export class Season {
 
 	/**
 	 * Creates an instance of this class from an entity model.
-	 * 
+	 *
 	 * @static
 	 * @param {any} season the entity
 	 * @returns an instance of {Season}
@@ -86,7 +86,7 @@ export class Season {
 
 /**
  * Represents a series.
- * 
+ *
  * @export
  * @class Series
  */
@@ -94,8 +94,8 @@ export class Series {
 
 	/**
 	 * Creates an instance of Series.
-	 * 
-	 * @param {number} id 
+	 *
+	 * @param {number} id
 	 * @param {string} [name=''] Name of the series.
 	 * @param {string} [overview=''] Descriptionb of the series.
 	 * @param {string} [airDate=''] First air date of the series.
@@ -125,7 +125,7 @@ export class Series {
 
 	/**
 	 * Creates an instance of this class from an entity model.
-	 * 
+	 *
 	 * @static
 	 * @param {any} series the entity
 	 * @returns an instance of {Series}
@@ -141,8 +141,9 @@ export class Series {
 		thisSeries.votes = series.vote_count;
 		thisSeries.genres = [];
 
-		if (series.genres)
+		if (series.genres) {
 			series.genres.forEach(val => thisSeries.genres.push(val.name))
+		}
 		thisSeries.country = series.origin_country;
 		thisSeries.status = series.status;
 		thisSeries.createdBy = series.created_by;

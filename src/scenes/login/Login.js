@@ -25,7 +25,7 @@ class Login extends Component {
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleAction = this.handleAction.bind(this);
 	}
-  
+
 	submitLogin(event) {
 		event.preventDefault();
 		this.fire.login(this.state.email, this.state.password).then(() => this.handleAction())
@@ -37,11 +37,12 @@ class Login extends Component {
 	}
 
 	handleAction() {
-		const error = this.fire.getError();
-		if (error)
-			this.setState(() => ({ error }));
-		else
-			window.location.pathname = "/";
+		const error = this.fire.getError()
+		if (error){
+			this.setState(() => ({ error }))
+		} else {
+			window.location.pathname = "/"
+		}
 		this.fire.clearError();
 	}
 
@@ -49,12 +50,12 @@ class Login extends Component {
 	  const target = event.target;
 	  const value = target.type === 'checkbox' ? target.checked : target.value;
 	  const name = target.id;
-  
+
 	  this.setState({
 			[name]: value
 	  });
 	}
-  
+
 	render() {
 	  return (
 		<Skeleton dontRenderHeader={ true }>
@@ -71,39 +72,39 @@ class Login extends Component {
 									<label
 										className="input-area--label"
 										htmlFor="password"
-									>	
+									>
 										E-Mail
 									</label>
-									<input 
+									<input
 										className="input-area--input"
-										id="email" 
+										id="email"
 										placeholder="E-Mail"
-										type="text" 
-										onChange={this.handleInputChange} 
-										value={this.state.email} 
+										type="text"
+										onChange={this.handleInputChange}
+										value={this.state.email}
 									/>
 								</div>
 								<div className="input-area">
-									<label 
+									<label
 										className="input-area--label"
 										htmlFor="password"
-									>	
+									>
 										Password
 									</label>
-									<input 
+									<input
 										className="input-area--input"
-										id="password" 
+										id="password"
 										placeholder="Password"
-										type="password" 
-										onChange={this.handleInputChange} 
-										value={this.state.password} 
+										type="password"
+										onChange={this.handleInputChange}
+										value={this.state.password}
 									/>
 								</div>
 								<div className="input-area">
-									<input 
+									<input
 										className="input-area--button"
-										type="submit" 
-										value="Login" 
+										type="submit"
+										value="Login"
 									/>
 								</div>
 							</div>
@@ -119,39 +120,39 @@ class Login extends Component {
 									<label
 										className="input-area--label"
 										htmlFor="password"
-									>	
+									>
 										E-Mail
 									</label>
-									<input 
+									<input
 										className="input-area--input"
-										id="email" 
+										id="email"
 										placeholder="E-Mail"
-										type="text" 
-										onChange={this.handleInputChange} 
-										value={this.state.email} 
+										type="text"
+										onChange={this.handleInputChange}
+										value={this.state.email}
 									/>
 								</div>
 								<div className="input-area">
-									<label 
+									<label
 										className="input-area--label"
 										htmlFor="password"
-									>	
+									>
 										Password
 									</label>
-									<input 
+									<input
 										className="input-area--input"
-										id="password" 
+										id="password"
 										placeholder="Password"
-										type="password" 
-										onChange={this.handleInputChange} 
-										value={this.state.password} 
+										type="password"
+										onChange={this.handleInputChange}
+										value={this.state.password}
 									/>
 								</div>
 								<div className="input-area">
-									<input 
+									<input
 										className="input-area--button"
-										type="submit" 
-										value="Registrieren" 
+										type="submit"
+										value="Registrieren"
 									/>
 								</div>
 							</div>

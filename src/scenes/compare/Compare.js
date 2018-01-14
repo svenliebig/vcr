@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Skeleton from '@scenes/skeleton'
 import UserRepository from '@service/user'
+import SeriesRepository from '@service/series'
+import SeriesapiService from '@service/api/Moviedb';
 import SeriesCard from '@components/SeriesCard'
 
 import './Compare.css';
-import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG, SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG } from 'constants';
 
 export default class Compare extends Component {
 
@@ -21,10 +22,13 @@ export default class Compare extends Component {
 		}
 
 		this.ur = new UserRepository()
+		this.sr = new SeriesRepository()
+		this.sapi = new SeriesapiService()
 		self = this
 
 		this.ur.getUserKeys().then(users => self.setState({ users }))
 		this.ur.getAllSeries().then(yours => self.setState({ yours }))
+		this.addSeries = this.addSeries.bind(this)
 	}
 
 	handler(other) {
@@ -54,6 +58,24 @@ export default class Compare extends Component {
 			onlyhim,
 			other
 		})
+
+	}
+
+	addSeries(id) {
+		let self = this
+		this.sapi.getCompleteSeries(id, (series) => {
+			let yours = self.state.yours.slice()
+			yours.push(series)
+			self.ur.addSeries(series)
+			self.setState({ yours }, () => {
+				self.handler(self.state.other)
+			})
+		})
+	}
+
+	removeSeries(id) {
+		let self = this;
+		this.ur.removeSeries(id, () => self.handler(self.state.other))
 	}
 
 	render() {
@@ -78,11 +100,22 @@ export default class Compare extends Component {
 			)
 		}
 		const renderHim = () => {
+			const actions = (id) => {
+				if (this.state.processing) {
+					return
+				}
+				return (<button onClick={ this.addSeries.bind(this, id) }><span className="fa fa-plus"></span></button>);
+			}
+
 			return (
 				<div>
 					<div className="header">{this.state.other.name}:</div>
 					<div className="content">
-					{ this.state.onlyhim.map(val => <SeriesCard key={ val.name } series={ val } />) }
+					{ this.state.onlyhim.map(val =>
+						<SeriesCard key={ val.name } series={ val }>
+							<div className="actions">{actions(val.id)}</div>
+						</SeriesCard>
+					) }
 					</div>
 				</div>
 			)

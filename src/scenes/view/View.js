@@ -33,12 +33,12 @@ export default class View extends AbstractSeries {
 			self.setState({
 				series: series
 			});
-		});
+		})
 
 		this.handleLinkInput = this.handleLinkInput.bind(this)
 		this.savePreferences = this.savePreferences.bind(this)
 		this.removeSeries = this.removeSeries.bind(this)
-		
+
 		this.sr.getBurningSeriesLink(props.match.params.id).then(bsto => {
 			this.setState({
 				bsto: bsto || ''
@@ -46,11 +46,10 @@ export default class View extends AbstractSeries {
 		})
 
 		this.sr.getLinksOfSeries(props.match.params.id).then(links => {
-			if (links)
-				this.setState({
-					otaku: links.otaku || '',
-					bsto: links.bsto || (this.state.bsto || '')
-				})
+			links && this.setState({
+				otaku: links.otaku || '',
+				bsto: links.bsto || (this.state.bsto || '')
+			})
 		})
 	}
 
@@ -58,10 +57,6 @@ export default class View extends AbstractSeries {
 	}
 
 	removeSeries() {
-		// let self = this;
-		// self.setState({
-		// 	processing: true
-		// });
 		this.ur.removeSeries(this.props.match.params.id, () => {
 			window.location.pathname = "/";
 		})
@@ -133,8 +128,8 @@ export default class View extends AbstractSeries {
 						<thead>
 							<tr>
 								<th>
-									<button 
-										className="fa fa-eye" 
+									<button
+										className="fa fa-eye"
 										onClick={ this.toggleSeason.bind(this, season) }>
 									</button>
 								</th>

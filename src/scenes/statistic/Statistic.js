@@ -5,7 +5,7 @@ import './Statistic.css';
 
 /**
  * Component Class of Statistic.
- * 
+ *
  * @export
  * @class Statistic
  * @extends {Component}
@@ -20,7 +20,7 @@ export default class Statistic extends Component {
 		super();
 
 		this.ur = new UserRepository();
-		
+
 		this.state = {
 			totalTime: 0,
 			noduration: []
@@ -29,50 +29,52 @@ export default class Statistic extends Component {
 		// Charts mit Genre Abhängigkeiten
 
 		this.calcSeries = this.calcSeries.bind(this);
-		
+
 		this.ur.getAllSeries().then(val => this.calcSeries(val));
 	}
 
 	/**
 	 * Called after the constructor.
-	 * 
+	 *
 	 * @memberof Statistic
 	 */
 	componentDidMount() {
 	}
 
 	calcSeries(seriesArray) {
-		let tempTotalDuration = 0;
-		const tempNoDuration = [];
-		
+		let tempTotalDuration = 0
+		const tempNoDuration = []
+
 		seriesArray.forEach(series => {
-			let durationAverage = 0;
+			let durationAverage = 0
 
 			if(!series.episodeDuration){
-				tempNoDuration.push(series);
-				return;
+				tempNoDuration.push(series)
+				return
 			}
 			series.episodeDuration.forEach(singleDuration => {
-				durationAverage += singleDuration;
+				durationAverage += singleDuration
 			});
 
-			durationAverage /= series.episodeDuration.length;
+			durationAverage /= series.episodeDuration.length
 
 			if(!series.seasons) {
-				console.log(`Keine Staffeln bei: ${series.name}`);
-				return;
+				console.log(`Keine Staffeln bei: ${series.name}`)
+				return
 			}
 
 			series.seasons.forEach(season => {
-				if (!season.episodes)
+				if (!season.episodes) {
 					return
+				}
 
 				season.episodes.forEach((episode) => {
-					if (episode.watched)
-						tempTotalDuration += durationAverage;
-				});
-			});
-		});
+					if (episode.watched) {
+						tempTotalDuration += durationAverage
+					}
+				})
+			})
+		})
 
 		this.setState({
 			totalTime: tempTotalDuration,
@@ -82,8 +84,8 @@ export default class Statistic extends Component {
 
 	/**
 	 * Renders the Component.
-	 * 
-	 * @returns 
+	 *
+	 * @returns
 	 * @memberof Statistic
 	 */
 	render() {

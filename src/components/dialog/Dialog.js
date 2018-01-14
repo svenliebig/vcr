@@ -45,8 +45,9 @@ export default class Dialog extends Component {
 	}
 
 	fadeout(e) {
-		if (!e.target.classList.contains('dialog-container'))
+		if (!e.target.classList.contains('dialog-container')) {
 			return
+		}
 		this.setState({
 			fadeout: true,
 			className: ANIM_OUT
@@ -58,34 +59,42 @@ export default class Dialog extends Component {
 					visible: false
 				})
 				const dialog = document.getElementsByClassName("dialog-container")[0]
-				if (dialog)
-					if (dialog.classList.contains("visible"))
+				if (dialog) {
+					if (dialog.classList.contains("visible")) {
 						dialog.classList.remove("visible")
+					}
+				}
 			}, 700)
 		})
 	}
 
 	getContainerClass() {
 		let className = 'dialog-container'
-		if (this.state.fadeout)
+		if (this.state.fadeout) {
 			className += ' fadeout'
+		}
 		const dialog = document.getElementsByClassName("dialog-container")[0]
-		if (dialog)
-			if (dialog.classList.contains("visible"))
+		if (dialog) {
+			if (dialog.classList.contains("visible")) {
 				className += ' visible'
+			}
+		}
 		return className
 	}
 
 	getDialogClass() {
 		let className = 'dialog'
-		if (this.state.fadeout)
+		if (this.state.fadeout) {
 			className += ` ${ANIM_OUT}`
-		else
+		} else {
 			className += ` ${ANIM_IN}`
+		}
 		const dialog = document.getElementsByClassName("dialog-container")[0]
-		if (dialog)
-			if (dialog.classList.contains("visible"))
+		if (dialog) {
+			if (dialog.classList.contains("visible")) {
 				className += ' visible'
+			}
+		}
 		return className
 	}
 
@@ -114,9 +123,7 @@ export default class Dialog extends Component {
 }
 
 Dialog.propTypes = {
-	children: PropTypes.oneOfType([
-		PropTypes.array,
-		PropTypes.element
-	]).isRequired
-	// visible: PropTypes.bool.isRequired
+	children: PropTypes.any.isRequired,
+	title: PropTypes.string,
+	visible: PropTypes.bool
 }

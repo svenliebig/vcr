@@ -49,8 +49,7 @@ export default class UserRepository {
 	}
 
 	addUserToDb() {
-		if(this.uid === null || this.uid === '')
-			throw this.exception('UID is not defined.');
+		this.checkArgs("")
 		this.fb.write(`/users/${this.uid}`, { series: []});
 	}
 
@@ -98,8 +97,7 @@ export default class UserRepository {
 	}
 
 	addSeries(series) {
-		if(this.uid === null || this.uid === '' || series === null)
-			throw this.exception('UID or series is not defined.');
+		this.checkArgs(series)
 		this.getSeries(series.id, result => {
 			let userSeries = null;
 			if (result) {
@@ -112,21 +110,26 @@ export default class UserRepository {
 	}
 
 	removeSeries(id, callback) {
-		if(this.uid === null || this.uid === '' || id === null)
-			throw this.exception('UID or series is not defined.');
+		this.checkArgs(id)
 		this.fb.remove(`/users/${this.uid}/series/${id}`).then(callback());
 	}
 
 	updateWatchedSeries(series) {
-		if(this.uid === null || this.uid === '' || series === null)
-			throw this.exception('UID or series is not defined.');
-		this.fb.write(`/users/${this.uid}/series/${series.id}`, series);
+		this.checkArgs(series)
+		this.fb.write(`/users/${this.uid}/series/${series.id}`, series)
+	}
+
+	checkArgs(args) {
+		if(this.uid === null || this.uid === '' || args === null) {
+			throw this.exception('UID or series is not defined.')
+		}
 	}
 
 	exception(str) {
+		console.error(str)
 		return {
 			message: str,
 			toString: () => str
-		};
+		}
 	}
 }

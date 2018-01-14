@@ -12,16 +12,18 @@ class SeriesRepository {
 	}
 
 	getSeries(id) {
-		if (id == null || id === '')
-			return  Promise.resolve(null);
+		if (id == null || id === '') {
+			return  Promise.resolve(null)
+		}
 		return this.fb.get(`/series/${id}`).then(val => {
 			return Promise.resolve(val);
 		});
 	}
 
 	addSeries(series) {
-		if (series == null || series.id === '')
-			throw this.exception('series or VALUE is not defined.');
+		if (series == null || series.id === '') {
+			throw this.exception('series or VALUE is not defined.')
+		}
 
 		this.getLinksOfSeries(series.id).then((links) => {
 			if (links) {
@@ -41,7 +43,7 @@ class SeriesRepository {
 	getBurningSeriesLink(id) {
 		return this.fb.get(`/series/${id}/bstolink`).then(val => {
 			return Promise.resolve(val);
-		});
+		})
 	}
 
 	/**
@@ -55,7 +57,7 @@ class SeriesRepository {
 	saveBurningSeriesLink(id, val) {
 		return this.fb.write(`/series/${id}/bstolink`, val).then(val => {
 			return Promise.resolve(val);
-		});
+		})
 	}
 
 	/**

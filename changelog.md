@@ -154,3 +154,14 @@ All notable changes to this project will be documented in this file.
 
 - Integrate Compare to other users
 
+## [0.9.21] - 14.01.2018
+
+### Add
+
+- Compare and Add
+
+## [0.9.22] - 14.01.2018
+
+### Fixed
+
+- Button Toggles @Board

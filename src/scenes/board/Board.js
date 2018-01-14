@@ -11,7 +11,7 @@ import './Board.css';
 
 import moment from 'moment';
 
-		
+
 let selectableGenres = [{
 	name: "Alle"
   }, {
@@ -48,7 +48,7 @@ export default class Board extends Component {
 		this.toggleSort = this.toggleSort.bind(this);
 		this.sortSeries = this.sortSeries.bind(this);
 	}
-	
+
 	componentDidMount() {
 		this.ur.getAllSeries().then(series => {
 			this.setState({
@@ -65,7 +65,7 @@ export default class Board extends Component {
 	toggleNotWatched(filterNotWatched) {
 		this.setState({ filterNotWatched })
 	}
-	
+
 	toggleUpcoming(filterUpcoming) {
 		this.setState({ filterUpcoming })
 	}
@@ -81,12 +81,13 @@ export default class Board extends Component {
 	isCompleteWatched(series) {
 		let result = true;
 		series.seasons.forEach(season => {
-			if (season.episodeAmount !== 0)
+			if (season.episodeAmount !== 0) {
 				season.episodes.forEach(episode => {
 					if (!episode.watched) {
 						result = false;
 					}
 				});
+			}
 		});
 		return result;
 	};
@@ -95,7 +96,7 @@ export default class Board extends Component {
 		let result = false;
 		let completlyWatched = true;
 		series.seasons.forEach(season => {
-			if (season.episodeAmount !== 0)
+			if (season.episodeAmount !== 0) {
 				season.episodes.forEach(episode => {
 					if (moment(episode.airDate).isAfter()) {
 						result = true;
@@ -104,6 +105,7 @@ export default class Board extends Component {
 						completlyWatched = false;
 					}
 				});
+			}
 		});
 		return result && completlyWatched;
 	}
@@ -111,20 +113,22 @@ export default class Board extends Component {
 	hasNotWatched(series) {
 		let result = false;
 		series.seasons.forEach(season => {
-			if (season.episodeAmount !== 0)
+			if (season.episodeAmount !== 0) {
 				season.episodes.forEach(episode => {
 					if (!episode.watched && moment(episode.airDate).isBefore()) {
 						result = true;
 					}
 				});
+			}
 		});
 		return result;
 	};
 
 	isAnimeGenre(series) {
-		if (!series.genres || !series.country)
-			return false;
-	
+		if (!series.genres || !series.country) {
+			return false
+		}
+
 		let resultGenre = false;
 		let resultCountry = false;
 
@@ -144,44 +148,46 @@ export default class Board extends Component {
 	}
 
 	filterSeries(series) {
+		console.log("filterSeries")
 		if (this.state.selectedFilter.name === "Anime") {
 			if (!this.isAnimeGenre(series)) {
-				return false;
+				return false
 			}
 		} else if (this.state.selectedFilter.name === "Serien") {
 			if (this.isAnimeGenre(series)) {
-				return false;
+				return false
 			}
 		}
 		if (this.state.filterWatched) {
 			if (this.isCompleteWatched(series)) {
-				return false;
+				return false
 			}
 		}
 		if (this.state.filterUpcoming) {
 			if (this.hasUpcoming(series)) {
-				return false;
+				return false
 			}
 		}
 		if (this.state.filterNotWatched) {
 			if (this.hasNotWatched(series)) {
-				return false;
+				return false
 			}
 		}
 		return true;
 	};
 
 	sortSeries(seriesA, seriesB) {
-		if (this.state.sortAscending)
-			return seriesA.name.localeCompare(seriesB.name);
+		if (this.state.sortAscending) {
+			return seriesA.name.localeCompare(seriesB.name)
+		}
 		return seriesB.name.localeCompare(seriesA.name);
 	}
-	
+
 	render() {
 		const seriesMap = this.state.userSeries.filter(this.filterSeries).sort(this.sortSeries).map((series) =>
 			<div key={ series.id }>
 				<Series series={ series } />
-			</div> 
+			</div>
 		);
 
 		const seriesPlaceholder = () => {
@@ -203,16 +209,16 @@ export default class Board extends Component {
 				);
 			}
 		}
-		
+
 		return (
 			<Skeleton>
 				<div className="series-table-wrapper">
 					<div className="series-table-header">
 
-						<ButtonToggle text="Gesehen" className="filter-toggle" handler={ this.toggleWatched } initial={ this.state.filterWatched } />
-						<ButtonToggle text="Offene" className="filter-toggle" handler={ this.toggleNotWatched } initial={ this.state.filterNotWatched } />
-						<ButtonToggle text="Bekommt neue" className="filter-toggle" handler={  this.toggleUpcoming } initial={ this.state.filterUpcoming } />
-						<ButtonToggle className="toggle-sort" handler={ this.toggleSort } initial={ this.state.sortAscending } activeIcon='fa fa-sort-alpha-asc' inactiveIcon='fa fa-sort-alpha-desc' />
+						<ButtonToggle text="Gesehen" className="filter-toggle" onClick={ this.toggleWatched } initial={ this.state.filterWatched } />
+						<ButtonToggle text="Offene" className="filter-toggle" onClick={ this.toggleNotWatched } initial={ this.state.filterNotWatched } />
+						<ButtonToggle text="Bekommt neue" className="filter-toggle" onClick={  this.toggleUpcoming } initial={ this.state.filterUpcoming } />
+						<ButtonToggle className="toggle-sort" onClick={ this.toggleSort } initial={ this.state.sortAscending } activeIcon='fa fa-sort-alpha-asc' inactiveIcon='fa fa-sort-alpha-desc' />
 
 						<Dropdown list={ selectableGenres } selected={ selectableGenres[0] } onclick={ this.selectGenre } />
 						<div className="spacer"></div>

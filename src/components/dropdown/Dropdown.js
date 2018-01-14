@@ -5,7 +5,7 @@ import './Dropdown.css';
 
 /**
  * Component Class of Dropdown.
- * 
+ *
  * @export
  * @class Dropdown
  * @extends {Component}
@@ -18,12 +18,12 @@ export default class Dropdown extends Component {
 	 */
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			listVisible: false,
 			selected: props.selected
 		};
-		
+
 		this.show = this.show.bind(this);
 		this.hide = this.hide.bind(this);
 		this.select = this.select.bind(this);
@@ -31,7 +31,7 @@ export default class Dropdown extends Component {
 
 	/**
 	 * Called after the constructor.
-	 * 
+	 *
 	 * @memberof Dropdown
 	 */
 	componentDidMount() {
@@ -41,12 +41,12 @@ export default class Dropdown extends Component {
 		this.setState({ selected: item });
 		this.props.onclick(item);
 	}
-	  
+
 	show() {
 		this.setState({ listVisible: true });
 		document.addEventListener("click", this.hide);
 	}
-		  
+
 	hide() {
 		this.setState({ listVisible: false });
 		document.removeEventListener("click", this.hide);
@@ -54,8 +54,8 @@ export default class Dropdown extends Component {
 
 	/**
 	 * Renders the Component.
-	 * 
-	 * @returns 
+	 *
+	 * @returns
 	 * @memberof Dropdown
 	 */
 	render() {
@@ -92,6 +92,6 @@ Dropdown.propTypes = {
 	// FIXME should be onClick
 	onclick: PropTypes.func.isRequired,
 	// FIXME should not be required
-	selected: PropTypes.number.isRequired,
+	selected: PropTypes.object.isRequired,
 	list: PropTypes.array.isRequired
 }

@@ -73,7 +73,6 @@ export class Tabs extends Component {
 
 /** The Prop Types */
 Tabs.propTypes = {
-	selected: PropTypes.number.isRequired,
     defaultActiveTabIndex: PropTypes.number,
     className: PropTypes.string,
 	children: PropTypes.oneOfType([
@@ -104,6 +103,6 @@ Tab.propTypes = {
     title: PropTypes.string,
     className: PropTypes.string,
     isActive: PropTypes.bool,
-    tabIndex: PropTypes.number.isRequired,
-    onClick: PropTypes.func.isRequired
+    tabIndex: PropTypes.number,
+    onClick: PropTypes.func
 }

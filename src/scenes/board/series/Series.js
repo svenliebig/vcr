@@ -62,12 +62,13 @@ export default class Series extends AbstractSeries {
 
 		if (this.state.series) {
 			this.state.series.seasons.some(season => {
-				if (season.episodes !== undefined)
+				if (season.episodes !== undefined) {
 					return season.episodes.some(episode => {
-						activeSeason = season.seasonNumber;
-						return !episode.watched;
-					});
-			});
+						activeSeason = season.seasonNumber
+						return !episode.watched
+					})
+				}
+			})
 		}
 
 		return activeSeason;
@@ -80,7 +81,7 @@ export default class Series extends AbstractSeries {
 			});
 		}
 	}
-	
+
 	incrementActiveSeason() {
 		if (this.state.activeSeason < (this.state.series.seasons.length)) {
 			this.setState({
@@ -91,13 +92,13 @@ export default class Series extends AbstractSeries {
 
 	getSeasonClass(num) {
 		if (num === this.state.activeSeason) {
-			return 'active';
+			return 'active'
 		} else if (num - 1 === this.state.activeSeason) {
-			return 'preactive';
+			return 'preactive'
 		} else if (num + 1 === this.state.activeSeason) {
-			return 'preactive';
+			return 'preactive'
 		} else {
-			return '';
+			return ''
 		}
 	}
 
@@ -121,7 +122,7 @@ export default class Series extends AbstractSeries {
 			this.decrementActiveSeason();
 		}
 	}
-	
+
 	createSeriesLink() {
 		if (this.state.bsto.match(/https:\/\/bs\.to\/serie/)) {
 			return `${this.state.bsto}/${this.state.activeSeason}`;
@@ -129,15 +130,15 @@ export default class Series extends AbstractSeries {
 			return `${this.state.bsto}`;
 		}
 	}
-	
+
 	render() {
 		let self = this;
 
 		const createEpisodes = (episode, index) => {
 			return(
 				<div key={ index } className="episode-container">
-					<button 
-						className={ this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') } 
+					<button
+						className={ this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') }
 						title={this.createEpisodeTooltip(episode) }
 						onClick={ this.toggleEpisode.bind(this, episode, index) }>
 					</button>
@@ -148,21 +149,23 @@ export default class Series extends AbstractSeries {
 		const createSeasonToggle = (season) => {
 			let render = true;
 
-			if (season.episodes === undefined)
-				return '';
+			if (season.episodes === undefined) {
+				return ''
+			}
 
 			season.episodes.forEach(episode => {
 				render &= moment(episode.airDate).isBefore();
 			})
-			
-			if (render)
+
+			if (render) {
 				return (
-					<button 
+					<button
 						className="fa fa-eye"
 						title="Alle Folgen dieser Staffel als gesehen markieren."
 						onClick={ self.toggleSeason.bind(self, season) }>
 					</button>
 				);
+			}
 		}
 
 		const createSeasons = (season, index) => {
@@ -183,14 +186,6 @@ export default class Series extends AbstractSeries {
 					<div className="season-container" onWheel={ this.seasonScroll }>
 						{ this.state.series.seasons.map(createSeasons) }
 					</div>
-					{/* <div className="season-navigation">
-						<button onClick={ this.decrementActiveSeason }>
-							<span className="fa fa-arrow-up"></span>
-						</button>
-						<button onClick={ this.incrementActiveSeason }>
-							<span className="fa fa-arrow-down"></span>
-						</button>
-					</div> */}
 				</div>
 			)
 		};
@@ -199,12 +194,12 @@ export default class Series extends AbstractSeries {
 			<div className="series-card-wrapper">
 				<div className="series-card-container">
 					{
-						this.state.bsto ? 
+						this.state.bsto ?
 						<a className="bs-link" href={ this.createSeriesLink() } target="_blank">bs</a>
 						: ''
 					}
 					{
-						this.state.otaku ? 
+						this.state.otaku ?
 						<a className="otaku-link" href={ this.state.otaku } target="_blank">otk</a>
 						: ''
 					}
@@ -214,7 +209,7 @@ export default class Series extends AbstractSeries {
 					</Link>
 					<div className="title-wrapper">
 						<p className="title-wrapper__text">{this.state.series.name}</p>
-						<button 
+						<button
 							className="fa fa-eye"
 							style={{ position: "absolute", right: 0, top: 10, background: "none", color: "inherit", border: "none", outline: "none", cursor: "pointer" }}
 							title="Alle Folgen der Serie als gesehen markieren."

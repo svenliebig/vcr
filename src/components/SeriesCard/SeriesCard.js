@@ -53,11 +53,16 @@ export default class SeriesCard extends Component {
 				<div className="card-title-wrapper">
 					<div className="card-title">{ series.name }</div>
 				</div>
+				{ this.props.children }
 	  		</div>
 		)
 	}
 }
 
 SeriesCard.propTypes = {
-	series: PropTypes.object.isRequired
+	series: PropTypes.object.isRequired,
+	children: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.element
+	])
 }
