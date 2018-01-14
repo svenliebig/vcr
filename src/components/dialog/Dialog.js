@@ -114,6 +114,9 @@ export default class Dialog extends Component {
 }
 
 Dialog.propTypes = {
-	children: PropTypes.children,
-	visible: PropTypes.bool.isRequired
+	children: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.element
+	]).isRequired
+	// visible: PropTypes.bool.isRequired
 }

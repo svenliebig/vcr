@@ -147,3 +147,10 @@ All notable changes to this project will be documented in this file.
 ### Add
 
 - Preferences Dialog
+
+## [0.9.20] - 14.01.2018
+
+### Add
+
+- Integrate Compare to other users
+

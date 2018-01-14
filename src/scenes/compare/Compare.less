@@ -1,0 +1,35 @@
+@import "src/resources/default.less";
+@import "src/resources/definitions.less";
+
+.table {
+	.header {
+		border-bottom: 1px solid @border-color;
+		margin-bottom: 5px;
+		display: flex;
+		flex-direction: row;
+	}
+
+	.content {
+		display: grid;
+		grid-template-columns: 3fr 3fr 3fr 3fr 3fr 3fr;
+		grid-gap: 1rem;
+
+		@media (max-width: 1200px) {
+			grid-template-columns: 3fr 3fr 3fr 3fr;
+		}
+		@media (max-width: 900px) {
+			grid-template-columns: 3fr 3fr 3fr;
+		}
+		@media (max-width: 600px) {
+			grid-template-columns: 3fr 3fr;
+		}
+		@media (max-width: 400px) {
+			grid-template-columns: 3fr;
+		}
+	}
+}
+
+.user {
+	.default-icon-button();
+	margin-right: 15px;
+}

@@ -9,7 +9,7 @@ import 'rxjs/add/operator/debounceTime';
 
 /**
  * Component Class of InputText.
- * 
+ *
  * @export
  * @class InputText
  * @extends {Component}
@@ -30,7 +30,7 @@ export default class InputText extends Component {
 		}
 
 		this.onChange = this.onChange.bind(this)
-		
+
 		this.state.observer.debounceTime(props.throttled || 0).subscribe(() => {
 				self.props.onChange(self.state.value)
 			}
@@ -40,14 +40,15 @@ export default class InputText extends Component {
 	onChange(e) {
 		const { value } = e.target
 		this.setState({ value: value })
-		if (this.props.onChange)
+		if (this.props.onChange) {
 			this.state.observer.next(value)
+		}
 	}
 
 	/**
 	 * Renders the Component.
-	 * 
-	 * @returns 
+	 *
+	 * @returns
 	 * @memberof InputText
 	 */
 	render() {

@@ -1,0 +1,37 @@
+@import "src/resources/mixins.less";
+@import "src/resources/definitions.less";
+
+.white-text() {
+	color: @text-color-1;
+	font-weight: 500;
+	text-shadow: @text-color-1-text-shadow;
+}
+
+.card {
+    overflow: hidden;
+	height: 110px;
+	position: relative;
+
+	img {
+		width: 300px;
+		float: left;
+	}
+
+	&-title-wrapper {
+		background-color: @text-color-1-background;
+		bottom: 0px;
+		height:40px;
+		max-width: 300px;
+		width: 100%;
+		position: absolute;
+		overflow: hidden;
+		z-index: 6;
+	}
+
+	&-title {
+		.white-text();
+
+		font-size: 22px;
+		margin: 0 10px 0px 10px;
+	}
+}

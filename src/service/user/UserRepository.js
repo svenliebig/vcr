@@ -3,11 +3,11 @@ import SeriesConverter from '@service/series/SeriesConverter';
 
 /**
  * Includes methods to communicate with the user database.
- * 
- * @export 
+ *
+ * @export
  * @class UserRepository
  */
-class UserRepository {
+export default class UserRepository {
 	constructor() {
 		let self = this;
 		this.fb = new Firebase();
@@ -16,11 +16,26 @@ class UserRepository {
 		} else {
 			this.uid = null;
 		}
-	
+
 		this.isUserInDb(result => {
 			if(!result) {
 				self.addUserToDb();
 			}
+		});
+	}
+
+	getUserKeys() {
+		return this.fb.get(`/users`).then(val => {
+			const tempArray = [];
+			for(let key in val) {
+				const seriesArray = [];
+				for(let s in val[key].series) {
+					seriesArray.push(val[key].series[s])
+				}
+				val[key].series = seriesArray
+				tempArray.push(val[key]);
+			}
+			return Promise.resolve(tempArray);
 		});
 	}
 
@@ -50,20 +65,30 @@ class UserRepository {
 
 	/**
 	 * Returns all the series from the user with a promise.
-	 * 
+	 *
 	 * @returns {Promise.<Series>} called after reading the data
 	 * @memberof UserRepository
 	 */
 	getAllSeries() {
 		return this.fb.get(`/users/${this.uid}/series`).then(val => {
-			
+
 			const tempArray = [];
-			for(let key in val) { 
+			for(let key in val) {
 				tempArray.push(val[key]);
 			}
 
 			return Promise.resolve(tempArray);
 		});
+	}
+
+	getName() {
+		return this.fb.get(`/users/${this.uid}/name`).then(val => {
+			return Promise.resolve(val);
+		});
+	}
+
+	setName(name) {
+		return this.fb.write(`/users/${this.uid}/name`, name);
 	}
 
 	getSeries(id, callback) {
@@ -105,5 +130,3 @@ class UserRepository {
 		};
 	}
 }
-
-export default UserRepository;

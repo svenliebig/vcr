@@ -3,9 +3,9 @@ import Header from './header/Header'
 import PropTypes from 'prop-types'
 
 /**
- * 
+ *
  * asdf
- * 
+ *
  * @export
  * @class Skeleton
  * @extends {Component}
@@ -27,5 +27,8 @@ Skeleton.propTypes = {
 	/** Turn on or off the header, default true */
 	dontRenderHeader: PropTypes.bool,
 	/** Children are rendered within the {@link Skelleton} */
-	children: PropTypes.children
+	children: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.element
+	]).isRequired
 }
