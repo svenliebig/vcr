@@ -138,7 +138,12 @@ All notable changes to this project will be documented in this file.
 
 ## [0.9.18] - 23.12.2017
 
-
 ### Fix
 
 - New links got cleared when series was added again
+
+## [0.9.19] - 14.01.2018
+
+### Add
+
+- Preferences Dialog

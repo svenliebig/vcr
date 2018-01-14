@@ -9,7 +9,7 @@ const ANIM_OUT = 'puff-out-center'
 
 /**
  * Component Class of Dialog.
- * 
+ *
  * @export
  * @class Dialog
  * @extends {Component}
@@ -38,11 +38,17 @@ export default class Dialog extends Component {
 		// this.setState({})
 	}
 
+	show() {
+		this.setState({
+			visible: true
+		})
+	}
+
 	fadeout(e) {
 		if (!e.target.classList.contains('dialog-container'))
-			return 
-		this.setState({ 
-			fadeout: true, 
+			return
+		this.setState({
+			fadeout: true,
 			className: ANIM_OUT
 		}, () => {
 			const self = this
@@ -51,6 +57,10 @@ export default class Dialog extends Component {
 					fadeout: false,
 					visible: false
 				})
+				const dialog = document.getElementsByClassName("dialog-container")[0]
+				if (dialog)
+					if (dialog.classList.contains("visible"))
+						dialog.classList.remove("visible")
 			}, 700)
 		})
 	}
@@ -59,8 +69,10 @@ export default class Dialog extends Component {
 		let className = 'dialog-container'
 		if (this.state.fadeout)
 			className += ' fadeout'
-		if (this.state.visible)
-			className += ' visible'
+		const dialog = document.getElementsByClassName("dialog-container")[0]
+		if (dialog)
+			if (dialog.classList.contains("visible"))
+				className += ' visible'
 		return className
 	}
 
@@ -70,15 +82,17 @@ export default class Dialog extends Component {
 			className += ` ${ANIM_OUT}`
 		else
 			className += ` ${ANIM_IN}`
-		if (this.state.visible)
-			className += ' visible'
+		const dialog = document.getElementsByClassName("dialog-container")[0]
+		if (dialog)
+			if (dialog.classList.contains("visible"))
+				className += ' visible'
 		return className
 	}
 
 	/**
 	 * Renders the Component.
-	 * 
-	 * @returns 
+	 *
+	 * @returns
 	 * @memberof Dialog
 	 */
 	render() {

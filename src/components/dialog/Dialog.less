@@ -1,3 +1,6 @@
+@import "src/resources/mixins.less";
+@import "src/resources/definitions.less";
+
 .dialog-container {
     position: fixed;
     top: 0;
@@ -10,6 +13,7 @@
     align-content: center;
 	display: none;
 	background: rgba(0, 0, 0, 0.5);
+	z-index: 99;
 
 	transition: background 0.7s cubic-bezier(0.470, 0.000, 0.745, 0.715);
 
@@ -27,15 +31,19 @@
 }
 
 .dialog {
-	background: white;
     margin-top: 150px;
     width: 500px;
     max-width: 80%;
 	max-height: 500px;
+	background: #151e28; /* Old browsers */
+	background: -moz-linear-gradient(left, #151e28 0%, #293541 31%, #3a4551 67%, #3e4854 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, #151e28 0%,#293541 31%,#3a4551 67%,#3e4854 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, #151e28 0%,#293541 31%,#3a4551 67%,#3e4854 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#151e28', endColorstr='#3e4854',GradientType=1 ); /* IE6-9 */
 
 	&-header {
-		background: rgb(90, 78, 119);
 		color: white;
+		border-bottom: 1px solid @border-color;
 		padding: 5px;
 	}
 
@@ -120,4 +128,3 @@
 		opacity: 0;
 	}
   }
-  
