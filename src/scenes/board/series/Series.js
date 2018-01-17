@@ -102,10 +102,6 @@ export default class Series extends AbstractSeries {
 		}
 	}
 
-	isAirDateAfterToday(episode) {
-		return moment(episode.airDate).isAfter();
-	}
-
 	createEpisodeTooltip(episode) {
 		if(this.isAirDateAfterToday(episode)) {
 			return `S${episode.season}E${episode.episode} kommt am ` + moment(episode.airDate).format('DD.MM.YYYY');

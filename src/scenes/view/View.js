@@ -105,7 +105,7 @@ export default class View extends AbstractSeries {
 				<tr key={ episode.episode }>
 					<td>
 						<button onClick={ this.toggleEpisode.bind(this, episode, index) }>
-							<span className={ 'fa ' + (episode.watched ? 'fa-check-square-o' : 'fa-square-o') }></span>
+							<span className={ this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') }></span>
 						</button>
 					</td>
 					<td>

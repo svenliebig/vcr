@@ -34,14 +34,20 @@ export default class AbstractSeries extends Component {
 	}
 
 	toggleEpisode(episode, index) {
-		let updated = this.state.series;
-		const snum = episode.season - 1;
-		const epnum = index ? index : episode.episode - 1;
-		updated.seasons[snum].episodes[epnum].watched = !updated.seasons[snum].episodes[epnum].watched;
-		this.ur.updateWatchedSeries(updated);
-		this.setState({
-			series: updated
-		});
+		if(moment(episode.airDate).isBefore()) {
+			let updated = this.state.series;
+			const snum = episode.season - 1;
+			const epnum = index ? index : episode.episode - 1;
+			updated.seasons[snum].episodes[epnum].watched = !updated.seasons[snum].episodes[epnum].watched;
+			this.ur.updateWatchedSeries(updated);
+			this.setState({
+				series: updated
+			});
+		}
+	}
+
+	isAirDateAfterToday(episode) {
+		return moment(episode.airDate).isAfter();
 	}
 
 	toggleSeason(season) {
@@ -49,10 +55,12 @@ export default class AbstractSeries extends Component {
 		const snum = season.seasonNumber - 1;
 		let changed = false;
 		updated.seasons[snum].episodes.forEach(episode => {
-			if(!episode.watched) {
-				changed = true;
+			if(moment(episode.airDate).isBefore()) {
+				if(!episode.watched) {
+					changed = true;
+				}
+				episode.watched = true;
 			}
-			episode.watched = true;
 		});
 
 		if (!changed) {
@@ -75,10 +83,12 @@ export default class AbstractSeries extends Component {
 				return
 			}
 			season.episodes.forEach(episode => {
-				if(!episode.watched) {
-					changed = true;
+				if(moment(episode.airDate).isBefore()) {
+					if(!episode.watched) {
+						changed = true;
+					}
+					episode.watched = true;
 				}
-				episode.watched = true;
 			});
 		});
 
