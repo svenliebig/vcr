@@ -12,6 +12,7 @@ import AbstractSeries from '@components/abstract/AbstractSeries'
 
 /** CSS */
 import './Series.css';
+import { Episode } from '@components';
 
 /**
  * Represents a Series.
@@ -102,14 +103,6 @@ export default class Series extends AbstractSeries {
 		}
 	}
 
-	createEpisodeTooltip(episode) {
-		if(this.isAirDateAfterToday(episode)) {
-			return `S${episode.season}E${episode.episode} kommt am ` + moment(episode.airDate).format('DD.MM.YYYY');
-		} else {
-			return `S${episode.season}E${episode.episode} - ${episode.name} vom ${moment(episode.airDate).format('DD.MM.YYYY')}`;
-		}
-	}
-
 	seasonScroll(event) {
 		event.preventDefault();
 		if (event.deltaY > 0) {
@@ -131,15 +124,7 @@ export default class Series extends AbstractSeries {
 		let self = this;
 
 		const createEpisodes = (episode, index) => {
-			return(
-				<div key={ index } className="episode-container">
-					<button
-						className={ this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') }
-						title={this.createEpisodeTooltip(episode) }
-						onClick={ this.toggleEpisode.bind(this, episode, index) }>
-					</button>
-				</div>
-			);
+			return <Episode key={ index } episode={ episode } onClick={ this.toggleEpisode.bind(this, episode, index) }/>
 		}
 
 		const createSeasonToggle = (season) => {
