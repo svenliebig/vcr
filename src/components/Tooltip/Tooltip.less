@@ -1,0 +1,26 @@
+#tooltip {
+	position: absolute;
+	z-index: 999;
+	background: black;
+	border-radius: 5px;
+	color: white;
+	padding: 1px 10px 3px 10px;
+	display: none;
+	transition: opacity 0.3s ease;
+	cursor: default;
+}
+
+#tooltip div {
+    position: relative;
+}
+
+#tooltip .caret {
+    content: "";
+    position: absolute;
+    top: calc(100% ~"+" 3px);
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
