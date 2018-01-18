@@ -76,7 +76,7 @@ export default class Tooltip extends Component {
 
 	hideTooltip() {
 		const tooltip = document.getElementById("tooltip")
-		// tooltip.style.display = "none"
+		tooltip.style.display = "none"
 		clearTimeout(this.timeout)
 	}
 

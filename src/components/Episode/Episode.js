@@ -65,7 +65,6 @@ export default class Episode extends Component {
 				<Tooltip text={ this.tooltip }>
 					<button
 						className={ this.icon }
-						title={this.tooltip }
 						onClick={ this.props.onClick }>
 					</button>
 				</Tooltip>
