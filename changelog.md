@@ -165,3 +165,9 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Button Toggles @Board
+
+## [0.9.23] - 18.01.2018
+
+### Added
+
+- Enhanced tooltips for Episodes
