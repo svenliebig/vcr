@@ -1,5 +1,6 @@
 node {
   checkout scm
+  HOME=.
 
   stage('HelloWorld') {
     echo 'Hello World'
