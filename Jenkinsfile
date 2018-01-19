@@ -1,5 +1,5 @@
-node {
-    checkout scm
+pipeline {
+    agent {docker 'node:9.4.0'
 
     stages {
         stage('Build') {
