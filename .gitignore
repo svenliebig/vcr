@@ -29,3 +29,4 @@ yarn-error.log*
 
 yarn.lock
 package-json.lock
+junit.xml
