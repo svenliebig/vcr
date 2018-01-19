@@ -4,6 +4,11 @@ node {
   }
 
   stage('git clone') {
-    git clone "ssh://git@mywebsite.com/myrepo.git"
+    git clone "https://github.com/Sly321/vcr.git"
+  }
+
+  stage('npm install') {
+    cd vcr
+    npm install
   }
 }
