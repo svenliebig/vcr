@@ -9,7 +9,7 @@ node {
 	* EACCES: permission denied, mkdir '/.config'
 	*/
 	'HOME=.',
-  ])
+  ]) {
 
   stage('HelloWorld') {
     echo 'Hello World'
@@ -39,5 +39,6 @@ node {
   stage('npminstall2') {
     cd vcr
     npm install
+  }
   }
 }
