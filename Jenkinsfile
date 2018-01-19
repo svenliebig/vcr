@@ -1,44 +1,28 @@
 node {
-  checkout scm
+	checkout scm
 
-  withEnv([
-	/* Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm' */
-	'npm_config_cache=npm-cache',
-	/* set home to our current directory because other bower
-	* nonsense breaks with HOME=/, e.g.:
-	* EACCES: permission denied, mkdir '/.config'
-	*/
-	'HOME=.',
-  ]) {
+	withEnv([
+		'npm_config_cache=npm-cache',
+		'HOME=.',
+	]) {
 
-  stage('HelloWorld') {
-    echo 'Hello World'
-  }
+		stage('Build') {
+			docker.image('node:latest').inside {
+				sh 'npm --version'
+				sh 'npm install'
+			}
+		}
 
-  stage('HelloWorld2') {
-    echo 'Hello World2'
-  }
+		stage('Test') {
+			docker.image('node:latest').inside {
+				sh 'npm run testc -- --verbose'
+			}
+		}
 
-  stage('Build') {
-    docker.image('node:6.3').inside {
-      sh 'npm --version'
-    }
-  }
-
-  stage('Build2') {
-    docker.image('node:6.3').inside {
-      sh 'npm --version'
-      sh 'npm install'
-    }
-  }
-
-  stage('npminstall') {
-    npm install
-  }
-
-  stage('npminstall2') {
-    cd vcr
-    npm install
-  }
-  }
+		stage('Start') {
+			docker.image('node:latest').inside {
+				sh 'npm start'
+			}
+		}
+	}
 }
