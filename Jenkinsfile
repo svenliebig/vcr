@@ -9,7 +9,7 @@ node {
 	* EACCES: permission denied, mkdir '/.config'
 	*/
 	'HOME=.',
-  ]
+  ])
 
   stage('HelloWorld') {
     echo 'Hello World'
