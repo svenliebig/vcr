@@ -15,7 +15,12 @@ node {
     }
   }
 
-  stage('npminstall') {
+  stage('git clone') {
+    git clone "git@github.com:Sly321/vcr.git"
+  }
+
+  stage('npm install') {
+    cd vcr
     npm install
   }
 }
