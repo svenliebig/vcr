@@ -28,7 +28,7 @@ node {
 			}
 		}
 
-		finally {
+		}finally {
 			junit 'junit.xml'
 		}
 	}
