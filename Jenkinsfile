@@ -15,10 +15,9 @@ node {
     }
   }
 
-  stage('Build') {
+  stage('Build2') {
     docker.image('node:6.3').inside {
       sh 'npm --version'
-      sh 'npm install'
     }
   }
 
