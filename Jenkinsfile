@@ -1,11 +1,11 @@
-pipeline {
-    agent any
+node {
+    checkout scm
 
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-		npm install
+                echo 'Building.. ${env.BUILD_ID} bla ${env.JENKINS_URL}'
+		sh 'npm install'
             }
         }
         stage('Test') {
