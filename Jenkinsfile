@@ -15,11 +15,18 @@ node {
     }
   }
 
-  stage('git clone') {
-    git clone "git@github.com:Sly321/vcr.git"
+  stage('Build2') {
+    docker.image('node:6.3').inside {
+      sh 'npm --version'
+      sh 'npm install'
+    }
   }
 
-  stage('npm install') {
+  stage('npminstall') {
+    npm install
+  }
+
+  stage('npminstall2') {
     cd vcr
     npm install
   }
