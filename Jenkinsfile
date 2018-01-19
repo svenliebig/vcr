@@ -6,6 +6,8 @@ node {
 		'HOME=.',
 	]) {
 
+		try{
+
 		stage('Install') {
 			docker.image('node:latest').inside {
 				sh 'npm --version'
@@ -24,6 +26,10 @@ node {
 			docker.image('node:latest').inside {
 				sh 'npm run testc -- --verbose'
 			}
+		}
+
+		finally {
+			junit 'junit.xml'
 		}
 	}
 }

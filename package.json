@@ -70,10 +70,19 @@
     "start-storybook": "start-storybook -p 6006 -c config/storybook",
     "build-storybook": "build-storybook"
   },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "output": "./junit.xml",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
+    "testResultsProcessor": "jest-junit",
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
