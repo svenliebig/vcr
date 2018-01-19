@@ -6,22 +6,23 @@ node {
 		'HOME=.',
 	]) {
 
-		stage('Build') {
+		stage('Install') {
 			docker.image('node:latest').inside {
 				sh 'npm --version'
 				sh 'npm install'
 			}
 		}
 
-		stage('Test') {
+		stage('Build') {
 			docker.image('node:latest').inside {
-				sh 'npm run testc -- --verbose'
+				sh 'npm run build-css'
+				sh 'npm run build-js'
 			}
 		}
 
-		stage('Start') {
+		stage('Test') {
 			docker.image('node:latest').inside {
-				sh 'npm start'
+				sh 'npm run testc -- --verbose'
 			}
 		}
 	}
