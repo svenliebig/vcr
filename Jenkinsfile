@@ -22,12 +22,7 @@ node {
     }
   }
 
-  stage('npm install') {
-    npm install
-  }
-
-  stage('npm install2') {
-    cd vcr
+  stage('npminstall') {
     npm install
   }
 }
