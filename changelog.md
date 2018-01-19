@@ -171,3 +171,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Enhanced tooltips for Episodes
+
+## [0.9.24] - 19.01.2018
+
+### Added
+
+- Intgrate Jenkins and CD to http://tv.beta.slyox.de
