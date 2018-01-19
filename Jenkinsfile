@@ -26,7 +26,7 @@ node {
     npm install
   }
 
-  stage('npm install') {
+  stage('npm install2') {
     cd vcr
     npm install
   }
