@@ -1,7 +1,7 @@
 import Firebase from '../firebase/Firebase';
 
 /**
- * asd
+ * Repository to communicate with the /series node in the database.
  *
  * @export
  * @class SeriesRepository
@@ -11,26 +11,38 @@ class SeriesRepository {
 		this.fb = new Firebase();
 	}
 
+	/**
+	 * returns the series that matches the given id.
+	 *
+	 * @param {number} id id of a series
+	 */
 	getSeries(id) {
 		if (id == null || id === '') {
-			return  Promise.resolve(null)
+			return Promise.resolve(null)
 		}
-		return this.fb.get(`/series/${id}`).then(val => {
-			return Promise.resolve(val);
-		});
+		return this.fb.get(`/series/${id}`)
 	}
 
+	/**
+	 * Add a series to the database.
+	 *
+	 * @param {Series} series
+	 */
 	addSeries(series) {
 		if (series == null || series.id === '') {
 			throw this.exception('series or VALUE is not defined.')
 		}
 
-		this.getLinksOfSeries(series.id).then((links) => {
+		return this.getLinksOfSeries(series.id).then((links) => {
 			if (links) {
 				series.links = links;
 			}
-			this.fb.write(`/series/${series.id}`, series);
-		});
+			return this.fb.write(`/series/${series.id}`, series)
+		})
+	}
+
+	removeSeries(id) {
+		return this.fb.remove(`/series/${id}`)
 	}
 
 	/**
@@ -42,51 +54,39 @@ class SeriesRepository {
 	 */
 	getBurningSeriesLink(id) {
 		return this.fb.get(`/series/${id}/bstolink`).then(val => {
-			return Promise.resolve(val);
+			if (val !== undefined) {
+				this.saveLinkToSeries(id, "bsto", val)
+				this.fb.remove(`/series/${id}/bstolink`)
+			}
+			return Promise.resolve(val)
 		})
 	}
 
 	/**
-	 * Writes a bs.to link into the database, to a specific series.
+	 * Saves a specific link to a series.
 	 *
-	 * @param {number} id Of the series
-	 * @param {string} val Link of the series to bs.to
-	 * @returns {Promise.<>} called after reading the data
-	 * @memberof SeriesRepository
-	 */
-	saveBurningSeriesLink(id, val) {
-		return this.fb.write(`/series/${id}/bstolink`, val).then(val => {
-			return Promise.resolve(val);
-		})
-	}
-
-	/**
-	 *
-	 * @param {*} id
-	 * @param {*} link
-	 * @param {*} val
+	 * @param {number} id series id
+	 * @param {string} link link type
+	 * @param {string} val the url of the link
 	 */
 	saveLinkToSeries(id, type, val) {
-		return this.fb.write(`/series/${id}/links/${type}`, val).then(val => {
-			return Promise.resolve(val);
-		});
+		return this.fb.write(`/series/${id}/links/${type}`, val)
 	}
 
 	/**
+	 * Returns all links that are save on a series within a promise.
 	 *
-	 * @param {*} id
+	 * @param {*} id Id of the series
 	 */
 	getLinksOfSeries(id) {
-		return this.fb.get(`/series/${id}/links`).then(val => {
-			return Promise.resolve(val);
-		});
+		return this.fb.get(`/series/${id}/links`).then(val => Promise.resolve(val));
 	}
 
 	exception(str) {
 		return {
 			message: str,
 			toString: () => str
-		};
+		}
 	}
 }
 

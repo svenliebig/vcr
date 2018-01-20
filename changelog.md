@@ -177,3 +177,10 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Intgrate Jenkins and CD to http://tv.beta.slyox.de
+
+## [0.9.25] - 20.01.2018
+
+### Fixed
+
+- Refactoring Code
+- Removed some old console.log

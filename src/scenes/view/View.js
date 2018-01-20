@@ -29,11 +29,7 @@ export default class View extends AbstractSeries {
 
 		const self = this;
 
-		this.ur.getSeries(props.match.params.id, (series) => {
-			self.setState({
-				series: series
-			});
-		})
+		this.ur.getSeries(props.match.params.id, (series) => self.setState({ series }))
 
 		this.handleLinkInput = this.handleLinkInput.bind(this)
 		this.savePreferences = this.savePreferences.bind(this)
@@ -53,12 +49,9 @@ export default class View extends AbstractSeries {
 		})
 	}
 
-	componentDidMount() {
-	}
-
 	removeSeries() {
 		this.ur.removeSeries(this.props.match.params.id, () => {
-			window.location.pathname = "/";
+			window.location.pathname = "/"
 		})
 	}
 
@@ -91,7 +84,7 @@ export default class View extends AbstractSeries {
 		});
 	}
 
-  	render() {
+	render() {
 		let self = this;
 
 		const buildEpisodeNumber = (episode) => {
@@ -101,42 +94,42 @@ export default class View extends AbstractSeries {
 		}
 
 		const mapEpisode = (episode, index) => {
-			return(
-				<tr key={ episode.episode }>
+			return (
+				<tr key={episode.episode}>
 					<td>
-						<button onClick={ this.toggleEpisode.bind(this, episode, index) }>
-							<span className={ this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o') }></span>
+						<button onClick={this.toggleEpisode.bind(this, episode, index)}>
+							<span className={this.isAirDateAfterToday(episode) ? ('fa fa-clock-o') : (episode.watched ? 'fa fa-check-square-o' : 'fa fa-square-o')}></span>
 						</button>
 					</td>
 					<td>
-						{ buildEpisodeNumber(episode) }
+						{buildEpisodeNumber(episode)}
 					</td>
 					<td>
-						{ episode.name }
+						{episode.name}
 					</td>
 					<td>
-						{ this.dateFormat(episode.airDate) }
+						{this.dateFormat(episode.airDate)}
 					</td>
 				</tr>
 			);
 		}
 
 		const mapSeason = (season, index) => {
-			return(
-				<Tab key={ season.seasonNumber } title={ `Staffel ${index + 1}` }>
-					<table key={ season.seasonNumber } className="season-wrapper">
+			return (
+				<Tab key={season.seasonNumber} title={`Staffel ${index + 1}`}>
+					<table key={season.seasonNumber} className="season-wrapper">
 						<thead>
 							<tr>
 								<th>
 									<button
 										className="fa fa-eye"
-										onClick={ this.toggleSeason.bind(this, season) }>
+										onClick={this.toggleSeason.bind(this, season)}>
 									</button>
 								</th>
 							</tr>
 						</thead>
 						<tbody className="episodes-wrapper">
-							{ season.episodes ? season.episodes.map(mapEpisode) : '' }
+							{season.episodes ? season.episodes.map(mapEpisode) : ''}
 						</tbody>
 					</table>
 				</Tab>
@@ -144,29 +137,31 @@ export default class View extends AbstractSeries {
 		}
 
 		const mapGenres = (genre, index) => {
-			return(
-				<div key={ index } className="genre-badge">
-					{ genre }
+			return (
+				<div key={index} className="genre-badge">
+					{genre}
 				</div>
 			);
 		}
 
 		const renderSeries = () => {
-			if (self.state.series != null) {
+			const { genres, name, seasons } = self.state.series
+
+			if (self.state.series) {
 				return (
 					<div className="series-container">
 						<div className="series-header">
-							<img src={ self.getImageSrc(500) } alt="" />
+							<img src={self.getImageSrc(500)} alt="" />
 							<Link className="series-header--link" to="/">
 								<span className="fa fa-arrow-left fa-2x"></span>
 							</Link>
 							<div className="series-name-wrapper">
 								<div className="series-name">
-									{ self.state.series.name }
+									{name}
 								</div>
 							</div>
 							<div className="genre-wrapper">
-								{ self.state.series.genres.map(mapGenres) }
+								{genres && genres.map(mapGenres)}
 							</div>
 						</div>
 						<div className="series-actions">
@@ -174,24 +169,24 @@ export default class View extends AbstractSeries {
 								<div className="input-wrapper">
 									<div className="input-container">
 										<label>bs.to</label>
-										<input id="bsto" type="type" placeholder="https://bs.to/example" value={ this.state.bsto } onChange={ this.handleLinkInput } />
+										<input id="bsto" type="type" placeholder="https://bs.to/example" value={this.state.bsto} onChange={this.handleLinkInput} />
 										<label>otakustream</label>
-										<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={ this.state.otaku } onChange={ this.handleLinkInput } />
+										<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={this.state.otaku} onChange={this.handleLinkInput} />
 									</div>
 								</div>
 								<div className="action-wrapper">
-									<ButtonRemove onClick={ this.removeSeries } />
+									<ButtonRemove onClick={this.removeSeries} />
 								</div>
 							</div>
 							<div className="spacer"></div>
-							{ this.state.changed ? <button className="save" onClick={ this.savePreferences }>Speichern</button> : '' }
+							{this.state.changed ? <button className="save" onClick={this.savePreferences}>Speichern</button> : ''}
 						</div>
 						<div className="series-content">
 							<div className="series-content--description">
-								{ self.state.series.overview }
+								{self.state.series.overview}
 							</div>
-							<Tabs defaultActiveTabIndex={ 0 }>
-								{ self.state.series.seasons.map(mapSeason) }
+							<Tabs defaultActiveTabIndex={0}>
+								{seasons && seasons.map(mapSeason)}
 							</Tabs>
 						</div>
 					</div>
@@ -202,9 +197,9 @@ export default class View extends AbstractSeries {
 		return (
 			<Skeleton>
 				<div className="view-series-wrapper">
-					{ renderSeries() }
+					{renderSeries()}
 				</div>
 			</Skeleton>
 		)
-  }
+	}
 }

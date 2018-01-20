@@ -1,64 +1,113 @@
 import SeriesRepository from './SeriesRepository';
 
 describe('SeriesRepository', () => {
-	
-	xit('random id 🎉  should get no series', (done) => {
-		// preparation
-		let repo = new SeriesRepository();
-		
-		// execution
-		repo.getById('987654321', (value) => {
-			expect(value).toBe(null);
-			done();
-		});
-	});
+	let repo
 
-	xit('empty id 🎉  should get no series', (done) => {
-		// preparation
-		let repo = new SeriesRepository();
-	
-		// execution
-		repo.getById('', (value) => {
-			expect(value).toBe(null);
-			done();
-		});
-	});
+	beforeAll(() => repo = new SeriesRepository())
 
-	xit('null 🎉  should get no series', (done) => {
-		// preparation
-		let repo = new SeriesRepository();
-	
-		// execution
-		repo.getById(null, (value) => {
-			expect(value).toBe(null);
-			done();
-		});
-	});
+	describe("getSeries", () => {
 
-	xit('id and value given 🎉  should add a series', (done) => {
-		// preparation
-		let repo = new SeriesRepository();
-		let id = "myownid";
-		let series = { "foo": 'bar' }
+		describe("database is empty", () => {
 
-		// execution
-		repo.addSeries(id, series);
+			it('random Id, should return null as promise value', (done) => {
+				repo.getSeries('987654321').then(value => {
+					expect(value).toBe(null)
+					done()
+				})
+			})
 
-		repo.getById(id, (value) => {
-			expect(value.foo).toBe("bar");
-			done();
-		});
-	});
+			it('empty Id, should return null as promise value', (done) => {
+				repo.getSeries('').then(value => {
+					expect(value).toBe(null)
+					done()
+				})
+			})
 
-	xit('id and value null 🎉  should throw exception', (done) => {
-		// preparation
-		let repo = new SeriesRepository();
 
-		// execution
-		try {
-			repo.addSeries(null, null);
-		} catch(e) {
-			done();
-		}
-	});
+			it('null Id, should return null as promise value', (done) => {
+				repo.getSeries(null).then(value => {
+					expect(value).toBe(null)
+					done()
+				})
+			})
+
+		})
+
+		describe("series { foo: 'bar' } is in database", () => {
+			const id = "mySecretId";
+			let series = { id: id, name: "testseries" }
+
+			beforeAll((done) => {
+				repo.removeSeries(id).then(() => done())
+			})
+
+			it('id and value given 🎉  should add a series', (done) => {
+
+				// execution
+				repo.addSeries(series).then(() => {
+					repo.getSeries(id).then(value => {
+						expect(value.name).toBe("testseries")
+						done()
+					})
+				})
+			})
+		})
+	})
+
+
+
+	describe("getBurningSeriesLink", () => {
+		describe("series with old bs.to link in database", () => {
+
+			const id = "mySecondSecretId";
+			let series = { id: id, name: "testseries", "bstolink": "mylink" }
+
+
+			beforeEach((done) => {
+				repo.removeSeries(id).then(() => repo.addSeries(series).then(() => done()))
+			})
+
+			fit("should have the old link", (done) => {
+				repo.getSeries(id).then(val => {
+					expect(val.bstolink).toBe("mylink")
+					done()
+				})
+			})
+
+			fit("should have the new link type after load", (done) => {
+				repo.getBurningSeriesLink(id).then(val => {
+					repo.getSeries(id).then(val => {
+						expect(val.links.bsto).toBe("mylink")
+						done()
+					})
+				})
+			})
+
+			fit("should not have the old link after load", (done) => {
+				repo.getBurningSeriesLink(id).then(val => {
+					repo.getSeries(id).then(val => {
+						expect(val.bstolink).toBe(undefined)
+						done()
+					})
+				})
+			})
+		})
+	})
+
+	describe('addSeries', () => {
+		describe('id and value null', () => {
+			it('should throw exception', (done) => {
+				try {
+					repo.addSeries(null, null)
+				} catch (e) {
+					done()
+				}
+			})
+		})
+	})
+
+	afterAll(() => {
+		// Close firebase connection
+		repo.fb.db.goOffline()
+	})
 });
