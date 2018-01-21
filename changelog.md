@@ -184,3 +184,16 @@ All notable changes to this project will be documented in this file.
 
 - Refactoring Code
 - Removed some old console.log
+
+## [0.9.26] - 21.01.2018
+
+### Fixed
+
+- Refactoring Code
+- Removed some old console.log
+
+## [0.9.27] - 21.01.2018
+
+### Refactor
+
+- removed console.log

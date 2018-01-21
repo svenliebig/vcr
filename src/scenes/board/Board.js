@@ -14,9 +14,9 @@ import moment from 'moment';
 
 let selectableGenres = [{
 	name: "Alle"
-  }, {
+}, {
 	name: "Anime"
-  }, {
+}, {
 	name: "Serien"
 }]
 
@@ -24,7 +24,7 @@ let selectableGenres = [{
  * {@link Board}
  */
 export default class Board extends Component {
-  constructor() {
+	constructor() {
 		super();
 		this.ur = new UserRepository();
 		this.sr = new SeriesRepository();
@@ -148,7 +148,6 @@ export default class Board extends Component {
 	}
 
 	filterSeries(series) {
-		console.log("filterSeries")
 		if (this.state.selectedFilter.name === "Anime") {
 			if (!this.isAnimeGenre(series)) {
 				return false
@@ -185,8 +184,8 @@ export default class Board extends Component {
 
 	render() {
 		const seriesMap = this.state.userSeries.filter(this.filterSeries).sort(this.sortSeries).map((series) =>
-			<div key={ series.id }>
-				<Series series={ series } />
+			<div key={series.id}>
+				<Series series={series} />
 			</div>
 		);
 
@@ -195,7 +194,7 @@ export default class Board extends Component {
 				var placeholder = [];
 				for (let x = 0; x < 9; x++) {
 					placeholder.push(
-						<div key={ 'placeholder-' + x } className="series-placeholder">
+						<div key={'placeholder-' + x} className="series-placeholder">
 							<div className="image" />
 							<div className="season" />
 							<div className="season" />
@@ -204,7 +203,7 @@ export default class Board extends Component {
 				}
 				return (
 					<div>
-						{ placeholder }
+						{placeholder}
 					</div>
 				);
 			}
@@ -215,20 +214,20 @@ export default class Board extends Component {
 				<div className="series-table-wrapper">
 					<div className="series-table-header">
 
-						<ButtonToggle text="Gesehen" className="filter-toggle" onClick={ this.toggleWatched } initial={ this.state.filterWatched } />
-						<ButtonToggle text="Offene" className="filter-toggle" onClick={ this.toggleNotWatched } initial={ this.state.filterNotWatched } />
-						<ButtonToggle text="Bekommt neue" className="filter-toggle" onClick={  this.toggleUpcoming } initial={ this.state.filterUpcoming } />
-						<ButtonToggle className="toggle-sort" onClick={ this.toggleSort } initial={ this.state.sortAscending } activeIcon='fa fa-sort-alpha-asc' inactiveIcon='fa fa-sort-alpha-desc' />
+						<ButtonToggle text="Gesehen" className="filter-toggle" onClick={this.toggleWatched} initial={this.state.filterWatched} />
+						<ButtonToggle text="Offene" className="filter-toggle" onClick={this.toggleNotWatched} initial={this.state.filterNotWatched} />
+						<ButtonToggle text="Bekommt neue" className="filter-toggle" onClick={this.toggleUpcoming} initial={this.state.filterUpcoming} />
+						<ButtonToggle className="toggle-sort" onClick={this.toggleSort} initial={this.state.sortAscending} activeIcon='fa fa-sort-alpha-asc' inactiveIcon='fa fa-sort-alpha-desc' />
 
-						<Dropdown list={ selectableGenres } selected={ selectableGenres[0] } onclick={ this.selectGenre } />
+						<Dropdown list={selectableGenres} selected={selectableGenres[0]} onclick={this.selectGenre} />
 						<div className="spacer"></div>
 					</div>
 					<div className="series-table-content">
-					{ seriesMap }
-					{ seriesPlaceholder() }
+						{seriesMap}
+						{seriesPlaceholder()}
 					</div>
 				</div>
 			</Skeleton>
 		)
-  }
+	}
 }

@@ -11,14 +11,14 @@ export default class UserRepository {
 	constructor() {
 		let self = this;
 		this.fb = new Firebase();
-		if(this.fb.isLoggedIn()) {
+		if (this.fb.isLoggedIn()) {
 			this.uid = this.fb.user.uid;
 		} else {
 			this.uid = null;
 		}
 
 		this.isUserInDb(result => {
-			if(!result) {
+			if (!result) {
 				self.addUserToDb();
 			}
 		});
@@ -27,9 +27,9 @@ export default class UserRepository {
 	getUserKeys() {
 		return this.fb.get(`/users`).then(val => {
 			const tempArray = [];
-			for(let key in val) {
+			for (let key in val) {
 				const seriesArray = [];
-				for(let s in val[key].series) {
+				for (let s in val[key].series) {
 					seriesArray.push(val[key].series[s])
 				}
 				val[key].series = seriesArray
@@ -41,7 +41,7 @@ export default class UserRepository {
 
 	isUserInDb(callback) {
 		this.fb.get(`/users/${this.uid}`).then(val => {
-			if(val == null) {
+			if (val == null) {
 				return callback(false);
 			}
 			callback(true);
@@ -50,12 +50,12 @@ export default class UserRepository {
 
 	addUserToDb() {
 		this.checkArgs("")
-		this.fb.write(`/users/${this.uid}`, { series: []});
+		this.fb.write(`/users/${this.uid}`, { series: [] });
 	}
 
 	hasSeries(id, callback) {
 		this.getSeries(id, (val) => {
-			if(val === null) {
+			if (val === null) {
 				return callback(false);
 			}
 			callback(true);
@@ -72,7 +72,7 @@ export default class UserRepository {
 		return this.fb.get(`/users/${this.uid}/series`).then(val => {
 
 			const tempArray = [];
-			for(let key in val) {
+			for (let key in val) {
 				tempArray.push(val[key]);
 			}
 
@@ -120,13 +120,12 @@ export default class UserRepository {
 	}
 
 	checkArgs(args) {
-		if(this.uid === null || this.uid === '' || args === null) {
+		if (this.uid === null || this.uid === '' || args === null) {
 			throw this.exception('UID or series is not defined.')
 		}
 	}
 
 	exception(str) {
-		console.error(str)
 		return {
 			message: str,
 			toString: () => str
