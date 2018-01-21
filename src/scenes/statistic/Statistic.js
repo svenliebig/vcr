@@ -90,9 +90,9 @@ export default class Statistic extends Component {
 	render() {
 		return (
 			<Skeleton>
-				<div>Gesamtzeit: {parseInt(this.state.totalTime)} Minuten</div><br />
+				<div>Gesamtzeit: {parseInt(this.state.totalTime, 10)} Minuten</div><br />
 				Das sind: <br />
-				{parseInt(this.state.totalTime / 60)} Stunden, oder<br />
+				{parseInt(this.state.totalTime / 60, 10)} Stunden, oder<br />
 				{parseFloat(this.state.totalTime / 60 / 24).toFixed(2)} Tage, oder<br />
 				{parseFloat(this.state.totalTime / 60 / 24 / 30).toFixed(2)} Monate, oder<br />
 				{parseFloat(this.state.totalTime / 60 / 24 / 30 / 12).toFixed(2)} Jahre<br />
