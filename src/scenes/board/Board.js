@@ -51,10 +51,13 @@ export default class Board extends Component {
 	}
 
 	componentDidMount() {
+		console.time("load series")
 		this.ur.getOpenSeries().then(series => {
 			this.setState({
 				userSeries: series,
 				loaded: true
+			}, () => {
+				console.timeEnd("load series")
 			})
 		})
 	}

@@ -221,3 +221,9 @@ All notable changes to this project will be documented in this file.
 ### chore
 
 - update the load cycle, so the series will get a new 'watched' flag when they are saved - now only series with open episodes are loaded
+
+## [0.9.32] - 21.01.2018
+
+### fix
+
+- addSeries from managed did not set the completlyWatched Flag

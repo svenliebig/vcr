@@ -132,6 +132,7 @@ export default class UserRepository {
 			} else {
 				userSeries = SeriesConverter.convert(series);
 			}
+			userSeries.isCompletlyWatched = userSeries.isWatched()
 			this.fb.write(`/users/${this.uid}/series/${series.id}`, userSeries);
 		});
 	}
