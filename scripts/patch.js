@@ -56,7 +56,7 @@ function appendStringToFile(appendString, file) {
 }
 
 const today = moment().format("DD.MM.YYYY")
-const changelogText = content.map(val => { console.log("foreach"); console.log(val); return `\n- ${val}`; });
+const changelogText = content.map(val => `\n- ${val}`);
 const changelogString = `\n\n## [${newVersion}] - ${today}\n\n### ${changeLogSubject}\n${changelogText.join("")}`
 
 replaceStringInFile(oldVersion, newVersion, packageJson)

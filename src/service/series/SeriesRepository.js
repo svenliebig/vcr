@@ -54,11 +54,11 @@ class SeriesRepository {
 	 */
 	getBurningSeriesLink(id) {
 		return this.fb.get(`/series/${id}/bstolink`).then(val => {
-			if (val !== undefined) {
-				this.saveLinkToSeries(id, "bsto", val)
-				this.fb.remove(`/series/${id}/bstolink`)
+			if (val) {
+				return this.saveLinkToSeries(id, "bsto", val).then(() => this.fb.remove(`/series/${id}/bstolink`)).then(() => Promise.resolve(val))
+			} else {
+				return Promise.resolve(val)
 			}
-			return Promise.resolve(val)
 		})
 	}
 

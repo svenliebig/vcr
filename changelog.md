@@ -203,3 +203,9 @@ All notable changes to this project will be documented in this file.
 ### feat
 
 - create patch script
+
+## [0.9.29] - 21.01.2018
+
+### fix
+
+- fix the converter from bstolink to links>bsto, he deleted the links after the 2nd load because he wrote empty bstolink in to links>bsto

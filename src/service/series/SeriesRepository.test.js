@@ -1,7 +1,7 @@
 import SeriesRepository from './SeriesRepository';
 
 describe('SeriesRepository', () => {
-	let repo
+	let repo = new SeriesRepository()
 
 	beforeAll(() => repo = new SeriesRepository())
 
@@ -62,12 +62,9 @@ describe('SeriesRepository', () => {
 			const id = "mySecondSecretId";
 			let series = { id: id, name: "testseries", "bstolink": "mylink" }
 
+			beforeEach(done => repo.removeSeries(id).then(() => repo.addSeries(series).then(done)))
 
-			beforeEach((done) => {
-				repo.removeSeries(id).then(() => repo.addSeries(series).then(() => done()))
-			})
-
-			it("should have the old link", (done) => {
+			it("should have the old link", done => {
 				repo.getSeries(id).then(val => {
 					expect(val.bstolink).toBe("mylink")
 					done()
@@ -75,7 +72,7 @@ describe('SeriesRepository', () => {
 			})
 
 			it("should have the new link type after load", (done) => {
-				repo.getBurningSeriesLink(id).then(val => {
+				repo.getBurningSeriesLink(id).then(() => {
 					repo.getSeries(id).then(val => {
 						expect(val.links.bsto).toBe("mylink")
 						done()
@@ -83,11 +80,22 @@ describe('SeriesRepository', () => {
 				})
 			})
 
-			it("should not have the old link after load", (done) => {
-				repo.getBurningSeriesLink(id).then(val => {
+			fit("should not have the old link after load", (done) => {
+				repo.getBurningSeriesLink(id).then(() => {
 					repo.getSeries(id).then(val => {
 						expect(val.bstolink).toBe(undefined)
 						done()
+					})
+				})
+			})
+
+			it("should not clear the new links after 2 times load", (done) => {
+				repo.getBurningSeriesLink(id).then(() => {
+					repo.getBurningSeriesLink(id).then(() => {
+						repo.getSeries(id).then(val => {
+							expect(val.links.bsto).toBe("mylink")
+							done()
+						})
 					})
 				})
 			})
