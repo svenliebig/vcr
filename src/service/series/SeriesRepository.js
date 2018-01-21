@@ -8,7 +8,7 @@ import Firebase from '../firebase/Firebase';
  */
 class SeriesRepository {
 	constructor() {
-		this.fb = new Firebase();
+		this.fb = new Firebase()
 	}
 
 	/**
@@ -17,7 +17,7 @@ class SeriesRepository {
 	 * @param {number} id id of a series
 	 */
 	getSeries(id) {
-		if (id == null || id === '') {
+		if (id == null || id === "") {
 			return Promise.resolve(null)
 		}
 		return this.fb.get(`/series/${id}`)

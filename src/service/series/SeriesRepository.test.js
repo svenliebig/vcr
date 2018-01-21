@@ -67,14 +67,14 @@ describe('SeriesRepository', () => {
 				repo.removeSeries(id).then(() => repo.addSeries(series).then(() => done()))
 			})
 
-			fit("should have the old link", (done) => {
+			it("should have the old link", (done) => {
 				repo.getSeries(id).then(val => {
 					expect(val.bstolink).toBe("mylink")
 					done()
 				})
 			})
 
-			fit("should have the new link type after load", (done) => {
+			it("should have the new link type after load", (done) => {
 				repo.getBurningSeriesLink(id).then(val => {
 					repo.getSeries(id).then(val => {
 						expect(val.links.bsto).toBe("mylink")
@@ -83,7 +83,7 @@ describe('SeriesRepository', () => {
 				})
 			})
 
-			fit("should not have the old link after load", (done) => {
+			it("should not have the old link after load", (done) => {
 				repo.getBurningSeriesLink(id).then(val => {
 					repo.getSeries(id).then(val => {
 						expect(val.bstolink).toBe(undefined)

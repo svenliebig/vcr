@@ -1,15 +1,10 @@
 import Firebase from './Firebase';
 
 describe('Firebase', () => {
-	let classUnderTest
+	let classUnderTest = new Firebase()
 
 	beforeAll(() => {
 		classUnderTest = new Firebase()
-	})
-
-	beforeEach((done) => {
-		classUnderTest.remove('/test')
-			.then(done());
 	})
 
 	describe('onAuthStateChanged(object): void', () => {
@@ -203,10 +198,48 @@ describe('Firebase', () => {
 		})
 	})
 
-	afterAll((done) => {
+	describe("getWhere", () => {
+
+		describe("values { hello: 'darkness' } and { myold: 'friend' } are at /test", () => {
+			const value = [{ hello: 'darkness' }, { myold: 'friend' }]
+
+			beforeEach((done) => {
+				classUnderTest.write("/test", value).then(done)
+			})
+
+			it("should find /test where childs value 'hello' equals 'darkness'", (done) => {
+				classUnderTest.getWhere("/test", "hello", "darkness").then(val => {
+					expect(val.length).toBe(1)
+					expect(val[0]).toEqual(value[0])
+					done()
+				})
+			})
+
+			it("should find /test where childs value 'myold' equals 'friend'", (done) => {
+				classUnderTest.getWhere("/test", "myold", "friend").then(val => {
+					expect(val.length).toBe(1)
+					expect(val[0]).toEqual(value[1])
+					done()
+				})
+			})
+
+			it("should NOT find /test where childs value 'myold' equals 'darkness'", (done) => {
+				classUnderTest.getWhere("/test", "myold", "darkness").then(val => {
+					expect(val).toBe(null)
+					done()
+				})
+			})
+
+		})
+	})
+
+	afterEach(done => {
 		classUnderTest.remove('/test').then(() => {
-			classUnderTest.db.goOffline()
 			done()
 		})
+	})
+
+	afterAll((done) => {
+		classUnderTest.db.goOffline()
 	})
 })

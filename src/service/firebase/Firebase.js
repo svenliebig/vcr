@@ -52,6 +52,27 @@ class Firebase {
 	}
 
 	/**
+	 * Returns the node that match the given criteria. For example the parameters
+	 * '/users', 'id' and '12345' will return a object from the node users where
+	 * users/{userkey}/id equals 12345. {userkey} is one of the firebase automatic generated
+	 * unqiue keys for a node. getWhere will iteratre through all childs, no matter what key they have.
+	 *
+	 * @param {string} node
+	 * @param {string} child
+	 * @param {string | boolean | number | object} value
+	 */
+	getWhere(node, child, value) {
+		return this.db.ref(node).orderByChild(child).equalTo(value).once('value').then(snapshot => {
+			const val = snapshot.val();
+			if (val === null) {
+				return null
+			}
+
+			return Promise.resolve(val.filter(e => e))
+		})
+	}
+
+	/**
 	 * Removes the node from the database and calls the optional callback after this.
 	 *
 	 * @param {String} node node to remove
