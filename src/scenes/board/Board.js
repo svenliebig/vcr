@@ -9,9 +9,6 @@ import ButtonToggle from '@components/button/toggle/ButtonToggle'
 
 import './Board.css';
 
-import moment from 'moment';
-
-
 let selectableGenres = [{
 	name: "Alle"
 }, {
@@ -21,14 +18,17 @@ let selectableGenres = [{
 }]
 
 /**
- * {@link Board}
+ * asdfs
+ *
+ * @field state {} asdf
+ * @memberOf Board
  */
 export default class Board extends Component {
 	constructor() {
-		super();
-		this.ur = new UserRepository();
-		this.sr = new SeriesRepository();
-		this.sapi = new SeriesapiService();
+		super()
+		this.ur = new UserRepository()
+		this.sr = new SeriesRepository()
+		this.sapi = new SeriesapiService()
 
 		this.state = {
 			selectedFilter: selectableGenres[0],
@@ -51,11 +51,12 @@ export default class Board extends Component {
 
 	componentDidMount() {
 		this.ur.getAllSeries().then(series => {
+
 			this.setState({
 				userSeries: series,
 				loaded: true
-			});
-		});
+			})
+		})
 	}
 
 	toggleWatched(filterWatched) {
@@ -79,50 +80,34 @@ export default class Board extends Component {
 	}
 
 	isCompleteWatched(series) {
-		let result = true;
-		series.seasons.forEach(season => {
-			if (season.episodeAmount !== 0) {
-				season.episodes.forEach(episode => {
-					if (!episode.watched) {
-						result = false;
-					}
-				});
-			}
-		});
-		return result;
-	};
+		return !series.seasons.some(season => !season.isWatched())
+	}
 
 	hasUpcoming(series) {
-		let result = false;
-		let completlyWatched = true;
+		let result = false
+		let completlyWatched = true
 		series.seasons.forEach(season => {
+			if (!completlyWatched) {
+				return
+			}
 			if (season.episodeAmount !== 0) {
 				season.episodes.forEach(episode => {
-					if (moment(episode.airDate).isAfter()) {
-						result = true;
+					if (episode.isNotAired()) {
+						result = true
 					}
-					if (!episode.watched && moment(episode.airDate).isBefore()) {
-						completlyWatched = false;
+					if (episode.isNotWatchedAndAired()) {
+						completlyWatched = false
+						return
 					}
-				});
+				})
 			}
-		});
-		return result && completlyWatched;
+		})
+		return result && completlyWatched
 	}
 
 	hasNotWatched(series) {
-		let result = false;
-		series.seasons.forEach(season => {
-			if (season.episodeAmount !== 0) {
-				season.episodes.forEach(episode => {
-					if (!episode.watched && moment(episode.airDate).isBefore()) {
-						result = true;
-					}
-				});
-			}
-		});
-		return result;
-	};
+		return series.seasons.some(season => season.isNotWatchedAndAired())
+	}
 
 	isAnimeGenre(series) {
 		if (!series.genres || !series.country) {
@@ -132,17 +117,8 @@ export default class Board extends Component {
 		let resultGenre = false;
 		let resultCountry = false;
 
-		series.genres.forEach((genre) => {
-			if (genre === "Animation") {
-				resultGenre = true;
-			}
-		});
-
-		series.country.forEach((country) => {
-			if (country === "JP") {
-				resultCountry = true;
-			}
-		});
+		resultGenre = series.genres.some((genre) => genre === "Animation")
+		resultCountry = series.country.some((country) => country === "JP")
 
 		return resultGenre && resultCountry;
 	}
@@ -172,8 +148,8 @@ export default class Board extends Component {
 				return false
 			}
 		}
-		return true;
-	};
+		return true
+	}
 
 	sortSeries(seriesA, seriesB) {
 		if (this.state.sortAscending) {

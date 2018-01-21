@@ -209,3 +209,9 @@ All notable changes to this project will be documented in this file.
 ### fix
 
 - fix the converter from bstolink to links>bsto, he deleted the links after the 2nd load because he wrote empty bstolink in to links>bsto
+
+## [0.9.30] - 21.01.2018
+
+### refactor
+
+- series filter system, using some instead of foreach to break the most iterations earlier

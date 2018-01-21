@@ -53,15 +53,20 @@ export default class AbstractSeries extends Component {
 	toggleSeason(season) {
 		let updated = this.state.series;
 		const snum = season.seasonNumber - 1;
-		let changed = false;
+		let changed = false
+
+		if (season.isWatched()) {
+			console.log("alles gesehen")
+		}
+
 		updated.seasons[snum].episodes.forEach(episode => {
 			if (moment(episode.airDate).isBefore()) {
 				if (!episode.watched) {
-					changed = true;
+					changed = true
 				}
-				episode.watched = true;
+				episode.watched = true
 			}
-		});
+		})
 
 		if (!changed) {
 			updated.seasons[snum].episodes.forEach(episode => {
@@ -72,7 +77,7 @@ export default class AbstractSeries extends Component {
 		this.ur.updateWatchedSeries(updated);
 		this.setState({
 			series: updated
-		});
+		})
 	}
 
 	toggleSeries() {

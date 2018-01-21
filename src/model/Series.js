@@ -8,38 +8,75 @@ import moment from 'moment';
  */
 export class Episode {
 
-		/**
-		 * Creates an instance of Episode.
-		 * @param {string} [name=''] Name of this episode.
-		 * @param {string} [airdate=''] Air date of this episode.
-		 * @memberof Episode
-		 */
-		constructor(name = '', airdate = '', season = 0, episode = 0) {
-			this.name = name;
-			this.airDate = airdate;
-			this.season = season;
-			this.episode = episode;
-			this.watched = false;
-		}
-
-		/**
-		 * Creates an instance of this class from an entity model.
-		 *
-		 * @static
-		 * @param {any} episode the entity
-		 * @returns an instance of {Episode}
-		 * @memberof Episode
-		 */
-		static fromEntity(episode) {
-			const thisEpisode = new Episode();
-			thisEpisode.name = episode.name;
-			thisEpisode.airDate = episode.air_date;
-			thisEpisode.season = episode.season_number;
-			thisEpisode.episode = episode.episode_number;
-			thisEpisode.watched = false;
-			return thisEpisode;
-		}
+	/**
+	 * Creates an instance of Episode.
+	 * @param {string} [name=''] Name of this episode.
+	 * @param {string} [airdate=''] Air date of this episode.
+	 * @memberof Episode
+	 */
+	constructor(name = '', airdate = '', season = 0, episode = 0) {
+		this.name = name;
+		this.airDate = airdate;
+		this.season = season;
+		this.episode = episode;
+		this.watched = false;
 	}
+
+	isNotAired() {
+		return moment(this.airDate).isAfter()
+	}
+
+	isAired() {
+		return !this.isNotAired()
+	}
+
+	/**
+	 * Returns if the series is aired and not watched.
+	 */
+	isNotWatchedAndAired() {
+		return !this.watched && this.isAired()
+	}
+
+	isWatchedOrNotAired() {
+		return this.isWatched() || this.isNotAired()
+	}
+
+	isWatchedAndAired() {
+		return this.watched && this.isAired()
+	}
+
+	isWatched() {
+		return this.watched
+	}
+
+	isNotWatched() {
+		return !this.watched
+	}
+
+	/**
+	 * Creates an instance of this class from an entity model.
+	 *
+	 * @static
+	 * @param {any} episode the entity
+	 * @returns an instance of {Episode}
+	 * @memberof Episode
+	 */
+	static fromEntity(episode) {
+		const thisEpisode = new Episode()
+		thisEpisode.name = episode.name
+		thisEpisode.airDate = episode.air_date
+		thisEpisode.season = episode.season_number
+		thisEpisode.episode = episode.episode_number
+		thisEpisode.watched = false
+		return thisEpisode
+	}
+
+	static fromFirebase(eps) {
+		const thisEpisode = new Episode(eps.name, eps.airDate, eps.season, eps.episode)
+		thisEpisode.watched = eps.watched
+		return thisEpisode;
+	}
+}
 
 /**
  * Represents a series season.
@@ -60,9 +97,9 @@ export class Season {
 	 * @memberof Season
 	 */
 	constructor(seasonNumber = 0, episodes = [], episodeAmount = 0) {
-		this.seasonNumber = seasonNumber;
-		this.episodes = episodes;
-		this.episodeAmount = episodeAmount;
+		this.seasonNumber = seasonNumber
+		this.episodes = episodes
+		this.episodeAmount = episodeAmount
 	}
 
 	/**
@@ -74,13 +111,41 @@ export class Season {
 	 * @memberof Season
 	 */
 	static fromEntity(season) {
-		const thisSeason = new Season();
-		thisSeason.seasonNumber = season.season_number;
-		thisSeason.episodeAmount = season.episodes.length;
+		const thisSeason = new Season()
+		thisSeason.seasonNumber = season.season_number
+		thisSeason.episodeAmount = season.episodes.length
 		season.episodes.forEach((episode) => {
-			thisSeason.episodes.push(Episode.fromEntity(episode));
-		});
+			thisSeason.episodes.push(Episode.fromEntity(episode))
+		})
 		return thisSeason;
+	}
+
+	static fromFirebase(season) {
+		const newSeason = new Season(season.seasonNumber, [], season.episodeAmount)
+
+		if (season.episodeAmount !== 0) {
+			season.episodes.forEach((episode) => {
+				newSeason.episodes.push(Episode.fromFirebase(episode))
+			})
+		}
+
+		return newSeason
+	}
+
+	isNotWatchedAndAired() {
+		if (this.episodeAmount === 0) {
+			return false
+		}
+
+		return this.episodes.some(episode => episode.isNotWatchedAndAired())
+	}
+
+	isWatched() {
+		if (this.episodeAmount === 0) {
+			return true
+		}
+
+		return !this.episodes.some(episode => episode.isNotWatched())
 	}
 }
 
@@ -102,7 +167,7 @@ export class Series {
 	 * @param {string} [posterUrl=''] Poster URL of the series.
 	 * @param {number} [rating=0] Average rating of the series.
 	 * @param {number} [votes=0] Count of votes on this series.
-	 * @param {any} [seasons=new Array<Season>()] Array with seasons and episodes.
+	 * @param {Array<Season>} [seasons=new Array<Season>()] Array with seasons and episodes.
 	 * @memberof Series
 	 */
 	constructor(id, name = '', overview = '', airDate = '', posterUrl = '', rating = 0, votes = 0, seasons = []) {
@@ -119,16 +184,45 @@ export class Series {
 		this.status = "";
 		this.createdBy = [];
 		this.episodeDuration = [];
-		this.bstolink = '';
-		this.updated = moment().format('DD.MM.YYYY');
+		this.bstolink = ''
+	}
+
+	/**
+	 *
+	 * @param {Array<Object>} val
+	 * @return {Array<Series>}
+	 */
+	static fromFirebaseArray(val) {
+		const array = [];
+		for (let key in val) {
+			array.push(Series.fromFirebase(val[key]));
+		}
+		return array;
+	}
+
+
+	static fromFirebase(series) {
+		const newSeries = new Series(series.id, series.name, series.overview, series.airDate, series.posterUrl, series.rating)
+		newSeries.votes = series.votes
+		newSeries.genres = series.genres
+		newSeries.country = series.country
+		newSeries.status = series.status
+		newSeries.createdBy = series.createdBy
+		newSeries.episodeDuration = series.episodeDuration
+
+		series.seasons.forEach((season) => {
+			newSeries.seasons.push(Season.fromFirebase(season))
+		})
+
+		return newSeries
 	}
 
 	/**
 	 * Creates an instance of this class from an entity model.
 	 *
 	 * @static
-	 * @param {any} series the entity
-	 * @returns an instance of {Series}
+	 * @param {Series} series the entity
+	 * @returns {Series} an instance of {Series}
 	 * @memberof Series
 	 */
 	static fromEntity(series) {
@@ -144,10 +238,28 @@ export class Series {
 		if (series.genres) {
 			series.genres.forEach(val => thisSeries.genres.push(val.name))
 		}
+
 		thisSeries.country = series.origin_country;
 		thisSeries.status = series.status;
 		thisSeries.createdBy = series.created_by;
 		thisSeries.episodeDuration = series.episode_run_time;
 		return thisSeries;
+	}
+
+	/**
+	 * Returns true if all episodes have the flag watched == true.
+	 *
+	 * @returns {boolean} true if everything is watched, false if not
+	 * @memberof Series
+	 */
+	isWatched() {
+		let result = true
+		this.seasons.forEach(season => {
+			if (!season.isWatched()) {
+				result = false
+				return
+			}
+		})
+		return result
 	}
 }

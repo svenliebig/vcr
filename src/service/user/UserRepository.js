@@ -1,5 +1,6 @@
-import Firebase from '@service/firebase/Firebase';
-import SeriesConverter from '@service/series/SeriesConverter';
+import Firebase from '@service/firebase/Firebase'
+import SeriesConverter from '@service/series/SeriesConverter'
+import { Series } from '../../model/Series'
 
 /**
  * Includes methods to communicate with the user database.
@@ -65,19 +66,13 @@ export default class UserRepository {
 	/**
 	 * Returns all the series from the user with a promise.
 	 *
-	 * @returns {Promise.<Series>} called after reading the data
+	 * @returns {Promise.<Array<Series>>} called after reading the data
 	 * @memberof UserRepository
 	 */
 	getAllSeries() {
-		return this.fb.get(`/users/${this.uid}/series`).then(val => {
-
-			const tempArray = [];
-			for (let key in val) {
-				tempArray.push(val[key]);
-			}
-
-			return Promise.resolve(tempArray);
-		});
+		return this.fb.get(`/users/${this.uid}/series`).then(val =>
+			Promise.resolve(Series.fromFirebaseArray(val))
+		)
 	}
 
 	getName() {
