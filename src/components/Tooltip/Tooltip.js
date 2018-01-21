@@ -17,20 +17,15 @@ export default class Tooltip extends Component {
 	 * Creates an instance of Tooltip.
 	 * @memberof Tooltip
 	 */
-	constructor(props) {
+	constructor() {
 		super()
 
-		this.timeout;
-        this.showTooltip = this.showTooltip.bind(this);
+		this.showTooltip = this.showTooltip.bind(this);
 		this.hideTooltip = this.hideTooltip.bind(this);
 	}
 
-	componentDidMount() {
-		// tooltip.appendChild(<span></span>)
-	}
-
 	renderChildrenWithTooltip() {
-		return React.Children.map(this.props.children, (child, index) => {
+		return React.Children.map(this.props.children, (child) => {
 			return React.cloneElement(child, {
 				onMouseEnter: this.showTooltip,
 				onMouseLeave: this.hideTooltip
@@ -56,7 +51,7 @@ export default class Tooltip extends Component {
 		tooltip.style.left = `${left}px`
 		left = x - (tooltip.clientWidth / 2) + (width / 2);
 		tooltip.style.left = `${left}px`
-		tooltip.style.top = `${y - tooltip.clientHeight - 8 }px`
+		tooltip.style.top = `${y - tooltip.clientHeight - 8}px`
 
 
 		// wenn man soweit rechts ist, das der Tooltip an die Wand knallt, justiere den pfeil
@@ -89,7 +84,7 @@ export default class Tooltip extends Component {
 	render() {
 		return (
 			<div className="tooltip">
-				{ this.renderChildrenWithTooltip() }
+				{this.renderChildrenWithTooltip()}
 			</div>
 		)
 	}
