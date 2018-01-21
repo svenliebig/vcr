@@ -172,11 +172,13 @@ export default class Board extends Component {
 	}
 
 	render() {
+		console.time("filter series")
 		const seriesMap = this.state.userSeries.filter(this.filterSeries).sort(this.sortSeries).map((series) =>
 			<div key={series.id}>
 				<Series series={series} />
 			</div>
 		);
+		console.timeEnd("filter series")
 
 		const seriesPlaceholder = () => {
 			if (!this.state.loaded) {

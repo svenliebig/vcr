@@ -227,3 +227,9 @@ All notable changes to this project will be documented in this file.
 ### fix
 
 - addSeries from managed did not set the completlyWatched Flag
+
+## [0.9.33] - 21.01.2018
+
+### fix
+
+- loadtime consoles
