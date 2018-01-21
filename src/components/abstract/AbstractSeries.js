@@ -1,5 +1,6 @@
 import { Component } from 'react'
-import UserRepository from '@service/user/UserRepository';
+import UserRepository from '@service/user/UserRepository'
+import { Episode } from '../../model/Series'
 
 import moment from 'moment';
 
@@ -33,8 +34,13 @@ export default class AbstractSeries extends Component {
 		this.toggleSeries = this.toggleSeries.bind(this)
 	}
 
+	/**
+	 *
+	 * @param {Episode} episode
+	 * @param {number} index
+	 */
 	toggleEpisode(episode, index) {
-		if (moment(episode.airDate).isBefore()) {
+		if (episode.isAired()) {
 			let updated = this.state.series;
 			const snum = episode.season - 1;
 			const epnum = index ? index : episode.episode - 1;
@@ -51,13 +57,9 @@ export default class AbstractSeries extends Component {
 	}
 
 	toggleSeason(season) {
-		let updated = this.state.series;
-		const snum = season.seasonNumber - 1;
+		let updated = this.state.series
+		const snum = season.seasonNumber - 1
 		let changed = false
-
-		if (season.isWatched()) {
-			console.log("alles gesehen")
-		}
 
 		updated.seasons[snum].episodes.forEach(episode => {
 			if (moment(episode.airDate).isBefore()) {

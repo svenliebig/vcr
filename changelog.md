@@ -215,3 +215,9 @@ All notable changes to this project will be documented in this file.
 ### refactor
 
 - series filter system, using some instead of foreach to break the most iterations earlier
+
+## [0.9.31] - 21.01.2018
+
+### chore
+
+- update the load cycle, so the series will get a new 'watched' flag when they are saved - now only series with open episodes are loaded

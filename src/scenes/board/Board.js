@@ -37,7 +37,8 @@ export default class Board extends Component {
 			sortAscending: true,
 			filterWatched: true,
 			userSeries: [],
-			loaded: false
+			loaded: false,
+			finishedLoaded: false
 		}
 
 		this.toggleNotWatched = this.toggleNotWatched.bind(this);
@@ -50,8 +51,7 @@ export default class Board extends Component {
 	}
 
 	componentDidMount() {
-		this.ur.getAllSeries().then(series => {
-
+		this.ur.getOpenSeries().then(series => {
 			this.setState({
 				userSeries: series,
 				loaded: true
@@ -60,7 +60,17 @@ export default class Board extends Component {
 	}
 
 	toggleWatched(filterWatched) {
-		this.setState({ filterWatched })
+		if (!this.state.finishedLoaded) {
+			this.ur.getFinishedSeries().then(series => {
+				this.setState({
+					userSeries: this.state.userSeries.concat(series),
+					filterWatched,
+					finishedLoaded: true
+				})
+			})
+		} else {
+			this.setState({ filterWatched })
+		}
 	}
 
 	toggleNotWatched(filterNotWatched) {

@@ -67,8 +67,10 @@ class Firebase {
 			if (val === null) {
 				return null
 			}
-
-			return Promise.resolve(val.filter(e => e))
+			if (Array.isArray(val)) {
+				return Promise.resolve(val.filter(e => e))
+			}
+			return Promise.resolve(val)
 		})
 	}
 

@@ -63,6 +63,38 @@ export default class UserRepository {
 		});
 	}
 
+	getFinishedSeries() {
+		return this.fb.getWhere(`/users/${this.uid}/series`, 'isCompletlyWatched', true).then(val => {
+			return Promise.resolve(Series.fromFirebaseArray(val))
+		})
+	}
+
+	getOpenSeries() {
+		return this.fb.getWhere(`/users/${this.uid}/series`, 'isCompletlyWatched', false).then(val =>
+			Promise.resolve(Series.fromFirebaseArray(val))
+		)
+	}
+
+	getUndefinedSeries() {
+		return this.fb.getWhere(`/users/${this.uid}/series`, 'isCompletlyWatched', null).then(val => {
+			if (!val) {
+				return Promise.resolve()
+			}
+			const res = Series.fromFirebaseArray(val)
+
+			let itemsProcessed = 0
+			res.forEach(item => {
+				itemsProcessed++
+				if (itemsProcessed === res.length) {
+					return
+				} else {
+					this.updateWatchedSeries(item)
+				}
+			})
+			return this.updateWatchedSeries(res[res.length - 1]).then(() => Promise.resolve(res))
+		})
+	}
+
 	/**
 	 * Returns all the series from the user with a promise.
 	 *
@@ -78,7 +110,7 @@ export default class UserRepository {
 	getName() {
 		return this.fb.get(`/users/${this.uid}/name`).then(val => {
 			return Promise.resolve(val);
-		});
+		})
 	}
 
 	setName(name) {
@@ -111,7 +143,8 @@ export default class UserRepository {
 
 	updateWatchedSeries(series) {
 		this.checkArgs(series)
-		this.fb.write(`/users/${this.uid}/series/${series.id}`, series)
+		series.isCompletlyWatched = series.isWatched()
+		return this.fb.write(`/users/${this.uid}/series/${series.id}`, series)
 	}
 
 	checkArgs(args) {
