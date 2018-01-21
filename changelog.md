@@ -197,3 +197,9 @@ All notable changes to this project will be documented in this file.
 ### Refactor
 
 - removed console.log
+
+## [0.9.28] - 21.01.2018
+
+### feat
+
+- create patch script
