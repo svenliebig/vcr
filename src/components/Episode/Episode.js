@@ -22,7 +22,7 @@ export default class Episode extends Component {
 	}
 
 	get tooltip() {
-		if(this.aired) {
+		if (this.aired) {
 			return `S${this.season}E${this.episode} kommt am ` + this.airDate;
 		} else {
 			return `S${this.season}E${this.episode} - ${this.props.episode.name} vom ${this.airDate}`;
@@ -34,7 +34,7 @@ export default class Episode extends Component {
 	}
 
 	get season() {
-		if (parseInt(this.props.episode.season) > 9) {
+		if (parseInt(this.props.episode.season, 10) > 9) {
 			return this.props.episode.season
 		} else {
 			return `0${this.props.episode.season}`
@@ -42,7 +42,7 @@ export default class Episode extends Component {
 	}
 
 	get episode() {
-		if (parseInt(this.props.episode.episode) > 9) {
+		if (parseInt(this.props.episode.episode, 10) > 9) {
 			return this.props.episode.episode
 		} else {
 			return `0${this.props.episode.episode}`
@@ -62,10 +62,10 @@ export default class Episode extends Component {
 	render() {
 		return (
 			<div className="episode-container">
-				<Tooltip text={ this.tooltip }>
+				<Tooltip text={this.tooltip}>
 					<button
-						className={ this.icon }
-						onClick={ this.props.onClick }>
+						className={this.icon}
+						onClick={this.props.onClick}>
 					</button>
 				</Tooltip>
 			</div>
