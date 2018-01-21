@@ -141,63 +141,62 @@ export default class View extends AbstractSeries {
 				<div key={index} className="genre-badge">
 					{genre}
 				</div>
-			);
+			)
 		}
 
 		const renderSeries = () => {
-			const { genres, name, seasons } = self.state.series
+			const series = this.state.series
+			const { genres, name, seasons } = series
 
-			if (self.state.series) {
-				return (
-					<div className="series-container">
-						<div className="series-header">
-							<img src={self.getImageSrc(500)} alt="" />
-							<Link className="series-header--link" to="/">
-								<span className="fa fa-arrow-left fa-2x"></span>
-							</Link>
-							<div className="series-name-wrapper">
-								<div className="series-name">
-									{name}
-								</div>
-							</div>
-							<div className="genre-wrapper">
-								{genres && genres.map(mapGenres)}
+			return (
+				<div className="series-container">
+					<div className="series-header">
+						<img src={this.getImageSrc(500)} alt="" />
+						<Link className="series-header--link" to="/">
+							<span className="fa fa-arrow-left fa-2x"></span>
+						</Link>
+						<div className="series-name-wrapper">
+							<div className="series-name">
+								{name}
 							</div>
 						</div>
-						<div className="series-actions">
-							<div className="head">
-								<div className="input-wrapper">
-									<div className="input-container">
-										<label>bs.to</label>
-										<input id="bsto" type="type" placeholder="https://bs.to/example" value={this.state.bsto} onChange={this.handleLinkInput} />
-										<label>otakustream</label>
-										<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={this.state.otaku} onChange={this.handleLinkInput} />
-									</div>
-								</div>
-								<div className="action-wrapper">
-									<ButtonRemove onClick={this.removeSeries} />
-								</div>
-							</div>
-							<div className="spacer"></div>
-							{this.state.changed ? <button className="save" onClick={this.savePreferences}>Speichern</button> : ''}
-						</div>
-						<div className="series-content">
-							<div className="series-content--description">
-								{self.state.series.overview}
-							</div>
-							<Tabs defaultActiveTabIndex={0}>
-								{seasons && seasons.map(mapSeason)}
-							</Tabs>
+						<div className="genre-wrapper">
+							{genres && genres.map(mapGenres)}
 						</div>
 					</div>
-				);
-			}
+					<div className="series-actions">
+						<div className="head">
+							<div className="input-wrapper">
+								<div className="input-container">
+									<label>bs.to</label>
+									<input id="bsto" type="type" placeholder="https://bs.to/example" value={this.state.bsto} onChange={this.handleLinkInput} />
+									<label>otakustream</label>
+									<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={this.state.otaku} onChange={this.handleLinkInput} />
+								</div>
+							</div>
+							<div className="action-wrapper">
+								<ButtonRemove onClick={this.removeSeries} />
+							</div>
+						</div>
+						<div className="spacer"></div>
+						{this.state.changed ? <button className="save" onClick={this.savePreferences}>Speichern</button> : ''}
+					</div>
+					<div className="series-content">
+						<div className="series-content--description">
+							{self.state.series.overview}
+						</div>
+						<Tabs defaultActiveTabIndex={0}>
+							{seasons && seasons.map(mapSeason)}
+						</Tabs>
+					</div>
+				</div>
+			)
 		}
 
 		return (
 			<Skeleton>
 				<div className="view-series-wrapper">
-					{renderSeries()}
+					{(this.state.series) ? renderSeries() : ""}
 				</div>
 			</Skeleton>
 		)
