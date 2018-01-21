@@ -34,7 +34,7 @@ export default class AbstractSeries extends Component {
 	}
 
 	toggleEpisode(episode, index) {
-		if(moment(episode.airDate).isBefore()) {
+		if (moment(episode.airDate).isBefore()) {
 			let updated = this.state.series;
 			const snum = episode.season - 1;
 			const epnum = index ? index : episode.episode - 1;
@@ -55,8 +55,8 @@ export default class AbstractSeries extends Component {
 		const snum = season.seasonNumber - 1;
 		let changed = false;
 		updated.seasons[snum].episodes.forEach(episode => {
-			if(moment(episode.airDate).isBefore()) {
-				if(!episode.watched) {
+			if (moment(episode.airDate).isBefore()) {
+				if (!episode.watched) {
 					changed = true;
 				}
 				episode.watched = true;
@@ -83,8 +83,8 @@ export default class AbstractSeries extends Component {
 				return
 			}
 			season.episodes.forEach(episode => {
-				if(moment(episode.airDate).isBefore()) {
-					if(!episode.watched) {
+				if (moment(episode.airDate).isBefore()) {
+					if (!episode.watched) {
 						changed = true;
 					}
 					episode.watched = true;
@@ -114,7 +114,7 @@ export default class AbstractSeries extends Component {
 		if (url.endsWith('jpg')) {
 			return url.replace(`w300`, `w${width}`);
 		} else {
-			return 'bright-squares.53c1ec5f96d716d4265e.png';
+			return '/bright-squares.png';
 		}
 	}
 
