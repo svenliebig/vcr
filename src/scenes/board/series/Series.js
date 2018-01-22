@@ -1,6 +1,5 @@
 /** React Imports */
 import React from 'react'
-import { Link } from "react-router-dom"
 import PropTypes from 'prop-types';
 
 /** Other Libraries */
@@ -9,6 +8,7 @@ import moment from 'moment'
 /** Imports */
 import SeriesRepository from '@service/series/SeriesRepository'
 import AbstractSeries from '@components/abstract/AbstractSeries'
+import SeriesCard from '@components/SeriesCard'
 
 /** CSS */
 import './Series.css';
@@ -124,7 +124,7 @@ export default class Series extends AbstractSeries {
 		let self = this;
 
 		const createEpisodes = (episode, index) => {
-			return <Episode key={ index } episode={ episode } onClick={ this.toggleEpisode.bind(this, episode, index) }/>
+			return <Episode key={index} episode={episode} onClick={this.toggleEpisode.bind(this, episode, index)} />
 		}
 
 		const createSeasonToggle = (season) => {
@@ -143,19 +143,19 @@ export default class Series extends AbstractSeries {
 					<button
 						className="fa fa-eye"
 						title="Alle Folgen dieser Staffel als gesehen markieren."
-						onClick={ self.toggleSeason.bind(self, season) }>
+						onClick={self.toggleSeason.bind(self, season)}>
 					</button>
 				);
 			}
 		}
 
 		const createSeasons = (season, index) => {
-			return(
-				<div key={ index } className={ 'season ' + this.getSeasonClass(season.seasonNumber) }>
-					{ createSeasonToggle(season) }
-					<div className="season-title">{ 'Staffel ' + season.seasonNumber }</div>
-					<div className="episodes-wrapper" season={ season.seasonNumber }>
-						{ (season.episodes !== undefined ? season.episodes.map(createEpisodes) : '')}
+			return (
+				<div key={index} className={'season ' + this.getSeasonClass(season.seasonNumber)}>
+					{createSeasonToggle(season)}
+					<div className="season-title">{'Staffel ' + season.seasonNumber}</div>
+					<div className="episodes-wrapper" season={season.seasonNumber}>
+						{(season.episodes !== undefined ? season.episodes.map(createEpisodes) : '')}
 					</div>
 				</div>
 			);
@@ -164,8 +164,8 @@ export default class Series extends AbstractSeries {
 		const seasonMap = () => {
 			return (
 				<div className="seasons-wrapper">
-					<div className="season-container" onWheel={ this.seasonScroll }>
-						{ this.state.series.seasons.map(createSeasons) }
+					<div className="season-container" onWheel={this.seasonScroll}>
+						{this.state.series.seasons.map(createSeasons)}
 					</div>
 				</div>
 			)
@@ -173,32 +173,25 @@ export default class Series extends AbstractSeries {
 
 		return (
 			<div className="series-card-wrapper">
-				<div className="series-card-container">
+				<SeriesCard series={this.state.series} bannerLink={`/view/${this.state.series.id}`}>
 					{
 						this.state.bsto ?
-						<a className="bs-link" href={ this.createSeriesLink() } target="_blank">bs</a>
-						: ''
+							<a className="bs-link" href={this.createSeriesLink()} target="_blank">bs</a>
+							: ''
 					}
 					{
 						this.state.otaku ?
-						<a className="otaku-link" href={ this.state.otaku } target="_blank">otk</a>
-						: ''
+							<a className="otaku-link" href={this.state.otaku} target="_blank">otk</a>
+							: ''
 					}
-					<Link className="banner-wrapper" to={ `/view/${this.state.series.id}` }>
-						<img src={ this.getImageSrc() } alt="" />
-						<div className="image-overlay"/>
-					</Link>
-					<div className="title-wrapper">
-						<p className="title-wrapper__text">{this.state.series.name}</p>
-						<button
-							className="fa fa-eye"
-							style={{ position: "absolute", right: 0, top: 10, background: "none", color: "inherit", border: "none", outline: "none", cursor: "pointer" }}
-							title="Alle Folgen der Serie als gesehen markieren."
-							onClick={ this.toggleSeries }>
-						</button>
-					</div>
-					{ seasonMap() }
-				</div>
+					<button
+						className="fa fa-eye"
+						style={{ position: "absolute", left: 270, bottom: 11, zIndex: 9, background: "none", color: "inherit", border: "none", outline: "none", cursor: "pointer" }}
+						title="Alle Folgen der Serie als gesehen markieren."
+						onClick={this.toggleSeries}>
+					</button>
+					{seasonMap()}
+				</SeriesCard>
 			</div>
 		)
 	}

@@ -1,8 +1,9 @@
 /** React Imports */
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { Link } from "react-router-dom"
 
-import './SeriesCard.css'
+import "./SeriesCard.css"
 
 /**
  * Component Class of SeriesCard.
@@ -49,12 +50,19 @@ export default class SeriesCard extends Component {
 
 		return (
 			<div className="card">
-				<img src={ this.getImageSrc(series) } alt="" />
+				{this.props.bannerLink ?
+					<Link className="banner-wrapper" to={this.props.bannerLink}>
+						<div className="image-overlay" />
+						<img src={this.getImageSrc(series)} alt="" />
+					</Link>
+					:
+					<img src={this.getImageSrc(series)} alt="" />
+				}
 				<div className="card-title-wrapper">
-					<div className="card-title">{ series.name }</div>
+					<div className="card-title">{series.name}</div>
 				</div>
-				{ this.props.children }
-	  		</div>
+				{this.props.children}
+			</div>
 		)
 	}
 }
@@ -64,5 +72,6 @@ SeriesCard.propTypes = {
 	children: PropTypes.oneOfType([
 		PropTypes.array,
 		PropTypes.element
-	])
+	]),
+	bannerLink: PropTypes.string
 }
