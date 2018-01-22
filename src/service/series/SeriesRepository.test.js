@@ -80,7 +80,7 @@ describe('SeriesRepository', () => {
 				})
 			})
 
-			fit("should not have the old link after load", (done) => {
+			it("should not have the old link after load", (done) => {
 				repo.getBurningSeriesLink(id).then(() => {
 					repo.getSeries(id).then(val => {
 						expect(val.bstolink).toBe(undefined)
@@ -115,7 +115,6 @@ describe('SeriesRepository', () => {
 	})
 
 	afterAll(() => {
-		// Close firebase connection
 		repo.fb.db.goOffline()
 	})
 });

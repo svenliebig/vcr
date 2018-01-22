@@ -233,3 +233,10 @@ All notable changes to this project will be documented in this file.
 ### fix
 
 - loadtime consoles
+
+## [0.9.34] - 22.01.2018
+
+### feat
+
+- implement message model
+- implement message service
