@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 
 import './Dialog.css'
 
-const ANIM_IN = 'puff-in-center'
-const ANIM_OUT = 'puff-out-center'
+const ANIM_IN = 'slide-in-elliptic-top-fwd'
+const ANIM_OUT = 'slide-out-elliptic-top-bck'
 
 /**
  * Component Class of Dialog.
@@ -106,15 +106,15 @@ export default class Dialog extends Component {
 	 */
 	render() {
 		return (
-			<div className={ this.getContainerClass() } onClick={ this.fadeout }>
-				<div className={ this.getDialogClass() }>
-					{ this.props.title &&
+			<div className={this.getContainerClass()} onClick={this.fadeout}>
+				<div className={this.getDialogClass()}>
+					{this.props.title &&
 						<div className='dialog-header'>
-							{ this.props.title }
+							{this.props.title}
 						</div>
 					}
 					<div className='dialog-body'>
-						{ this.props.children }
+						{this.props.children}
 					</div>
 				</div>
 			</div>

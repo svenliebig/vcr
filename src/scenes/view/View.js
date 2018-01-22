@@ -1,15 +1,17 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
-import Skeleton from '@scenes/skeleton/Skeleton';
+import Skeleton from '@scenes/skeleton/Skeleton'
 
 /** Services */
-import SeriesRepository from '@service/series/SeriesRepository';
+import SeriesRepository from '@service/series/SeriesRepository'
+import Message from '@service/Message'
 
 /** Components */
-import { Tabs, Tab } from '@components/tabs';
-import AbstractSeries from '@components/abstract/AbstractSeries';
-import ButtonRemove from '@components/button/remove/ButtonRemove';
+import { Tabs, Tab } from '@components/tabs'
+import AbstractSeries from '@components/abstract/AbstractSeries'
+import ButtonRemove from '@components/button/remove/ButtonRemove'
+import Mail from '@components/button/Mail'
 
 
 import './View.css';
@@ -17,21 +19,24 @@ import './View.css';
 export default class View extends AbstractSeries {
 
 	constructor(props) {
-		super();
-		this.sr = new SeriesRepository();
+		super()
+		this.sr = new SeriesRepository()
+		this.msg = new Message()
 
 		this.state = {
 			series: null,
 			changed: false,
 			bsto: '',
-			otaku: ''
+			otaku: '',
+			suggestedUsername: ""
 		}
 
 		const self = this;
 
 		this.ur.getSeries(props.match.params.id, (series) => self.setState({ series }))
+		this.ur.getUserNames().then(usernames => this.setState({ usernames }))
 
-		this.handleLinkInput = this.handleLinkInput.bind(this)
+		this.handleInput = this.handleInput.bind(this)
 		this.savePreferences = this.savePreferences.bind(this)
 		this.removeSeries = this.removeSeries.bind(this)
 
@@ -55,20 +60,29 @@ export default class View extends AbstractSeries {
 		})
 	}
 
-	handleLinkInput(e) {
+	suggestSeries() {
+		this.ur.getName().then(val => this.msg.writeMessage(this.props.match.params.id, val, this.state.suggestedUsername))
+	}
+
+	handleInput(e) {
 		switch (e.target.id) {
 			case "otaku":
 				this.setState({
 					otaku: e.target.value,
 					changed: true
-				});
-				break;
+				})
+				break
 			case "bsto":
 				this.setState({
 					bsto: e.target.value,
 					changed: true
-				});
-				break;
+				})
+				break
+			case "username":
+				this.setState({
+					suggestedUsername: e.target.value
+				})
+				break
 		}
 	}
 
@@ -169,10 +183,15 @@ export default class View extends AbstractSeries {
 							<div className="input-wrapper">
 								<div className="input-container">
 									<label>bs.to</label>
-									<input id="bsto" type="type" placeholder="https://bs.to/example" value={this.state.bsto} onChange={this.handleLinkInput} />
+									<input id="bsto" type="type" placeholder="https://bs.to/example" value={this.state.bsto} onChange={this.handleInput} />
 									<label>otakustream</label>
-									<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={this.state.otaku} onChange={this.handleLinkInput} />
+									<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={this.state.otaku} onChange={this.handleInput} />
+									<label>empfehlen</label>
+									<input id="username" placeholder="Name" onChange={this.handleInput} />
 								</div>
+							</div>
+							<div className="action-wrapper">
+								<Mail onClick={this.suggestSeries.bind(this)} />
 							</div>
 							<div className="action-wrapper">
 								<ButtonRemove onClick={this.removeSeries} />

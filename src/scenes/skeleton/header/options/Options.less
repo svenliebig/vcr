@@ -1,11 +1,12 @@
+@import "src/resources/default.less";
 @import "src/resources/mixins.less";
 @import "src/resources/definitions.less";
 
 .options-wrapper {
 	.options-container {
-		min-width: 35px;
+		min-width: 64px;
 
-		button {
+		button, .iconbadge {
 			background: none;
 			border: none;
 			color: @text-color-2;
@@ -13,14 +14,78 @@
 			transition: @text-color-2-transition;
 			cursor: pointer;
 			outline: none;
+			font-size: 14px;
 
 			&:hover {
 				color: @text-color-2-hover;
 			}
 
-			&:first-child {
-				margin-right: 12px;
+			margin-right: 12px;
+			&:last-child {
+				margin-right: 0px
 			}
+		}
+
+		.iconbadge {
+			font-size: 15px;
+		}
+	}
+
+	.messages {
+		position: absolute;
+		right: 25px;
+		top: 55px;
+		background: @text-color-1-background;
+		padding: 0px 5px 5px 5px;
+
+		.suggestion {
+			.card {
+				margin: 5px 0 0 0;
+				position: relative;
+				.actions {
+					z-index: 7;
+					position: absolute;
+					padding: 0 5px;
+					top: 5px;
+					width: calc(100% ~"-" 10px);
+					height: 27px;
+		
+					button {
+						.default-icon-button();
+						height: 31px;
+						width: 33px;
+						background: @text-color-1-background;
+						color: @text-color-1;
+						text-shadow: @text-color-1-text-shadow;
+						border-radius: 2px;
+						margin-right: 5px;
+						display: block;
+						float: left;
+						text-align: center;
+						font-size: 17px;
+
+						&.remove-message {
+							float: right;
+							margin-right: 0;
+						}
+					}
+
+					.from {
+						font-size: 1.08em;
+						height: 31px;
+						background: @text-color-1-background;
+						color: @text-color-1;
+						text-shadow: @text-color-1-text-shadow;
+						padding: 0px 5px;
+						border-radius: 2px;
+					}
+		
+					a span {
+						margin-top: 4px;
+					}
+				}
+			}
+
 		}
 	}
 }

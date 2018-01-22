@@ -1,0 +1,31 @@
+@import "src/resources/mixins.less";
+@import "src/resources/definitions.less";
+
+.iconbadge {
+	position: relative;
+	.not-selectable();
+
+	.badge {
+		background: rgba(255, 99, 71, 0.8);
+		display: inline-block;
+		position: absolute;
+		text-align: center;
+		border-radius: 1em;
+		color: #fff;
+		max-width: 5em;
+		min-width: 1.2em;
+		overflow: hidden;
+		right: -12px;
+		text-overflow: ellipsis;
+		top: -8px;
+		height: 1.06em;
+		line-height: 1;
+		-webkit-transform: scale(.25);
+		transform: scale(.25);
+		-webkit-transform-origin: top right;
+		transform-origin: top right;
+		font-size: 4em;
+		padding: 0.01em 0.11em;
+		.not-selectable();
+	}
+}
