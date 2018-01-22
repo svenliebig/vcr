@@ -240,3 +240,9 @@ All notable changes to this project will be documented in this file.
 
 - implement message model
 - implement message service
+
+## [0.9.35] - 22.01.2018
+
+### feat
+
+- implement message frontend

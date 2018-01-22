@@ -40,6 +40,16 @@ export default class UserRepository {
 		});
 	}
 
+	getUserNames() {
+		return this.fb.get(`/users`).then(val => {
+			const tempArray = [];
+			for (let key in val) {
+				tempArray.push(key);
+			}
+			return Promise.resolve(tempArray);
+		})
+	}
+
 	isUserInDb(callback) {
 		this.fb.get(`/users/${this.uid}`).then(val => {
 			if (val == null) {
@@ -50,7 +60,6 @@ export default class UserRepository {
 	}
 
 	addUserToDb() {
-		this.checkArgs("")
 		this.fb.write(`/users/${this.uid}`, { series: [] });
 	}
 
