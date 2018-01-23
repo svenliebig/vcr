@@ -207,7 +207,7 @@ export class Series {
 		newSeries.genres = series.genres
 		newSeries.country = series.country
 		newSeries.status = series.status
-		newSeries.createdBy = series.createdBy
+		newSeries.createdBy = series.createdBy || ""
 		newSeries.episodeDuration = series.episodeDuration
 
 		series.seasons.forEach((season) => {

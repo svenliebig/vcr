@@ -63,12 +63,12 @@ export default class UserRepository {
 		this.fb.write(`/users/${this.uid}`, { series: [] });
 	}
 
-	hasSeries(id, callback) {
-		this.getSeries(id).then(val => {
+	hasSeries(id) {
+		return this.getSeries(id).then(val => {
 			if (val === null) {
-				return callback(false)
+				return Promise.resolve(false)
 			}
-			callback(true)
+			return Promise.resolve(true)
 		})
 	}
 
@@ -159,6 +159,7 @@ export default class UserRepository {
 
 	updateWatchedSeries(series) {
 		this.checkArgs(series)
+		console.log(series)
 		series.isCompletlyWatched = series.isWatched()
 		return this.fb.write(`/users/${this.uid}/series/${series.id}`, series)
 	}

@@ -8,12 +8,12 @@ import IconBadge from "@components/IconBadge"
 import Firebase from '@service/firebase/Firebase'
 import Message from '@service/Message'
 import UserRepository from '@service/user'
-import SeriesRepository from '@service/series'
 import SeriesCard from "@components/SeriesCard"
 import SeriesapiService from '@service/api/Moviedb'
 
 // CSS
 import './Options.css';
+import EventBus from '@service/EventBus/EventBus';
 
 const fb = new Firebase();
 
@@ -31,7 +31,6 @@ class Options extends Component {
 		this.messages = []
 		this.msg = new Message()
 		this.ur = new UserRepository()
-		this.sr = new SeriesRepository()
 		this.sapi = new SeriesapiService()
 
 
@@ -41,16 +40,14 @@ class Options extends Component {
 	}
 
 	componentDidMount() {
-		this.ur.getName().then(name => this.msg.getMessages(name).then(val => {
-
+		EventBus.instance.emit("getName").then(name => this.msg.getMessages(name).then(val => {
 			const seriesMessages = []
-			val.forEach((message, i) => this.sr.getSeries(message.series).then(series => {
+			val.forEach((message, i) => EventBus.instance.emit("getSeries", message.series).then(series => {
 				seriesMessages.push(series)
 				if (i === val.length - 1) {
 					this.setState({ seriesMessages, messages: val })
 				}
 			}))
-
 		}))
 	}
 

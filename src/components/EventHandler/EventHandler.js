@@ -43,6 +43,7 @@ export default class EventHandler extends Component {
 		EventBus.instance.register("getUsers", series => this.userRepository.getUsers(series))
 		EventBus.instance.register("getAllSeries", () => this.userRepository.getAllSeries())
 		EventBus.instance.register("getName", () => this.userRepository.getName())
+		EventBus.instance.register("hasSeries", id => this.userRepository.hasSeries(id))
 
 		// Series Repository
 		EventBus.instance.register("getSeries", id => this.seriesRepository.getSeries(id))

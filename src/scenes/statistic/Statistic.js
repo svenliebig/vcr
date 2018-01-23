@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Skeleton from '@scenes/skeleton/Skeleton';
-import UserRepository from '@service/user/UserRepository';
+import EventBus from '@service/EventBus/EventBus'
+import Skeleton from '@scenes/skeleton/Skeleton'
 import './Statistic.css';
 
 /**
@@ -17,28 +17,14 @@ export default class Statistic extends Component {
 	 * @memberof Statistic
 	 */
 	constructor() {
-		super();
-
-		this.ur = new UserRepository();
+		super()
 
 		this.state = {
 			totalTime: 0,
 			noduration: []
-		};
+		}
 
-		// Charts mit Genre Abhängigkeiten
-
-		this.calcSeries = this.calcSeries.bind(this);
-
-		this.ur.getAllSeries().then(val => this.calcSeries(val));
-	}
-
-	/**
-	 * Called after the constructor.
-	 *
-	 * @memberof Statistic
-	 */
-	componentDidMount() {
+		EventBus.instance.emit("getAllSeries").then(val => this.calcSeries(val))
 	}
 
 	calcSeries(seriesArray) {

@@ -1,49 +1,41 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import React, { Component } from "react"
+import Link from "react-router-dom/Link"
+import PropTypes from "prop-types"
+import moment from "moment"
 
-import SeriesapiService from '@service/api/Moviedb';
-import UserRepository from '@service/user/UserRepository';
-import SeriesRepository from '@service/series/SeriesRepository';
+import SeriesapiService from "@service/api/Moviedb"
+import EventBus from "@service/EventBus/EventBus"
 
-import { Link } from "react-router-dom";
-
-import moment from 'moment';
-
-import './SearchResult.css';
-import EventBus from '@service/EventBus/EventBus';
+import "./SearchResult.css"
 
 export default class SearchResult extends Component {
 	constructor() {
-		super();
-		this.ur = new UserRepository();
-		this.sapi = new SeriesapiService();
-		this.sr = new SeriesRepository();
+		super()
+		this.sapi = new SeriesapiService()
 
 		this.state = {
 			hasSeries: false,
 			processing: false
 		}
 
-		this.addSeries = this.addSeries.bind(this);
-		this.removeSeries = this.removeSeries.bind(this);
+		this.addSeries = this.addSeries.bind(this)
+		this.removeSeries = this.removeSeries.bind(this)
 	}
 
 	componentDidMount() {
-		let self = this;
-		this.ur.hasSeries(this.props.series.id, (val) => {
-			self.setState({
+		EventBus.instance.emit("hasSeries", this.props.series.id).then(val => {
+			this.setState({
 				hasSeries: val
 			})
 		})
 	}
 
 	addSeries() {
-		let self = this;
-		self.setState({
+		this.setState({
 			processing: true
 		})
 		EventBus.instance.emit("addSeries", this.props.series.id).then(() => {
-			self.setState({
+			this.setState({
 				hasSeries: true,
 				processing: false
 			})

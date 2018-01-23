@@ -1,4 +1,6 @@
-import Firebase from '../firebase/Firebase';
+import Firebase from '../firebase/Firebase'
+import { Series } from '@model/Series';
+
 
 /**
  * Repository to communicate with the /series node in the database.
@@ -20,7 +22,8 @@ class SeriesRepository {
 		if (id == null || id === "") {
 			return Promise.resolve(null)
 		}
-		return this.fb.get(`/series/${id}`)
+
+		return this.fb.get(`/series/${id}`).then(val => Promise.resolve(Series.fromFirebase(val)))
 	}
 
 	/**
