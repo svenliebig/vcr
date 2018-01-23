@@ -54,54 +54,6 @@ describe('SeriesRepository', () => {
 		})
 	})
 
-
-
-	describe("getBurningSeriesLink", () => {
-		describe("series with old bs.to link in database", () => {
-
-			const id = "mySecondSecretId";
-			let series = { id: id, name: "testseries", "bstolink": "mylink" }
-
-			beforeEach(done => repo.removeSeries(id).then(() => repo.addSeries(series).then(done)))
-
-			it("should have the old link", done => {
-				repo.getSeries(id).then(val => {
-					expect(val.bstolink).toBe("mylink")
-					done()
-				})
-			})
-
-			it("should have the new link type after load", (done) => {
-				repo.getBurningSeriesLink(id).then(() => {
-					repo.getSeries(id).then(val => {
-						expect(val.links.bsto).toBe("mylink")
-						done()
-					})
-				})
-			})
-
-			it("should not have the old link after load", (done) => {
-				repo.getBurningSeriesLink(id).then(() => {
-					repo.getSeries(id).then(val => {
-						expect(val.bstolink).toBe(undefined)
-						done()
-					})
-				})
-			})
-
-			it("should not clear the new links after 2 times load", (done) => {
-				repo.getBurningSeriesLink(id).then(() => {
-					repo.getBurningSeriesLink(id).then(() => {
-						repo.getSeries(id).then(val => {
-							expect(val.links.bsto).toBe("mylink")
-							done()
-						})
-					})
-				})
-			})
-		})
-	})
-
 	describe('addSeries', () => {
 		describe('id and value null', () => {
 			it('should throw exception', (done) => {

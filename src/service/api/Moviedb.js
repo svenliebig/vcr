@@ -35,7 +35,7 @@ class SeriesapiService {
 		/** Setzt die Ausgabesprache der API als Parameter, default: Deutsch */
 		this.LANG_PARAM = '&language=de';
 
-		this.headers  = {
+		this.headers = {
 			'Content-Type': 'application/json',
 			'Accept': 'application/json'
 		};
@@ -110,13 +110,14 @@ class SeriesapiService {
 						if (series.seasons.length === lastSeason) {
 							series.seasons.sort((a, b) => {
 								return a.seasonNumber - b.seasonNumber;
-							});
+							})
 							callback(series);
 						}
-					});
+					})
 				}
-			});
-		});
+			})
+		})
+		return Promise.resolve()
 	}
 
 	/**
@@ -137,18 +138,18 @@ class SeriesapiService {
 	callApi(url, callback) {
 		let self = this;
 		axios.get(url, { headers: this.headers })
-		.then(data => {
-			if(data && data.status === 200) {
-				callback(data.data);
-			} else {
-				callback(null)
-			}
-		})
-		.catch(() => {
-			setTimeout(() => {
-				self.callApi(url, callback);
-			}, 1000);
-		});
+			.then(data => {
+				if (data && data.status === 200) {
+					callback(data.data);
+				} else {
+					callback(null)
+				}
+			})
+			.catch(() => {
+				setTimeout(() => {
+					self.callApi(url, callback);
+				}, 1000);
+			});
 	}
 }
 

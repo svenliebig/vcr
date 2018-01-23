@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import moment from 'moment';
 
 import './SearchResult.css';
+import EventBus from '@service/EventBus/EventBus';
 
 export default class SearchResult extends Component {
 	constructor() {
@@ -40,10 +41,8 @@ export default class SearchResult extends Component {
 		let self = this;
 		self.setState({
 			processing: true
-		});
-		this.sapi.getCompleteSeries(this.props.series.id, (series) => {
-			self.ur.addSeries(series);
-			self.sr.addSeries(series);
+		})
+		EventBus.instance.emit("addSeries", this.props.series.id).then(() => {
 			self.setState({
 				hasSeries: true,
 				processing: false
@@ -56,12 +55,12 @@ export default class SearchResult extends Component {
 		self.setState({
 			processing: true
 		});
-		this.ur.removeSeries(this.props.series.id, () => {
+		EventBus.instance.emit("removeSeries", this.props.series.id).then(() => {
 			self.setState({
 				hasSeries: false,
 				processing: false
-			});
-		});
+			})
+		})
 	}
 
 	getImageSrc(series) {

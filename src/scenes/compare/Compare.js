@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import Skeleton from '@scenes/skeleton'
-import UserRepository from '@service/user'
-import SeriesRepository from '@service/series'
-import SeriesapiService from '@service/api/Moviedb';
+import SeriesapiService from '@service/api/Moviedb'
 import SeriesCard from '@components/SeriesCard'
+import UserRepository from "@service/user/UserRepository";
 
 import './Compare.css';
+import EventBus from '@service/EventBus/EventBus';
 
 export default class Compare extends Component {
 
@@ -22,12 +22,11 @@ export default class Compare extends Component {
 		}
 
 		this.ur = new UserRepository()
-		this.sr = new SeriesRepository()
 		this.sapi = new SeriesapiService()
 		self = this
 
-		this.ur.getUserKeys().then(users => self.setState({ users }))
-		this.ur.getAllSeries().then(yours => self.setState({ yours }))
+		EventBus.instance.emit("getUsers").then(users => this.setState({ users }))
+		EventBus.instance.emit("getAllSeries").then(yours => this.setState({ yours }))
 		this.addSeries = this.addSeries.bind(this)
 	}
 
@@ -73,18 +72,13 @@ export default class Compare extends Component {
 		})
 	}
 
-	removeSeries(id) {
-		let self = this;
-		this.ur.removeSeries(id, () => self.handler(self.state.other))
-	}
-
 	render() {
 		const renderBoth = () => {
 			return (
 				<div>
 					<div className="header">{this.state.other.name} {"&"} du:</div>
 					<div className="content">
-					{ this.state.both.map(val => <SeriesCard key={ val.name } series={ val } />) }
+						{this.state.both.map(val => <SeriesCard key={val.name} series={val} />)}
 					</div>
 				</div>
 			)
@@ -94,7 +88,7 @@ export default class Compare extends Component {
 				<div>
 					<div className="header">Du:</div>
 					<div className="content">
-					{ this.state.onlyyou.map(val => <SeriesCard key={ val.name } series={ val } />) }
+						{this.state.onlyyou.map(val => <SeriesCard key={val.name} series={val} />)}
 					</div>
 				</div>
 			)
@@ -104,18 +98,18 @@ export default class Compare extends Component {
 				if (this.state.processing) {
 					return
 				}
-				return (<button onClick={ this.addSeries.bind(this, id) }><span className="fa fa-plus"></span></button>);
+				return (<button onClick={this.addSeries.bind(this, id)}><span className="fa fa-plus"></span></button>);
 			}
 
 			return (
 				<div>
 					<div className="header">{this.state.other.name}:</div>
 					<div className="content">
-					{ this.state.onlyhim.map(val =>
-						<SeriesCard key={ val.name } series={ val }>
-							<div className="actions">{actions(val.id)}</div>
-						</SeriesCard>
-					) }
+						{this.state.onlyhim.map(val =>
+							<SeriesCard key={val.name} series={val}>
+								<div className="actions">{actions(val.id)}</div>
+							</SeriesCard>
+						)}
 					</div>
 				</div>
 			)
@@ -124,13 +118,13 @@ export default class Compare extends Component {
 			<Skeleton>
 				<div className="table">
 					<div className="header">
-						{ this.state.users.filter(val => val.name).map((val, i) => <div className="user" key={ i } onClick={this.handler.bind(this, val)}>{val.name}</div>) }
+						{this.state.users.filter(val => val.name).map((val, i) => <div className="user" key={i} onClick={this.handler.bind(this, val)}>{val.name}</div>)}
 					</div>
 					<div className="content">
 					</div>
-					{ (this.state.both.length !== 0) && renderBoth() }
-					{ (this.state.onlyyou.length !== 0) && renderYou() }
-					{ (this.state.onlyhim.length !== 0) && renderHim() }
+					{(this.state.both.length !== 0) && renderBoth()}
+					{(this.state.onlyyou.length !== 0) && renderYou()}
+					{(this.state.onlyhim.length !== 0) && renderHim()}
 				</div>
 			</Skeleton>
 		)

@@ -1,8 +1,8 @@
 import { Component } from 'react'
-import UserRepository from '@service/user/UserRepository'
 import { Episode } from '../../model/Series'
 
 import moment from 'moment';
+import EventBus from '@service/EventBus/EventBus';
 
 const POSTER_URL = 'https://image.tmdb.org/t/p/w300';
 
@@ -20,13 +20,11 @@ export default class AbstractSeries extends Component {
 	 * @memberof AbstractSeries
 	 */
 	constructor() {
-		super();
-
-		this.ur = new UserRepository();
+		super()
 
 		this.state = {
 			series: null
-		};
+		}
 
 		this.toggleEpisode = this.toggleEpisode.bind(this)
 		this.toggleSeason = this.toggleSeason.bind(this)
@@ -45,10 +43,11 @@ export default class AbstractSeries extends Component {
 			const snum = episode.season - 1;
 			const epnum = index ? index : episode.episode - 1;
 			updated.seasons[snum].episodes[epnum].watched = !updated.seasons[snum].episodes[epnum].watched;
-			this.ur.updateWatchedSeries(updated);
+
+			EventBus.instance.emit("updateWatchedSeries", updated)
 			this.setState({
 				series: updated
-			});
+			})
 		}
 	}
 
@@ -76,7 +75,7 @@ export default class AbstractSeries extends Component {
 			});
 		}
 
-		this.ur.updateWatchedSeries(updated);
+		EventBus.instance.emit("updateWatchedSeries", updated)
 		this.setState({
 			series: updated
 		})
@@ -106,20 +105,20 @@ export default class AbstractSeries extends Component {
 				}
 				season.episodes.forEach(episode => {
 					episode.watched = false;
-				});
-			});
+				})
+			})
 		}
 
-		this.ur.updateWatchedSeries(updated);
+		EventBus.instance.emit("updateWatchedSeries", updated)
 		this.setState({
 			series: updated
-		});
+		})
 	}
 
 	getImageSrc(width = 300) {
-		const url = `${POSTER_URL}${this.state.series.posterUrl}`;
+		const url = `${POSTER_URL}${this.state.series.posterUrl}`
 		if (url.endsWith('jpg')) {
-			return url.replace(`w300`, `w${width}`);
+			return url.replace(`w300`, `w${width}`)
 		} else {
 			return '/bright-squares.png';
 		}

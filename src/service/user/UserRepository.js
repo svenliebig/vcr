@@ -25,7 +25,7 @@ export default class UserRepository {
 		});
 	}
 
-	getUserKeys() {
+	getUsers() {
 		return this.fb.get(`/users`).then(val => {
 			const tempArray = [];
 			for (let key in val) {
@@ -64,12 +64,12 @@ export default class UserRepository {
 	}
 
 	hasSeries(id, callback) {
-		this.getSeries(id, (val) => {
+		this.getSeries(id).then(val => {
 			if (val === null) {
-				return callback(false);
+				return callback(false)
 			}
-			callback(true);
-		});
+			callback(true)
+		})
 	}
 
 	getFinishedSeries() {
@@ -126,29 +126,35 @@ export default class UserRepository {
 		return this.fb.write(`/users/${this.uid}/name`, name);
 	}
 
-	getSeries(id, callback) {
-		this.fb.get(`/users/${this.uid}/series/${id}`).then(val => {
-			return callback(val);
-		});
+	getSeries(id) {
+		return this.fb.get(`/users/${this.uid}/series/${id}`).then(val => {
+			return Promise.resolve(val)
+		})
 	}
 
 	addSeries(series) {
 		this.checkArgs(series)
-		this.getSeries(series.id, result => {
-			let userSeries = null;
+		return this.getSeries(series.id).then(result => {
+			let userSeries = null
 			if (result) {
-				userSeries = SeriesConverter.merge(series, result);
+				userSeries = SeriesConverter.merge(series, result)
 			} else {
-				userSeries = SeriesConverter.convert(series);
+				userSeries = SeriesConverter.convert(series)
 			}
 			userSeries.isCompletlyWatched = userSeries.isWatched()
-			this.fb.write(`/users/${this.uid}/series/${series.id}`, userSeries);
-		});
+			return this.fb.write(`/users/${this.uid}/series/${series.id}`, userSeries)
+		})
 	}
 
-	removeSeries(id, callback) {
+	/**
+	 * removes the series with the given id from the /user/series database
+	 *
+	 * @param {number} id
+	 * @returns {Promise<>}
+	 */
+	removeSeries(id) {
 		this.checkArgs(id)
-		this.fb.remove(`/users/${this.uid}/series/${id}`).then(callback());
+		return this.fb.remove(`/users/${this.uid}/series/${id}`)
 	}
 
 	updateWatchedSeries(series) {

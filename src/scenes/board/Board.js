@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import Skeleton from '@scenes/skeleton/Skeleton';
 import Series from '@scenes/board/series/Series';
-import UserRepository from '@service/user/UserRepository';
-import SeriesRepository from '@service/series/SeriesRepository';
-import SeriesapiService from '@service/api/Moviedb';
 import Dropdown from '@components/dropdown';
 import ButtonToggle from '@components/button/toggle/ButtonToggle'
 
 import './Board.css';
+import EventBus from '@service/EventBus/EventBus';
 
 let selectableGenres = [{
 	name: "Alle"
@@ -26,9 +24,6 @@ let selectableGenres = [{
 export default class Board extends Component {
 	constructor() {
 		super()
-		this.ur = new UserRepository()
-		this.sr = new SeriesRepository()
-		this.sapi = new SeriesapiService()
 
 		this.state = {
 			selectedFilter: selectableGenres[0],
@@ -52,7 +47,7 @@ export default class Board extends Component {
 
 	componentDidMount() {
 		console.time("load series")
-		this.ur.getOpenSeries().then(series => {
+		EventBus.instance.emit("getOpenSeries").then(series => {
 			this.setState({
 				userSeries: series,
 				loaded: true
@@ -64,7 +59,7 @@ export default class Board extends Component {
 
 	toggleWatched(filterWatched) {
 		if (!this.state.finishedLoaded) {
-			this.ur.getFinishedSeries().then(series => {
+			EventBus.instance.emit("getFinishedSeries").then(series => {
 				this.setState({
 					userSeries: this.state.userSeries.concat(series),
 					filterWatched,

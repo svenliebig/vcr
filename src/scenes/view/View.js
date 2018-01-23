@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 import Skeleton from '@scenes/skeleton/Skeleton'
 
 /** Services */
-import SeriesRepository from '@service/series/SeriesRepository'
 import Message from '@service/Message'
 
 /** Components */
@@ -15,12 +14,12 @@ import Mail from '@components/button/Mail'
 
 
 import './View.css';
+import EventBus from '@service/EventBus/EventBus';
 
 export default class View extends AbstractSeries {
 
 	constructor(props) {
 		super()
-		this.sr = new SeriesRepository()
 		this.msg = new Message()
 
 		this.state = {
@@ -31,22 +30,12 @@ export default class View extends AbstractSeries {
 			suggestedUsername: ""
 		}
 
-		const self = this;
-
-		this.ur.getSeries(props.match.params.id, (series) => self.setState({ series }))
-		this.ur.getUserNames().then(usernames => this.setState({ usernames }))
-
 		this.handleInput = this.handleInput.bind(this)
 		this.savePreferences = this.savePreferences.bind(this)
 		this.removeSeries = this.removeSeries.bind(this)
 
-		this.sr.getBurningSeriesLink(props.match.params.id).then(bsto => {
-			this.setState({
-				bsto: bsto || ''
-			})
-		})
-
-		this.sr.getLinksOfSeries(props.match.params.id).then(links => {
+		EventBus.instance.emit("getSeries", props.match.params.id).then(series => this.setState({ series }))
+		EventBus.instance.emit("getLinksOfSeries", props.match.params.id).then(links => {
 			links && this.setState({
 				otaku: links.otaku || '',
 				bsto: links.bsto || (this.state.bsto || '')
@@ -55,13 +44,13 @@ export default class View extends AbstractSeries {
 	}
 
 	removeSeries() {
-		this.ur.removeSeries(this.props.match.params.id, () => {
+		EventBus.instance.emit("removeSeries", this.props.match.params.id).then(() => {
 			window.location.pathname = "/"
 		})
 	}
 
 	suggestSeries() {
-		this.ur.getName().then(val => this.msg.writeMessage(this.props.match.params.id, val, this.state.suggestedUsername))
+		EventBus.instance.emit("getName").then(val => this.msg.writeMessage(this.props.match.params.id, val, this.state.suggestedUsername))
 	}
 
 	handleInput(e) {
@@ -91,11 +80,11 @@ export default class View extends AbstractSeries {
 			bsto: this.state.bsto,
 			otaku: this.state.otaku
 		}
-		this.sr.saveLinkToSeries(this.state.series.id, '', links).then(() => {
+		EventBus.instance.emit("saveLinkToSeries", this.state.series.id, '', links).then(() => {
 			this.setState({
 				changed: false
-			});
-		});
+			})
+		})
 	}
 
 	render() {

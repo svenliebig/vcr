@@ -37,12 +37,6 @@ export default class Series extends AbstractSeries {
 	}
 
 	componentDidMount() {
-		this.sr.getBurningSeriesLink(this.props.series.id).then(bsto => {
-			this.setState({
-				bsto: bsto ? bsto : ''
-			});
-		});
-
 		this.sr.getLinksOfSeries(this.props.series.id).then(links => {
 			if (links) {
 				this.setState({

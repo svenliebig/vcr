@@ -41,25 +41,14 @@ class SeriesRepository {
 		})
 	}
 
+	/**
+	 * removes the series with the given id from the /series database
+	 *
+	 * @param {number} id
+	 * @returns {Promise<>}
+	 */
 	removeSeries(id) {
 		return this.fb.remove(`/series/${id}`)
-	}
-
-	/**
-	 * Returns the bs.to links from this series if one exists. If not it returns null.
-	 *
-	 * @param {number} id Of the series
-	 * @returns {Promise.<string>} called after reading the data
-	 * @memberof SeriesRepository
-	 */
-	getBurningSeriesLink(id) {
-		return this.fb.get(`/series/${id}/bstolink`).then(val => {
-			if (val) {
-				return this.saveLinkToSeries(id, "bsto", val).then(() => this.fb.remove(`/series/${id}/bstolink`)).then(() => Promise.resolve(val))
-			} else {
-				return Promise.resolve(val)
-			}
-		})
 	}
 
 	/**

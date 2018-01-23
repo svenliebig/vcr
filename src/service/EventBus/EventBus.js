@@ -13,7 +13,7 @@ export default class EventBus {
 
 	emit(event, ...args) {
 		if (Object.getOwnPropertyNames(this.events).indexOf(event) !== -1) {
-			this.events[event].apply(this, args)
+			return this.events[event].apply(this, args)
 		}
 	}
 
