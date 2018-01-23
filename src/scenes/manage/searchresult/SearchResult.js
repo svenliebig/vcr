@@ -3,7 +3,6 @@ import Link from "react-router-dom/Link"
 import PropTypes from "prop-types"
 import moment from "moment"
 
-import SeriesapiService from "@service/api/Moviedb"
 import EventBus from "@service/EventBus/EventBus"
 
 import "./SearchResult.css"
@@ -11,7 +10,6 @@ import "./SearchResult.css"
 export default class SearchResult extends Component {
 	constructor() {
 		super()
-		this.sapi = new SeriesapiService()
 
 		this.state = {
 			hasSeries: false,

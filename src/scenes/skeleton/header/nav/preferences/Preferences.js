@@ -1,22 +1,17 @@
 import React, { Component } from 'react'
 import Dialog from '@components/dialog'
-import UserRepository from "@service/user"
 import InputText from "@components/input/text"
+import EventBus from '@service/EventBus/EventBus';
 
 export default class Preferences extends Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			name: "",
-			loading: true
+			name: null
 		}
 
-		this.ur = new UserRepository()
-		const self = this
-		this.ur.getName().then(name => {
-			self.setState({ name, loading: false })
-		})
+		EventBus.instance.emit("getName").then(name => this.setState({ name }))
 	}
 
 	changed(val) {
@@ -26,8 +21,7 @@ export default class Preferences extends Component {
 	render() {
 		return (
 			<Dialog title="Einstellungen">
-				{this.state.loading ? '' :
-					<InputText id="name-input" value={this.state.name} label="Name" onChange={this.changed.bind(this)} throttled={500} />
+				{this.state.name ? <InputText id="name-input" value={this.state.name} label="Name" onChange={this.changed.bind(this)} throttled={500} /> : ""
 				}
 			</Dialog>
 		)
