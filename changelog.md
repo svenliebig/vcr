@@ -246,3 +246,28 @@ All notable changes to this project will be documented in this file.
 ### feat
 
 - implement message frontend
+
+## [0.9.36] - 23.01.2018
+
+### fix
+
+- couldnt toggle series that had no creator
+- couldnt toggle series in view because missing converter
+
+## [0.9.37] - 23.01.2018
+
+### feat
+
+- implement eventbus
+
+## [0.9.38] - 23.01.2018
+
+### feat
+
+- implement eventhandler
+
+## [0.9.39] - 23.01.2018
+
+### refactor
+
+- using eventhandler for the most repository calls, living the singleton pattern \o/
