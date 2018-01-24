@@ -1,6 +1,6 @@
-import environment from "../../environment/environment";
-import axios from 'axios';
-import { Series, Season } from '../../model/Series';
+import environment from "../../environment/environment"
+import axios from 'axios'
+import { Series, Season } from '../../model/Series'
 
 /**
  * Service for the API of themoviedb.org.
@@ -42,28 +42,28 @@ class SeriesapiService {
 	}
 
 	/**
-	 * Calls the API and returns a Series.
+	 * Calls the API and returns a Promise with the a Series and the number of total seasons.
 	 *
 	 * @param {number} id ID of the series
-	 * @param {*} callback Callback with parameter that returns the data
+	 * @return {Promise<Series, number>}
 	 * @memberof SeriesapiService
 	 */
-	getSeries(id, callback) {
+	getSeries(id) {
 		const url = `${this.API_URL}${this.BY_ID}${id}${environment.themoviedb}${this.LANG_PARAM}`;
-		this.callApi(url, callback, false);
+		return this.callApi(url).then(res => Promise.resolve(Series.fromEntity(res)))
 	}
 
 	/**
-	 * Calls the API and returns a Season.
+	 * Calls the API and returns a Promise with the a series season.
 	 *
 	 * @param {number} id ID of the series
 	 * @param {number} season Number of the season
-	 * @param {*} callback Callback with parameter that returns the data
+	 * @return {Promise<Season>}
 	 * @memberof SeriesapiService
 	 */
-	getSeriesSeason(id, season, callback) {
-		const url = `${this.API_URL}${this.BY_ID}${id}${this.SEASON}${season}${environment.themoviedb}${this.LANG_PARAM}`;
-		this.callApi(url, callback, false);
+	getSeriesSeason(id, season) {
+		const url = `${this.API_URL}${this.BY_ID}${id}${this.SEASON}${season}${environment.themoviedb}${this.LANG_PARAM}`
+		return this.callApi(url).then((res) => Promise.resolve(Season.fromEntity(res)))
 	}
 
 	/**
@@ -72,84 +72,102 @@ class SeriesapiService {
 	 * @param {number} id ID of the series
 	 * @param {number} season Number of the season
 	 * @param {number} episode Number of the episode
-	 * @param {*} callback Callback with parameter that returns the data
+	 * @return {Promise<any>}
 	 * @memberof SeriesapiService
 	 */
-	getSeriesEpisode(id, season, episode, callback) {
+	getSeriesEpisode(id, season, episode) {
 		let url = `${this.API_URL}${this.BY_ID}${id}${this.SEASON}${season}`;
 		url += `${this.EPISODE}${episode}${environment.themoviedb}${this.LANG_PARAM}`;
-		this.callApi(url, callback, false);
+		return this.callApi(url)
 	}
 
 	/**
+	 * Adds all available Season the given series argument.
 	 *
+	 * @param {Series} series
+	 * @param {number} seasonNumber
+	 * @param {number} lastSeason
+	 *
+	 * @return {Promise<Series>}
+	 */
+	addSeasons(series, seasonNumber) {
+		if (seasonNumber === 0) {
+			return this.addSeasons(series, ++seasonNumber, series.seasonsCount)
+		} else if (seasonNumber === -1) {
+			return this.addSeasons(series, ++seasonNumber, --series.seasonsCount)
+		}
+
+		return this.getSeriesSeason(series.id, seasonNumber).then(season => {
+			series.seasons.push(season)
+
+			if (series.seasons.length === series.seasonsCount) {
+				series.seasons.sort((a, b) => {
+					return a.seasonNumber - b.seasonNumber;
+				})
+				return Promise.resolve(series);
+			} else {
+				return this.addSeasons(series, ++seasonNumber, series.seasonsCount)
+			}
+		})
+	}
+
+	/**
 	 * Returns a complete {@link Series} object with seasons and episodes.
 	 *
 	 * @param {number} id ID of the Series
-	 * @param {*} [callback=(series: Series) void => {}]  Callback with Series as parameter
+	 *
+	 * @return {Promise<Series>}
 	 * @memberof SeriesapiService
 	 */
-	getCompleteSeries(id, callback) {
-		const self = this;
-		this.getSeries(id, (seriesData) => {
-			const series = Series.fromEntity(seriesData);
-			let lastSeason = seriesData.number_of_seasons;
-
-			seriesData.seasons.forEach(seasonIterator => {
-				// Fix for Moviedb - 0.9.16
-				if (seasonIterator.season_number === -1) {
-					lastSeason--
-					return
-				}
-				if (seasonIterator.season_number !== 0) {
-					self.getSeriesSeason(id, seasonIterator.season_number, (seasonData) => {
-
-						const season = Season.fromEntity(seasonData);
-						series.seasons.push(season);
-
-						if (series.seasons.length === lastSeason) {
-							series.seasons.sort((a, b) => {
-								return a.seasonNumber - b.seasonNumber;
-							})
-							callback(series);
-						}
-					})
-				}
-			})
+	getCompleteSeries(id) {
+		return this.getSeries(id).then((series) => {
+			return this.addSeasons(series, 0)
 		})
-		return Promise.resolve()
 	}
 
 	/**
-	 * Calls the API and returns a {@link SeriesInfoResponseByName} Array to the callback.
+	 * Calls the API and returns a Promise with series Array.
 	 *
 	 * @param {string} name Name of the Series that are searched
-	 * @callback callback Calls this function after the api call with an Array of SeriesInfoResponseByName
+	 * @returns {Promise<any>}
 	 * @memberof SeriesapiService
 	 */
-	findSerieByName(name, callback) {
-		const url = `${this.API_URL}${this.BY_NAME}${environment.themoviedb}&query=${name}${this.LANG_PARAM}`;
-		const findSeriesByNameCall = (res) => {
-			callback(res.results);
-		};
-		this.callApi(url, findSeriesByNameCall);
+	findSerieByName(name) {
+		const url = `${this.API_URL}${this.BY_NAME}${environment.themoviedb}&query=${name}${this.LANG_PARAM}`
+		return this.callApi(url).then(res => Promise.resolve(res.results))
 	}
 
-	callApi(url, callback) {
-		let self = this;
-		axios.get(url, { headers: this.headers })
+	/**
+	 * Returns a delayed promise, apply the promise as () => Promise.resolve(any)
+	 *
+	 * @param {number} t time that the returned promise is delayed
+	 * @param {Function: Promise<any>} v the promise shall be resolved
+	 * @returns {Promise<any>}
+	 */
+	delay(t, v) {
+		return new Promise(resolve => {
+			setTimeout(resolve.bind(null, v), t)
+		})
+	}
+
+	/**
+	 * Calls an api url and returns a promise with the data or null.
+	 *
+	 * @param {string} url
+	 * @returns {Promise<any | null}
+	 */
+	callApi(url) {
+		return axios.get(url, { headers: this.headers })
 			.then(data => {
 				if (data && data.status === 200) {
-					callback(data.data);
+					return Promise.resolve(data.data)
 				} else {
-					callback(null)
+					return Promise.resolve(null)
 				}
 			})
 			.catch(() => {
-				setTimeout(() => {
-					self.callApi(url, callback);
-				}, 1000);
-			});
+				return this.delay(1000).then(() => this.callApi(url))
+			})
 	}
 }
 

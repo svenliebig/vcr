@@ -1,5 +1,5 @@
 import Firebase from '../firebase/Firebase'
-import { Series } from '@model/Series';
+import { Series } from '../../model/Series'
 
 
 /**
@@ -23,7 +23,7 @@ class SeriesRepository {
 			return Promise.resolve(null)
 		}
 
-		return this.fb.get(`/series/${id}`).then(val => Promise.resolve(Series.fromFirebase(val)))
+		return this.fb.get(`/series/${id}`).then(val => Promise.resolve(val && Series.fromFirebase(val)))
 	}
 
 	/**

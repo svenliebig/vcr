@@ -3,81 +3,62 @@ import axios from 'axios'
 
 
 describe('MovieDatabase', () => {
+	/** @type {SeriesapiService} */
 	let classUnderTest = null;
 
 	beforeAll(() => {
 		classUnderTest = new SeriesapiService();
-	});
+	})
 
 	it('should find the walking dead in the database', (done) => {
-		// preparation
-	
-		// execution
-	
-		// testing
-		classUnderTest.findSerieByName('The Walking Dead', (res) => {
+		classUnderTest.findSerieByName('The Walking Dead').then(res => {
 			expect(res.length).toBeGreaterThan(0);
-			done();
-		});
-	});
-	
-	it('should find the walking dead by id in the database', (done) => {
-		// preparation
-	
-		// execution
-	
-		// testing
-		classUnderTest.getSeries(1402, (res) => {
-			expect(res).toBeDefined();
-			done();
-		});
+			done()
+		})
 	});
 
-	it('should find the walking dead season 1 by id in the database', (done) => {
-		// preparation
-	
-		// execution
-	
-		// testing
-		classUnderTest.getSeriesSeason(1402, 1, (res) => {
-			expect(res).toBeDefined();
-			done();
-		});
-	});
-	
-	it('should find complete the walking dead by id in the database', (done) => {
-		// preparation
-	
-		// execution
-	
-		// testing
-		classUnderTest.getCompleteSeries(1402, (res) => {
-			expect(res).toBeDefined();
-			done();
-		});
+	it('should find the walking dead by id in the database', (done) => {
+		classUnderTest.getSeries(1402).then(res => {
+			expect(res).toBeDefined()
+			done()
+		})
 	})
-	
-	describe('rest api returns null as value', () => {
+
+	it('should find the walking dead season 1 by id in the database', (done) => {
+		classUnderTest.getSeriesSeason(1402, 1).then(res => {
+			expect(res).toBeDefined()
+			done()
+		})
+	})
+
+	it('should find complete the walking dead by id in the database', (done) => {
+		classUnderTest.getCompleteSeries(1402).then(res => {
+			expect(res).toBeDefined()
+			done()
+		})
+	})
+
+	describe('rest api returns null as promise', () => {
 		beforeEach(() => {
 			spyOn(axios, 'get').and.callFake(() => Promise.resolve(null))
 		})
 
-		it('should call the callback with a value that is equal to null', (done) => {
-			var mock = { func: (val) => {
-					expect(val).toBe(null)
-					done()
-				}
-			}
-			classUnderTest.callApi(null, mock.func)
-		});
-		
-		it('should call the setTimeout function when a error was thrown in the promise', (done) => {
-			var mock = { func: () => {
-					throw ""
-				}
-			}
-			spyOn(window, 'setTimeout').and.callFake(() => done())
-			classUnderTest.callApi(null, mock.func)
-		});
+		it('should call the promise with a value that is equal to null', (done) => {
+			classUnderTest.callApi(null).then((val) => {
+				expect(val).toBe(null)
+				done()
+			})
+		})
 	})
-});
+
+	describe('rest api rejects promise', () => {
+		beforeEach(() => {
+			spyOn(axios, 'get').and.callFake(() => Promise.reject())
+		})
+
+		it('should call the setTimeout function when a error was thrown in the promise', (done) => {
+			spyOn(window, 'setTimeout').and.callFake(() => done())
+			classUnderTest.callApi(null).then(done)
+		})
+	})
+})

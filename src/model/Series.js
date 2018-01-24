@@ -171,19 +171,20 @@ export class Series {
 	 * @memberof Series
 	 */
 	constructor(id, name = '', overview = '', airDate = '', posterUrl = '', rating = 0, votes = 0, seasons = []) {
-		this.id = id;
-		this.name = name;
-		this.overview = overview;
-		this.airDate = airDate;
-		this.posterUrl = posterUrl;
-		this.rating = rating;
-		this.votes = votes;
-		this.seasons = seasons;
-		this.genres = [];
-		this.country = [];
-		this.status = "";
-		this.createdBy = [];
-		this.episodeDuration = [];
+		this.id = id
+		this.name = name
+		this.overview = overview
+		this.airDate = airDate
+		this.posterUrl = posterUrl
+		this.rating = rating
+		this.votes = votes
+		this.seasons = seasons
+		this.genres = []
+		this.country = []
+		this.status = ""
+		this.createdBy = []
+		this.seasonsCount = 0
+		this.episodeDuration = []
 		this.bstolink = ''
 	}
 
@@ -209,10 +210,13 @@ export class Series {
 		newSeries.status = series.status
 		newSeries.createdBy = series.createdBy || ""
 		newSeries.episodeDuration = series.episodeDuration
+		newSeries.seasonsCount = series.seasonsCount || (series.seasons && series.seasons.length) || 0
 
-		series.seasons.forEach((season) => {
-			newSeries.seasons.push(Season.fromFirebase(season))
-		})
+		if (series.seasons) {
+			series.seasons.forEach((season) => {
+				newSeries.seasons.push(Season.fromFirebase(season))
+			})
+		}
 
 		return newSeries
 	}
@@ -233,6 +237,7 @@ export class Series {
 		thisSeries.posterUrl = `${series.backdrop_path}`;
 		thisSeries.rating = series.vote_average;
 		thisSeries.votes = series.vote_count;
+		thisSeries.seasonsCount = series.number_of_seasons
 		thisSeries.genres = [];
 
 		if (series.genres) {

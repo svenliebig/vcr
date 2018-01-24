@@ -2,9 +2,12 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import EventBus from "@service/EventBus/EventBus"
-import UserRepository from "@service/user/UserRepository";
-import SeriesRepository from "@service/series/SeriesRepository";
-import SeriesapiService from "@service/api/Moviedb";
+
+import Message from "@service/Message"
+import Firebase from '@service/firebase/Firebase'
+import SeriesapiService from "@service/api/Moviedb"
+import UserRepository from "@service/user/UserRepository"
+import SeriesRepository from "@service/series/SeriesRepository"
 
 /**
  * Component Class of EventHandler.
@@ -24,16 +27,25 @@ export default class EventHandler extends Component {
 		this.userRepository = new UserRepository()
 		this.seriesApi = new SeriesapiService()
 		this.seriesRepository = new SeriesRepository()
+		this.message = new Message()
+		this.firebase = new Firebase()
 
 		EventBus.instance.register("addSeries", (id) => {
-
-			return this.seriesApi.getCompleteSeries(id, (series) => {
+			return this.seriesApi.getCompleteSeries(id).then(series => {
 				this.userRepository.addSeries(series)
 				this.seriesRepository.addSeries(series)
-				return Promise.resolve()
+				return Promise.resolve(series)
 			})
-
 		})
+
+		// User Management
+		EventBus.instance.register("logout", (() => {
+			this.firebase.logout()
+			window.location.pathname = "/"
+		}))
+
+		// Messages
+		EventBus.instance.register("getMessages", () => this.userRepository.getName().then(name => this.message.getMessages(name)))
 
 		// User Repository
 		EventBus.instance.register("getOpenSeries", () => this.userRepository.getOpenSeries())

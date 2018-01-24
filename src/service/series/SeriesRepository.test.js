@@ -41,9 +41,7 @@ describe('SeriesRepository', () => {
 				repo.removeSeries(id).then(() => done())
 			})
 
-			it('id and value given 🎉  should add a series', (done) => {
-
-				// execution
+			it('id and value given should add a series', (done) => {
 				repo.addSeries(series).then(() => {
 					repo.getSeries(id).then(value => {
 						expect(value.name).toBe("testseries")

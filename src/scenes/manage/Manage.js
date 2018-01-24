@@ -29,7 +29,7 @@ export default class Manage extends Component {
 					});
 					return;
 				}
-				tvapi.findSerieByName(self.state.searchString, (result) => {
+				tvapi.findSerieByName(self.state.searchString).then(result => {
 					self.setState({
 						searchResultsArray: result
 					});
@@ -40,14 +40,14 @@ export default class Manage extends Component {
 		this.searchStringChanged = this.searchStringChanged.bind(this);
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.searchInput.focus();
 	}
 
 	searchStringChanged(event) {
 		this.setState({
 			searchString: event.target.value
-	  	});
+		});
 		this.state.searchStringObs.next(event.target.value);
 	}
 
@@ -58,18 +58,18 @@ export default class Manage extends Component {
 
 	render() {
 		const searchResults = this.state.searchResultsArray.map((series) =>
-			<div key={ series.id }>
-				<SearchResult series={ series } />
-			</div> 
+			<div key={series.id}>
+				<SearchResult series={series} />
+			</div>
 		);
 
 		return (
-		<Skeleton>
-			<div className="manage-wrapper">
-				<input ref={(input) => { this.searchInput = input; }} placeholder="Suche. ." type="text" onChange={ this.searchStringChanged } value={ this.state.searchString} />
-			</div>
-			{ searchResults }
-		</Skeleton>
+			<Skeleton>
+				<div className="manage-wrapper">
+					<input ref={(input) => { this.searchInput = input; }} placeholder="Suche. ." type="text" onChange={this.searchStringChanged} value={this.state.searchString} />
+				</div>
+				{searchResults}
+			</Skeleton>
 		)
 	}
 }

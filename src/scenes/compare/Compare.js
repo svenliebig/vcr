@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
+
 import Skeleton from '@scenes/skeleton'
-import SeriesapiService from '@service/api/Moviedb'
 import SeriesCard from '@components/SeriesCard'
-import UserRepository from "@service/user/UserRepository";
+import EventBus from '@service/EventBus/EventBus';
 
 import './Compare.css';
-import EventBus from '@service/EventBus/EventBus';
 
 export default class Compare extends Component {
 
@@ -21,8 +20,6 @@ export default class Compare extends Component {
 			onlyyou: []
 		}
 
-		this.ur = new UserRepository()
-		this.sapi = new SeriesapiService()
 		self = this
 
 		EventBus.instance.emit("getUsers").then(users => this.setState({ users }))
@@ -61,13 +58,11 @@ export default class Compare extends Component {
 	}
 
 	addSeries(id) {
-		let self = this
-		this.sapi.getCompleteSeries(id, (series) => {
-			let yours = self.state.yours.slice()
+		EventBus.instance.emit("addSeries", id).then(series => {
+			let yours = this.state.yours.slice()
 			yours.push(series)
-			self.ur.addSeries(series)
-			self.setState({ yours }, () => {
-				self.handler(self.state.other)
+			this.setState({ yours }, () => {
+				this.handler(this.state.other)
 			})
 		})
 	}

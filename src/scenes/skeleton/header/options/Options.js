@@ -3,19 +3,13 @@ import { withRouter } from "react-router-dom"
 
 // Components
 import IconBadge from "@components/IconBadge"
+import SeriesCard from "@components/SeriesCard"
 
 // Service
-import Firebase from '@service/firebase/Firebase'
-import Message from '@service/Message'
-import UserRepository from '@service/user'
-import SeriesCard from "@components/SeriesCard"
-import SeriesapiService from '@service/api/Moviedb'
+import EventBus from "@service/EventBus/EventBus"
 
 // CSS
 import './Options.css';
-import EventBus from '@service/EventBus/EventBus';
-
-const fb = new Firebase();
 
 class Options extends Component {
 	constructor() {
@@ -29,10 +23,6 @@ class Options extends Component {
 		}
 
 		this.messages = []
-		this.msg = new Message()
-		this.ur = new UserRepository()
-		this.sapi = new SeriesapiService()
-
 
 		this.logout = this.logout.bind(this);
 		this.settings = this.settings.bind(this)
@@ -40,7 +30,7 @@ class Options extends Component {
 	}
 
 	componentDidMount() {
-		EventBus.instance.emit("getName").then(name => this.msg.getMessages(name).then(val => {
+		EventBus.instance.emit("getMessages").then(val => {
 			const seriesMessages = []
 			val.forEach((message, i) => EventBus.instance.emit("getSeries", message.series).then(series => {
 				seriesMessages.push(series)
@@ -48,12 +38,11 @@ class Options extends Component {
 					this.setState({ seriesMessages, messages: val })
 				}
 			}))
-		}))
+		})
 	}
 
 	logout() {
-		fb.logout();
-		window.location.pathname = "/";
+		EventBus.instance.emit("logout")
 	}
 
 	settings() {
@@ -65,10 +54,7 @@ class Options extends Component {
 	}
 
 	addSeries(_series, index) {
-		this.sapi.getCompleteSeries(_series.id, (series) => {
-			this.ur.addSeries(series)
-			this.removeMessage(index)
-		})
+		EventBus.instance.emit("addSeries", _series.id).then(() => this.removeMessage(index))
 	}
 
 	removeMessage(index) {
@@ -98,26 +84,22 @@ class Options extends Component {
 			}
 		}
 
-		if (fb.isLoggedIn()) {
-			return (
-				<div className="options-wrapper">
-					<div className="options-container">
-						<IconBadge icon="fa fa-envelope-o" counter={this.state.messages.length} onClick={this.toggleMessages.bind(this)} />
-						<button onClick={this.settings} title="Einstellungen">
-							<span className="fa fa-cog"></span>
-						</button>
-						<button onClick={this.logout} title="Ausloggen">
-							<span className="fa fa-power-off"></span>
-						</button>
-					</div>
-					<div className="messages">
-						{renderMessages()}
-					</div>
-				</div >
-			);
-		} else {
-			return (<div />);
-		}
+		return (
+			<div className="options-wrapper">
+				<div className="options-container">
+					<IconBadge icon="fa fa-envelope-o" counter={this.state.messages.length} onClick={this.toggleMessages.bind(this)} />
+					<button onClick={this.settings} title="Einstellungen">
+						<span className="fa fa-cog"></span>
+					</button>
+					<button onClick={this.logout} title="Ausloggen">
+						<span className="fa fa-power-off"></span>
+					</button>
+				</div>
+				<div className="messages">
+					{renderMessages()}
+				</div>
+			</div >
+		)
 	}
 }
 
