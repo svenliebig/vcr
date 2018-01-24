@@ -30,6 +30,7 @@ export default class EventHandler extends Component {
 		this.message = new Message()
 		this.firebase = new Firebase()
 
+		// Movie DB Api
 		EventBus.instance.register("addSeries", (id) => {
 			return this.seriesApi.getCompleteSeries(id).then(series => {
 				this.userRepository.addSeries(series)
@@ -37,6 +38,7 @@ export default class EventHandler extends Component {
 				return Promise.resolve(series)
 			})
 		})
+		EventBus.instance.register("findSeriesByName", (name) => this.seriesApi.findSerieByName(name))
 
 		// User Management
 		EventBus.instance.register("logout", (() => {
@@ -46,6 +48,10 @@ export default class EventHandler extends Component {
 
 		// Messages
 		EventBus.instance.register("getMessages", () => this.userRepository.getName().then(name => this.message.getMessages(name)))
+		EventBus.instance.register("clearMessage", clear => this.message.clearMessage(clear))
+		EventBus.instance.register("writeMessage", (id, to) =>
+			this.userRepository.getName().then(from =>
+				this.message.writeMessage(id, from, to)))
 
 		// User Repository
 		EventBus.instance.register("getOpenSeries", () => this.userRepository.getOpenSeries())
@@ -61,6 +67,7 @@ export default class EventHandler extends Component {
 		EventBus.instance.register("getSeries", id => this.seriesRepository.getSeries(id))
 		EventBus.instance.register("getLinksOfSeries", id => this.seriesRepository.getLinksOfSeries(id))
 		EventBus.instance.register("saveLinkToSeries", (id, type, val) => this.seriesRepository.saveLinkToSeries(id, type, val))
+
 	}
 
 	render() {

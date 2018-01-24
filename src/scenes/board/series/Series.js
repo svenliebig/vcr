@@ -1,26 +1,24 @@
-/** React Imports */
 import React from 'react'
 import PropTypes from 'prop-types';
-
-/** Other Libraries */
 import moment from 'moment'
 
-/** Imports */
-import SeriesRepository from '@service/series/SeriesRepository'
+// Service
+import EventBus from '@service/EventBus/EventBus';
+
+// Components
 import AbstractSeries from '@components/abstract/AbstractSeries'
 import SeriesCard from '@components/SeriesCard'
-
-/** CSS */
-import './Series.css';
 import { Episode } from '@components';
+
+// CSS
+import './Series.css';
 
 /**
  * Represents a Series.
  */
 export default class Series extends AbstractSeries {
 	constructor(props) {
-		super();
-		this.sr = new SeriesRepository();
+		super(props)
 
 		this.state = {
 			activeSeason: 0,
@@ -37,7 +35,7 @@ export default class Series extends AbstractSeries {
 	}
 
 	componentDidMount() {
-		this.sr.getLinksOfSeries(this.props.series.id).then(links => {
+		EventBus.instance.emit("getLinksOfSeries", this.props.series.id).then(links => {
 			if (links) {
 				this.setState({
 					otaku: links.otaku || '',

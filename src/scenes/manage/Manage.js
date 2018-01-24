@@ -1,41 +1,41 @@
-import React, { Component } from 'react'
-import Skeleton from '@scenes/skeleton/Skeleton'
-import SearchResult from '@scenes/manage/searchresult/SearchResult'
-import SeriesapiService from '@service/api/Moviedb'
+import React, { Component } from "react"
+import { Subject } from "rxjs/Subject"
+import "rxjs/add/operator/debounceTime"
 
-import './Manage.css';
+// Service
+import EventBus from "@service/EventBus/EventBus"
 
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
+// Components
+import Skeleton from "@scenes/skeleton/Skeleton"
+import SearchResult from "@scenes/manage/searchresult/SearchResult"
+
+// CSS
+import "./Manage.css"
 
 export default class Manage extends Component {
-	constructor() {
-		super();
-
-		let tvapi = new SeriesapiService();
+	constructor(props) {
+		super(props)
 
 		this.state = {
-			searchString: '',
-			searchStringObs: new Subject(),
+			searchString: "",
 			searchResultsArray: []
 		}
 
-		let self = this;
-		this.state.searchStringObs.debounceTime(500).subscribe(
-			() => {
-				if (self.state.searchString === '') {
-					self.setState({
-						searchResultsArray: []
-					});
-					return;
-				}
-				tvapi.findSerieByName(self.state.searchString).then(result => {
-					self.setState({
-						searchResultsArray: result
-					});
-				});
+		this.observer = new Subject()
+
+		this.observer.debounceTime(500).subscribe(() => {
+			if (this.state.searchString === "") {
+				this.setState({
+					searchResultsArray: []
+				})
+				return
 			}
-		);
+			EventBus.instance.emit("findSeriesByName", this.state.searchString).then(result => {
+				this.setState({
+					searchResultsArray: result
+				})
+			})
+		})
 
 		this.searchStringChanged = this.searchStringChanged.bind(this);
 	}
@@ -47,13 +47,13 @@ export default class Manage extends Component {
 	searchStringChanged(event) {
 		this.setState({
 			searchString: event.target.value
-		});
-		this.state.searchStringObs.next(event.target.value);
+		})
+		this.observer.next(event.target.value);
 	}
 
 	clearInput() {
-		this.searchString = '';
-		this.searchStringObs.next(this.searchString);
+		this.searchString = ""
+		this.observer.next(this.searchString)
 	}
 
 	render() {
@@ -66,7 +66,7 @@ export default class Manage extends Component {
 		return (
 			<Skeleton>
 				<div className="manage-wrapper">
-					<input ref={(input) => { this.searchInput = input; }} placeholder="Suche. ." type="text" onChange={this.searchStringChanged} value={this.state.searchString} />
+					<input ref={(input) => this.searchInput = input} placeholder="Suche. ." type="text" onChange={this.searchStringChanged} value={this.state.searchString} />
 				</div>
 				{searchResults}
 			</Skeleton>

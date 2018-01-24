@@ -285,3 +285,9 @@ All notable changes to this project will be documented in this file.
 - promisify the moviedatabase api
 - replace all references to the movie db api with the eventHandler
 - refactor load cycle of series from api, to recursive load seasons and return the promise
+
+## [0.9.42] - 24.01.2018
+
+### refactor
+
+- using eventHandler to write, get and clear Messaged

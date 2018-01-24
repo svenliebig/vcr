@@ -1,32 +1,30 @@
-import React from 'react'
+import React from "react"
 import { Link } from "react-router-dom"
 
-import Skeleton from '@scenes/skeleton/Skeleton'
+import Skeleton from "@scenes/skeleton/Skeleton"
 
 /** Services */
-import Message from '@service/Message'
+import EventBus from "@service/EventBus/EventBus"
 
 /** Components */
-import { Tabs, Tab } from '@components/tabs'
-import AbstractSeries from '@components/abstract/AbstractSeries'
-import ButtonRemove from '@components/button/remove/ButtonRemove'
-import Mail from '@components/button/Mail'
+import { Tabs, Tab } from "@components/tabs"
+import AbstractSeries from "@components/abstract/AbstractSeries"
+import ButtonRemove from "@components/button/remove/ButtonRemove"
+import Mail from "@components/button/Mail"
 
 
-import './View.css';
-import EventBus from '@service/EventBus/EventBus';
+import "./View.css";
 
 export default class View extends AbstractSeries {
 
 	constructor(props) {
 		super()
-		this.msg = new Message()
 
 		this.state = {
 			series: null,
 			changed: false,
-			bsto: '',
-			otaku: '',
+			bsto: "",
+			otaku: "",
 			suggestedUsername: ""
 		}
 
@@ -50,7 +48,7 @@ export default class View extends AbstractSeries {
 	}
 
 	suggestSeries() {
-		EventBus.instance.emit("getName").then(val => this.msg.writeMessage(this.props.match.params.id, val, this.state.suggestedUsername))
+		EventBus.instance.emit("writeMessage", this.props.match.params.id, this.state.suggestedUsername)
 	}
 
 	handleInput(e) {

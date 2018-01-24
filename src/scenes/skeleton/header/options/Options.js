@@ -61,7 +61,7 @@ class Options extends Component {
 		const clear = this.state.messages.splice(index, 1)
 		this.state.seriesMessages.splice(index, 1)
 		this.setState({ messages: this.state.messages, seriesMessages: this.state.seriesMessages },
-			() => this.msg.clearMessage(clear)
+			() => EventBus.instance.emit("clearMessage", clear)
 		)
 	}
 
