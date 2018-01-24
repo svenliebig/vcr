@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Dialog from '@components/dialog'
-import InputText from "@components/input/text"
+import InputText from "@components/Input/Text"
 import EventBus from '@service/EventBus/EventBus';
 
 export default class Preferences extends Component {

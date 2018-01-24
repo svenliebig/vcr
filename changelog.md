@@ -271,3 +271,9 @@ All notable changes to this project will be documented in this file.
 ### refactor
 
 - using eventhandler for the most repository calls, living the singleton pattern \o/
+
+## [0.9.40] - 23.01.2018
+
+### refactor
+
+- Login and InputText
