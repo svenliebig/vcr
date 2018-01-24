@@ -291,3 +291,9 @@ All notable changes to this project will be documented in this file.
 ### refactor
 
 - using eventHandler to write, get and clear Messaged
+
+## [0.9.43] - 24.01.2018
+
+### refactor
+
+- series code in board view

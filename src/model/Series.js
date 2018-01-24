@@ -92,7 +92,7 @@ export class Season {
 	 * @param {string} [name=''] Name of the season.
 	 * @param {string} [overview=''] Description of this season.
 	 * @param {number} [seasonNumber=0] Number of this season.
-	 * @param {any} [episodes=new Array<Episode>()] Array of episodes that are in this season.
+	 * @param {Array<Episode>} [episodes=new Array<Episode>()] Array of episodes that are in this season.
 	 * @param {number} [episodeAmount=0] Number of total episodes of this season.
 	 * @memberof Season
 	 */

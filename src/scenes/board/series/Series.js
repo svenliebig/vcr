@@ -1,30 +1,39 @@
-import React from 'react'
-import PropTypes from 'prop-types';
-import moment from 'moment'
+import React from "react"
+import PropTypes from "prop-types"
+import moment from "moment"
 
 // Service
-import EventBus from '@service/EventBus/EventBus';
+import EventBus from "@service/EventBus/EventBus"
+
+// Model
+import { Series as SeriesModel, Season } from "@model/Series"
 
 // Components
-import AbstractSeries from '@components/abstract/AbstractSeries'
-import SeriesCard from '@components/SeriesCard'
-import { Episode } from '@components';
+import AbstractSeries from "@components/abstract/AbstractSeries"
+import SeriesCard from "@components/SeriesCard"
+import Episode from "@components/Episode"
+import Tooltip from "@components/Tooltip"
 
 // CSS
-import './Series.css';
+import "./Series.css"
 
 /**
  * Represents a Series.
  */
 export default class Series extends AbstractSeries {
+
+	/**
+	 *
+	 * @param {{ series: SeriesModel }} props
+	 */
 	constructor(props) {
 		super(props)
 
 		this.state = {
 			activeSeason: 0,
 			series: props.series,
-			bsto: '',
-			otaku: ''
+			bsto: "",
+			otaku: ""
 		}
 
 		this.getActiveSeason = this.getActiveSeason.bind(this);
@@ -38,8 +47,8 @@ export default class Series extends AbstractSeries {
 		EventBus.instance.emit("getLinksOfSeries", this.props.series.id).then(links => {
 			if (links) {
 				this.setState({
-					otaku: links.otaku || '',
-					bsto: links.bsto || (this.state.bsto || '')
+					otaku: links.otaku || "",
+					bsto: links.bsto || (this.state.bsto || "")
 				})
 			}
 		})
@@ -47,7 +56,7 @@ export default class Series extends AbstractSeries {
 		this.setState({
 			activeSeason: this.getActiveSeason(),
 			series: this.props.series
-		});
+		})
 	}
 
 	getActiveSeason() {
@@ -71,7 +80,7 @@ export default class Series extends AbstractSeries {
 		if (this.state.activeSeason > 1) {
 			this.setState({
 				activeSeason: this.state.activeSeason - 1
-			});
+			})
 		}
 	}
 
@@ -79,79 +88,83 @@ export default class Series extends AbstractSeries {
 		if (this.state.activeSeason < (this.state.series.seasons.length)) {
 			this.setState({
 				activeSeason: this.state.activeSeason + 1
-			});
+			})
 		}
 	}
 
 	getSeasonClass(num) {
 		if (num === this.state.activeSeason) {
-			return 'active'
+			return "active"
 		} else if (num - 1 === this.state.activeSeason) {
-			return 'preactive'
+			return "preactive"
 		} else if (num + 1 === this.state.activeSeason) {
-			return 'preactive'
+			return "preactive"
 		} else {
-			return ''
+			return ""
 		}
 	}
 
 	seasonScroll(event) {
-		event.preventDefault();
+		event.preventDefault()
 		if (event.deltaY > 0) {
-			this.incrementActiveSeason();
+			this.incrementActiveSeason()
 		} else {
-			this.decrementActiveSeason();
+			this.decrementActiveSeason()
 		}
 	}
 
 	createSeriesLink() {
 		if (this.state.bsto.match(/https:\/\/bs\.to\/serie/)) {
-			return `${this.state.bsto}/${this.state.activeSeason}`;
+			return `${this.state.bsto}/${this.state.activeSeason}`
 		} else {
-			return `${this.state.bsto}`;
+			return `${this.state.bsto}`
 		}
 	}
 
 	render() {
-		let self = this;
-
 		const createEpisodes = (episode, index) => {
 			return <Episode key={index} episode={episode} onClick={this.toggleEpisode.bind(this, episode, index)} />
 		}
 
+		/**
+		 *
+		 * @param {Season} season
+		 * @param {number} index
+		 */
 		const createSeasonToggle = (season) => {
 			let render = true;
 
 			if (season.episodes === undefined) {
-				return ''
+				return ""
 			}
 
-			season.episodes.forEach(episode => {
-				render &= moment(episode.airDate).isBefore();
-			})
+			render = !season.episodes.some(episode => !episode.isAired())
 
 			if (render) {
 				return (
-					<button
-						className="fa fa-eye"
-						title="Alle Folgen dieser Staffel als gesehen markieren."
-						onClick={self.toggleSeason.bind(self, season)}>
-					</button>
-				);
+					<Tooltip text="Alle Folgen dieser Staffel als gesehen markieren">
+						<button className="fa fa-eye" onClick={this.toggleSeason.bind(this, season)} />
+					</Tooltip>
+				)
 			}
 		}
 
+		/**
+		 *
+		 * @param {Season} season
+		 * @param {number} index
+		 */
 		const createSeasons = (season, index) => {
 			return (
-				<div key={index} className={'season ' + this.getSeasonClass(season.seasonNumber)}>
+				<div key={index} className={"season " + this.getSeasonClass(season.seasonNumber)}>
 					{createSeasonToggle(season)}
-					<div className="season-title">{'Staffel ' + season.seasonNumber}</div>
+					<div className="season-title">{"Staffel " + season.seasonNumber}</div>
 					<div className="episodes-wrapper" season={season.seasonNumber}>
-						{(season.episodes !== undefined ? season.episodes.map(createEpisodes) : '')}
+						{(season.episodes !== undefined ? season.episodes.map(createEpisodes) : "")}
 					</div>
 				</div>
-			);
-		};
+			)
+		}
 
 		const seasonMap = () => {
 			return (
@@ -161,7 +174,7 @@ export default class Series extends AbstractSeries {
 					</div>
 				</div>
 			)
-		};
+		}
 
 		return (
 			<div className="series-card-wrapper">
@@ -169,19 +182,19 @@ export default class Series extends AbstractSeries {
 					{
 						this.state.bsto ?
 							<a className="bs-link" href={this.createSeriesLink()} target="_blank">bs</a>
-							: ''
+							: ""
 					}
 					{
 						this.state.otaku ?
 							<a className="otaku-link" href={this.state.otaku} target="_blank">otk</a>
-							: ''
+							: ""
 					}
-					<button
-						className="fa fa-eye"
-						style={{ position: "absolute", left: 270, bottom: 11, zIndex: 9, background: "none", color: "inherit", border: "none", outline: "none", cursor: "pointer" }}
-						title="Alle Folgen der Serie als gesehen markieren."
-						onClick={this.toggleSeries}>
-					</button>
+					<Tooltip text="Alle Folgen der Serie als gesehen markieren">
+						<button className="fa fa-eye"
+							style={{ position: "absolute", left: 270, bottom: 11, zIndex: 9, background: "none", color: "inherit", border: "none", outline: "none", cursor: "pointer" }}
+							onClick={this.toggleSeries}
+						/>
+					</Tooltip>
 					{seasonMap()}
 				</SeriesCard>
 			</div>
@@ -190,5 +203,5 @@ export default class Series extends AbstractSeries {
 }
 
 Series.propTypes = {
-	series: PropTypes.object.isRequired
+	series: PropTypes.instanceOf(SeriesModel).isRequired
 }
