@@ -297,3 +297,9 @@ All notable changes to this project will be documented in this file.
 ### refactor
 
 - series code in board view
+
+## [0.9.44] - 25.01.2018
+
+### refactor
+
+- service part
