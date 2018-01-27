@@ -310,3 +310,9 @@ All notable changes to this project will be documented in this file.
 
 - implement chat
 - fix username input
+
+## [0.9.46] - 28.01.2018
+
+### feat
+
+- adding features to the chat

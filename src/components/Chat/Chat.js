@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 import './Chat.css'
 import EventBus from '@service/EventBus/EventBus';
+import Tooltip from '@components/Tooltip';
 
 /**
  * Component Class of Chat.
@@ -22,14 +23,15 @@ export default class Chat extends Component {
 		super()
 
 		this.state = {
-			users: []
+			users: [],
+			collapsed: true
 		}
 	}
 
 	componentDidMount() {
 		EventBus.instance.emit("getName").then(name => {
 			this.username = name
-			this.connection = new WebSocket("ws://127.0.0.1:8081")
+			this.connection = new WebSocket("ws://tv.websocket.slyox.de/ws")
 			this.connection.onopen = () => {
 				this.connection.send(this.username)
 			}
@@ -45,8 +47,7 @@ export default class Chat extends Component {
 	}
 
 	click() {
-		console.log("click")
-		// this.connection.send("this.username")
+		this.setState({ collapsed: !this.state.collapsed })
 	}
 
 	handleMessage(incomingMessage) {
@@ -76,9 +77,14 @@ export default class Chat extends Component {
 	render() {
 		return (
 			<div className="chat-container" onClick={this.click.bind(this)}>
-				<div className="connection-symbol" />
-				<div className="connections-amount">
-					{this.state.users.length}
+				<div className="connection-head">
+					<div className="connection-symbol" />
+					<div className="connections-amount">
+						{this.state.users.length}
+					</div>
+				</div>
+				<div className={`collapsable ${this.state.collapsed ? "collapsed" : ""}`}>
+					{this.state.users.map(val => <div className="chat-user">{val}</div>)}
 				</div>
 			</div>
 		)
