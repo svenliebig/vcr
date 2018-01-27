@@ -303,3 +303,10 @@ All notable changes to this project will be documented in this file.
 ### refactor
 
 - service part
+
+## [0.9.45] - 27.01.2018
+
+### feat
+
+- implement chat
+- fix username input

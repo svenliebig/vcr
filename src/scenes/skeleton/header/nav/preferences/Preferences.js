@@ -11,11 +11,11 @@ export default class Preferences extends Component {
 			name: null
 		}
 
-		EventBus.instance.emit("getName").then(name => this.setState({ name }))
+		EventBus.instance.emit("getName").then(name => this.setState({ name: name || "empty" }))
 	}
 
 	changed(val) {
-		this.ur.setName(val)
+		EventBus.instance.emit("setName", val)
 	}
 
 	render() {

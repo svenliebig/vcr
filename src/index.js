@@ -1,12 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Router from './Router'
+import React from "react"
+import Router from "./Router"
+import ReactDOM from "react-dom"
+import registerServiceWorker from "./registerServiceWorker"
+
 import Preferences from "@scenes/skeleton/header/nav/preferences"
-import registerServiceWorker from './registerServiceWorker'
-import EventHandler from '@components/EventHandler/EventHandler'
+import EventHandler from "@components/EventHandler/EventHandler"
+import Chat from "@components/Chat"
 
-import 'font-awesome/css/font-awesome.css'
+import "font-awesome/css/font-awesome.css"
 
-ReactDOM.render(<EventHandler><Router /></EventHandler>, document.getElementById('root'))
-ReactDOM.render(<Preferences />, document.getElementById('dialogs'))
+ReactDOM.render(<EventHandler><Router /></EventHandler>, document.getElementById("root"))
+ReactDOM.render(<Preferences />, document.getElementById("dialogs"))
+ReactDOM.render(<Chat />, document.getElementById("chat"))
 registerServiceWorker()

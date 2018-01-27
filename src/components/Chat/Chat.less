@@ -1,0 +1,33 @@
+@import "src/resources/mixins.less";
+@import "src/resources/definitions.less";
+
+.chat-container {
+	position: fixed;
+	right: 5px;
+	bottom: 0;
+	height: 15px;
+	width: 35px;
+	background: @text-color-1-background;
+	border-top: 1px solid @border-color;
+	border-left: 1px solid @border-color;
+	border-right: 1px solid @border-color;
+	line-height: 11px;
+	cursor: pointer;
+	.not-selectable();
+
+	.connection-symbol {
+		border-radius: 100%;
+		background-color: greenyellow;
+		width: 5px;
+		height: 5px;
+		float: left;
+		margin: 5px 0 0 5px;
+	}
+
+	.connections-amount {
+		text-shadow: @text-color-1-text-shadow;
+		color: @text-color-1;
+		float: right;
+		margin-right: 5px;
+	}
+}
