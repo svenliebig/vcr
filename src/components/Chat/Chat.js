@@ -1,10 +1,10 @@
 /** React Imports */
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react"
 
-import './Chat.css'
-import EventBus from '@service/EventBus/EventBus';
-import Tooltip from '@components/Tooltip';
+import "./Chat.css"
+import EventBus from "@service/EventBus/EventBus"
+import environment from "@environment/environment"
+import InputText from "@components/Input/Text"
 
 /**
  * Component Class of Chat.
@@ -22,16 +22,20 @@ export default class Chat extends Component {
 	constructor() {
 		super()
 
+		this.messageContainer
+
 		this.state = {
 			users: [],
-			collapsed: true
+			collapsed: true,
+			input: "",
+			messages: []
 		}
 	}
 
 	componentDidMount() {
 		EventBus.instance.emit("getName").then(name => {
 			this.username = name
-			this.connection = new WebSocket("ws://tv.websocket.slyox.de/ws")
+			this.connection = new WebSocket(environment.websocketurl)
 			this.connection.onopen = () => {
 				this.connection.send(this.username)
 			}
@@ -40,14 +44,18 @@ export default class Chat extends Component {
 				this.handleMessage(e.data)
 			}
 
-			this.connection.onclose = (event) => {
+			this.connection.onclose = () => {
 				this.connection.send(this.username)
 			}
 		})
 	}
 
-	click() {
-		this.setState({ collapsed: !this.state.collapsed })
+	click(event) {
+		if (event.target.id !== "chat-input") {
+			this.setState({ collapsed: !this.state.collapsed }, () => {
+				this.messageContainer.scrollTop = this.messageContainer.scrollHeight
+			})
+		}
 	}
 
 	handleMessage(incomingMessage) {
@@ -63,9 +71,23 @@ export default class Chat extends Component {
 			case "clients":
 				this.setState({ users: message.value })
 				break
+			case "message":
+				this.setState({ messages: message.value })
+				break
 			default:
 				break
 		}
+	}
+
+	handleInput(value) {
+		this.setState({ input: value })
+	}
+
+	handleSendMessage(value) {
+		this.setState({ input: "" }, () => {
+			const newMessage = { user: this.username, message: value }
+			this.connection.send(JSON.stringify(newMessage))
+		})
 	}
 
 	/**
@@ -76,15 +98,37 @@ export default class Chat extends Component {
 	 */
 	render() {
 		return (
-			<div className="chat-container" onClick={this.click.bind(this)}>
-				<div className="connection-head">
+			<div className="chat-container">
+				<div className="connection-head" onClick={this.click.bind(this)}>
 					<div className="connection-symbol" />
 					<div className="connections-amount">
 						{this.state.users.length}
 					</div>
 				</div>
 				<div className={`collapsable ${this.state.collapsed ? "collapsed" : ""}`}>
-					{this.state.users.map(val => <div className="chat-user">{val}</div>)}
+					<div className="userList">
+						{this.state.users.map((val, i) =>
+							<div key={i} className="chat-user">
+								{val}
+							</div>)}
+					</div>
+					<div className="chat-messages-container">
+						<div className="chat-messages" ref={(element) => this.messageContainer = element}>
+							{this.state.messages.map((val, i) =>
+								<div key={i} className="chat-message">
+									<div className="chat-message-writer">
+										{val.user}:
+									</div>
+									<div className="chat-message-content">
+										{val.message}
+									</div>
+								</div>
+							)}
+						</div>
+						<div className="chat-input-container">
+							<InputText id="chat-input" onChange={this.handleInput.bind(this)} value={this.state.input} />
+						</div>
+					</div>
 				</div>
 			</div>
 		)

@@ -316,3 +316,10 @@ All notable changes to this project will be documented in this file.
 ### feat
 
 - adding features to the chat
+
+## [0.9.47] - 28.01.2018
+
+### feat
+
+- implement chat messages
+- implement user overview

@@ -1,14 +1,25 @@
 {
-    "compilerOptions": {
-        "target": "ES6",
-        "module": "commonjs",
-        "allowSyntheticDefaultImports": true,
+	"compilerOptions": {
+		"target": "ES6",
+		"module": "commonjs",
+		"allowSyntheticDefaultImports": true,
 		"baseUrl": "src/",
-        "paths": {
-          "@service/*": ["service/*"],
-          "@components/*": ["components/*"],
-          "@scenes/*": ["scenes/*"],
-          "@model/*": ["model/*"]
-        }
-    }
+		"paths": {
+			"@service/*": [
+				"service/*"
+			],
+			"@components/*": [
+				"components/*"
+			],
+			"@scenes/*": [
+				"scenes/*"
+			],
+			"@environment/*": [
+				"environment/*"
+			],
+			"@model/*": [
+				"model/*"
+			]
+		}
+	}
 }

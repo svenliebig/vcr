@@ -52,9 +52,11 @@ export default class InputText extends Component {
 	render() {
 		return (
 			<div className="input-text--wrapper">
-				<label htmlFor={this.props.id} className="input-text--label">
-					{this.props.label}
-				</label>
+				{this.props.label ?
+					<label htmlFor={this.props.id} className="input-text--label">
+						{this.props.label}
+					</label>
+					: ""}
 				<input
 					id={this.props.id}
 					className="input-text"
