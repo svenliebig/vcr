@@ -329,3 +329,9 @@ All notable changes to this project will be documented in this file.
 ### fix
 
 - view series, didnt load from user repository
+
+## [0.9.49] - 29.01.2018
+
+### feat
+
+- add text input support for chat

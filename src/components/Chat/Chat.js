@@ -79,6 +79,11 @@ export default class Chat extends Component {
 		}
 	}
 
+	handleEnter(value) {
+		console.log(value)
+		this.setState({ input: "" })
+	}
+
 	handleInput(value) {
 		this.setState({ input: value })
 	}
@@ -126,7 +131,7 @@ export default class Chat extends Component {
 							)}
 						</div>
 						<div className="chat-input-container">
-							<InputText id="chat-input" onChange={this.handleInput.bind(this)} value={this.state.input} />
+							<InputText id="chat-input" onChange={this.handleInput.bind(this)} value={this.state.input} onEnter={this.handleEnter.bind(this)} />
 						</div>
 					</div>
 				</div>

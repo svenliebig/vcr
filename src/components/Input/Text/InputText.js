@@ -43,6 +43,16 @@ export default class InputText extends Component {
 		}
 	}
 
+	componentWillReceiveProps(nextProps) {
+		this.setState({ value: nextProps.value })
+	}
+
+	handleKeypress(e) {
+		if (e.key === "Enter" && this.props.onEnter) {
+			this.props.onEnter(this.props.value)
+		}
+	}
+
 	/**
 	 * Renders the Component.
 	 *
@@ -64,6 +74,7 @@ export default class InputText extends Component {
 					onChange={this.onChange}
 					placeholder={this.props.placeholder}
 					type={this.props.type}
+					onKeyPress={this.handleKeypress.bind(this)}
 				/>
 			</div>
 		)
@@ -74,6 +85,7 @@ InputText.propTypes = {
 	id: PropTypes.string.isRequired,
 	label: PropTypes.string,
 	onChange: PropTypes.func,
+	onEnter: PropTypes.func,
 	throttled: PropTypes.number,
 	value: PropTypes.string,
 	placeholder: PropTypes.string,
