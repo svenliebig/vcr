@@ -1,4 +1,4 @@
-# VCR 0.9.47
+# VCR 0.9.48
 
 Project, written in React with Firebase as Database.
 Helps you to manage your watched series.

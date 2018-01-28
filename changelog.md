@@ -323,3 +323,9 @@ All notable changes to this project will be documented in this file.
 
 - implement chat messages
 - implement user overview
+
+## [0.9.48] - 28.01.2018
+
+### fix
+
+- view series, didnt load from user repository

@@ -32,7 +32,7 @@ export default class View extends AbstractSeries {
 		this.savePreferences = this.savePreferences.bind(this)
 		this.removeSeries = this.removeSeries.bind(this)
 
-		EventBus.instance.emit("getSeries", props.match.params.id).then(series => this.setState({ series }))
+		EventBus.instance.emit("getUserSeries", props.match.params.id).then(series => this.setState({ series }))
 		EventBus.instance.emit("getLinksOfSeries", props.match.params.id).then(links => {
 			links && this.setState({
 				otaku: links.otaku || '',
