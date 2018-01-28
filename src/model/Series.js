@@ -206,7 +206,7 @@ export class Series {
 		const newSeries = new Series(series.id, series.name, series.overview, series.airDate, series.posterUrl, series.rating)
 		newSeries.votes = series.votes
 		newSeries.genres = series.genres
-		newSeries.country = series.country
+		newSeries.country = series.country || []
 		newSeries.status = series.status
 		newSeries.createdBy = series.createdBy || ""
 		newSeries.episodeDuration = series.episodeDuration
