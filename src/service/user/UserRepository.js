@@ -124,7 +124,7 @@ export default class UserRepository {
 
 	getSeries(id) {
 		return this.fb.get(`/users/${this.uid}/series/${id}`).then(val => {
-			return Promise.resolve(val)
+			return Promise.resolve(Series.fromFirebase(val))
 		})
 	}
 

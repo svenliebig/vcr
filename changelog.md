@@ -347,3 +347,9 @@ All notable changes to this project will be documented in this file.
 ### feat
 
 - compare from chat with other users
+
+## [0.9.52] - 29.01.2018
+
+### fix
+
+- error when toggle episode in series view
