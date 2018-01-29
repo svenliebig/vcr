@@ -9,8 +9,8 @@ const environment = {
 		messagingSenderId: '506827361279'
 	},
 	themoviedb: '?api_key=2e74839a423b1266f0ccf5043bade403',
-	websocketurl: "ws://tv.websocket.slyox.de"
-	// websocketurl: "ws://localhost:8081"
+	// websocketurl: "ws://tv.websocket.slyox.de"
+	websocketurl: "ws://localhost:8081"
 };
 
 export default environment;

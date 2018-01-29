@@ -28,7 +28,8 @@ export default class Chat extends Component {
 			users: [],
 			collapsed: true,
 			input: "",
-			messages: []
+			messages: [],
+			websocketonline: false
 		}
 	}
 
@@ -36,8 +37,10 @@ export default class Chat extends Component {
 		EventBus.instance.emit("getName").then(name => {
 			this.username = name
 			this.connection = new WebSocket(environment.websocketurl)
+
 			this.connection.onopen = () => {
-				this.connection.send(this.username)
+				this.connection.send(JSON.stringify({ context: "clientConnection", value: this.username }))
+				this.setState({ websocketonline: true })
 			}
 
 			this.connection.onmessage = (e) => {
@@ -46,6 +49,7 @@ export default class Chat extends Component {
 
 			this.connection.onclose = () => {
 				this.connection.send(this.username)
+				this.setState({ websocketonline: false })
 			}
 		})
 	}
@@ -81,6 +85,7 @@ export default class Chat extends Component {
 
 	handleEnter(value) {
 		console.log(value)
+		this.connection.send(JSON.stringify({ context: "newMessage", value: { user: this.username, message: value } }))
 		this.setState({ input: "" })
 	}
 
@@ -105,16 +110,17 @@ export default class Chat extends Component {
 		return (
 			<div className="chat-container">
 				<div className="connection-head" onClick={this.click.bind(this)}>
-					<div className="connection-symbol" />
+					<div className={`connection-symbol ${this.state.websocketonline ? "online" : "offline"}`} />
 					<div className="connections-amount">
-						{this.state.users.length}
+						{this.state.users.filter(user => user.online).length}
 					</div>
 				</div>
 				<div className={`collapsable ${this.state.collapsed ? "collapsed" : ""}`}>
 					<div className="userList">
 						{this.state.users.map((val, i) =>
 							<div key={i} className="chat-user">
-								{val}
+								<div className={`connection-symbol ${val.online ? "online" : "offline"}`} />
+								{val.name}
 							</div>)}
 					</div>
 					<div className="chat-messages-container">

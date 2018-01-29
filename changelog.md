@@ -335,3 +335,9 @@ All notable changes to this project will be documented in this file.
 ### feat
 
 - add text input support for chat
+
+## [0.9.50] - 29.01.2018
+
+### feat
+
+- implement messages and offline / online states

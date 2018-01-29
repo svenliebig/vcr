@@ -10,6 +10,7 @@
 	border-left: 1px solid @border-color;
 	border-right: 1px solid @border-color;
 	line-height: 11px;
+	z-index: 50;
 	
 	.connection-head {
 		.not-selectable();
@@ -23,20 +24,26 @@
 			background: rgba(34, 34, 34, 0.9);
 		}
 
-		.connection-symbol {
-			border-radius: 100%;
-			background-color: greenyellow;
-			width: 5px;
-			height: 5px;
-			float: left;
-			margin: 5px 5px 5px 5px;
-		}
-
 		.connections-amount {
 			text-shadow: @text-color-1-text-shadow;
 			color: @text-color-1;
 			float: right;
 			margin-right: 5px;
+		}
+	}
+
+	.connection-symbol {
+		border-radius: 100%;
+		width: 5px;
+		height: 5px;
+		float: left;
+		margin: 5px 5px 5px 5px;
+
+		&.online {
+			background-color: greenyellow;
+		}
+		&.offline {
+			background-color: grey;
 		}
 	}
 
@@ -46,7 +53,7 @@
 		height: 300px;
 		width: 300px;
 		overflow: hidden;
-		padding: 0 5px;
+		padding: 0 5px 0 0;
 		.flex-container-row(nowrap, flex-start, flex-start);
 
 		.userList {
@@ -81,6 +88,7 @@
 				margin-bottom: 5px;
 				padding-left: 5px;
 				padding-top: 5px;
+				width: 100%;
 
 				.chat-message{
 					line-height: 16px;
