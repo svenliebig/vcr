@@ -13,7 +13,6 @@ export default class Compare extends Component {
 
 		this.state = {
 			yours: [],
-			users: [],
 			other: {},
 			both: [],
 			onlyhim: [],
@@ -22,12 +21,25 @@ export default class Compare extends Component {
 
 		self = this
 
-		EventBus.instance.emit("getUsers").then(users => this.setState({ users }))
-		EventBus.instance.emit("getAllSeries").then(yours => this.setState({ yours }))
-		this.addSeries = this.addSeries.bind(this)
+		console.log(props.match.params.username)
+
+		if (props.match.params.username) {
+
+			EventBus.instance.emit("getUserByName", props.match.params.username).then(other => this.handler(other))
+			EventBus.instance.emit("getAllSeries").then(yours => this.setState({ yours }))
+			this.addSeries = this.addSeries.bind(this)
+
+		} else {
+			console.debug("no username provided")
+		}
 	}
 
 	handler(other) {
+		if (other.length !== 1) {
+			return
+		} else {
+			other = other[0]
+		}
 		let otherSeries = other.series.slice()
 		const yourSeries = this.state.yours
 
@@ -112,9 +124,6 @@ export default class Compare extends Component {
 		return (
 			<Skeleton>
 				<div className="table">
-					<div className="header">
-						{this.state.users.filter(val => val.name).map((val, i) => <div className="user" key={i} onClick={this.handler.bind(this, val)}>{val.name}</div>)}
-					</div>
 					<div className="content">
 					</div>
 					{(this.state.both.length !== 0) && renderBoth()}

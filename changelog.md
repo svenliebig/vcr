@@ -341,3 +341,9 @@ All notable changes to this project will be documented in this file.
 ### feat
 
 - implement messages and offline / online states
+
+## [0.9.51] - 29.01.2018
+
+### feat
+
+- compare from chat with other users

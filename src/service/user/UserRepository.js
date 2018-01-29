@@ -25,6 +25,22 @@ export default class UserRepository {
 		});
 	}
 
+	getUserByName(username) {
+		return this.fb.getWhere("/users", "name", username).then(val => {
+			const tempArray = [];
+			for (let key in val) {
+				const seriesArray = [];
+				for (let s in val[key].series) {
+					seriesArray.push(val[key].series[s])
+				}
+				val[key].series = seriesArray
+				tempArray.push(val[key]);
+			}
+
+			return Promise.resolve(tempArray)
+		});
+	}
+
 	getUsers() {
 		return this.fb.get(`/users`).then(val => {
 			const tempArray = [];

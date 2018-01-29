@@ -120,7 +120,7 @@ export default class Chat extends Component {
 						{this.state.users.map((val, i) =>
 							<div key={i} className="chat-user">
 								<div className={`connection-symbol ${val.online ? "online" : "offline"}`} />
-								{val.name}
+								<a href={`/compare/${val.name}`}>{val.name}</a>
 							</div>)}
 					</div>
 					<div className="chat-messages-container">

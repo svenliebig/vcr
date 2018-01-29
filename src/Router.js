@@ -35,7 +35,7 @@ export default class Router extends Component {
 				{ path: '/manage', component: Manage, key: '2' },
 				{ path: '/view/:id', component: View, key: '3' },
 				{ path: '/statistics', component: Statistic, key: '4' },
-				{ path: '/compare', component: Compare, key: '5' }
+				{ path: '/compare/:username', component: Compare, key: '5' }
 			];
 			ReactDOM.render(<Chat />, document.getElementById("chat"))
 		} else {
