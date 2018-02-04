@@ -51,7 +51,8 @@
 		
 		transition: height 0.7s ease, width 0.2s ease;
 		height: 300px;
-		width: 300px;
+		max-width: 100%;
+		width: 400px;
 		overflow: hidden;
 		padding: 0 5px 0 0;
 		.flex-container-row(nowrap, flex-start, flex-start);
@@ -67,6 +68,8 @@
 
 			.chat-user {
 				padding: 5px 0;
+				display: flex;
+				width: 100%;
 			}
 		}
 
