@@ -1,6 +1,8 @@
 import Firebase from '@service/firebase/Firebase'
 import SeriesConverter from '@service/series/SeriesConverter'
-import { Series } from '../../model/Series'
+import {
+	Series
+} from '../../model/Series'
 
 /**
  * Includes methods to communicate with the user database.
@@ -76,7 +78,9 @@ export default class UserRepository {
 	}
 
 	addUserToDb() {
-		this.fb.write(`/users/${this.uid}`, { series: [] });
+		this.fb.write(`/users/${this.uid}`, {
+			series: []
+		});
 	}
 
 	hasSeries(id) {
@@ -124,7 +128,10 @@ export default class UserRepository {
 
 	getSeries(id) {
 		return this.fb.get(`/users/${this.uid}/series/${id}`).then(val => {
-			return Promise.resolve(Series.fromFirebase(val))
+			if (val) {
+				return Promise.resolve(Series.fromFirebase(val))
+			}
+			return Promise.resolve(val)
 		})
 	}
 
