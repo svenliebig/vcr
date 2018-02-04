@@ -11,6 +11,7 @@
 	border-right: 1px solid @border-color;
 	line-height: 11px;
 	z-index: 50;
+	max-width: calc(100% ~"-" 13px);
 	
 	.connection-head {
 		.not-selectable();
@@ -48,10 +49,8 @@
 	}
 
 	.collapsable {
-		
 		transition: height 0.7s ease, width 0.2s ease;
 		height: 300px;
-		max-width: 100%;
 		width: 400px;
 		overflow: hidden;
 		padding: 0 5px 0 0;

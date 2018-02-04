@@ -1,4 +1,5 @@
 @import "src/resources/mixins.less";
+@import "src/resources/default.less";
 @import "src/resources/definitions.less";
 
 .header-wrapper {
@@ -25,6 +26,7 @@
 		margin-top: -3px;
 		margin-bottom: -3px;
 		color: @text-color-2;
+		&:extend(.hidden-xs);
 
 		&::-webkit-scrollbar { width: 5px; }
 		&::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); -webkit-border-radius: 0px; border-radius: 0px; width: 5px; }

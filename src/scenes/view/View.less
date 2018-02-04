@@ -13,6 +13,7 @@
 			width: 100%;
 			max-width: 500px;
 			height: 281px;
+			margin-right: 8px;
 
 			&--link {
 				color: @text-color-1;
@@ -64,13 +65,14 @@
 		}
 
 		.series-actions {
-			display: inline-block;
+			// display: inline-block;
 			height: 281px;
-			margin: 0 0 10px 8px;
+			// margin: 0 0 10px 8px;
 			border-left: 1px solid @border-color;
 			color: @text-color-1;
 			padding-left: 10px;
-			width: calc(100% ~"-" 519px);
+			flex-grow: 1;
+			// width: calc(100% ~"-" 519px);
 
 			.flex-container-column(nowrap, flex-start, flex-start);
 
