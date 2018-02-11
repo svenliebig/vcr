@@ -1,6 +1,6 @@
 {
   "name": "vcr",
-  "version": "0.9.52",
+  "version": "0.9.53",
   "private": true,
   "homepage": "http://tv.slyox.de",
   "dependencies": {

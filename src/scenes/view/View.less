@@ -140,46 +140,46 @@
 			}
 		}
 
-		.series-content {
-			&--description {
+	}
+	.series-content {
+		&--description {
+			color: @text-color-2;
+			line-height: 18px;
+		}
+
+		table.season-wrapper {
+			color: @text-color-1;
+			border-collapse: collapse;
+			
+			button {
+				.default-icon-button();
 				color: @text-color-2;
-				line-height: 18px;
 			}
 
-			table.season-wrapper {
-				color: @text-color-1;
-				border-collapse: collapse;
-				
-				button {
-					.default-icon-button();
-					color: @text-color-2;
+			thead {
+				tr {
+					th {
+						text-align: left;
+						padding: 5px;
+					}
 				}
+			}
 
-				thead {
-					tr {
-						th {
-							text-align: left;
-							padding: 5px;
-						}
+			.episodes-wrapper {
+				tr {
+					line-height: 13px;
+
+					td {
+						border-spacing: 0;
+						border-collapse: unset;
+						padding: 5px;
+					}
+
+					&:nth-child(odd) {
+						background-color: @text-color-1-background;
 					}
 				}
 
-				.episodes-wrapper {
-					tr {
-						line-height: 13px;
-
-						td {
-							border-spacing: 0;
-							border-collapse: unset;
-							padding: 5px;
-						}
-
-						&:nth-child(odd) {
-							background-color: @text-color-1-background;
-						}
-					}
-
-				}
 			}
 		}
 	}

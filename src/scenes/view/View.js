@@ -150,42 +150,44 @@ export default class View extends AbstractSeries {
 			const { genres, name, seasons } = series
 
 			return (
-				<div className="series-container">
-					<div className="series-header">
-						<img src={this.getImageSrc(500)} alt="" />
-						<Link className="series-header--link" to="/">
-							<span className="fa fa-arrow-left fa-2x"></span>
-						</Link>
-						<div className="series-name-wrapper">
-							<div className="series-name">
-								{name}
-							</div>
-						</div>
-						<div className="genre-wrapper">
-							{genres && genres.map(mapGenres)}
-						</div>
-					</div>
-					<div className="series-actions">
-						<div className="head">
-							<div className="input-wrapper">
-								<div className="input-container">
-									<label>bs.to</label>
-									<input id="bsto" type="type" placeholder="https://bs.to/example" value={this.state.bsto} onChange={this.handleInput} />
-									<label>otakustream</label>
-									<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={this.state.otaku} onChange={this.handleInput} />
-									<label>empfehlen</label>
-									<input id="username" placeholder="Name" onChange={this.handleInput} />
+				<div>
+					<div className="series-container">
+						<div className="series-header">
+							<img src={this.getImageSrc(500)} alt="" />
+							<Link className="series-header--link" to="/">
+								<span className="fa fa-arrow-left fa-2x"></span>
+							</Link>
+							<div className="series-name-wrapper">
+								<div className="series-name">
+									{name}
 								</div>
 							</div>
-							<div className="action-wrapper">
-								<Mail onClick={this.suggestSeries.bind(this)} />
-							</div>
-							<div className="action-wrapper">
-								<ButtonRemove onClick={this.removeSeries} />
+							<div className="genre-wrapper">
+								{genres && genres.map(mapGenres)}
 							</div>
 						</div>
-						<div className="spacer"></div>
-						{this.state.changed ? <button className="save" onClick={this.savePreferences}>Speichern</button> : ''}
+						<div className="series-actions">
+							<div className="head">
+								<div className="input-wrapper">
+									<div className="input-container">
+										<label>bs.to</label>
+										<input id="bsto" type="type" placeholder="https://bs.to/example" value={this.state.bsto} onChange={this.handleInput} />
+										<label>otakustream</label>
+										<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={this.state.otaku} onChange={this.handleInput} />
+										<label>empfehlen</label>
+										<input id="username" placeholder="Name" onChange={this.handleInput} />
+									</div>
+								</div>
+								<div className="action-wrapper">
+									<Mail onClick={this.suggestSeries.bind(this)} />
+								</div>
+								<div className="action-wrapper">
+									<ButtonRemove onClick={this.removeSeries} />
+								</div>
+							</div>
+							<div className="spacer"></div>
+							{this.state.changed ? <button className="save" onClick={this.savePreferences}>Speichern</button> : ''}
+						</div>
 					</div>
 					<div className="series-content">
 						<div className="series-content--description">

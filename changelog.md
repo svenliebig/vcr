@@ -353,3 +353,9 @@ All notable changes to this project will be documented in this file.
 ### fix
 
 - error when toggle episode in series view
+
+## [0.9.53] - 11.02.2018
+
+### fix
+
+- style@view
