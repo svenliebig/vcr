@@ -205,7 +205,7 @@ export class Series {
 	static fromFirebase(series) {
 		const newSeries = new Series(series.id, series.name, series.overview, series.airDate, series.posterUrl, series.rating)
 		newSeries.votes = series.votes
-		newSeries.genres = series.genres
+		newSeries.genres = series.genres || []
 		newSeries.country = series.country || []
 		newSeries.status = series.status
 		newSeries.createdBy = series.createdBy || ""

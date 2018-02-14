@@ -359,3 +359,9 @@ All notable changes to this project will be documented in this file.
 ### fix
 
 - style@view
+
+## [0.9.54] - 14.02.2018
+
+### fix
+
+- series genres was undefined
