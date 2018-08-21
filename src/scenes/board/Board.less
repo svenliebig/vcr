@@ -43,6 +43,14 @@
 				padding-bottom: 4px;
 				border-right: 1px solid @border-color;
 				margin-right: 8px;
+
+				.text-white {
+					color: white;
+				}
+
+				.disabled {
+					color: rgba(181, 181, 181, 0.5);
+				}
 			}
 
 			&.updater {
@@ -71,7 +79,7 @@
 				transition: color 0.3s ease;
 				border-bottom: solid 1px @border-color;
 
-				&:hover { 
+				&:hover {
 					background: rgba(119, 119, 119, 0.8);
 					color: @text-color-2-hover;
 				}
@@ -95,7 +103,7 @@
 				overflow: hidden;
 				height: 96px;
 				float: left;
-				
+
 				animation-duration: 1s;
 				animation-fill-mode: forwards;
 				animation-iteration-count: infinite;
@@ -111,7 +119,7 @@
 				height: 19px;
 				float: left;
 				width: calc(100% ~"-" 310px);
-				
+
 				animation-duration: 1s;
 				animation-fill-mode: forwards;
 				animation-iteration-count: infinite;

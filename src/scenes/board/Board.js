@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import Skeleton from '@scenes/skeleton/Skeleton';
 import Series from '@scenes/board/series/Series';
+import { Series as SeriesModel} from '@model/Series'
 import Dropdown from '@components/dropdown';
 import ButtonToggle from '@components/button/toggle/ButtonToggle'
 
 import './Board.css';
 import EventBus from '@service/EventBus/EventBus';
+import Tooltip from '@components/Tooltip';
 
 let selectableGenres = [{
 	name: "Alle"
@@ -30,6 +32,7 @@ export default class Board extends Component {
 			filterNotWatched: false,
 			filterUpcoming: true,
 			sortAscending: true,
+			sortRemainingTime: false,
 			filterWatched: true,
 			userSeries: [],
 			loaded: false,
@@ -41,7 +44,8 @@ export default class Board extends Component {
 		this.toggleWatched = this.toggleWatched.bind(this);
 		this.filterSeries = this.filterSeries.bind(this);
 		this.selectGenre = this.selectGenre.bind(this);
-		this.toggleSort = this.toggleSort.bind(this);
+		this.toggleSortAlphabetical = this.toggleSortAlphabetical.bind(this);
+		this.toggleSortRemainingTime = this.toggleSortRemainingTime.bind(this);
 		this.sortSeries = this.sortSeries.bind(this);
 	}
 
@@ -79,8 +83,13 @@ export default class Board extends Component {
 		this.setState({ filterUpcoming })
 	}
 
-	toggleSort(sortAscending) {
+	toggleSortAlphabetical(sortAscending) {
 		this.setState({ sortAscending })
+	}
+
+	toggleSortRemainingTime(sortRemainingTime) {
+		console.debug(`set sort`, sortRemainingTime)
+		this.setState({ sortRemainingTime })
 	}
 
 	selectGenre(selected) {
@@ -159,8 +168,18 @@ export default class Board extends Component {
 		return true
 	}
 
+	/**
+	 *
+	 *
+	 * @param {SeriesModel} seriesA
+	 * @param {SeriesModel} seriesB
+	 * @returns
+	 * @memberof Board
+	 */
 	sortSeries(seriesA, seriesB) {
-		if (this.state.sortAscending) {
+		if (this.state.sortRemainingTime) {
+			return seriesA.totalMinutesNotWatched() > seriesB.totalMinutesNotWatched()
+		} else if (this.state.sortAscending) {
 			return seriesA.name.localeCompare(seriesB.name)
 		}
 		return seriesB.name.localeCompare(seriesA.name);
@@ -203,7 +222,15 @@ export default class Board extends Component {
 						<ButtonToggle text="Gesehen" className="filter-toggle" onClick={this.toggleWatched} initial={this.state.filterWatched} />
 						<ButtonToggle text="Offene" className="filter-toggle" onClick={this.toggleNotWatched} initial={this.state.filterNotWatched} />
 						<ButtonToggle text="Bekommt neue" className="filter-toggle" onClick={this.toggleUpcoming} initial={this.state.filterUpcoming} />
-						<ButtonToggle className="toggle-sort" onClick={this.toggleSort} initial={this.state.sortAscending} activeIcon='fa fa-sort-alpha-asc' inactiveIcon='fa fa-sort-alpha-desc' />
+						<ButtonToggle className="toggle-sort" onClick={this.toggleSortAlphabetical} initial={this.state.sortAscending} activeIcon={`fa fa-sort-alpha-asc${this.state.sortRemainingTime ? " disabled" : ""}`} inactiveIcon={`fa fa-sort-alpha-desc${this.state.sortRemainingTime ? " disabled" : ""}`} />
+						<ButtonToggle
+							className="toggle-sort"
+							onClick={this.toggleSortRemainingTime}
+							initial={this.state.sortRemainingTime}
+							activeIcon='fa fa-sort-numeric-asc text-white'
+							inactiveIcon='fa fa-sort-numeric-asc'
+							tooltip="Nach verbleibender Zeit nicht gesehender Folgen"
+						/>
 
 						<Dropdown list={selectableGenres} selected={selectableGenres[0]} onclick={this.selectGenre} />
 						<div className="spacer"></div>

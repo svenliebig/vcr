@@ -2,8 +2,11 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
+import Tooltip from "@components/Tooltip"
 
 import "./SeriesCard.css"
+import { Series } from "@model/Series";
+import TimeUtil from "@service/TimeUtil";
 
 /**
  * Component Class of SeriesCard.
@@ -13,7 +16,6 @@ import "./SeriesCard.css"
  * @extends {Component}
  */
 export default class SeriesCard extends Component {
-
 	/**
 	 * Creates an instance of SeriesCard.
 	 * @memberof SeriesCard
@@ -30,6 +32,13 @@ export default class SeriesCard extends Component {
 		// this.setState({})
 	}
 
+	/**
+	 *
+	 *
+	 * @param {*} series
+	 * @returns
+	 * @memberof SeriesCard
+	 */
 	getImageSrc(series) {
 		const url = series.posterUrl;
 		if (url !== undefined && url.endsWith('jpg')) {
@@ -46,6 +55,7 @@ export default class SeriesCard extends Component {
 	 * @memberof SeriesCard
 	 */
 	render() {
+		/** @type {Series} */
 		const series = this.props.series;
 
 		return (
@@ -59,7 +69,9 @@ export default class SeriesCard extends Component {
 					<img src={this.getImageSrc(series)} alt="" />
 				}
 				<div className="card-title-wrapper">
-					<div className="card-title">{series.name}</div>
+					<Tooltip text={`Noch ca. ${TimeUtil.minutesToReadableTimeString(series.totalMinutesNotWatched())}`}>
+						<div className="card-title">{series.name}</div>
+					</Tooltip>
 				</div>
 				{this.props.children}
 			</div>
@@ -67,7 +79,9 @@ export default class SeriesCard extends Component {
 	}
 }
 
+
 SeriesCard.propTypes = {
+	/** @type {Series} */
 	series: PropTypes.object.isRequired,
 	children: PropTypes.oneOfType([
 		PropTypes.array,

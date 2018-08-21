@@ -201,6 +201,26 @@ export class Series {
 		return array;
 	}
 
+	averageDuration() {
+		if (Array.isArray(this.episodeDuration) && this.episodeDuration.length > 0) {
+			return this.episodeDuration.reduce((p, n) => p + n, 0) / this.episodeDuration.length
+		}
+		return 0
+	}
+
+	totalMinutesNotWatched() {
+		if (Array.isArray(this.seasons) && this.seasons.length > 0) {
+			return this.seasons.reduce((counter, season) => {
+				if (season && Array.isArray(season.episodes) && season.episodes.length > 0) {
+					return counter + season.episodes.reduce((counter, episode) => {
+						return !episode.watched ? this.averageDuration() + counter : counter
+					}, 0)
+				}
+				return counter
+			}, 0)
+		}
+		return 0
+	}
 
 	static fromFirebase(series) {
 		const newSeries = new Series(series.id, series.name, series.overview, series.airDate, series.posterUrl, series.rating)

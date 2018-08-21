@@ -20,6 +20,7 @@ export default class ButtonToggle extends Component {
 	constructor(props) {
 		super(props)
 
+		// TODO: Fuck my life, stateless PLS
 		this.state = {
 			toggled: props.initial || false,
 			activeIcon: props.activeIcon || 'fa fa-toggle-on',
@@ -27,6 +28,13 @@ export default class ButtonToggle extends Component {
 		}
 
 		this.toggle = this.toggle.bind(this)
+	}
+
+	componentWillReceiveProps(props) {
+		this.setState({
+			activeIcon: props.activeIcon || 'fa fa-toggle-on',
+			inactiveIcon: props.inactiveIcon || 'fa fa-toggle-off'
+		})
 	}
 
 	toggle() {
@@ -50,8 +58,9 @@ export default class ButtonToggle extends Component {
 			<button
 				className={ `button-toggle ${this.props.className}` }
 				onClick={ this.toggle }
+				title={this.props.tooltip}
 			>
-				{  this.props.text ? <span>{ this.props.text } </span> : '' }
+				{this.props.text ? <span>{ this.props.text } </span> : '' }
 				<span className={ this.state.toggled ? this.state.activeIcon : this.state.inactiveIcon }></span>
 			</button>
 		)
@@ -70,5 +79,7 @@ ButtonToggle.propTypes = {
 	/** Icon when toggle is on */
 	activeIcon: PropTypes.string,
 	/** Icon when toggle is off */
-	inactiveIcon: PropTypes.string
+	inactiveIcon: PropTypes.string,
+	/**  */
+	tooltip: PropTypes.string
 }
