@@ -178,7 +178,7 @@ export default class Board extends Component {
 	 */
 	sortSeries(seriesA, seriesB) {
 		if (this.state.sortRemainingTime) {
-			return seriesA.totalMinutesNotWatched() > seriesB.totalMinutesNotWatched()
+			return seriesA.totalMinutesNotWatched() - seriesB.totalMinutesNotWatched()
 		} else if (this.state.sortAscending) {
 			return seriesA.name.localeCompare(seriesB.name)
 		}
