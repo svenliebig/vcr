@@ -64,7 +64,7 @@ export default class Dropdown extends Component {
 			for (var i = 0; i < this.props.list.length; i++) {
 				var item = this.props.list[i];
 				items.push(
-					<div key={ `dropdown-item-${i}` } className={ 'dropdown--list-item' + (this.state.selected === item ? ' selected' : '') } onClick={ this.select.bind(null, item) }>
+					<div key={ `dropdown-item-${i}` } className={ 'dropdown--list-item' + (this.state.selected === item ? ' selected' : '') } onClick={ this.select.bind(null, item)} onKeyDown={() => {}} tabIndex={0} role="button">
 						<span>{ item.name }</span>
 					</div>
 					);
@@ -74,7 +74,7 @@ export default class Dropdown extends Component {
 
 		return (
 			<div className={'dropdown' + ( this.state.listVisible ? ' show' : '')}>
-				<div className={'dropdown--button' + ( this.state.listVisible ? ' clicked' : '')} onClick={ this.show }>
+				<div className={'dropdown--button' + ( this.state.listVisible ? ' clicked' : '')} onClick={ this.show } onKeyDown={() => {}} tabIndex={0} role="button">
 					<span>{ this.state.selected.name }</span>
 					<i className='fa fa-angle-down'></i>
 				</div>

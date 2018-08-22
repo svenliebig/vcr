@@ -21,7 +21,7 @@ export default class IconBadge extends Component {
 	 */
 	render() {
 		return (
-			<div className={`iconbadge ${this.props.icon}`} onClick={this.props.onClick}>
+			<div role="button" className={`iconbadge ${this.props.icon}`} onClick={this.props.onClick} tabIndex={0} onKeyDown={() => {}}>
 				{this.props.counter !== 0 ?
 					<span className="badge">{this.props.counter < 10 ? this.props.counter : "9+"}</span>
 					: ""}

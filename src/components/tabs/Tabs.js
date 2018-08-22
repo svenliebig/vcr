@@ -85,14 +85,15 @@ export class Tab extends Component {
 	render() {
         return (
             <li className={ `tab ${this.props.className}` }>
-                <a className={`tab-link ${this.props.isActive ? 'active' : ''}`}
+                <button className={`tab-link ${this.props.isActive ? 'active' : ''}`}
                     onClick={(event) => {
                         event.preventDefault();
                         this.props.onClick(this.props.tabIndex);
-                    }}>
+					}}
+				>
                     <i className={`tab-icon ${this.props.icon}`}/>
                     <div>{ this.props.title }</div>
-                </a>
+                </button>
             </li>
         )
     }

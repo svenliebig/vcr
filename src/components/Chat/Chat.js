@@ -109,7 +109,7 @@ export default class Chat extends Component {
 	render() {
 		return (
 			<div className="chat-container">
-				<div className="connection-head" onClick={this.click.bind(this)}>
+				<div role="button" onKeyDown={() => {}} className="connection-head" onClick={this.click.bind(this)} tabIndex={0}>
 					<div className={`connection-symbol ${this.state.websocketonline ? "online" : "offline"}`} />
 					<div className="connections-amount">
 						{this.state.users.filter(user => user.online).length}

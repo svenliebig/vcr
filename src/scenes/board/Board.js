@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import Skeleton from '@scenes/skeleton/Skeleton';
 import Series from '@scenes/board/series/Series';
-import { Series as SeriesModel} from '@model/Series'
 import Dropdown from '@components/dropdown';
 import ButtonToggle from '@components/button/toggle/ButtonToggle'
 
 import './Board.css';
 import EventBus from '@service/EventBus/EventBus';
-import Tooltip from '@components/Tooltip';
 
 let selectableGenres = [{
 	name: "Alle"

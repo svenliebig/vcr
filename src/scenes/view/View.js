@@ -170,11 +170,11 @@ export default class View extends AbstractSeries {
 							<div className="head">
 								<div className="input-wrapper">
 									<div className="input-container">
-										<label>bs.to</label>
+										<label htmlFor="bsto">bs.to</label>
 										<input id="bsto" type="type" placeholder="https://bs.to/example" value={this.state.bsto} onChange={this.handleInput} />
-										<label>otakustream</label>
+										<label htmlFor="otaku">otakustream</label>
 										<input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={this.state.otaku} onChange={this.handleInput} />
-										<label>empfehlen</label>
+										<label htmlFor="username">empfehlen</label>
 										<input id="username" placeholder="Name" onChange={this.handleInput} />
 									</div>
 								</div>

@@ -106,7 +106,7 @@ export default class Dialog extends Component {
 	 */
 	render() {
 		return (
-			<div className={this.getContainerClass()} onClick={this.fadeout}>
+			<div role="button" className={this.getContainerClass()} onClick={this.fadeout} onKeyDown={() => {}} tabIndex={0}>
 				<div className={this.getDialogClass()}>
 					{this.props.title &&
 						<div className='dialog-header'>
