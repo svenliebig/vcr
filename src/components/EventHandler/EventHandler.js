@@ -70,7 +70,6 @@ export default class EventHandler extends Component {
 		EventBus.instance.register("getSeries", id => this.seriesRepository.getSeries(id))
 		EventBus.instance.register("getLinksOfSeries", id => this.seriesRepository.getLinksOfSeries(id))
 		EventBus.instance.register("saveLinkToSeries", (id, type, val) => this.seriesRepository.saveLinkToSeries(id, type, val))
-
 	}
 
 	render() {

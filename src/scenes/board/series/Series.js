@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import EventBus from "@service/EventBus/EventBus"
 
 // Model
-import { Series as SeriesModel, Season } from "@model/Series"
+import { Series as SeriesModel } from "@model/Series"
 
 // Components
 import AbstractSeries from "@components/abstract/AbstractSeries"

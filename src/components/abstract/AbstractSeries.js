@@ -1,6 +1,4 @@
 import { Component } from 'react'
-import { Episode } from '../../model/Series'
-
 import moment from 'moment';
 import EventBus from '@service/EventBus/EventBus';
 

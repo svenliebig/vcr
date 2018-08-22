@@ -8,9 +8,6 @@ import EventHandler from "@components/EventHandler/EventHandler"
 
 import "font-awesome/css/font-awesome.css"
 
-const test = ''
-console.log(test)
-
 ReactDOM.render(<EventHandler><Router /></EventHandler>, document.getElementById("root"))
 ReactDOM.render(<Preferences />, document.getElementById("dialogs"))
 registerServiceWorker()

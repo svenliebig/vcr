@@ -21,8 +21,6 @@ export default class Compare extends Component {
 
 		self = this
 
-		console.log(props.match.params.username)
-
 		if (props.match.params.username) {
 
 			EventBus.instance.emit("getUserByName", props.match.params.username).then(other => this.handler(other))

@@ -5,8 +5,7 @@ import { Link } from "react-router-dom"
 import Tooltip from "@components/Tooltip"
 
 import "./SeriesCard.css"
-import { Series } from "@model/Series";
-import TimeUtil from "@service/TimeUtil";
+import TimeUtil from "@service/TimeUtil"
 
 /**
  * Component Class of SeriesCard.
