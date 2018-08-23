@@ -55,7 +55,7 @@ module.exports = {
 		strictExportPresence: true,
 		rules: [
 			{
-				test: /\.(js|jsx)$/,
+				test: /\.(js|jsx|tsx)$/,
 				enforce: 'pre',
 				use: [
 					{
