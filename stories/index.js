@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import ButtonRemove from '../src/components/button/remove/ButtonRemove';
 import Dialog from '../src/components/dialog';
 import Tooltip from '../src/components/Tooltip';
-import InputText from '../src/components/input/text/InputText';
+import InputText from '../src/components/Input/Text/InputText';
 import IconBadge from '../src/components/IconBadge';
 
 import 'font-awesome/css/font-awesome.css';

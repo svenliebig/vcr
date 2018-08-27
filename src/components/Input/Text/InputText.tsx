@@ -4,7 +4,7 @@ import React, { Component, ChangeEvent, KeyboardEvent } from "react"
 import { Subject } from "rxjs/Subject"
 import "rxjs/add/operator/debounceTime"
 
-import "./InputText.css"
+import "./InputText.less"
 
 export interface Props {
     id: string

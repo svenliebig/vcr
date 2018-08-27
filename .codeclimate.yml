@@ -45,7 +45,7 @@ plugins:
         - .js
       config: "./.eslintrc.json"
   stylelint:
-    enabled: true   
+    enabled: true
   fixme:
     enabled: true
 

@@ -3,12 +3,12 @@ import { RouteComponentProps } from "react-router-dom"
 
 import Firebase from "@service/firebase/Firebase"
 
-import { Tab, Tabs } from "@components/tabs"
-
 import Skeleton from "@scenes/skeleton/Skeleton"
 
-import "./Login.less"
 import InputText from "@components/Input/Text/InputText"
+import { Tab, Tabs } from "@components/tabs/Tabs"
+
+import "./Login.less"
 
 export interface State {
     email: string

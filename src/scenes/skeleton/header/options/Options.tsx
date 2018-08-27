@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from "react-router-dom"
 import SeriesModel from "@model/SeriesModel"
 
 // Components
-import IconBadge from "@components/IconBadge"
+import IconBadge from "@components/IconBadge/IconBadge"
 import SeriesCard from "@components/SeriesCard/SeriesCard"
 
 // Service
