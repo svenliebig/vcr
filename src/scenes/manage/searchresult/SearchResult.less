@@ -1,5 +1,5 @@
-@import "src/resources/mixins.less";
-@import "src/resources/definitions.less";
+@import "../../../../src/resources/mixins.less";
+@import "../../../../src/resources/definitions.less";
 
 .white-text() {
 	color: @text-color-1;
@@ -81,7 +81,15 @@
 			display: block;
 			float: left;
 			text-align: center;
-			font-size: 17px;
+            font-size: 17px;
+
+            transition: color 0.3s ease, background 0.3s ease, text-shadow 0.3s ease;
+
+            &:focus {
+                background: @text-color-1;
+                color: @text-color-1-background;
+                text-shadow: none;
+            }
 		}
 
 		a span {

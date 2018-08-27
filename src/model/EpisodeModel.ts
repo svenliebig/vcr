@@ -11,7 +11,7 @@ export default class EpisodeModel {
      * @type {string}
      * @memberof EpisodeModel
      */
-	public name: string
+    public name: string
 
     /**
      * the airdate of the episode
@@ -22,7 +22,7 @@ export default class EpisodeModel {
      * @example
      * "2015-1-15"
      */
-	public airDate: string
+    public airDate: string
 
     /**
      * the number of the season
@@ -30,7 +30,7 @@ export default class EpisodeModel {
      * @type {number}
      * @memberof EpisodeModel
      */
-	public season: number
+    public season: number
 
     /**
      * the number of the episode
@@ -38,7 +38,7 @@ export default class EpisodeModel {
      * @type {number}
      * @memberof EpisodeModel
      */
-	public episode: number
+    public episode: number
 
     /**
      * when true, the episode is watched
@@ -46,7 +46,7 @@ export default class EpisodeModel {
      * @type {boolean}
      * @memberof EpisodeModel
      */
-	public watched: boolean
+    public watched: boolean
 
     /**
      * creates an instance of EpisodeModel
@@ -58,44 +58,44 @@ export default class EpisodeModel {
      * @param {boolean} [watched=false]
      * @memberof EpisodeModel
      */
-	constructor(name: string = "", airdate: string = "", season: number = 0, episode: number = 0, watched: boolean = false) {
-		this.name = name
-		this.airDate = airdate
-		this.season = season
-		this.episode = episode
-		this.watched = watched
-	}
+    constructor(name: string = "", airdate: string = "", season: number = 0, episode: number = 0, watched: boolean = false) {
+        this.name = name
+        this.airDate = airdate
+        this.season = season
+        this.episode = episode
+        this.watched = watched
+    }
 
-	public isNotAired() {
-		const dateArray = this.airDate.split("-").map(e => parseInt(e, 10))
-		const releaseDate = new Date(dateArray[0], dateArray[1], dateArray[2])
-		return releaseDate > new Date()
-	}
+    public isNotAired() {
+        const dateArray = this.airDate.split("-").map(e => parseInt(e, 10))
+        const releaseDate = new Date(dateArray[0], dateArray[1], dateArray[2])
+        return releaseDate > new Date()
+    }
 
-	public isAired() {
-		return !this.isNotAired()
-	}
+    public isAired() {
+        return !this.isNotAired()
+    }
 
     /**
      * Returns if the series is aired and not watched.
      */
-	public isNotWatchedAndAired() {
-		return !this.watched && this.isAired()
-	}
+    public isNotWatchedAndAired() {
+        return !this.watched && this.isAired()
+    }
 
-	public isWatchedOrNotAired() {
-		return this.isWatched() || this.isNotAired()
-	}
+    public isWatchedOrNotAired() {
+        return this.isWatched() || this.isNotAired()
+    }
 
-	public isWatchedAndAired() {
-		return this.watched && this.isAired()
-	}
+    public isWatchedAndAired() {
+        return this.watched && this.isAired()
+    }
 
-	public isWatched() {
-		return this.watched
-	}
+    public isWatched() {
+        return this.watched
+    }
 
-	public isNotWatched() {
-		return !this.watched
-	}
+    public isNotWatched() {
+        return !this.watched
+    }
 }
