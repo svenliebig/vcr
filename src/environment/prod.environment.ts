@@ -1,4 +1,6 @@
-const environment = {
+import { EnvironmentType } from "@environment/environment"
+
+const environment: EnvironmentType = {
     production: true,
     firebase: {
         apiKey: "AIzaSyDTREoB0u_S_Gm189HK5cDvSJ-z_U6oLKg",

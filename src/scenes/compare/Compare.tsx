@@ -1,15 +1,13 @@
-import React, { Component, Fragment } from "react"
-
-import Skeleton from "@scenes/skeleton"
 import SeriesCard from "@components/SeriesCard"
-import EventBus from "@service/EventBus/EventBus"
-
-import "./Compare.css"
-import { SeriesFirebase } from "@service/firebase/Firebase"
-import { RouteComponentProps } from "react-router"
-import { UserRepositoryResponse } from "@service/user/UserRepository"
-import SeriesModel from "@model/SeriesModel"
 import SeriesConverter from "@converter/SeriesConverter"
+import SeriesModel from "@model/SeriesModel"
+import Skeleton from "@scenes/skeleton/Skeleton"
+import EventBus from "@service/EventBus/EventBus"
+import { SeriesFirebase } from "@service/firebase/Firebase"
+import { UserRepositoryResponse } from "@service/user/UserRepository"
+import React, { Component, Fragment } from "react"
+import { RouteComponentProps } from "react-router"
+import "./Compare.less"
 
 export interface State {
     yours: Array<SeriesFirebase>
@@ -47,22 +45,19 @@ export default class Compare extends Component<Props, State> {
     }
 
     render() {
-        console.debug(this.state.other)
-        return (
-            <Skeleton>
-                <div className="table">
-                    <div className="content" />
-                    {(this.state.both.length !== 0) && this.renderBoth()}
-                    {(this.state.onlyyou.length !== 0) && this.renderYou()}
-                    {(this.state.onlyhim.length !== 0) && this.renderHim()}
-                </div>
-            </Skeleton>
-        )
+        return <Skeleton>
+            <div className="table">
+                {/* <div className="content" /> */}
+                {this.state.both.length !== 0 && this.renderBoth()}
+                {this.state.onlyyou.length !== 0 && this.renderYou()}
+                {this.state.onlyhim.length !== 0 && this.renderHim()}
+            </div>
+        </Skeleton>
     }
 
     private renderBoth() {
         return <Fragment>
-            <div className="header">{(this.state.other as any).name} {"&"} du:</div>
+            <div className="header">{this.state.other!.name} {"&"} du:</div>
             <div className="content">
                 {this.state.both.map(val => <SeriesCard key={val.name} series={SeriesConverter.firebaseToModel(val)} />)}
             </div>
@@ -89,7 +84,7 @@ export default class Compare extends Component<Props, State> {
 
         return (
             <Fragment>
-                <div className="header">{(this.state.other as any).name}:</div>
+                <div className="header">{this.state.other!.name}:</div>
                 <div className="content">
                     {this.state.onlyhim.map(val =>
                         <SeriesCard key={val.name} series={SeriesConverter.firebaseToModel(val)}>

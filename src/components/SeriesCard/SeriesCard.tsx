@@ -28,24 +28,9 @@ export default class SeriesCard extends Component<Props> {
         }
     }
 
-    /**
-	 *
-	 *
-	 * @param {*} series
-	 * @returns
-	 * @memberof SeriesCard
-	 */
-    getImageSrc(series: SeriesModel) {
-        const url = series.posterUrl
-        if (url !== undefined && url.endsWith("jpg")) {
-            return `https://image.tmdb.org/t/p/w300${url}`
-        } else {
-            return "bright-squares.png"
-        }
-    }
-
     render() {
         const { series } = this.props
+        const remainingWatchtime = series.totalMinutesNotWatched()
 
         return (
             <div className="card">
@@ -58,12 +43,28 @@ export default class SeriesCard extends Component<Props> {
                     <img src={this.getImageSrc(series)} alt="" />
                 }
                 <div className="card-title-wrapper">
-                    <Tooltip text={`Noch ca. ${TimeUtil.minutesToReadableTimeString(series.totalMinutesNotWatched())}`}>
+                    <Tooltip text={remainingWatchtime === 0 ? "Vollständig gesehen" : `Noch ca. ${TimeUtil.minutesToReadableTimeString(remainingWatchtime)}`}>
                         <div className="card-title">{series.name}</div>
                     </Tooltip>
                 </div>
                 {this.props.children}
             </div>
         )
+    }
+
+    /**
+	 *
+	 *
+	 * @param {*} series
+	 * @returns
+	 * @memberof SeriesCard
+	 */
+    private getImageSrc(series: SeriesModel) {
+        const url = series.posterUrl
+        if (url !== undefined && url.endsWith("jpg")) {
+            return `https://image.tmdb.org/t/p/w300${url}`
+        } else {
+            return "bright-squares.png"
+        }
     }
 }

@@ -2,8 +2,8 @@ import AbstractSeries, { State as AbstractSeriesState } from "@components/abstra
 import Mail from "@components/button/Mail"
 import ButtonRemove from "@components/button/remove/ButtonRemove"
 import { Tab, Tabs } from "@components/tabs"
+import EpisodeModel from "@model/EpisodeModel"
 import SeasonModel from "@model/SeasonModel"
-import { Episode } from "@model/Series"
 import SeriesModel from "@model/SeriesModel"
 import Skeleton from "@scenes/skeleton/Skeleton"
 import EventBus from "@service/EventBus/EventBus"
@@ -12,7 +12,6 @@ import React, { ChangeEvent } from "react"
 import { RouteComponentProps } from "react-router"
 import { Link } from "react-router-dom"
 import "./View.less"
-
 
 export interface State extends AbstractSeriesState {
     changed: boolean
@@ -95,7 +94,7 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
         })
     }
 
-    buildEpisodeNumber(episode: Episode) {
+    buildEpisodeNumber(episode: EpisodeModel) {
         const episodeNumber = episode.episode < 10 ? `0${episode.episode}` : `${episode.episode}`
         const seasonNumber = episode.season < 10 ? `0${episode.season}` : `${episode.season}`
         return `S${seasonNumber}E${episodeNumber}`
@@ -177,7 +176,7 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
         )
     }
 
-    public mapEpisode = (episode: Episode) => {
+    public mapEpisode = (episode: EpisodeModel) => {
         return (
             <tr key={episode.episode}>
                 <td>

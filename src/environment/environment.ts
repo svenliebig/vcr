@@ -1,8 +1,8 @@
 import prod from "./prod.environment"
-import * as test from "./test.environment"
-import * as devel from "./development.environment"
+import test from "./test.environment"
+import devel from "./development.environment"
 
-type EnvironmentType = {
+export type EnvironmentType = {
     production: boolean,
     firebase: {
         apiKey: string,
@@ -19,11 +19,11 @@ type EnvironmentType = {
 let environment: EnvironmentType
 
 if (process.env.NODE_ENV === "test") {
-    environment = test.default
+    environment = test
 } else if (process.env.NODE_ENV === "production") {
     environment = prod
 } else {
-    environment = devel.default
+    environment = devel
 }
 
 export default environment
