@@ -85,7 +85,7 @@ export default class Firebase {
         this.error = undefined
         this.db = app.database()
         this.auth = app.auth()
-        this.user = JSON.parse(localStorage.getItem("firebase-user-login") || "")
+        this.user = JSON.parse(localStorage.getItem("firebase-user-login") as any)
 
         const self = this
         this.auth.onAuthStateChanged((user) => {

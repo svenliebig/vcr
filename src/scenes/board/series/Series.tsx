@@ -8,8 +8,8 @@ import SeriesModel from "@model/SeriesModel"
 
 // Components
 import AbstractSeries, { State as AbstractSeriesState } from "@components/abstract/AbstractSeries"
-import SeriesCard from "@components/SeriesCard"
-import Episode from "@components/Episode"
+import SeriesCard from "@components/SeriesCard/SeriesCard"
+import Episode from "@components/Episode/Episode"
 import Tooltip from "@components/Tooltip"
 
 import EpisodeModel from "@model/EpisodeModel"

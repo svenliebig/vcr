@@ -3,7 +3,7 @@ import Router from "./Router"
 import { render } from "react-dom"
 import registerServiceWorker from "./registerServiceWorker"
 
-import Preferences from "@scenes/skeleton/header/nav/preferences"
+import Preferences from "@scenes/skeleton/header/nav/preferences/Preferences"
 import EventHandler from "@components/EventHandler/EventHandler"
 
 import "font-awesome/css/font-awesome.css"

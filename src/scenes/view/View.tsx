@@ -1,5 +1,5 @@
 import AbstractSeries, { State as AbstractSeriesState } from "@components/abstract/AbstractSeries"
-import Mail from "@components/button/Mail"
+import Mail from "@components/button/Mail/Mail"
 import ButtonRemove from "@components/button/remove/ButtonRemove"
 import { Tab, Tabs } from "@components/tabs"
 import EpisodeModel from "@model/EpisodeModel"

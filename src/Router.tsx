@@ -9,6 +9,7 @@ import Board from "@scenes/board/Board"
 import Statistic from "@scenes/statistic/Statistic"
 import Manage from "@scenes/manage/Manage"
 import Compare from "@scenes/compare/Compare"
+import Login from "@scenes/login/Login"
 
 const firebase = new Firebase()
 
@@ -33,7 +34,7 @@ export default class Router extends Component {
             ]
             // ReactDOM.render(<Chat />, document.getElementById("chat"))
         } else {
-            // routesArray.push({ path: "/", component: Login, key: "1" })
+            routesArray.push({ path: "/", component: Login, key: "1" })
         }
 
         return (

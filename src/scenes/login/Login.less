@@ -1,5 +1,5 @@
-@import "src/resources/mixins.less";
-@import "src/resources/definitions.less";
+@import "../../../src/resources/mixins.less";
+@import "../../../src/resources/definitions.less";
 
 *::-webkit-input-placeholder {
 	color: #95a5a6;
@@ -42,12 +42,12 @@
 					margin-left: 0px;
 				}
 
-				a.active {
+				button.active {
 					color: #b5b5b5;
 					border-bottom: 1px solid @border-color;
 				}
 
-				a:hover {
+				button:hover {
 					border-bottom: 1px solid @border-color;
 				}
 			}
@@ -86,7 +86,7 @@
 .input-text--wrapper {
 	display: flex;
 	flex-direction: column;
-	margin: 10px 5px 10px 5px;       
+	margin: 10px 5px 10px 5px;
 }
 
 .input-text--label {

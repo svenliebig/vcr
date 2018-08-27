@@ -1,4 +1,4 @@
-import SeriesCard from "@components/SeriesCard"
+import SeriesCard from "@components/SeriesCard/SeriesCard"
 import SeriesConverter from "@converter/SeriesConverter"
 import SeriesModel from "@model/SeriesModel"
 import Skeleton from "@scenes/skeleton/Skeleton"

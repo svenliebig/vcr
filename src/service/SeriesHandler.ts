@@ -1,8 +1,7 @@
 import EpisodeModel from "@model/EpisodeModel"
 import SeasonModel from "@model/SeasonModel"
 import SeriesModel from "@model/SeriesModel"
-import EventBus from "@service/EventBus"
-import moment from "moment"
+import EventBus from "@service/EventBus/EventBus"
 
 export default class SeriesHandler {
     public static toggleEpisode(series: SeriesModel, episode: EpisodeModel): SeriesModel {
@@ -25,7 +24,7 @@ export default class SeriesHandler {
                 return
             }
             season.episodes.forEach(episode => {
-                if (moment(episode.airDate).isBefore()) {
+                if (episode.isAired()) {
                     if (!episode.watched) {
                         changed = true
                     }
