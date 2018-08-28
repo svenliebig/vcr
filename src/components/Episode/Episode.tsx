@@ -1,12 +1,8 @@
-/** React Imports */
 import React, { Component } from "react"
-
-import moment from "moment"
-
 import Tooltip from "@components/Tooltip"
-
-import "./Episode.less"
 import EpisodeModel from "@model/EpisodeModel"
+import "./Episode.less"
+import TimeUtil from "@service/TimeUtil"
 
 export interface Props {
     episode: EpisodeModel
@@ -22,7 +18,7 @@ export interface Props {
  */
 export default class Episode extends Component<Props> {
     get aired() {
-        return moment(this.props.episode.airDate).isAfter()
+        return this.props.episode.isNotAired()
     }
 
     get tooltip() {
@@ -34,7 +30,7 @@ export default class Episode extends Component<Props> {
     }
 
     get airDate() {
-        return moment(this.props.episode.airDate).format("DD.MM.YYYY")
+        return TimeUtil.formatDateString(this.props.episode.airDate)
     }
 
     get season() {

@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Dialog from "@components/dialog"
+import Dialog from "@components/dialog/Dialog"
 import InputText from "@components/Input/Text/InputText"
 import EventBus from "@service/EventBus/EventBus"
 

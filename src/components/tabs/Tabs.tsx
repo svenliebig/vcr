@@ -1,5 +1,6 @@
 import React, { Component, ReactNode } from "react"
 import "./Tabs.less"
+import Button from "@components/button/Button"
 
 export interface Props {
     defaultActiveTabIndex: number
@@ -92,7 +93,7 @@ export class Tab extends Component<TabProps> {
     render() {
         return (
             <li className={`tab ${this.props.className}`}>
-                <button className={`tab-link ${this.props.isActive ? "active" : ""}`}
+                <Button icon={`tab-link ${this.props.isActive ? "active" : ""}`}
                     onClick={(event) => {
                         event.preventDefault()
                         this.props.onClick!(this.props.tabIndex!)
@@ -100,7 +101,7 @@ export class Tab extends Component<TabProps> {
                 >
                     <i className={`tab-icon ${this.props.icon}`} />
                     <div>{this.props.title}</div>
-                </button>
+                </Button>
             </li>
         )
     }

@@ -10,7 +10,7 @@ export interface Props {
     id: string
     value: string
     throttled?: number
-    label: string
+    label?: string
     placeholder?: string
     type?: "password"
     onChange(value: string, id: string): void

@@ -1,5 +1,5 @@
-@import "src/resources/mixins.less";
-@import "src/resources/definitions.less";
+@import "../../../src/resources/mixins.less";
+@import "../../../src/resources/definitions.less";
 
 .chat-container {
 	position: fixed;
@@ -12,7 +12,7 @@
 	line-height: 11px;
 	z-index: 50;
 	max-width: calc(100% ~"-" 13px);
-	
+
 	.connection-head {
 		.not-selectable();
 		width: 100%;
@@ -59,7 +59,7 @@
 		.userList {
 			.flex-item(1, 0, 1, auto, auto);
 			height: 100%;
-			
+
 			padding-right: 5px;
 			margin-bottom: 5px;
 			border-right: 1px solid @border-color;
@@ -99,7 +99,7 @@
 					&:first-child {
 						margin-top: 0;
 					}
-					
+
 					.chat-message-writer {
 						font-weight: bold;
 						text-shadow: @text-color-1-text-shadow;
@@ -108,7 +108,7 @@
 					}
 				}
 			}
-			
+
 			.chat-input-container {
 				.flex-item(2, 0, 1, auto, flex-end);
 				width: 100%;
@@ -127,7 +127,7 @@
 						border-left-width: 0;
 						padding: 0 5px;
 					}
-				}	
+				}
 			}
 		}
 

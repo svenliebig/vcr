@@ -1,5 +1,5 @@
 import AbstractSeries, { State as AbstractSeriesState } from "@components/abstract/AbstractSeries"
-import Mail from "@components/button/Mail/Mail"
+// import Mail from "@components/button/Mail/Mail"
 import ButtonRemove from "@components/button/remove/ButtonRemove"
 import { Tab, Tabs } from "@components/tabs/Tabs"
 import EpisodeModel from "@model/EpisodeModel"
@@ -12,6 +12,8 @@ import React, { ChangeEvent } from "react"
 import { RouteComponentProps } from "react-router"
 import { Link } from "react-router-dom"
 import "./View.less"
+import Button from "@components/button/Button"
+import TimeUtil from "@service/TimeUtil"
 
 export interface State extends AbstractSeriesState {
     changed: boolean
@@ -132,14 +134,14 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
                                 </div>
                             </div>
                             <div className="action-wrapper">
-                                <Mail onClick={this.suggestSeries.bind(this)} />
+                                {import("@components/button/Mail/Mail").then(m => <m.default onClick={this.suggestSeries.bind(this)} />)}
                             </div>
                             <div className="action-wrapper">
                                 <ButtonRemove onClick={this.removeSeries} />
                             </div>
                         </div>
-                        <div className="spacer"></div>
-                        {this.state.changed ? <button className="save" onClick={this.savePreferences}>Speichern</button> : ""}
+                        <div className="spacer" />
+                        {this.state.changed ? <Button icon="save" onClick={this.savePreferences}>Speichern</Button> : ""}
                     </div>
                 </div>
                 <div className="series-content">
@@ -161,10 +163,7 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
                     <thead>
                         <tr>
                             <th>
-                                <button
-                                    className="fa fa-eye"
-                                    onClick={() => SeriesHandler.toggleSeason(this.state.series!, season)}>
-                                </button>
+                                <Button icon="fa fa-eye" onClick={() => SeriesHandler.toggleSeason(this.state.series!, season)} />
                             </th>
                         </tr>
                     </thead>
@@ -180,9 +179,9 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
         return (
             <tr key={episode.episode}>
                 <td>
-                    <button onClick={() => SeriesHandler.toggleEpisode(this.state.series!, episode)}>
+                    <Button onClick={() => SeriesHandler.toggleEpisode(this.state.series!, episode)}>
                         <span className={episode.isNotAired() ? ("fa fa-clock-o") : (episode.watched ? "fa fa-check-square-o" : "fa fa-square-o")}></span>
-                    </button>
+                    </Button>
                 </td>
                 <td>
                     {this.buildEpisodeNumber(episode)}
@@ -191,7 +190,7 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
                     {episode.name}
                 </td>
                 <td>
-                    {this.dateFormat(episode.airDate)}
+                    {TimeUtil.formatDateString(episode.airDate)}
                 </td>
             </tr>
         )

@@ -2,25 +2,26 @@ import React, { Component } from "react"
 import Tooltip from "../../Tooltip"
 
 import "./Mail.less"
+import Button from "@components/button/Button"
 
 export interface Props {
     onClick(): void
 }
 
 /**
- * Component Class of ButtonRemove.
+ * Component Class of Mail.
  *
  * @export
- * @class ButtonRemove
+ * @class Mail
  * @extends {Component}
  */
-export default class ButtonRemove extends Component<Props> {
+export default class Mail extends Component<Props> {
     render() {
         return (
             <Tooltip text="Serie empfehlen">
-                <button className="button--mail" onClick={this.props.onClick}>
+                <Button icon="button--mail" onClick={this.props.onClick}>
                     <span className="fa fa-envelope-o"></span>
-                </button>
+                </Button>
             </Tooltip>
         )
     }

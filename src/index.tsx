@@ -1,13 +1,14 @@
 import React from "react"
-import Router from "./Router"
-import { render } from "react-dom"
-import registerServiceWorker from "./registerServiceWorker"
-
-import Preferences from "@scenes/skeleton/header/nav/preferences/Preferences"
-import EventHandler from "@components/EventHandler/EventHandler"
-
 import "font-awesome/css/font-awesome.css"
 
-render(<EventHandler><Router /></EventHandler>, document.getElementById("root"))
-render(<Preferences />, document.getElementById("dialogs"))
-registerServiceWorker()
+(async function () {
+    const E = (await import("@components/EventHandler/EventHandler")).default
+    const P = (await import("@scenes/skeleton/header/nav/preferences/Preferences")).default
+    const R = (await import("./Router")).default
+
+    const { render } = (await import("react-dom"))
+
+    render(<E><R /></E>, document.getElementById("root"))
+    render(<P />, document.getElementById("dialogs"));
+    (await import("./registerServiceWorker")).default()
+})()

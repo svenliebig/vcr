@@ -11,4 +11,9 @@ export default class TimeUtil {
         m -= hrs * MINUTES_OF_HOUR
         return `${days !== 0 ? `${days}d ` : ""}${hrs !== 0 ? `${hrs}h ` : ""}${m !== 0 ? `${m}m` : ""}`
     }
+
+    public static formatDateString(date: string) {
+        const dateArray = date.split("-").map(e => parseInt(e, 10))
+        return `${dateArray[2]}.${dateArray[1] + 1}.${dateArray[0]}`
+    }
 }

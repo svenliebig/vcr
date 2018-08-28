@@ -9,6 +9,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const getClientEnvironment = require('./env');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const publicPath = paths.servedPath;
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -39,18 +40,8 @@ module.exports = {
             process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
         ),
         extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.tsx', '.ts'],
-        alias: {
-            'react-native': 'react-native-web',
-            '@service': paths.appSrc + '/service',
-            '@components': paths.appSrc + '/components',
-            '@scenes': paths.appSrc + '/scenes',
-            '@environment': paths.appSrc + '/environment',
-            '@converter': paths.appSrc + '/converter',
-            '@model': paths.appSrc + '/model'
-        },
-        plugins: [
-            new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])
-        ]
+        alias: require("./aliases"),
+        plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])]
     },
     module: {
         strictExportPresence: true,
@@ -139,6 +130,42 @@ module.exports = {
                         ]
                     },
                     {
+                        test: /\.less$/,
+                        use: [{
+                                loader: require.resolve('style-loader') // creates style nodes from JS strings
+                            }, {
+                                loader: require.resolve('css-loader'),
+                                options: {
+                                    importLoaders: 1,
+                                    minimize: true,
+                                    sourceMap: shouldUseSourceMap
+                                }
+                            },
+                            {
+                                loader: require.resolve('postcss-loader'),
+                                options: {
+                                    // Necessary for external CSS imports to work
+                                    // https://github.com/facebookincubator/create-react-app/issues/2677
+                                    ident: 'postcss',
+                                    plugins: () => [
+                                        require('postcss-flexbugs-fixes'),
+                                        autoprefixer({
+                                            browsers: [
+                                                '>1%',
+                                                'last 4 versions',
+                                                'Firefox ESR',
+                                                'not ie < 9'
+                                            ],
+                                            flexbox: 'no-2009'
+                                        })
+                                    ]
+                                }
+                            }, {
+                                loader: require.resolve('less-loader') // compiles Less to CSS
+                            }
+                        ]
+                    },
+                    {
                         loader: require.resolve('file-loader'),
                         exclude: [/\.js$/, /\.html$/, /\.json$/, /\.ts$/],
                         options: {
@@ -194,10 +221,13 @@ module.exports = {
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
     optimization: {
-        minimize: true,
-        splitChunks: {
-            chunks: 'all'
-        }
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                sourceMap: false,
+                parallel: true,
+            }),
+        ],
     },
     node: {
         dgram: 'empty',

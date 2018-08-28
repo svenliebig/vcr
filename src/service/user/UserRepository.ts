@@ -1,8 +1,5 @@
 import Firebase, { UserFirebase, SeriesFirebase } from "@service/firebase/Firebase"
 import SeriesConverter from "@converter/SeriesConverter"
-import {
-    Series
-} from "../../model/Series"
 import SeriesModel from "@model/SeriesModel"
 
 export type UserRepositoryResponse = {
@@ -107,13 +104,13 @@ export default class UserRepository {
 
     getFinishedSeries() {
         return this.fb.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", true).then(val => {
-            return Promise.resolve(Series.fromFirebaseArray(val))
+            return Promise.resolve(SeriesConverter.firebaseToModel(val))
         })
     }
 
     getOpenSeries() {
         return this.fb.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", false).then(val =>
-            Promise.resolve(Series.fromFirebaseArray(val))
+            Promise.resolve(SeriesConverter.firebaseToModel(val))
         )
     }
 
@@ -125,7 +122,7 @@ export default class UserRepository {
 	 */
     getAllSeries() {
         return this.fb.get(`/users/${this.uid}/series`).then(val =>
-            Promise.resolve(Series.fromFirebaseArray(val))
+            Promise.resolve(SeriesConverter.firebaseToModel(val))
         )
     }
 

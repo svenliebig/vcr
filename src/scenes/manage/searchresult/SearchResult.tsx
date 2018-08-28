@@ -1,9 +1,9 @@
 import { SeriesByNameSeriesResponse } from "@service/api/Moviedb"
 import EventBus from "@service/EventBus/EventBus"
-import moment from "moment"
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import "./SearchResult.less"
+import TimeUtil from "@service/TimeUtil"
 
 export interface Props {
     series: SeriesByNameSeriesResponse
@@ -94,7 +94,7 @@ export default class SearchResult extends Component<Props, State> {
                 <div className="series-title-wrapper">
                     <div className="series-title">{series.name}</div>
                 </div>
-                <div className="airing">{moment(series.first_air_date).format("DD.MM.YYYY")}</div>
+                <div className="airing">{TimeUtil.formatDateString(series.first_air_date)}</div>
                 <div className="actions">
                     {actions()}
                 </div>

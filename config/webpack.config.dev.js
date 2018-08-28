@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 // const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
+// const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
@@ -69,33 +69,24 @@ module.exports = {
             process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
         ),
         extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.tsx', '.ts'],
-        alias: {
-            'react-native': 'react-native-web',
-            '@service': paths.appSrc + '/service',
-            '@components': paths.appSrc + '/components',
-            '@scenes': paths.appSrc + '/scenes',
-            '@environment': paths.appSrc + '/environment',
-            '@converter': paths.appSrc + '/converter',
-            '@model': paths.appSrc + '/model'
-        },
-        plugins: [
-            new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])
-        ]
+        alias: require("./aliases"),
+        plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])]
     },
     module: {
         strictExportPresence: true,
-        rules: [{
-                test: /\.(js|jsx)$/,
-                enforce: 'pre',
-                use: [{
-                    options: {
-                        formatter: eslintFormatter,
-                        eslintPath: require.resolve('eslint')
-                    },
-                    loader: require.resolve('eslint-loader')
-                }],
-                include: paths.appSrc
-            },
+        rules: [
+            // {
+            //     test: /\.(js|jsx)$/,
+            //     enforce: 'pre',
+            //     use: [{
+            //         options: {
+            //             formatter: eslintFormatter,
+            //             eslintPath: require.resolve('eslint')
+            //         },
+            //         loader: require.resolve('eslint-loader')
+            //     }],
+            //     include: paths.appSrc
+            // },
             {
                 test: /\.(ts|tsx)$/,
                 enforce: 'pre',

@@ -1,46 +1,32 @@
-/** React Imports */
-import View from "@scenes/view/View"
 import React, { Component, ComponentType } from "react"
-/** Router */
 import { BrowserRouter, Route, Switch } from "react-router-dom"
-/** Services */
 import Firebase from "./service/firebase/Firebase"
-import Board from "@scenes/board/Board"
-import Statistic from "@scenes/statistic/Statistic"
-import Manage from "@scenes/manage/Manage"
-import Compare from "@scenes/compare/Compare"
-import Login from "@scenes/login/Login"
+import { render } from "react-dom"
+import Chat from "@components/Chat/Chat"
 
 const firebase = new Firebase()
 
-/**
- *
- *
- * @export
- * @class Router
- * @extends {Component}
-  */
 export default class Router extends Component {
-    render() {
-        let routesArray: Array<{ path: string, component: ComponentType<any>, key: string }> = []
+    async render() {
+        let routesArray: Array<{ path: string, component: ComponentType<any> }> = []
 
         if (firebase.isLoggedIn()) {
             routesArray = [
-                { path: "/", component: Board, key: "1" },
-                { path: "/manage", component: Manage, key: "2" },
-                { path: "/view/:id", component: View, key: "3" },
-                { path: "/statistics", component: Statistic, key: "4" },
-                { path: "/compare/:username", component: Compare, key: "5" }
+                { path: "/", component: (await import("@scenes/board/Board")).default },
+                { path: "/manage", component: (await import("@scenes/manage/Manage")).default },
+                { path: "/view/:id", component: (await import("@scenes/board/Board")).default },
+                { path: "/statistics", component: (await import("@scenes/statistic/Statistic")).default },
+                { path: "/compare/:username", component: (await import("@scenes/compare/Compare")).default }
             ]
-            // ReactDOM.render(<Chat />, document.getElementById("chat"))
+            render(<Chat />, document.getElementById("chat"))
         } else {
-            routesArray.push({ path: "/", component: Login, key: "1" })
+            routesArray.push({ path: "/", component: (await import("@scenes/login/Login")).default })
         }
 
         return (
             <BrowserRouter>
                 <Switch>
-                    {routesArray.map((route) => <Route exact {...route} />)}
+                    {routesArray.map((route, i) => <Route exact {...route} key={i} />)}
                 </Switch>
             </BrowserRouter>
         )

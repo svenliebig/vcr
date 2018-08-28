@@ -54,11 +54,9 @@ export default class Board extends Component<{}, State> {
         this.toggleNotWatched = this.toggleNotWatched.bind(this)
         this.toggleUpcoming = this.toggleUpcoming.bind(this)
         this.toggleWatched = this.toggleWatched.bind(this)
-        this.filterSeries = this.filterSeries.bind(this)
         this.selectGenre = this.selectGenre.bind(this)
         this.toggleSortAlphabetical = this.toggleSortAlphabetical.bind(this)
         this.toggleSortRemainingTime = this.toggleSortRemainingTime.bind(this)
-        this.sortSeries = this.sortSeries.bind(this)
     }
 
     componentDidMount() {
