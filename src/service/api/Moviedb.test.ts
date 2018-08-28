@@ -49,14 +49,14 @@ describe("MovieDatabase", () => {
         })
     })
 
-    describe("rest api rejects promise", () => {
-        beforeEach(() => {
-            spyOn(axios, "get").and.callFake(() => Promise.reject())
-        })
+    // describe("rest api rejects promise", () => {
+    //     beforeEach(() => {
+    //         spyOn(axios, "get").and.callFake(() => Promise.reject())
+    //     })
 
-        it("should call the setTimeout function when a error was thrown in the promise", (done) => {
-            spyOn(window, "setTimeout").and.callFake(done);
-            (classUnderTest as any).callApi(null as any).then(done)
-        })
-    })
+    //     it("should call the setTimeout function when a error was thrown in the promise", (done) => {
+    //         spyOn(window, "setTimeout").and.callFake(done);
+    //         (classUnderTest as any).callApi(null as any).then(done)
+    //     })
+    // })
 })
