@@ -14,14 +14,12 @@ import { Link } from "react-router-dom"
 import "./View.less"
 import Button from "@components/button/Button"
 import TimeUtil from "@service/TimeUtil"
-import Mail from "@components/button/Mail/Mail"
+import SuggestionWidget from "@scenes/view/SuggestionWidget"
 
 export interface State extends AbstractSeriesState {
     changed: boolean
     bsto: string
     otaku: string
-    suggestedUsername: string
-    userOptions: Array<{ uid: string, name: string }>
 }
 
 export default class View extends AbstractSeries<RouteComponentProps<{ id: number }>, State> {
@@ -33,15 +31,11 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
             series: null,
             changed: false,
             bsto: "",
-            otaku: "",
-            suggestedUsername: "",
-            userOptions: []
+            otaku: ""
         }
 
         this.savePreferences = this.savePreferences.bind(this)
         this.removeSeries = this.removeSeries.bind(this)
-
-        EventBus.instance.emit("getUserDirectory").then((userOptions: Array<{ uid: string, name: string }>) => this.setState({ userOptions }))
 
         EventBus.instance.emit("getUserSeries", props.match.params.id).then((series: SeriesModel) => {
             console.debug(series)
@@ -62,12 +56,6 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
         })
     }
 
-    suggestSeries() {
-        EventBus.instance.emit("writeMessage", this.props.match.params.id, this.state.suggestedUsername).then(() => {
-            this.setState({ suggestedUsername: "" })
-        })
-    }
-
     handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         switch (e.target.id) {
             case "otaku":
@@ -80,11 +68,6 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
                 this.setState({
                     bsto: e.target.value,
                     changed: true
-                })
-                break
-            case "username":
-                this.setState({
-                    suggestedUsername: e.target.value
                 })
                 break
         }
@@ -140,12 +123,7 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
                                     <input id="bsto" type="type" placeholder="https://bs.to/example" value={this.state.bsto} onChange={this.handleInput} />
                                     <label htmlFor="otaku">otakustream</label>
                                     <input id="otaku" type="type" placeholder="https://otakustream.tv/anime/xyz/" value={this.state.otaku} onChange={this.handleInput} />
-                                    <Mail onClick={this.suggestSeries.bind(this)} />
-                                    <label htmlFor="username">empfehlen</label>
-                                    <select id="username" onChange={this.handleInput} value={this.state.suggestedUsername}>
-                                        <option value="">(Auswählen)</option>
-                                        {this.state.userOptions.map((v) => <option key={v.uid} value={v.name}>{v.name}</option>)}
-                                    </select>
+                                    <SuggestionWidget seriesId={this.props.match.params.id} />
                                 </div>
                             </div>
                             <div className="action-wrapper">
