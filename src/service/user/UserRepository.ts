@@ -104,7 +104,7 @@ export default class UserRepository {
 
     getFinishedSeries() {
         return this.fb.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", true).then(val => {
-            return Promise.resolve(SeriesConverter.firebaseToModel(val))
+            return Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))
         })
     }
 
@@ -122,7 +122,7 @@ export default class UserRepository {
 	 */
     getAllSeries() {
         return this.fb.get(`/users/${this.uid}/series`).then(val =>
-            Promise.resolve(SeriesConverter.firebaseToModel(val))
+            Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))
         )
     }
 
