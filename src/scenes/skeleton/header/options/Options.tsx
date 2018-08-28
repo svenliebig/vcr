@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import { withRouter, RouteComponentProps } from "react-router-dom"
 
 // Model
 import SeriesModel from "@model/SeriesModel"
@@ -13,18 +12,17 @@ import EventBus from "@service/EventBus/EventBus"
 
 // CSS
 import "./Options.less"
-
-export type Props = RouteComponentProps<{}>
+import MessageModel from "@model/MessageModel"
 
 export interface State {
     settings: boolean
     showMessages: boolean
-    messages: Array<any>
-    seriesMessages: Array<any>
+    messages: Array<MessageModel>
+    seriesMessages: Array<SeriesModel>
 }
 
-class Options extends Component<Props, State> {
-    constructor(props: Props) {
+class Options extends Component<{}, State> {
+    constructor(props: {}) {
         super(props)
 
         this.state = {
@@ -57,10 +55,10 @@ class Options extends Component<Props, State> {
                     <div key={i} className="suggestion">
                         <SeriesCard series={this.state.seriesMessages[i]}>
                             <div className="actions">
-                                <button onClick={this.addSeries.bind(this, this.state.seriesMessages[i], i)}><span className="fa fa-plus"></span></button>
+                                <button onClick={this.addSeries.bind(this, this.state.seriesMessages[i], i)}><span className="fa fa-plus" /></button>
                                 <span className="from">Von: {message.from}</span>
                                 <button className="remove-message" onClick={this.removeMessage.bind(this, i)}>
-                                    <span className="fa fa-times"></span>
+                                    <span className="fa fa-times" />
                                 </button>
                             </div>
                         </SeriesCard>
@@ -75,10 +73,10 @@ class Options extends Component<Props, State> {
                 <div className="options-container">
                     <IconBadge icon="fa fa-envelope-o" counter={this.state.messages.length} onClick={this.toggleMessages.bind(this)} />
                     <button onClick={this.settings} title="Einstellungen">
-                        <span className="fa fa-cog"></span>
+                        <span className="fa fa-cog" />
                     </button>
                     <button onClick={this.logout} title="Ausloggen">
-                        <span className="fa fa-power-off"></span>
+                        <span className="fa fa-power-off" />
                     </button>
                 </div>
                 <div className="messages">
@@ -113,4 +111,4 @@ class Options extends Component<Props, State> {
     }
 }
 
-export default withRouter(Options)
+export default Options

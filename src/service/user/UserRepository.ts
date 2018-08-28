@@ -15,14 +15,14 @@ export type UserRepositoryResponse = {
  * @class UserRepository
  */
 export default class UserRepository {
-    private fb = new Firebase()
+    private firebase = new Firebase()
     private uid: string | null = null
 
     constructor() {
         const self = this
 
-        if (this.fb.isLoggedIn()) {
-            this.uid = this.fb.user.uid
+        if (this.firebase.isLoggedIn()) {
+            this.uid = this.firebase.user.uid
         }
 
         this.isUserInDb(result => {
@@ -32,8 +32,27 @@ export default class UserRepository {
         })
     }
 
+    public async checkUser() {
+        const exist = await this.isUserInUserDirectory()
+        if (!exist) {
+            const { displayName, uid } = this.firebase.user
+            if (displayName) {
+                this.writeUserToUserDirectory(displayName)
+            } else {
+                const name = await this.firebase.get(`/users/${this.uid}/name`)
+                if (name) {
+                    this.firebase.user.updateProfile({ displayName: name, photoURL: null })
+                    this.writeUserToUserDirectory(name)
+                } else {
+                    this.firebase.user.updateProfile({ displayName: uid, photoURL: null })
+                    this.writeUserToUserDirectory(uid)
+                }
+            }
+        }
+    }
+
     public getUserByName(username: string) {
-        return this.fb.getWhere("/users", "name", username).then((val: { [key: string]: UserFirebase }) => {
+        return this.firebase.getWhere("/users", "name", username).then((val: { [key: string]: UserFirebase }) => {
             const tempArray: Array<UserRepositoryResponse> = []
 
             for (const key in val) {
@@ -59,7 +78,7 @@ export default class UserRepository {
     }
 
     public getUsers(): Promise<Array<UserFirebase>> {
-        return this.fb.get(`/users`).then((users: { [key: string]: UserFirebase }) => {
+        return this.firebase.get(`/users`).then((users: { [key: string]: UserFirebase }) => {
             const tempArray = []
             for (const key in users) {
                 const seriesArray = []
@@ -73,22 +92,22 @@ export default class UserRepository {
         })
     }
 
-    getUserNames() {
-        return this.fb.get(`/users`).then(val => {
-            const tempArray = []
+    public getUserDirectory() {
+        return this.firebase.get(`/user-directory`).then(val => {
+            const tempArray: Array<{ uid: string, name: string }> = []
             for (const key in val) {
-                tempArray.push(key)
+                tempArray.push(val[key])
             }
             return Promise.resolve(tempArray)
         })
     }
 
     public isUserInDb(callback: (val: boolean) => void) {
-        this.fb.get(`/users/${this.uid}`).then(val => callback(val !== null))
+        this.firebase.get(`/users/${this.uid}`).then(val => callback(val !== null))
     }
 
     public addUserToDb() {
-        this.fb.write(`/users/${this.uid}`, {
+        this.firebase.write(`/users/${this.uid}`, {
             series: []
         })
     }
@@ -103,13 +122,13 @@ export default class UserRepository {
     }
 
     getFinishedSeries() {
-        return this.fb.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", true).then(val => {
+        return this.firebase.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", true).then(val => {
             return Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))
         })
     }
 
     getOpenSeries() {
-        return this.fb.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", false).then(val =>
+        return this.firebase.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", false).then(val =>
             Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))
         )
     }
@@ -121,23 +140,22 @@ export default class UserRepository {
 	 * @memberof UserRepository
 	 */
     getAllSeries() {
-        return this.fb.get(`/users/${this.uid}/series`).then(val =>
+        return this.firebase.get(`/users/${this.uid}/series`).then(val =>
             Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))
         )
     }
 
-    getName() {
-        return this.fb.get(`/users/${this.uid}/name`).then(val => {
-            return Promise.resolve(val)
-        })
+    public getName() {
+        return Promise.resolve(this.firebase.user.displayName!)
     }
 
-    setName(name: string) {
-        return this.fb.write(`/users/${this.uid}/name`, name)
+    public setName(name: string) {
+        this.firebase.user.updateProfile({ displayName: name, photoURL: null })
+        return this.firebase.write(`/user-directory/${this.uid}/name`, name)
     }
 
     getSeries(id: number) {
-        return this.fb.get(`/users/${this.uid}/series/${id}`).then(val => {
+        return this.firebase.get(`/users/${this.uid}/series/${id}`).then(val => {
             if (val) {
                 return Promise.resolve(SeriesConverter.firebaseToModel(val))
             }
@@ -155,7 +173,7 @@ export default class UserRepository {
                 userSeries = SeriesConverter.firebaseToModel(series)
             }
             userSeries.isCompletlyWatched = userSeries.isWatched()
-            return this.fb.write(`/users/${this.uid}/series/${series.id}`, userSeries)
+            return this.firebase.write(`/users/${this.uid}/series/${series.id}`, userSeries)
         })
     }
 
@@ -167,25 +185,33 @@ export default class UserRepository {
 	 */
     removeSeries(id: number) {
         this.checkArgs(id)
-        return this.fb.remove(`/users/${this.uid}/series/${id}`)
+        return this.firebase.remove(`/users/${this.uid}/series/${id}`)
     }
 
     updateWatchedSeries(series: SeriesModel) {
         this.checkArgs(series)
         series.isCompletlyWatched = series.isWatched()
-        return this.fb.write(`/users/${this.uid}/series/${series.id}`, series)
+        return this.firebase.write(`/users/${this.uid}/series/${series.id}`, series)
     }
 
-    checkArgs(args: any) {
+    private checkArgs(args: any) {
         if (this.uid === null || this.uid === "" || args === null) {
             throw this.exception("UID or series is not defined.")
         }
     }
 
-    exception(str: string) {
+    private exception(str: string) {
         return {
             message: str,
             toString: () => str
         }
+    }
+
+    private isUserInUserDirectory() {
+        return this.firebase.exists(`/user-directory/${this.uid}`)
+    }
+
+    private writeUserToUserDirectory(username: string) {
+        return this.firebase.write(`/user-directory/${this.uid}`, { uid: this.uid, name: username })
     }
 }

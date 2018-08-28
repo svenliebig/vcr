@@ -163,7 +163,7 @@ describe("Firebase", () => {
     describe("login(string, string): Promise", () => {
         describe("without email and password", () => {
             it("should have error 'Your email is not vaild.'", done => {
-                classUnderTest.login(", ", undefined as any).then(() => {
+                classUnderTest.login(", ", "").then(() => {
                     expect(classUnderTest.getError()).toBe("Your email is not vaild.")
                     done()
                 })
@@ -182,7 +182,7 @@ describe("Firebase", () => {
     describe("createUser(): void", () => {
         describe("without email and password", () => {
             it("should have error 'Your email is not vaild.'", done => {
-                classUnderTest.createUser(", ", undefined as any).then(() => {
+                classUnderTest.createUser(", ", "").then(() => {
                     expect(classUnderTest.getError()).toBe("Your email is not vaild.")
                     done()
                 })

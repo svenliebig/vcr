@@ -100,7 +100,7 @@ export default class Firebase {
 
     /**
      * Writes data to the node, the provided value should be an object or string.
-     * After the action, a promise is returned and can be used.
+     * After the action, a promises is returned and can be used.
      *
      * @param {String} path the node to write the datavalue
      * @param {{ [key: string]: string } | string} value the value to write on the node

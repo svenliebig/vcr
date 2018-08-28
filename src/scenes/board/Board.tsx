@@ -57,12 +57,13 @@ export default class Board extends Component<{}, State> {
         this.selectGenre = this.selectGenre.bind(this)
         this.toggleSortAlphabetical = this.toggleSortAlphabetical.bind(this)
         this.toggleSortRemainingTime = this.toggleSortRemainingTime.bind(this)
+
+        EventBus.instance.emit("checkUser")
     }
 
     componentDidMount() {
         console.time("load series")
         EventBus.instance.emit("getOpenSeries").then((series: Array<SeriesModel>) => {
-            console.debug(series)
             this.setState({
                 userSeries: series,
                 loaded: true
@@ -126,23 +127,6 @@ export default class Board extends Component<{}, State> {
             }
         })
         return result && completlyWatched
-    }
-
-    /**
-	 *
-	 *
-	 * @param {SeriesModel} seriesA
-	 * @param {SeriesModel} seriesB
-	 * @returns
-	 * @memberof Board
-	 */
-    sortSeries(seriesA: SeriesModel, seriesB: SeriesModel) {
-        if (this.state.sortRemainingTime) {
-            return seriesA.totalMinutesNotWatched() - seriesB.totalMinutesNotWatched()
-        } else if (this.state.sortAscending) {
-            return seriesA.name.localeCompare(seriesB.name)
-        }
-        return seriesB.name.localeCompare(seriesA.name)
     }
 
     seriesPlaceholder() {
@@ -219,7 +203,16 @@ export default class Board extends Component<{}, State> {
         return resultGenre && resultCountry
     }
 
-    private filterSeries(series: SeriesModel) {
+    private sortSeries = (seriesA: SeriesModel, seriesB: SeriesModel) => {
+        if (this.state.sortRemainingTime) {
+            return seriesA.totalMinutesNotWatched() - seriesB.totalMinutesNotWatched()
+        } else if (this.state.sortAscending) {
+            return seriesA.name.localeCompare(seriesB.name)
+        }
+        return seriesB.name.localeCompare(seriesA.name)
+    }
+
+    private filterSeries = (series: SeriesModel) => {
         if (this.state.selectedFilter.name === "Anime") {
             if (!this.isAnimeGenre(series)) {
                 return false

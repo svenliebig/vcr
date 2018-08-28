@@ -1,9 +1,10 @@
 import { SeriesByNameSeriesResponse } from "@service/api/Moviedb"
 import EventBus from "@service/EventBus/EventBus"
-import React, { Component } from "react"
+import React, { Component, Fragment, ReactNode } from "react"
 import { Link } from "react-router-dom"
 import "./SearchResult.less"
 import TimeUtil from "@service/TimeUtil"
+import Button from "@components/button/Button"
 
 export interface Props {
     series: SeriesByNameSeriesResponse
@@ -27,36 +28,21 @@ export default class SearchResult extends Component<Props, State> {
         this.removeSeries = this.removeSeries.bind(this)
     }
 
-    componentDidMount() {
-        EventBus.instance.emit("hasSeries", this.props.series.id).then((val: boolean) => {
-            this.setState({
-                hasSeries: val
-            })
-        })
+    componentWillMount() {
+        EventBus.instance.emit("hasSeries", this.props.series.id).then((hasSeries: boolean) => this.setState({ hasSeries }))
     }
 
     addSeries() {
-        this.setState({
-            processing: true
-        })
+        this.setState({ processing: true })
         EventBus.instance.emit("addSeries", this.props.series.id).then(() => {
-            this.setState({
-                hasSeries: true,
-                processing: false
-            })
+            this.setState({ hasSeries: true, processing: false })
         })
     }
 
     removeSeries() {
-        const self = this
-        self.setState({
-            processing: true
-        })
+        this.setState({ processing: true })
         EventBus.instance.emit("removeSeries", this.props.series.id).then(() => {
-            self.setState({
-                hasSeries: false,
-                processing: false
-            })
+            this.setState({ hasSeries: false, processing: false })
         })
     }
 
@@ -70,23 +56,7 @@ export default class SearchResult extends Component<Props, State> {
     }
 
     render() {
-        const series = this.props.series
-
-        const actions = () => {
-            if (this.state.processing) {
-                return
-            }
-            if (this.state.hasSeries) {
-                return (
-                    <div>
-                        <button onClick={this.addSeries}><span className="fa fa-refresh" /></button>
-                        <button onClick={this.removeSeries}><span className="fa fa-trash" /></button>
-                        <Link className="view-link" to={`/view/${series.id}`}><span className="fa fa-tv"></span></Link>
-                    </div>
-                )
-            }
-            return (<button onClick={this.addSeries}><span className="fa fa-plus"></span></button>)
-        }
+        const { series } = this.props
 
         return (
             <div className="series-result">
@@ -96,10 +66,24 @@ export default class SearchResult extends Component<Props, State> {
                 </div>
                 <div className="airing">{TimeUtil.formatDateString(series.first_air_date)}</div>
                 <div className="actions">
-                    {actions()}
+                    {this.actions}
                 </div>
                 <div className="series-description">{series.overview}</div>
             </div>
         )
+    }
+
+    private get actions(): ReactNode {
+        if (this.state.processing) {
+            return null
+        }
+        if (this.state.hasSeries) {
+            return <Fragment>
+                <Button onClick={this.addSeries} icon="fa fa-refresh" />
+                <Button onClick={this.removeSeries} icon="fa fa-trash" />
+                <Link to={`/view/${this.props.series.id}`}><span className="fa fa-tv" /></Link>
+            </Fragment>
+        }
+        return <Button onClick={this.addSeries} icon="fa fa-plus" />
     }
 }

@@ -1,9 +1,7 @@
 import EventBus from "./EventBus"
 
 describe("EventBus", () => {
-
     describe("registered: printHelloWorld", () => {
-
         beforeAll(() => {
             EventBus.instance.register("printHelloWorld", (val, world) => console.log(val, world))
         })
@@ -20,7 +18,5 @@ describe("EventBus", () => {
                 done()
             }
         })
-
     })
-
 })
