@@ -68,7 +68,10 @@ export default class EpisodeModel {
 
     public isNotAired() {
         const dateArray = this.airDate.split("-").map(e => parseInt(e, 10))
-        const releaseDate = new Date(dateArray[0], dateArray[1], dateArray[2])
+        if (dateArray.some(v => Number.isNaN(v))) {
+            return true
+        }
+        const releaseDate = new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
         return releaseDate > new Date()
     }
 

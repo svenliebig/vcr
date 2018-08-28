@@ -25,7 +25,9 @@ export default class SuggestionWidget extends Component<Props, State> {
             message: ""
         }
 
-        EventBus.instance.emit("getUserDirectory").then((userOptions: Array<{ uid: string, name: string }>) => this.setState({ userOptions }))
+        EventBus.instance.emit("getUserDirectory").then((userOptions: Array<{ uid: string, name: string }>) => {
+            this.setState({ userOptions })
+        })
     }
 
     render() {
