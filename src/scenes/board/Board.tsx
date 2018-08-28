@@ -62,6 +62,7 @@ export default class Board extends Component<{}, State> {
     componentDidMount() {
         console.time("load series")
         EventBus.instance.emit("getOpenSeries").then((series: Array<SeriesModel>) => {
+            console.debug(series)
             this.setState({
                 userSeries: series,
                 loaded: true

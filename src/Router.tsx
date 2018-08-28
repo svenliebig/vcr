@@ -3,30 +3,38 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 import Firebase from "./service/firebase/Firebase"
 import { render } from "react-dom"
 import Chat from "@components/Chat/Chat"
+import Board from "@scenes/board/Board"
+import Manage from "@scenes/manage/Manage"
+import Statistic from "@scenes/statistic/Statistic"
+import Compare from "@scenes/compare/Compare"
+import Login from "@scenes/login/Login"
+import View from "@scenes/view/View"
 
 const firebase = new Firebase()
 
 export default class Router extends Component {
-    async render() {
-        let routesArray: Array<{ path: string, component: ComponentType<any> }> = []
+    private routesArray: Array<{ path: string, component: ComponentType<any> }> = []
 
+    componentWillMount() {
         if (firebase.isLoggedIn()) {
-            routesArray = [
-                { path: "/", component: (await import("@scenes/board/Board")).default },
-                { path: "/manage", component: (await import("@scenes/manage/Manage")).default },
-                { path: "/view/:id", component: (await import("@scenes/board/Board")).default },
-                { path: "/statistics", component: (await import("@scenes/statistic/Statistic")).default },
-                { path: "/compare/:username", component: (await import("@scenes/compare/Compare")).default }
+            this.routesArray = [
+                { path: "/", component: Board },
+                { path: "/manage", component: Manage },
+                { path: "/view/:id", component: View },
+                { path: "/statistics", component: Statistic },
+                { path: "/compare/:username", component: Compare }
             ]
             render(<Chat />, document.getElementById("chat"))
         } else {
-            routesArray.push({ path: "/", component: (await import("@scenes/login/Login")).default })
+            this.routesArray.push({ path: "/", component: Login })
         }
+    }
 
+    render() {
         return (
             <BrowserRouter>
                 <Switch>
-                    {routesArray.map((route, i) => <Route exact {...route} key={i} />)}
+                    {this.routesArray.map((route, i) => <Route exact {...route} key={i} />)}
                 </Switch>
             </BrowserRouter>
         )

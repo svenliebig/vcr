@@ -41,8 +41,22 @@ export default class SeriesConverter {
         return series
     }
 
+    static firebaseArrayToModelArray(obj: { [key: string]: SeriesFirebase }) {
+        const result: Array<SeriesModel> = []
+        for (const key in obj) {
+            result.push(SeriesConverter.firebaseToModel(obj[key]))
+        }
+        return result
+    }
+
     public static firebaseToModel(firebase: SeriesFirebase): SeriesModel {
-        const series = new SeriesModel(firebase.id)
+        const series = new SeriesModel()
+
+        if (!firebase) {
+            return series
+        }
+
+        series.id = firebase.id
         series.name = firebase.name
         series.overview = firebase.overview
         series.airDate = firebase.airDate

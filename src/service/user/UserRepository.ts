@@ -110,7 +110,7 @@ export default class UserRepository {
 
     getOpenSeries() {
         return this.fb.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", false).then(val =>
-            Promise.resolve(SeriesConverter.firebaseToModel(val))
+            Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))
         )
     }
 

@@ -19,7 +19,7 @@ module.exports = {
     mode: "development",
     devtool: 'cheap-module-source-map',
     devServer: {
-        port: 3000,
+        port: 3001,
         // public: "/",
         compress: true,
         clientLogLevel: 'info',

@@ -30,7 +30,7 @@ export default class SeriesRepository {
      * @param {Series} series
      */
     addSeries(series: SeriesModel) {
-        if (series === null || series.id) {
+        if (series === null || !series.id) {
             throw this.exception("series or VALUE is not defined.")
         }
 
