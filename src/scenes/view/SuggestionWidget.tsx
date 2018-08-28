@@ -26,7 +26,11 @@ export default class SuggestionWidget extends Component<Props, State> {
         }
 
         EventBus.instance.emit("getUserDirectory").then((userOptions: Array<{ uid: string, name: string }>) => {
-            this.setState({ userOptions })
+            if (userOptions.length !== 0) {
+                const currUid = EventBus.instance.emit("getCurrentUserUid")
+                delete userOptions[userOptions.findIndex(e => e.uid === currUid)]
+                this.setState({ userOptions })
+            }
         })
     }
 

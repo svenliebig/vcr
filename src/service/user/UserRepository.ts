@@ -32,6 +32,10 @@ export default class UserRepository {
         })
     }
 
+    public getCurrentUserUid() {
+        return this.uid
+    }
+
     public async checkUser() {
         const exist = await this.isUserInUserDirectory()
         if (!exist) {
