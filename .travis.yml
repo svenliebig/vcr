@@ -5,6 +5,13 @@ node_js:
 
 sudo: false
 
+before_script:
+  - npm install
+
+cache:
+  directories:
+    - "node_modules"
+
 jobs:
   include:
     - stage: "Install Dependencies"
