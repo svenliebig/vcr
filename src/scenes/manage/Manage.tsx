@@ -3,9 +3,8 @@ import Skeleton from "@scenes/skeleton/Skeleton"
 import { SeriesByNameSeriesResponse } from "@service/api/Moviedb"
 import EventBus from "@service/EventBus/EventBus"
 import React, { ChangeEvent, Component } from "react"
-import "rxjs/add/operator/debounceTime"
-import { Subject } from "rxjs/Subject"
 import "./Manage.less"
+import Observer from "@utils/Observer"
 
 export interface State {
     searchString: string
@@ -13,7 +12,7 @@ export interface State {
 }
 
 export default class Manage extends Component<{}, State> {
-    private observer: Subject<{}>
+    private observer: Observer
     private searchInput = React.createRef<HTMLInputElement>()
 
     constructor(props: {}) {
@@ -24,9 +23,9 @@ export default class Manage extends Component<{}, State> {
             searchResultsArray: []
         }
 
-        this.observer = new Subject()
+        this.observer = new Observer()
 
-        this.observer.debounceTime(500).subscribe(() => {
+        this.observer.throttled(500).subscribe(() => {
             if (this.state.searchString === "") {
                 this.setState({
                     searchResultsArray: []
