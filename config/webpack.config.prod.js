@@ -164,6 +164,7 @@ module.exports = {
         ]
     },
     plugins: [
+        // new(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
         new HtmlWebpackPlugin({
             inject: true,
             template: paths.appHtml,
@@ -207,6 +208,9 @@ module.exports = {
         }),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
+    performance: {
+        maxAssetSize: 450000
+    },
     optimization: {
         minimizer: [
             new UglifyJsPlugin({

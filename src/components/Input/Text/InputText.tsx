@@ -1,10 +1,8 @@
 /** React Imports */
 import React, { Component, ChangeEvent, KeyboardEvent } from "react"
 
-import { Subject } from "rxjs/Subject"
-import "rxjs/add/operator/debounceTime"
-
 import "./InputText.less"
+import Observer from "@utils/Observer"
 
 export interface Props {
     id: string
@@ -29,7 +27,7 @@ export interface State {
  * @extends {Component}
  */
 export default class InputText extends Component<Props, State> {
-    private observer: Subject<{}>
+    private observer: Observer
 
     /**
 	 * Creates an instance of InputText.
@@ -42,10 +40,10 @@ export default class InputText extends Component<Props, State> {
             value: props.value || ""
         }
 
-        this.observer = new Subject()
+        this.observer = new Observer()
         this.onChange = this.onChange.bind(this)
 
-        this.observer.debounceTime(props.throttled || 0).subscribe(() => {
+        this.observer.throttled(props.throttled || 0).subscribe(() => {
             this.props.onChange(this.state.value, this.props.id)
         })
     }
@@ -83,10 +81,11 @@ export default class InputText extends Component<Props, State> {
 
     private onChange(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target
-        this.setState({ value })
-        if (this.props.onChange) {
-            this.observer.next(value)
-        }
+        this.setState({ value }, () => {
+            if (this.props.onChange) {
+                this.observer.next(value)
+            }
+        })
     }
 
     private handleKeypress(e: KeyboardEvent<HTMLInputElement>) {
