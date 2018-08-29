@@ -6,13 +6,13 @@ Enzyme.configure({
     adapter: new Adapter()
 });
 
-global.localStorage = {};
-global.localStorage.getItem = () => {
+window.localStorage = {};
+window.localStorage.getItem = () => {
     return null;
 }
-global.localStorage.setItem = () => {
+window.localStorage.setItem = () => {
     return null;
 }
-global.localStorage.removeItem = () => {
+window.localStorage.removeItem = () => {
     return null;
 }
