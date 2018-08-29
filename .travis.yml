@@ -14,8 +14,6 @@ cache:
 
 jobs:
   include:
-    - stage: "Install Dependencies"
-      script: npm install
     - stage: "Test"
       script: npm run test-ci
     - stage: "Build"
