@@ -81,10 +81,11 @@ export default class InputText extends Component<Props, State> {
 
     private onChange(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target
-        this.setState({ value })
-        if (this.props.onChange) {
-            this.observer.next(value)
-        }
+        this.setState({ value }, () => {
+            if (this.props.onChange) {
+                this.observer.next(value)
+            }
+        })
     }
 
     private handleKeypress(e: KeyboardEvent<HTMLInputElement>) {
