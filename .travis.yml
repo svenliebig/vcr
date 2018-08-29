@@ -17,6 +17,6 @@ jobs:
     - stage: "Install Dependencies"
       script: npm install
     - stage: "Test"
-      script: npm run testc
+      script: npm run test-ci
     - stage: "Build"
       script: npm run build

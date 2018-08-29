@@ -169,7 +169,7 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
         return (
             <tr key={episode.episode}>
                 <td>
-                    <Button onClick={() => SeriesHandler.toggleEpisode(this.state.series!, episode)}>
+                    <Button onClick={() => this.setState({ series: SeriesHandler.toggleEpisode(this.state.series!, episode) })}>
                         <span className={episode.isNotAired() ? ("fa fa-clock-o") : (episode.watched ? "fa fa-check-square-o" : "fa fa-square-o")}></span>
                     </Button>
                 </td>
