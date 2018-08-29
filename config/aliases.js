@@ -7,7 +7,8 @@ const aliases = {
     '@scenes': paths.appSrc + '/scenes',
     '@environment': paths.appSrc + '/environment',
     '@converter': paths.appSrc + '/converter',
-    '@model': paths.appSrc + '/model'
+    '@model': paths.appSrc + '/model',
+    '@details': paths.appSrc + '/details'
 }
 
 module.exports = aliases

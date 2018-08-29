@@ -9,6 +9,7 @@ import Statistic from "@scenes/statistic/Statistic"
 import Compare from "@scenes/compare/Compare"
 import Login from "@scenes/login/Login"
 import View from "@scenes/view/View"
+import DetailsView from "@details/DetailsView"
 
 const firebase = new Firebase()
 
@@ -21,6 +22,7 @@ export default class Router extends Component {
                 { path: "/", component: Board },
                 { path: "/manage", component: Manage },
                 { path: "/view/:id", component: View },
+                { path: "/details/:id", component: DetailsView },
                 { path: "/statistics", component: Statistic },
                 { path: "/compare/:username", component: Compare }
             ]
