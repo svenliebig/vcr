@@ -74,6 +74,9 @@
             ],
             "@utils/*": [
                 "utils/*"
+            ],
+            "@details/*": [
+                "details/*"
             ]
         },
 
