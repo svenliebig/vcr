@@ -1,4 +1,4 @@
-@import "src/resources/default.less";
+@import "../../../src/resources/default.less";
 
 @height: 27px;
 @spacing: 30px;
@@ -13,7 +13,7 @@
 	-o-transform: @val;
 	transform: @val;
 }
-			
+
 .dropdown {
 
 	&.show > .dropdown--list {
@@ -21,7 +21,7 @@
 	}
 
 	@icon-width:14px;
-				
+
 	&--button {
 		float: left;
 		height: @height;
@@ -32,12 +32,12 @@
 			float:left;
 			height:100%;
 		}
-		
+
 		span {
 			font-size: @font-size;
 			padding-right: 10px;
 		}
-		
+
 		i {
 			width: @icon-width;
 			font-size: 1.125em;
@@ -63,7 +63,7 @@
 			z-index:2;
 			cursor:pointer;
 		}
-			
+
 		&-item {
 			float:left;
 			width: calc(100% ~"-" 20px);

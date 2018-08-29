@@ -5,14 +5,16 @@ ul.tabs-nav {
 	display: flex;
 
 	li.tab {
-		a {
+		button {
 			cursor: pointer;
 			margin: 0 5px;
 			display: block;
 			transition: border-bottom 0.3s ease;
+			border: none;
 			border-bottom: 1px solid rgba(0, 0, 0, 0);
 			color: #b5b5b5;
-			
+			background: transparent;
+
 			&:hover {
 				border-bottom: 1px solid rgba(181, 181, 181, 0.3);
 			}
@@ -27,9 +29,9 @@ ul.tabs-nav {
 			}
 		}
 	}
-	
+
 	:first-child {
-		a {
+		button {
 			margin-left: 0 !important;
 		}
 	}

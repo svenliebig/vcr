@@ -1,6 +1,6 @@
-@import "src/resources/default.less";
-@import "src/resources/mixins.less";
-@import "src/resources/definitions.less";
+@import "../../../src/resources/default.less";
+@import "../../../src/resources/mixins.less";
+@import "../../../src/resources/definitions.less";
 
 .view-series-wrapper {
 	.series-container {
@@ -43,7 +43,7 @@
 					height: 70px;
 				}
 			}
-			
+
 			.genre-wrapper {
 				position: absolute;
 				right: 0;
@@ -85,7 +85,7 @@
 
 					.input-container {
 						.flex-container-column(nowrap, flex-start, flex-start);
-			
+
 						input {
 							background: none;
 							border: none;
@@ -96,7 +96,7 @@
 							color: white;
 							width: 300px;
 							transition: color,background,border-bottom 0.3s ease;
-		
+
 							&:focus {
 								border-bottom: 2px solid white;
 								color: white;
@@ -150,7 +150,7 @@
 		table.season-wrapper {
 			color: @text-color-1;
 			border-collapse: collapse;
-			
+
 			button {
 				.default-icon-button();
 				color: @text-color-2;

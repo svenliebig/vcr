@@ -1,5 +1,5 @@
-@import "src/resources/mixins.less";
-@import "src/resources/definitions.less";
+@import "../../../src/resources/mixins.less";
+@import "../../../src/resources/definitions.less";
 
 .dialog-container {
     position: fixed;
@@ -8,7 +8,6 @@
     right: 0;
 	bottom: 0;
 	display: flex;
-    // align-items: center;
     justify-content: center;
     align-content: center;
 	display: none;
@@ -35,11 +34,11 @@
     width: 500px;
     max-width: 80%;
 	max-height: 500px;
-	background: #151e28; /* Old browsers */
-	background: -moz-linear-gradient(left, #151e28 0%, #293541 31%, #3a4551 67%, #3e4854 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(left, #151e28 0%,#293541 31%,#3a4551 67%,#3e4854 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to right, #151e28 0%,#293541 31%,#3a4551 67%,#3e4854 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#151e28', endColorstr='#3e4854',GradientType=1 ); /* IE6-9 */
+	background: #151e28;
+	background: -moz-linear-gradient(left, #151e28 0%, #293541 31%, #3a4551 67%, #3e4854 100%);
+	background: -webkit-linear-gradient(left, #151e28 0%,#293541 31%,#3a4551 67%,#3e4854 100%);
+	background: linear-gradient(to right, #151e28 0%,#293541 31%,#3a4551 67%,#3e4854 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#151e28', endColorstr='#3e4854',GradientType=1 );
 
 	&-header {
 		color: white;

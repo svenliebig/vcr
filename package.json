@@ -7,67 +7,43 @@
     "autoprefixer": "7.2.3",
     "axios": "^0.17.1",
     "babel-core": "6.26.0",
-    "babel-eslint": "8.0.3",
     "babel-jest": "21.2.0",
-    "babel-loader": "7.1.2",
+    "babel-loader": "^7.1.5",
     "babel-preset-react-app": "^3.1.0",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "2.3.0",
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
-    "eslint": "4.13.1",
-    "eslint-config-react-app": "^2.0.1",
-    "eslint-loader": "1.9.0",
-    "eslint-plugin-flowtype": "2.40.1",
-    "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-jasmine": "^2.9.1",
-    "eslint-plugin-jest": "^21.5.0",
-    "eslint-plugin-jsx-a11y": "6.0.3",
-    "eslint-plugin-react": "^7.5.1",
-    "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.6",
     "firebase": "^4.8.0",
     "font-awesome": "^4.7.0",
     "fs-extra": "5.0.0",
-    "gulp": "^3.9.1",
-    "gulp-less": "^3.3.2",
-    "gulp-watch": "^4.3.11",
-    "html-webpack-plugin": "2.30.1",
-    "jest": "21.2.1",
-    "jest-junit": "^3.4.1",
-    "moment": "^2.19.4",
-    "npm-run-all": "^4.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "moment": "^2.22.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",
     "promise": "8.0.1",
-    "react": "^16.0.0",
-    "react-dev-utils": "^4.2.1",
-    "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2",
+    "react": "^16.4.2",
+    "react-dev-utils": "^5.0.1",
+    "react-dom": "^16.4.2",
+    "react-router-dom": "^4.3.1",
     "react-test-renderer": "^16.2.0",
     "rxjs": "^5.5.5",
     "style-loader": "0.19.1",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
-    "webpack": "3.10.0",
-    "webpack-dev-server": "2.9.7",
-    "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "build-css": "gulp less",
-    "watch-css": "gulp less-watch",
-    "start-js": "node scripts/start.js",
+    "start": "NODE_ENV='development' ./node_modules/.bin/webpack-dev-server -d --config ./config/webpack.config.dev.js",
     "replace-title": "node scripts/cd-build-prepare.js",
-    "build-js": "node scripts/build.js",
-    "start": "npm run build-css && npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && npm run build-js",
-    "testv": "npm run build-css && node scripts/test.js --env=jsdom --verbose",
-    "testw": "npm run build-css && node scripts/test.js --env=jsdom --verbose --watch",
-    "test": "npm run build-css && node scripts/test.js --env=jsdom",
-    "testc": "npm run build-css && node scripts/test.js --coverage --env=jsdom --forceExit",
+    "build": "node scripts/build.js",
+    "testv": "node scripts/test.js --env=jsdom --verbose",
+    "testw": "node scripts/test.js --env=jsdom --verbose --watch",
+    "test": "node scripts/test.js --env=jsdom",
+    "testc": "node scripts/test.js --coverage --env=jsdom",
     "storybook": "npm run build-css && npm-run-all -p watch-css start-storybook",
     "start-storybook": "start-storybook -p 6006 -c config/storybook",
     "build-storybook": "build-storybook"
@@ -82,31 +58,37 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
+      "src/**/*.{ts,tsx}"
     ],
     "testResultsProcessor": "jest-junit",
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
     "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
-    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
+      "^.+\\.tsx?$": "ts-jest",
       "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^.+\\.(css|less)$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
     ],
     "moduleNameMapper": {
-      "^react-native$": "react-native-web"
+      "^react-native$": "react-native-web",
+      "@service/(.*)": "<rootDir>/src/service/$1",
+      "@components/(.*)": "<rootDir>/src/components/$1",
+      "@scenes/(.*)": "<rootDir>/src/scenes/$1",
+      "@converter/(.*)": "<rootDir>/src/converter/$1",
+      "@environment/(.*)": "<rootDir>/src/environment/$1",
+      "@model/(.*)": "<rootDir>/src/model/$1"
     },
     "moduleFileExtensions": [
+      "ts",
+      "tsx",
       "web.js",
       "js",
       "json",
@@ -115,20 +97,42 @@
       "node"
     ]
   },
+  "globals": {
+    "ts-jest": {
+      "tsConfigFile": "tsconfig.json"
+    }
+  },
   "babel": {
     "presets": [
       "react-app"
     ]
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.17",
     "@storybook/addon-links": "^3.2.17",
     "@storybook/react": "^3.2.17",
+    "@types/enzyme": "^3.1.13",
+    "@types/jest": "^23.3.1",
+    "@types/react-dom": "^16.0.7",
+    "@types/react-router-dom": "^4.3.0",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
-    "raf": "^3.4.0"
+    "jest": "^23.5.0",
+    "jest-junit": "^3.4.1",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^0.4.2",
+    "npm-run-all": "^4.1.3",
+    "raf": "^3.4.0",
+    "ts-jest": "^23.1.4",
+    "ts-loader": "^4.5.0",
+    "tslint": "^5.11.0",
+    "tslint-loader": "^3.6.0",
+    "typescript": "^3.0.1",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.6",
+    "webpack-manifest-plugin": "^2.0.3"
   }
 }

@@ -1,0 +1,82 @@
+{
+    "rules": {
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "prefer-const": true,
+        "class-name": true,
+        "array-type": [
+            true,
+            "generic"
+        ],
+        "align": true,
+        "curly": true,
+        "whitespace": true,
+        "use-isnan": true,
+        "typedef-whitespace": true,
+        "ordered-imports": false,
+        "member-ordering": [
+            false,
+            {
+                "order": [
+                    "public-static-field",
+                    "public-instance-field",
+                    "private-static-field",
+                    "private-instance-field",
+                    "public-constructor",
+                    "private-constructor",
+                    "public-instance-method",
+                    "protected-instance-method",
+                    "private-instance-method"
+                ]
+            }
+        ],
+        "no-var-keyword": true,
+        "indent": [
+            true,
+            "spaces"
+        ],
+        "quotemark": [
+            true,
+            "double"
+        ],
+        "no-duplicate-super": false,
+        "no-consecutive-blank-lines": true,
+        "no-duplicate-variable": true,
+        "no-empty-interface": true,
+        "object-literal-shorthand": true,
+        "triple-equals": true,
+        "no-parameter-reassignment": true,
+        "no-unnecessary-callback-wrapper": true,
+        "await-promise": true,
+        "no-construct": true,
+        "no-duplicate-switch-case": true,
+        "object-literal-sort-keys": false,
+        "trailing-comma": true,
+        "comment-format": true,
+        "interface-name": [true, "never-prefix"],
+        "encoding": true,
+        "completed-docs": [
+            true,
+            {
+                "enums": true,
+                "functions": {
+                    "visibilities": ["exported"]
+                },
+                "methods": {
+                    "locations": "instance",
+                    "privacies": ["public", "protected"]
+                },
+                "properties": {
+                    "tags": {
+                        "content": {
+                            "see": ["#.*"]
+                        },
+                        "existence": ["inheritdoc"]
+                    }
+                }
+            }
+        ]
+    }
+}
