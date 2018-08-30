@@ -1,10 +1,9 @@
 import SearchResult from "@scenes/manage/searchresult/SearchResult"
-import Skeleton from "@scenes/skeleton/Skeleton"
 import { SeriesByNameSeriesResponse } from "@service/api/Moviedb"
 import EventBus from "@service/EventBus/EventBus"
+import Observer from "@utils/Observer"
 import React, { ChangeEvent, Component } from "react"
 import "./Manage.less"
-import Observer from "@utils/Observer"
 
 export interface State {
     searchString: string
@@ -53,14 +52,12 @@ export default class Manage extends Component<{}, State> {
             </div>
         )
 
-        return (
-            <Skeleton>
-                <div className="manage-wrapper">
-                    <input ref={this.searchInput} placeholder="Suche. ." type="text" onChange={this.searchStringChanged} value={this.state.searchString} />
-                </div>
-                {searchResults}
-            </Skeleton>
-        )
+        return <>
+            <div className="manage-wrapper">
+                <input ref={this.searchInput} placeholder="Suche. ." type="text" onChange={this.searchStringChanged} value={this.state.searchString} />
+            </div>
+            {searchResults}
+        </>
     }
 
     private searchStringChanged(event: ChangeEvent<HTMLInputElement>) {

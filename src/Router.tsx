@@ -1,28 +1,35 @@
-import React, { Component, ComponentType } from "react"
-import { BrowserRouter, Route, Switch } from "react-router-dom"
-import Firebase from "./service/firebase/Firebase"
-import { render } from "react-dom"
 import Chat from "@components/Chat/Chat"
+import DetailsContainer from "@details/DetailsContainer"
 import Board from "@scenes/board/Board"
-import Manage from "@scenes/manage/Manage"
-import Statistic from "@scenes/statistic/Statistic"
 import Compare from "@scenes/compare/Compare"
 import Login from "@scenes/login/Login"
+import Manage from "@scenes/manage/Manage"
+import Statistic from "@scenes/statistic/Statistic"
 import View from "@scenes/view/View"
-import DetailsView from "@details/DetailsView"
+import React, { Component, ComponentType } from "react"
+import { render } from "react-dom"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
+import Firebase from "./service/firebase/Firebase"
+import Skeleton from "@scenes/skeleton/Skeleton"
 
 const firebase = new Firebase()
 
 export default class Router extends Component {
     private routesArray: Array<{ path: string, component: ComponentType<any> }> = []
+    private loggedIn: boolean
+
+    constructor() {
+        super({})
+        this.loggedIn = firebase.isLoggedIn()
+    }
 
     componentWillMount() {
-        if (firebase.isLoggedIn()) {
+        if (this.loggedIn) {
             this.routesArray = [
                 { path: "/", component: Board },
                 { path: "/manage", component: Manage },
                 { path: "/view/:id", component: View },
-                { path: "/details/:id", component: DetailsView },
+                { path: "/details/:id", component: DetailsContainer },
                 { path: "/statistics", component: Statistic },
                 { path: "/compare/:username", component: Compare }
             ]
@@ -36,7 +43,9 @@ export default class Router extends Component {
         return (
             <BrowserRouter>
                 <Switch>
-                    {this.routesArray.map((route, i) => <Route exact {...route} key={i} />)}
+                    <Skeleton dontRenderHeader={!this.loggedIn}>
+                        {this.routesArray.map((route, i) => <Route exact {...route} key={i} />)}
+                    </Skeleton>
                 </Switch>
             </BrowserRouter>
         )

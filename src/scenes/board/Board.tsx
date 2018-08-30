@@ -1,12 +1,9 @@
-import React, { Component } from "react"
-import Skeleton from "@scenes/skeleton/Skeleton"
-import Series from "@scenes/board/series/Series"
-import Dropdown from "@components/dropdown/Dropdown"
 import ButtonToggle from "@components/button/toggle/ButtonToggle"
-
-import EventBus from "@service/EventBus/EventBus"
+import Dropdown from "@components/dropdown/Dropdown"
 import SeriesModel from "@model/SeriesModel"
-
+import Series from "@scenes/board/series/Series"
+import EventBus from "@service/EventBus/EventBus"
+import React, { Component } from "react"
 import "./Board.less"
 
 const selectableGenres: Array<{ name: "Alle" | "Anime" | "Serien" }> = [{
@@ -150,35 +147,33 @@ export default class Board extends Component<{}, State> {
     }
 
     render() {
-        return <Skeleton>
-            <div className="series-table-wrapper">
-                <div className="series-table-header">
-                    <ButtonToggle text="Gesehen" className="filter-toggle" onClick={this.toggleWatched} initial={this.state.filterWatched} />
-                    <ButtonToggle text="Offene" className="filter-toggle" onClick={this.toggleNotWatched} initial={this.state.filterNotWatched} />
-                    <ButtonToggle text="Bekommt neue" className="filter-toggle" onClick={this.toggleUpcoming} initial={this.state.filterUpcoming} />
-                    <ButtonToggle className="toggle-sort" onClick={this.toggleSortAlphabetical} initial={this.state.sortAscending} activeIcon={`fa fa-sort-alpha-asc${this.state.sortRemainingTime ? " disabled" : ""}`} inactiveIcon={`fa fa-sort-alpha-desc${this.state.sortRemainingTime ? " disabled" : ""}`} />
-                    <ButtonToggle
-                        className="toggle-sort"
-                        onClick={this.toggleSortRemainingTime}
-                        initial={this.state.sortRemainingTime}
-                        activeIcon="fa fa-sort-numeric-asc text-white"
-                        inactiveIcon="fa fa-sort-numeric-asc"
-                        tooltip="Nach verbleibender Zeit nicht gesehender Folgen"
-                    />
+        return <div className="series-table-wrapper">
+            <div className="series-table-header">
+                <ButtonToggle text="Gesehen" className="filter-toggle" onClick={this.toggleWatched} initial={this.state.filterWatched} />
+                <ButtonToggle text="Offene" className="filter-toggle" onClick={this.toggleNotWatched} initial={this.state.filterNotWatched} />
+                <ButtonToggle text="Bekommt neue" className="filter-toggle" onClick={this.toggleUpcoming} initial={this.state.filterUpcoming} />
+                <ButtonToggle className="toggle-sort" onClick={this.toggleSortAlphabetical} initial={this.state.sortAscending} activeIcon={`fa fa-sort-alpha-asc${this.state.sortRemainingTime ? " disabled" : ""}`} inactiveIcon={`fa fa-sort-alpha-desc${this.state.sortRemainingTime ? " disabled" : ""}`} />
+                <ButtonToggle
+                    className="toggle-sort"
+                    onClick={this.toggleSortRemainingTime}
+                    initial={this.state.sortRemainingTime}
+                    activeIcon="fa fa-sort-numeric-asc text-white"
+                    inactiveIcon="fa fa-sort-numeric-asc"
+                    tooltip="Nach verbleibender Zeit nicht gesehender Folgen"
+                />
 
-                    <Dropdown list={selectableGenres} selected={selectableGenres[0]} onclick={this.selectGenre} />
-                    <div className="spacer" />
-                </div>
-                <div className="series-table-content">
-                    {this.state.userSeries.filter(this.filterSeries).sort(this.sortSeries).map((series) =>
-                        <div key={series.id}>
-                            <Series series={series} />
-                        </div>
-                    )}
-                    {this.seriesPlaceholder()}
-                </div>
+                <Dropdown list={selectableGenres} selected={selectableGenres[0]} onclick={this.selectGenre} />
+                <div className="spacer" />
             </div>
-        </Skeleton>
+            <div className="series-table-content">
+                {this.state.userSeries.filter(this.filterSeries).sort(this.sortSeries).map((series) =>
+                    <div key={series.id}>
+                        <Series series={series} />
+                    </div>
+                )}
+                {this.seriesPlaceholder()}
+            </div>
+        </div>
     }
 
     private isCompleteWatched(series: SeriesModel) {

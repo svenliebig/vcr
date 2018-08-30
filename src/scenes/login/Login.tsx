@@ -1,13 +1,8 @@
-import React, { Component, FormEvent } from "react"
-import { RouteComponentProps } from "react-router-dom"
-
-import Firebase from "@service/firebase/Firebase"
-
-import Skeleton from "@scenes/skeleton/Skeleton"
-
 import InputText from "@components/Input/Text/InputText"
 import { Tab, Tabs } from "@components/tabs/Tabs"
-
+import Firebase from "@service/firebase/Firebase"
+import React, { Component, FormEvent } from "react"
+import { RouteComponentProps } from "react-router-dom"
 import "./Login.less"
 
 export interface State {
@@ -64,52 +59,50 @@ class Login extends Component<Props, State> {
     }
 
     render() {
-        return <Skeleton dontRenderHeader={true}>
-            <div className="login-wrapper">
-                <div className="login-wrapper--container">
-                    <Tabs defaultActiveTabIndex={0} className="login-wrapper--tabs">
-                        <Tab title="Login" className="login-wrapper--tab">
-                            <form onSubmit={this.submitLogin} className="login-wrapper--form" >
-                                <div className="input">
-                                    <p className="input-title">
-                                        VCR
+        return <div className="login-wrapper">
+            <div className="login-wrapper--container">
+                <Tabs defaultActiveTabIndex={0} className="login-wrapper--tabs">
+                    <Tab title="Login" className="login-wrapper--tab">
+                        <form onSubmit={this.submitLogin} className="login-wrapper--form" >
+                            <div className="input">
+                                <p className="input-title">
+                                    VCR
                                         </p>
 
-                                    <InputText id="email" label="E-Mail" onChange={this.handleInputChange} value={this.state.email} placeholder="E-Mail" />
-                                    <InputText id="password" label="Password" onChange={this.handleInputChange} value={this.state.password} placeholder="Password" type="password" />
+                                <InputText id="email" label="E-Mail" onChange={this.handleInputChange} value={this.state.email} placeholder="E-Mail" />
+                                <InputText id="password" label="Password" onChange={this.handleInputChange} value={this.state.password} placeholder="Password" type="password" />
 
-                                    <div className="input-text--wrapper">
-                                        <input
-                                            className="input-area--button"
-                                            type="submit"
-                                            value="Login"
-                                        />
-                                    </div>
+                                <div className="input-text--wrapper">
+                                    <input
+                                        className="input-area--button"
+                                        type="submit"
+                                        value="Login"
+                                    />
                                 </div>
-                            </form>
-                        </Tab>
-                        <Tab title="Registrieren">
-                            <form onSubmit={this.submitRegistration} className="login-wrapper--form" >
-                                <div className="input">
-                                    <p className="input-title">VCR</p>
-                                    <InputText id="email" label="E-Mail" onChange={this.handleInputChange} value={this.state.email} placeholder="E-Mail" />
-                                    <InputText id="password" label="Password" onChange={this.handleInputChange} value={this.state.password} placeholder="Password" type="password" />
+                            </div>
+                        </form>
+                    </Tab>
+                    <Tab title="Registrieren">
+                        <form onSubmit={this.submitRegistration} className="login-wrapper--form" >
+                            <div className="input">
+                                <p className="input-title">VCR</p>
+                                <InputText id="email" label="E-Mail" onChange={this.handleInputChange} value={this.state.email} placeholder="E-Mail" />
+                                <InputText id="password" label="Password" onChange={this.handleInputChange} value={this.state.password} placeholder="Password" type="password" />
 
-                                    <div className="input-text--wrapper">
-                                        <input
-                                            className="input-area--button"
-                                            type="submit"
-                                            value="Registrieren"
-                                        />
-                                    </div>
+                                <div className="input-text--wrapper">
+                                    <input
+                                        className="input-area--button"
+                                        type="submit"
+                                        value="Registrieren"
+                                    />
                                 </div>
-                            </form>
-                        </Tab>
-                    </Tabs>
-                </div>
-                {!!this.state.error ? <p className="input-area--login-error">{this.state.error}</p> : null}
+                            </div>
+                        </form>
+                    </Tab>
+                </Tabs>
             </div>
-        </Skeleton >
+            {!!this.state.error ? <p className="input-area--login-error">{this.state.error}</p> : null}
+        </div>
     }
 }
 

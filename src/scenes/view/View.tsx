@@ -1,20 +1,19 @@
 import AbstractSeries, { State as AbstractSeriesState } from "@components/abstract/AbstractSeries"
+import Button from "@components/button/Button"
 // import Mail from "@components/button/Mail/Mail"
 import ButtonRemove from "@components/button/remove/ButtonRemove"
 import { Tab, Tabs } from "@components/tabs/Tabs"
 import EpisodeModel from "@model/EpisodeModel"
 import SeasonModel from "@model/SeasonModel"
 import SeriesModel from "@model/SeriesModel"
-import Skeleton from "@scenes/skeleton/Skeleton"
+import SuggestionWidget from "@scenes/view/SuggestionWidget"
 import EventBus from "@service/EventBus/EventBus"
 import SeriesHandler from "@service/SeriesHandler"
+import TimeUtil from "@service/TimeUtil"
 import React, { ChangeEvent } from "react"
 import { RouteComponentProps } from "react-router"
 import { Link } from "react-router-dom"
 import "./View.less"
-import Button from "@components/button/Button"
-import TimeUtil from "@service/TimeUtil"
-import SuggestionWidget from "@scenes/view/SuggestionWidget"
 
 export interface State extends AbstractSeriesState {
     changed: boolean
@@ -38,7 +37,6 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
         this.removeSeries = this.removeSeries.bind(this)
 
         EventBus.instance.emit("getUserSeries", props.match.params.id).then((series: SeriesModel) => {
-            console.debug(series)
             this.setState({ series })
         })
 
@@ -147,22 +145,20 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
     }
 
     public mapSeason = (season: SeasonModel, index: number) => {
-        return (
-            <Tab key={season.seasonNumber} title={`Staffel ${index + 1}`}>
-                <table key={season.seasonNumber} className="season-wrapper">
-                    <thead>
-                        <tr>
-                            <th>
-                                <Button icon="fa fa-eye" onClick={() => SeriesHandler.toggleSeason(this.state.series!, season)} />
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody className="episodes-wrapper">
-                        {season.episodes ? season.episodes.map(this.mapEpisode) : ""}
-                    </tbody>
-                </table>
-            </Tab>
-        )
+        return <Tab key={season.seasonNumber} title={`Staffel ${index + 1}`}>
+            <table key={season.seasonNumber} className="season-wrapper">
+                <thead>
+                    <tr>
+                        <th>
+                            <Button icon="fa fa-eye" onClick={() => SeriesHandler.toggleSeason(this.state.series!, season)} />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody className="episodes-wrapper">
+                    {season.episodes ? season.episodes.map(this.mapEpisode) : ""}
+                </tbody>
+            </table>
+        </Tab>
     }
 
     public mapEpisode = (episode: EpisodeModel) => {
@@ -195,10 +191,8 @@ export default class View extends AbstractSeries<RouteComponentProps<{ id: numbe
     }
 
     public render() {
-        return <Skeleton>
-            <div className="view-series-wrapper">
-                {this.state.series ? this.renderSeries(this.state.series) : ""}
-            </div>
-        </Skeleton>
+        return <div className="view-series-wrapper">
+            {this.state.series ? this.renderSeries(this.state.series) : ""}
+        </div>
     }
 }

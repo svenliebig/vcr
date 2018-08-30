@@ -15,6 +15,8 @@ export type UserRepositoryResponse = {
  * @class UserRepository
  */
 export default class UserRepository {
+    public static instance = new UserRepository()
+
     private firebase = new Firebase()
     private uid: string | null = null
 
@@ -117,6 +119,7 @@ export default class UserRepository {
     }
 
     public hasSeries(id: number) {
+        console.debug(`call get series`, id)
         return this.getSeries(id).then(val => {
             if (val === null) {
                 return Promise.resolve(false)
