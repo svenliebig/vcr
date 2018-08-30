@@ -17,7 +17,6 @@ const DetailsReducer = (state = initialState(), action: DetailsActionsType): Det
         case getType(DetailsActions.loadSeries):
             return { ...state }
         case getType(DetailsActions.loadSeriesComplete):
-            console.debug(`complete`, action.payload)
             return { ...state, series: action.payload }
         default:
             return state

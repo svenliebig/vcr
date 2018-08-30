@@ -9,6 +9,7 @@ enum DetailsAction {
 export const loadSeries = createAction(DetailsAction.LoadSeries)
 
 export const loadSeriesComplete = createAction(DetailsAction.LoadSeriesComplete, resolve => {
+    // tslint:disable-next-line:no-unnecessary-callback-wrapper
     return (series: SeriesModel) => resolve(series)
 })
 
