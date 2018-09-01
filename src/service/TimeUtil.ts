@@ -16,4 +16,9 @@ export default class TimeUtil {
         const dateArray = date.split("-").map(e => parseInt(e, 10))
         return `${dateArray[2]}.${dateArray[1] + 1}.${dateArray[0]}`
     }
+
+    public static getYear(date: string) {
+        const dateArray = date.split("-").map(e => parseInt(e, 10))
+        return dateArray[0]
+    }
 }

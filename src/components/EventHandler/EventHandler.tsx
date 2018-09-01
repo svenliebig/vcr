@@ -33,6 +33,7 @@ export default class EventHandler extends Component<Props> {
         // Movie DB Api
         EventBus.instance.register("addSeries", (id) => {
             return this.seriesApi.getCompleteSeries(id).then(series => {
+                console.debug(series)
                 this.userRepository.addSeries(series)
                 this.seriesRepository.addSeries(series)
                 return Promise.resolve(series)
@@ -77,9 +78,9 @@ export default class EventHandler extends Component<Props> {
 
     render() {
         return (
-            <div>
+            <>
                 {this.props.children}
-            </div>
+            </>
         )
     }
 }

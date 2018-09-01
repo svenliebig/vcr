@@ -20,7 +20,7 @@ export default abstract class AbstractSeries<P, S extends State = State> extends
             return ""
         }
 
-        const url = `${POSTER_URL}${series.posterUrl}`
+        const url = `${POSTER_URL}${series.backdropUrl}`
         if (url.endsWith("jpg")) {
             return url.replace(`w300`, `w${width}`)
         } else {

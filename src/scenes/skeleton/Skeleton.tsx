@@ -17,7 +17,7 @@ export default class Skeleton extends Component<Props> {
     render() {
         return <>
             {this.props.dontRenderHeader ? "" : <Header />}
-            <main className="content" style={{ padding: "30px", marginTop: "50px" }}>
+            <main className="container-fluid">
                 {this.props.children}
             </main>
         </>

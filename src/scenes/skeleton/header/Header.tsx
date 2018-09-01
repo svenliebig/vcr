@@ -8,11 +8,13 @@ export default class Header extends Component {
     render() {
         return (
             <div className="header-wrapper">
-                <div className="quote">
-                    {getQuote()}
+                <div className="container-fluid d-flex">
+                    <div className="quote">
+                        {getQuote()}
+                    </div>
+                    <Nav />
+                    <Options />
                 </div>
-                <Nav />
-                <Options />
             </div>
         )
     }

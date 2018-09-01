@@ -13,6 +13,7 @@ export default class SeriesModel {
     public overview: string
     public airDate: string
     public posterUrl: string
+    public backdropUrl: string
     public rating: number
     public votes: number
     public seasons: Array<SeasonModel>
@@ -54,6 +55,7 @@ export default class SeriesModel {
         this.episodeDuration = []
         this.bstolink = ""
         this.seasonsCount = seasonsCount
+        this.backdropUrl = ""
     }
 
     /**

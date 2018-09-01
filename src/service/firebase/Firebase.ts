@@ -42,6 +42,7 @@ export type SeriesFirebase = {
      * "2005-09-19"
      */
     airDate: string,
+    backdropUrl: string,
     bstolink: string,
     country: Array<string>,
     createdBy: Array<{
