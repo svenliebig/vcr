@@ -15,11 +15,11 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 export default class Router extends Component {
     private routesArray: Array<{ path: string, component: ComponentType<any> }> = []
     private loggedIn: boolean
-    private firebase = ServiceFactory.firebase
+    private auth = ServiceFactory.auth
 
-    constructor() {
-        super({})
-        this.loggedIn = this.firebase.isLoggedIn()
+    constructor(props: {}) {
+        super(props)
+        this.loggedIn = this.auth.isLoggedIn()
     }
 
     componentWillMount() {

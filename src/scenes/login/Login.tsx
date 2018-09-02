@@ -17,7 +17,7 @@ export type Props = RouteComponentProps<{}>
  * Login View.
  */
 class Login extends Component<Props, State> {
-    private firebase = ServiceFactory.firebase
+    private firebase = ServiceFactory.auth
 
     constructor(props: Props) {
         super(props)

@@ -1,5 +1,5 @@
-import SeriesapiService from "vcr-shared/service/Moviedb"
 import axios from "axios"
+import SeriesapiService from "vcr-shared/service/Moviedb"
 
 describe("MovieDatabase", () => {
     let classUnderTest: SeriesapiService

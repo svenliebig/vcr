@@ -1,6 +1,6 @@
-import Firebase from "../service/Firebase"
-import SeriesModel from "../models/SeriesModel"
+import FirebaseDatabase from "../service/FirebaseDatabase"
 import SeriesConverter from "../converter/SeriesConverter"
+import SeriesModel from "../models/SeriesModel"
 
 /**
  * Repository to communicate with the /series node in the database.
@@ -9,16 +9,16 @@ import SeriesConverter from "../converter/SeriesConverter"
  * @class SeriesRepository
  */
 export default class SeriesRepository {
-    constructor(private firebase: Firebase) { }
+    constructor(private firebase: FirebaseDatabase) { }
 
     /**
      * returns the series that matches the given id.
      *
      * @param {number} id id of a series
      */
-    public getSeries(id: number | string) {
+    public getSeries(id: number | string): Promise<SeriesModel> {
         if (id === null || id === "") {
-            return Promise.resolve(null)
+            return Promise.reject(null)
         }
 
         return this.firebase.get(`/series/${id}`).then(val => Promise.resolve(val && SeriesConverter.firebaseToModel(val)))
@@ -31,7 +31,7 @@ export default class SeriesRepository {
      */
     addSeries(series: SeriesModel) {
         if (series === null || !series.id) {
-            throw this.exception("series or VALUE is not defined.")
+            throw Promise.reject("series or VALUE is not defined.")
         }
 
         return this.getLinksOfSeries(series.id).then((links) => {

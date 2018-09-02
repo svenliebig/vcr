@@ -1,8 +1,7 @@
 import { SeriesResponse } from "../service/Moviedb"
 import SeriesModel from "../models/SeriesModel"
 import SeasonConverter from "../converter/SeasonConverter"
-import { SeriesFirebase } from "../service/Firebase"
-
+import { SeriesFirebase } from "../service/FirebaseTypes"
 /**
  * has functions to convert or merge different episode models
  *
@@ -39,7 +38,6 @@ export default class SeriesConverter {
         series.createdBy = response.created_by
         series.episodeDuration = response.episode_run_time
         series.seasonsCount = response.number_of_seasons
-        console.debug(series)
         return series
     }
 
@@ -128,7 +126,6 @@ export default class SeriesConverter {
                 result.seasons = []
             }
 
-            console.debug(result)
             return result
         })
     }

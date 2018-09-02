@@ -20,9 +20,9 @@ export interface Props { children: ReactNode }
  * @extends {Component}
  */
 export default class EventHandler extends Component<Props> {
-    private firebase = ServiceFactory.firebase
-    private userRepository = new UserRepository(ServiceFactory.firebase)
-    private seriesRepository = new SeriesRepository(ServiceFactory.firebase)
+    private auth = ServiceFactory.auth
+    private userRepository = new UserRepository(ServiceFactory.database, ServiceFactory.auth)
+    private seriesRepository = new SeriesRepository(ServiceFactory.database)
     private seriesApi = new SeriesapiService(environment.themoviedb)
     private message = new Message()
 
@@ -46,7 +46,7 @@ export default class EventHandler extends Component<Props> {
 
         // User Management
         EventBus.instance.register("logout", (() => {
-            this.firebase.logout()
+            this.auth.logout()
             window.location.pathname = "/"
         }))
 

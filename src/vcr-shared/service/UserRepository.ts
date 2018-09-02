@@ -1,6 +1,8 @@
 import SeriesConverter from "../converter/SeriesConverter"
 import SeriesModel from "../models/SeriesModel"
-import Firebase, { SeriesFirebase, UserFirebase } from "../service/Firebase"
+import FirebaseAuth from "../service/FirebaseAuth"
+import FirebaseDatabase from "../service/FirebaseDatabase"
+import { UserFirebase, SeriesFirebase } from "../service/FirebaseTypes"
 
 export type UserRepositoryResponse = {
     series: Array<SeriesFirebase>
@@ -19,19 +21,20 @@ export default class UserRepository {
 
     private uid: string | null = null
 
-    constructor(private firebase: Firebase) {
+    constructor(private database: FirebaseDatabase, private auth?: FirebaseAuth) {
         const self = this
         UserRepository.instance = this
 
-        if (this.firebase.isLoggedIn()) {
-            this.uid = this.firebase.user.uid
-        }
-
-        this.isUserInDb(result => {
-            if (!result) {
-                self.addUserToDb()
+        if (this.auth) {
+            if (this.auth.isLoggedIn()) {
+                this.uid = this.auth.user.uid
+                this.isUserInDb(result => {
+                    if (!result) {
+                        self.addUserToDb()
+                    }
+                })
             }
-        })
+        }
     }
 
     public getCurrentUserUid() {
@@ -40,17 +43,17 @@ export default class UserRepository {
 
     public async checkUser() {
         const exist = await this.isUserInUserDirectory()
-        if (!exist) {
-            const { displayName, uid } = this.firebase.user
+        if (!exist && this.auth) {
+            const { displayName, uid } = this.auth.user
             if (displayName) {
                 this.writeUserToUserDirectory(displayName)
             } else {
-                const name = await this.firebase.get(`/users/${this.uid}/name`)
+                const name = await this.database.get(`/users/${this.uid}/name`)
                 if (name) {
-                    this.firebase.user.updateProfile({ displayName: name, photoURL: null })
+                    this.auth.user.updateProfile({ displayName: name, photoURL: null })
                     this.writeUserToUserDirectory(name)
                 } else {
-                    this.firebase.user.updateProfile({ displayName: uid, photoURL: null })
+                    this.auth.user.updateProfile({ displayName: uid, photoURL: null })
                     this.writeUserToUserDirectory(uid)
                 }
             }
@@ -58,7 +61,7 @@ export default class UserRepository {
     }
 
     public getUserByName(username: string) {
-        return this.firebase.getWhere("/users", "name", username).then((val: { [key: string]: UserFirebase }) => {
+        return this.database.getWhere("/users", "name", username).then((val: { [key: string]: UserFirebase }) => {
             const tempArray: Array<UserRepositoryResponse> = []
 
             for (const key in val) {
@@ -84,7 +87,7 @@ export default class UserRepository {
     }
 
     public getUsers(): Promise<Array<UserFirebase>> {
-        return this.firebase.get(`/users`).then((users: { [key: string]: UserFirebase }) => {
+        return this.database.get(`/users`).then((users: { [key: string]: UserFirebase }) => {
             const tempArray = []
             for (const key in users) {
                 const seriesArray = []
@@ -99,7 +102,7 @@ export default class UserRepository {
     }
 
     public getUserDirectory() {
-        return this.firebase.get(`/user-directory`).then(val => {
+        return this.database.get(`/user-directory`).then(val => {
             const tempArray: Array<{ uid: string, name: string }> = []
             for (const key in val) {
                 tempArray.push(val[key])
@@ -109,33 +112,27 @@ export default class UserRepository {
     }
 
     public isUserInDb(callback: (val: boolean) => void) {
-        this.firebase.get(`/users/${this.uid}`).then(val => callback(val !== null))
+        this.database.get(`/users/${this.uid}`).then(val => callback(val !== null))
     }
 
     public addUserToDb() {
-        this.firebase.write(`/users/${this.uid}`, {
+        this.database.write(`/users/${this.uid}`, {
             series: []
         })
     }
 
-    public hasSeries(id: number) {
-        console.debug(`call get series`, id)
-        return this.getSeries(id).then(val => {
-            if (val === null) {
-                return Promise.resolve(false)
-            }
-            return Promise.resolve(true)
-        })
+    public hasSeries(id: number, uid: string | null = this.uid) {
+        return this.getSeries(id, uid).then(val => Promise.resolve(val !== null))
     }
 
-    getFinishedSeries() {
-        return this.firebase.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", true).then(val => {
+    public getFinishedSeries(uid: string | null = this.uid) {
+        return this.database.getWhere(`/users/${uid}/series`, "isCompletlyWatched", true).then(val => {
             return Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))
         })
     }
 
-    getOpenSeries() {
-        return this.firebase.getWhere(`/users/${this.uid}/series`, "isCompletlyWatched", false).then(val =>
+    public getOpenSeries(uid: string | null = this.uid) {
+        return this.database.getWhere(`/users/${uid}/series`, "isCompletlyWatched", false).then(val =>
             Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))
         )
     }
@@ -146,31 +143,22 @@ export default class UserRepository {
 	 * @returns {Promise.<Array<Series>>} called after reading the data
 	 * @memberof UserRepository
 	 */
-    getAllSeries() {
-        return this.firebase.get(`/users/${this.uid}/series`).then(val =>
+    public getAllSeries(uid: string | null = this.uid) {
+        return this.database.get(`/users/${uid}/series`).then(val =>
             Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))
         )
     }
 
-    public getName() {
-        return Promise.resolve(this.firebase.user.displayName!)
-    }
-
-    public setName(name: string) {
-        this.firebase.user.updateProfile({ displayName: name, photoURL: null })
-        return this.firebase.write(`/user-directory/${this.uid}/name`, name)
-    }
-
-    getSeries(id: number) {
-        return this.firebase.get(`/users/${this.uid}/series/${id}`).then(val => {
+    public getSeries(id: number, uid: string | null = this.uid): Promise<SeriesModel | null> {
+        return this.database.get(`/users/${uid}/series/${id}`).then(val => {
             if (val) {
                 return Promise.resolve(SeriesConverter.firebaseToModel(val))
             }
-            return Promise.resolve(val)
+            return Promise.resolve(null)
         })
     }
 
-    public addSeries(series: SeriesFirebase) {
+    public addSeries(series: SeriesFirebase, uid: string | null = this.uid) {
         this.checkArgs(series)
         return this.getSeries(series.id).then(result => {
             let userSeries: SeriesModel
@@ -180,25 +168,44 @@ export default class UserRepository {
                 userSeries = SeriesConverter.firebaseToModel(series)
             }
             userSeries.isCompletlyWatched = userSeries.isWatched()
-            return this.firebase.write(`/users/${this.uid}/series/${series.id}`, userSeries)
+            return this.database.write(`/users/${uid}/series/${series.id}`, userSeries)
         })
     }
 
     /**
-	 * removes the series with the given id from the /user/series database
-	 *
-	 * @param {number} id
-	 * @returns {Promise<>}
-	 */
-    removeSeries(id: number) {
+     * removes the series with the given id from the /user/series database
+     *
+     * @param {number} id
+     * @param {string | null} [uid=this.uid]
+     * @returns
+     * @memberof UserRepository
+     */
+    public removeSeries(id: number, uid: string | null = this.uid): Promise<void> {
         this.checkArgs(id)
-        return this.firebase.remove(`/users/${this.uid}/series/${id}`)
+        return this.database.remove(`/users/${uid}/series/${id}`)
     }
 
-    updateWatchedSeries(series: SeriesModel) {
+    // User Specific
+
+    public getName() {
+        if (this.auth) {
+            return Promise.resolve(this.auth.user.displayName!)
+        }
+        return Promise.reject("Nicht eingeloggt")
+    }
+
+    public setName(name: string) {
+        if (this.auth) {
+            this.auth.user.updateProfile({ displayName: name, photoURL: null })
+            return this.database.write(`/user-directory/${this.uid}/name`, name)
+        }
+        return Promise.reject("Nicht eingeloggt")
+    }
+
+    public updateWatchedSeries(series: SeriesModel) {
         this.checkArgs(series)
         series.isCompletlyWatched = series.isWatched()
-        return this.firebase.write(`/users/${this.uid}/series/${series.id}`, series)
+        return this.database.write(`/users/${this.uid}/series/${series.id}`, series)
     }
 
     private checkArgs(args: any) {
@@ -215,10 +222,10 @@ export default class UserRepository {
     }
 
     private isUserInUserDirectory() {
-        return this.firebase.exists(`/user-directory/${this.uid}`)
+        return this.database.exists(`/user-directory/${this.uid}`)
     }
 
     private writeUserToUserDirectory(username: string) {
-        return this.firebase.write(`/user-directory/${this.uid}`, { uid: this.uid, name: username })
+        return this.database.write(`/user-directory/${this.uid}`, { uid: this.uid, name: username })
     }
 }

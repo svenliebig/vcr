@@ -1,10 +1,9 @@
 import { loadSeries, loadSeriesComplete } from "@details/DetailsAction"
-import UserRepository from "vcr-shared/service/UserRepository"
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from "react-redux"
 import { Dispatch } from "redux"
 import { RootState } from "RootReducer"
+import UserRepository from "vcr-shared/service/UserRepository"
 import DetailsView, { DispatchProps, StateProps } from "./DetailsView"
-import SeriesModel from "vcr-shared/models/SeriesModel"
 
 const mapStateToProps: MapStateToProps<StateProps, {}, RootState> = (state: RootState): StateProps => ({
     series: state.DetailsReducer.series
@@ -13,7 +12,11 @@ const mapStateToProps: MapStateToProps<StateProps, {}, RootState> = (state: Root
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch: Dispatch): DispatchProps => ({
     loadSeries: (id: number) => {
         dispatch(loadSeries())
-        UserRepository.instance.getSeries(id).then((series: SeriesModel) => dispatch(loadSeriesComplete(series)))
+        UserRepository.instance.getSeries(id).then(series => {
+            if (series) {
+                dispatch(loadSeriesComplete(series))
+            }
+        })
     }
 })
 

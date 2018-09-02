@@ -1,12 +1,12 @@
 import SeriesCard from "@components/SeriesCard/SeriesCard"
-import SeriesConverter from "vcr-shared/converter/SeriesConverter"
-import SeriesModel from "vcr-shared/models/SeriesModel"
 import EventBus from "@service/EventBus/EventBus"
-import { SeriesFirebase } from "vcr-shared/service/Firebase"
-import { UserRepositoryResponse } from "vcr-shared/service/UserRepository"
 import React, { Component, Fragment } from "react"
 import { RouteComponentProps } from "react-router"
+import SeriesConverter from "vcr-shared/converter/SeriesConverter"
+import SeriesModel from "vcr-shared/models/SeriesModel"
+import { UserRepositoryResponse } from "vcr-shared/service/UserRepository"
 import "./Compare.less"
+import { SeriesFirebase } from "vcr-shared/service/FirebaseTypes"
 
 export interface State {
     yours: Array<SeriesFirebase>
