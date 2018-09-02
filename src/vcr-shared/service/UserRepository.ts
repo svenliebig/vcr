@@ -159,8 +159,8 @@ export default class UserRepository {
     }
 
     public addSeries(series: SeriesFirebase, uid: string | null = this.uid) {
-        this.checkArgs(series)
-        return this.getSeries(series.id).then(result => {
+        this.checkArgs(series, uid)
+        return this.getSeries(series.id, uid).then(result => {
             let userSeries: SeriesModel
             if (result) {
                 userSeries = SeriesConverter.mergeModels(SeriesConverter.firebaseToModel(series), result)
@@ -181,7 +181,7 @@ export default class UserRepository {
      * @memberof UserRepository
      */
     public removeSeries(id: number, uid: string | null = this.uid): Promise<void> {
-        this.checkArgs(id)
+        this.checkArgs(id, uid)
         return this.database.remove(`/users/${uid}/series/${id}`)
     }
 
@@ -208,8 +208,8 @@ export default class UserRepository {
         return this.database.write(`/users/${this.uid}/series/${series.id}`, series)
     }
 
-    private checkArgs(args: any) {
-        if (this.uid === null || this.uid === "" || args === null) {
+    private checkArgs(args: any, uid: string | null = this.uid) {
+        if (uid === null || uid === "" || args === null) {
             throw this.exception("UID or series is not defined.")
         }
     }
