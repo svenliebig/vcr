@@ -1,10 +1,20 @@
 import Firebase from "./Firebase"
+import firebase from "firebase/app"
+
+const config = {
+    apiKey: "AIzaSyBIdEMoGyVhG7vEuFONf43h9K4lJvqbjg8",
+    authDomain: "viewcachu-firebase-mock.firebaseapp.com",
+    databaseURL: "https://viewcachu-firebase-mock.firebaseio.com",
+    projectId: "viewcachu-firebase-mock",
+    storageBucket: "viewcachu-firebase-mock.appspot.com",
+    messagingSenderId: "506827361279"
+}
 
 describe("Firebase", () => {
-    let classUnderTest = new Firebase()
+    let classUnderTest: Firebase
 
     beforeAll(() => {
-        classUnderTest = new Firebase()
+        classUnderTest = new Firebase(firebase.initializeApp(config))
     })
 
     describe("onAuthStateChanged(object): void", () => {

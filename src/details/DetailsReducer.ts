@@ -1,6 +1,6 @@
 import { ActionType, getType } from "typesafe-actions"
 import DetailsActions from "./DetailsAction"
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 
 export type DetailsActionsType = ActionType<typeof DetailsActions>
 

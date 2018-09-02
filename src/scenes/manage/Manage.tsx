@@ -1,5 +1,5 @@
 import SearchResult from "@scenes/manage/searchresult/SearchResult"
-import { SeriesByNameSeriesResponse } from "@service/api/Moviedb"
+import { SeriesByNameSeriesResponse } from "vcr-shared/service/Moviedb"
 import EventBus from "@service/EventBus/EventBus"
 import Observer from "@utils/Observer"
 import React, { ChangeEvent, Component } from "react"

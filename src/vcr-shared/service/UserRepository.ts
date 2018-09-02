@@ -1,6 +1,6 @@
-import Firebase, { UserFirebase, SeriesFirebase } from "@service/firebase/Firebase"
-import SeriesConverter from "@converter/SeriesConverter"
-import SeriesModel from "@model/SeriesModel"
+import SeriesConverter from "../converter/SeriesConverter"
+import SeriesModel from "../models/SeriesModel"
+import Firebase, { SeriesFirebase, UserFirebase } from "../service/Firebase"
 
 export type UserRepositoryResponse = {
     series: Array<SeriesFirebase>
@@ -15,13 +15,13 @@ export type UserRepositoryResponse = {
  * @class UserRepository
  */
 export default class UserRepository {
-    public static instance = new UserRepository()
+    public static instance: UserRepository
 
-    private firebase = new Firebase()
     private uid: string | null = null
 
-    constructor() {
+    constructor(private firebase: Firebase) {
         const self = this
+        UserRepository.instance = this
 
         if (this.firebase.isLoggedIn()) {
             this.uid = this.firebase.user.uid

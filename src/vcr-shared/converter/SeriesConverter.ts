@@ -1,7 +1,7 @@
-import { SeriesResponse } from "@service/api/Moviedb"
-import SeriesModel from "@model/SeriesModel"
-import SeasonConverter from "@converter/SeasonConverter"
-import { SeriesFirebase } from "@service/firebase/Firebase"
+import { SeriesResponse } from "../service/Moviedb"
+import SeriesModel from "../models/SeriesModel"
+import SeasonConverter from "../converter/SeasonConverter"
+import { SeriesFirebase } from "../service/Firebase"
 
 /**
  * has functions to convert or merge different episode models

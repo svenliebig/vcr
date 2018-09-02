@@ -1,6 +1,6 @@
 import InputText from "@components/Input/Text/InputText"
 import { Tab, Tabs } from "@components/tabs/Tabs"
-import Firebase from "@service/firebase/Firebase"
+import ServiceFactory from "@utils/ServiceFactory"
 import React, { Component, FormEvent } from "react"
 import { RouteComponentProps } from "react-router-dom"
 import "./Login.less"
@@ -17,7 +17,7 @@ export type Props = RouteComponentProps<{}>
  * Login View.
  */
 class Login extends Component<Props, State> {
-    private firebase: Firebase = new Firebase()
+    private firebase = ServiceFactory.firebase
 
     constructor(props: Props) {
         super(props)

@@ -4,23 +4,22 @@ import Board from "@scenes/board/Board"
 import Compare from "@scenes/compare/Compare"
 import Login from "@scenes/login/Login"
 import Manage from "@scenes/manage/Manage"
+import Skeleton from "@scenes/skeleton/Skeleton"
 import Statistic from "@scenes/statistic/Statistic"
 import View from "@scenes/view/View"
+import ServiceFactory from "@utils/ServiceFactory"
 import React, { Component, ComponentType } from "react"
 import { render } from "react-dom"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
-import Firebase from "./service/firebase/Firebase"
-import Skeleton from "@scenes/skeleton/Skeleton"
-
-const firebase = new Firebase()
 
 export default class Router extends Component {
     private routesArray: Array<{ path: string, component: ComponentType<any> }> = []
     private loggedIn: boolean
+    private firebase = ServiceFactory.firebase
 
     constructor() {
         super({})
-        this.loggedIn = firebase.isLoggedIn()
+        this.loggedIn = this.firebase.isLoggedIn()
     }
 
     componentWillMount() {

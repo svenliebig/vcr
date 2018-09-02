@@ -1,10 +1,3 @@
-import environment from "../../environment/environment"
-import firebase from "firebase/app"
-import "firebase/database"
-import "firebase/auth"
-
-const app = firebase.initializeApp(environment.firebase)
-
 export type UserFirebase = {
     name?: "string",
     series: Array<{ [key: string]: SeriesFirebase }>,
@@ -84,7 +77,7 @@ export default class Firebase {
     private auth: firebase.auth.Auth
     private error: any
 
-    constructor() {
+    constructor(app: firebase.app.App) {
         this.error = undefined
         this.db = app.database()
         this.auth = app.auth()

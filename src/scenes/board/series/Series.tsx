@@ -4,7 +4,7 @@ import React from "react"
 import EventBus from "@service/EventBus/EventBus"
 
 // Model
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 
 // Components
 import AbstractSeries, { State as AbstractSeriesState } from "@components/abstract/AbstractSeries"
@@ -12,8 +12,8 @@ import SeriesCard from "@components/SeriesCard/SeriesCard"
 import Episode from "@components/Episode/Episode"
 import Tooltip from "@components/Tooltip"
 
-import EpisodeModel from "@model/EpisodeModel"
-import SeasonModel from "@model/SeasonModel"
+import EpisodeModel from "vcr-shared/models/EpisodeModel"
+import SeasonModel from "vcr-shared/models/SeasonModel"
 import SeriesHandler from "@service/SeriesHandler"
 
 import "./Series.less"

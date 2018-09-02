@@ -1,11 +1,14 @@
 /** React Imports */
-import SeriesapiService from "@service/api/Moviedb"
+import environment from "@environment/environment"
 import EventBus from "@service/EventBus/EventBus"
-import Firebase from "@service/firebase/Firebase"
 import Message from "@service/Message/Message"
-import SeriesRepository from "@service/series/SeriesRepository"
-import UserRepository from "@service/user/UserRepository"
+import ServiceFactory from "@utils/ServiceFactory"
+import "firebase/auth"
+import "firebase/database"
 import React, { Component, ReactNode } from "react"
+import SeriesapiService from "vcr-shared/service/Moviedb"
+import SeriesRepository from "vcr-shared/service/SeriesRepository"
+import UserRepository from "vcr-shared/service/UserRepository"
 
 export interface Props { children: ReactNode }
 
@@ -17,11 +20,11 @@ export interface Props { children: ReactNode }
  * @extends {Component}
  */
 export default class EventHandler extends Component<Props> {
-    private userRepository = new UserRepository()
-    private seriesApi = new SeriesapiService()
-    private seriesRepository = new SeriesRepository()
+    private firebase = ServiceFactory.firebase
+    private userRepository = new UserRepository(ServiceFactory.firebase)
+    private seriesRepository = new SeriesRepository(ServiceFactory.firebase)
+    private seriesApi = new SeriesapiService(environment.themoviedb)
     private message = new Message()
-    private firebase = new Firebase()
 
     /**
 	 * Creates an instance of EventHandler.

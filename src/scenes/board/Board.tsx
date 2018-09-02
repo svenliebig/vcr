@@ -1,6 +1,6 @@
 import ButtonToggle from "@components/button/toggle/ButtonToggle"
 import Dropdown from "@components/dropdown/Dropdown"
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 import Series from "@scenes/board/series/Series"
 import EventBus from "@service/EventBus/EventBus"
 import React, { Component } from "react"

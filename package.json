@@ -106,7 +106,8 @@
       "@environment/(.*)": "<rootDir>/src/environment/$1",
       "@model/(.*)": "<rootDir>/src/model/$1",
       "@details/(.*)": "<rootDir>/src/details/$1",
-      "@utils/(.*)": "<rootDir>/src/utils/$1"
+      "@utils/(.*)": "<rootDir>/src/utils/$1",
+      "vcr-shared/(.*)": "<rootDir>/src/vcr-shared/$1"
     },
     "moduleFileExtensions": [
       "ts",

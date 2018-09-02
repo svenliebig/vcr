@@ -1,4 +1,4 @@
-import { SeriesByNameSeriesResponse } from "@service/api/Moviedb"
+import { SeriesByNameSeriesResponse } from "vcr-shared/service/Moviedb"
 import EventBus from "@service/EventBus/EventBus"
 import React, { Component, Fragment, ReactNode } from "react"
 import { Link } from "react-router-dom"

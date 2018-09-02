@@ -1,4 +1,4 @@
-import SeriesRepository from './SeriesRepository';
+import SeriesRepository from 'vcr-shared/service/SeriesRepository';
 
 describe('SeriesRepository', () => {
     let repo = new SeriesRepository()

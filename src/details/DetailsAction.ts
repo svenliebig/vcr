@@ -1,7 +1,7 @@
 import { createAction } from "typesafe-actions"
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 
-enum DetailsAction {
+export enum DetailsAction {
     LoadSeries = "DetailsAction/LoadSeries",
     LoadSeriesComplete = "DetailsAction/LoadSeriesComplete"
 }

@@ -1,4 +1,4 @@
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 import EventBus from "@service/EventBus/EventBus"
 import React, { Component } from "react"
 import "./Statistic.less"

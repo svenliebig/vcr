@@ -1,5 +1,5 @@
 import SeasonModel from "./SeasonModel"
-import { SeriesCreatedByResponse } from "@service/api/Moviedb"
+import { SeriesCreatedByResponse } from "../service/Moviedb"
 
 /**
  * Represents a series.

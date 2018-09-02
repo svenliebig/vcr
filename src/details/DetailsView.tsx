@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 import { RouteComponentProps } from "react-router-dom"
 
 import "./Details.less"

@@ -9,7 +9,8 @@ const aliases = {
     "@converter": paths.appSrc + "/converter",
     "@model": paths.appSrc + "/model",
     "@utils": paths.appSrc + "/utils",
-    "@details": paths.appSrc + "/details"
+    "@details": paths.appSrc + "/details",
+    "vcr-shared": paths.appSrc + "/vcr-shared",
 }
 
 module.exports = aliases

@@ -1,11 +1,11 @@
-import SeriesapiService from "./Moviedb"
+import SeriesapiService from "vcr-shared/service/Moviedb"
 import axios from "axios"
 
 describe("MovieDatabase", () => {
     let classUnderTest: SeriesapiService
 
     beforeAll(() => {
-        classUnderTest = new SeriesapiService()
+        classUnderTest = new SeriesapiService("?api_key=2e74839a423b1266f0ccf5043bade403")
     })
 
     it("should find the walking dead in the database", (done) => {

@@ -1,12 +1,11 @@
 import axios from "axios"
 import http from "http"
 import https from "https"
-import environment from "../../environment/environment"
 
-import SeriesModel from "@model/SeriesModel"
-import SeriesConverter from "@converter/SeriesConverter"
-import SeasonConverter from "@converter/SeasonConverter"
-import SeasonModel from "@model/SeasonModel"
+import SeriesModel from "../models/SeriesModel"
+import SeriesConverter from "../converter/SeriesConverter"
+import SeasonConverter from "../converter/SeasonConverter"
+import SeasonModel from "../models/SeasonModel"
 
 export type SeasonEpisodeResponse = {
     air_date: string,
@@ -248,6 +247,9 @@ export default class SeriesapiService {
         keepAlive: true
     })
 
+    constructor(private key: string) {
+    }
+
     /**
      * Calls the API and returns a getSeriesSeason Series.
      *
@@ -255,7 +257,7 @@ export default class SeriesapiService {
      * @memberof SeriesapiService
      */
     public getSeries(id: number): Promise<SeriesModel> {
-        const url = `${this.API_URL}${this.BY_ID}${id}${environment.themoviedb}${this.LANG_PARAM}`
+        const url = `${this.API_URL}${this.BY_ID}${id}${this.key}${this.LANG_PARAM}`
         return this.callApi(url).then((res: SeriesResponse) => Promise.resolve(SeriesConverter.responseToModel(res)))
     }
 
@@ -267,7 +269,7 @@ export default class SeriesapiService {
      * @memberof SeriesapiService
      */
     public getSeriesSeason(id: number, season: number): Promise<SeasonModel> {
-        const url = `${this.API_URL}${this.BY_ID}${id}${this.SEASON}${season}${environment.themoviedb}${this.LANG_PARAM}`
+        const url = `${this.API_URL}${this.BY_ID}${id}${this.SEASON}${season}${this.key}${this.LANG_PARAM}`
         return this.callApi(url).then((res: SeasonReponse) => Promise.resolve(SeasonConverter.responseToModel(res)))
     }
 
@@ -282,7 +284,7 @@ export default class SeriesapiService {
      */
     public getSeriesEpisode(id: number, season: number, episode: number) {
         let url = `${this.API_URL}${this.BY_ID}${id}${this.SEASON}${season}`
-        url += `${this.EPISODE}${episode}${environment.themoviedb}${this.LANG_PARAM}`
+        url += `${this.EPISODE}${episode}${this.key}${this.LANG_PARAM}`
         return this.callApi(url)
     }
 
@@ -338,7 +340,7 @@ export default class SeriesapiService {
      * @memberof SeriesapiService
      */
     public findSerieByName(name: string): Promise<Array<SeriesByNameSeriesResponse>> {
-        const url = `${this.API_URL}${this.BY_NAME}${environment.themoviedb}&query=${name}${this.LANG_PARAM}`
+        const url = `${this.API_URL}${this.BY_NAME}${this.key}&query=${name}${this.LANG_PARAM}`
         return this.callApi(url).then((res: SeriesByNameResponse) => res.results)
     }
 

@@ -1,4 +1,4 @@
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 import { Component } from "react"
 
 const POSTER_URL = "https://image.tmdb.org/t/p/w300"

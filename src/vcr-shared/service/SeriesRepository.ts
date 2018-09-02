@@ -1,6 +1,6 @@
-import Firebase from "../firebase/Firebase"
-import SeriesModel from "@model/SeriesModel"
-import SeriesConverter from "@converter/SeriesConverter"
+import Firebase from "../service/Firebase"
+import SeriesModel from "../models/SeriesModel"
+import SeriesConverter from "../converter/SeriesConverter"
 
 /**
  * Repository to communicate with the /series node in the database.
@@ -9,7 +9,7 @@ import SeriesConverter from "@converter/SeriesConverter"
  * @class SeriesRepository
  */
 export default class SeriesRepository {
-    private fb: Firebase = new Firebase()
+    constructor(private firebase: Firebase) { }
 
     /**
      * returns the series that matches the given id.
@@ -21,7 +21,7 @@ export default class SeriesRepository {
             return Promise.resolve(null)
         }
 
-        return this.fb.get(`/series/${id}`).then(val => Promise.resolve(val && SeriesConverter.firebaseToModel(val)))
+        return this.firebase.get(`/series/${id}`).then(val => Promise.resolve(val && SeriesConverter.firebaseToModel(val)))
     }
 
     /**
@@ -38,7 +38,7 @@ export default class SeriesRepository {
             if (links) {
                 (series as any).links = links
             }
-            return this.fb.write(`/series/${series.id}`, series)
+            return this.firebase.write(`/series/${series.id}`, series)
         })
     }
 
@@ -49,7 +49,7 @@ export default class SeriesRepository {
      * @returns {Promise<>}
      */
     removeSeries(id: number) {
-        return this.fb.remove(`/series/${id}`)
+        return this.firebase.remove(`/series/${id}`)
     }
 
     /**
@@ -60,7 +60,7 @@ export default class SeriesRepository {
      * @param {string} val the url of the link
      */
     saveLinkToSeries(id: number, type: string, val: any) {
-        return this.fb.write(`/series/${id}/links/${type}`, val)
+        return this.firebase.write(`/series/${id}/links/${type}`, val)
     }
 
     /**
@@ -69,7 +69,7 @@ export default class SeriesRepository {
      * @param {*} id Id of the series
      */
     getLinksOfSeries(id: number) {
-        return this.fb.get(`/series/${id}/links`).then(val => Promise.resolve(val))
+        return this.firebase.get(`/series/${id}/links`).then(val => Promise.resolve(val))
     }
 
     exception(str: string) {

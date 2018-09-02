@@ -1,6 +1,6 @@
 /** React Imports */
 import Tooltip from "@components/Tooltip"
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 import TimeUtil from "@service/TimeUtil"
 import React, { Component, ReactNode } from "react"
 import { Link } from "react-router-dom"

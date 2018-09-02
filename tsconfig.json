@@ -77,6 +77,9 @@
             ],
             "@details/*": [
                 "details/*"
+            ],
+            "vcr-shared/*": [
+                "vcr-shared/*"
             ]
         },
 

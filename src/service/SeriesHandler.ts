@@ -1,6 +1,6 @@
-import EpisodeModel from "@model/EpisodeModel"
-import SeasonModel from "@model/SeasonModel"
-import SeriesModel from "@model/SeriesModel"
+import EpisodeModel from "vcr-shared/models/EpisodeModel"
+import SeasonModel from "vcr-shared/models/SeasonModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 import EventBus from "@service/EventBus/EventBus"
 
 export default class SeriesHandler {
