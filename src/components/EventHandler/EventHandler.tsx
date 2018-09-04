@@ -1,11 +1,14 @@
 /** React Imports */
-import SeriesapiService from "@service/api/Moviedb"
+import environment from "@environment/environment"
 import EventBus from "@service/EventBus/EventBus"
-import Firebase from "@service/firebase/Firebase"
 import Message from "@service/Message/Message"
-import SeriesRepository from "@service/series/SeriesRepository"
-import UserRepository from "@service/user/UserRepository"
+import ServiceFactory from "@utils/ServiceFactory"
+import "firebase/auth"
+import "firebase/database"
 import React, { Component, ReactNode } from "react"
+import SeriesapiService from "vcr-shared/service/Moviedb"
+import SeriesRepository from "vcr-shared/service/SeriesRepository"
+import UserRepository from "vcr-shared/service/UserRepository"
 
 export interface Props { children: ReactNode }
 
@@ -17,11 +20,11 @@ export interface Props { children: ReactNode }
  * @extends {Component}
  */
 export default class EventHandler extends Component<Props> {
-    private userRepository = new UserRepository()
-    private seriesApi = new SeriesapiService()
-    private seriesRepository = new SeriesRepository()
+    private auth = ServiceFactory.auth
+    private userRepository = new UserRepository(ServiceFactory.database, ServiceFactory.auth)
+    private seriesRepository = new SeriesRepository(ServiceFactory.database)
+    private seriesApi = new SeriesapiService(environment.themoviedb)
     private message = new Message()
-    private firebase = new Firebase()
 
     /**
 	 * Creates an instance of EventHandler.
@@ -33,6 +36,7 @@ export default class EventHandler extends Component<Props> {
         // Movie DB Api
         EventBus.instance.register("addSeries", (id) => {
             return this.seriesApi.getCompleteSeries(id).then(series => {
+                console.debug(series)
                 this.userRepository.addSeries(series)
                 this.seriesRepository.addSeries(series)
                 return Promise.resolve(series)
@@ -42,7 +46,7 @@ export default class EventHandler extends Component<Props> {
 
         // User Management
         EventBus.instance.register("logout", (() => {
-            this.firebase.logout()
+            this.auth.logout()
             window.location.pathname = "/"
         }))
 
@@ -77,9 +81,9 @@ export default class EventHandler extends Component<Props> {
 
     render() {
         return (
-            <div>
+            <>
                 {this.props.children}
-            </div>
+            </>
         )
     }
 }

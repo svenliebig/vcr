@@ -1,6 +1,6 @@
-import Firebase from "../firebase/Firebase"
-import SeriesModel from "@model/SeriesModel"
-import SeriesConverter from "@converter/SeriesConverter"
+import FirebaseDatabase from "../service/FirebaseDatabase"
+import SeriesConverter from "../converter/SeriesConverter"
+import SeriesModel from "../models/SeriesModel"
 
 /**
  * Repository to communicate with the /series node in the database.
@@ -9,19 +9,19 @@ import SeriesConverter from "@converter/SeriesConverter"
  * @class SeriesRepository
  */
 export default class SeriesRepository {
-    private fb: Firebase = new Firebase()
+    constructor(private firebase: FirebaseDatabase) { }
 
     /**
      * returns the series that matches the given id.
      *
      * @param {number} id id of a series
      */
-    public getSeries(id: number | string) {
+    public getSeries(id: number | string): Promise<SeriesModel> {
         if (id === null || id === "") {
-            return Promise.resolve(null)
+            return Promise.reject(null)
         }
 
-        return this.fb.get(`/series/${id}`).then(val => Promise.resolve(val && SeriesConverter.firebaseToModel(val)))
+        return this.firebase.get(`/series/${id}`).then(val => Promise.resolve(val && SeriesConverter.firebaseToModel(val)))
     }
 
     /**
@@ -31,14 +31,14 @@ export default class SeriesRepository {
      */
     addSeries(series: SeriesModel) {
         if (series === null || !series.id) {
-            throw this.exception("series or VALUE is not defined.")
+            throw Promise.reject("series or VALUE is not defined.")
         }
 
         return this.getLinksOfSeries(series.id).then((links) => {
             if (links) {
                 (series as any).links = links
             }
-            return this.fb.write(`/series/${series.id}`, series)
+            return this.firebase.write(`/series/${series.id}`, series)
         })
     }
 
@@ -49,7 +49,7 @@ export default class SeriesRepository {
      * @returns {Promise<>}
      */
     removeSeries(id: number) {
-        return this.fb.remove(`/series/${id}`)
+        return this.firebase.remove(`/series/${id}`)
     }
 
     /**
@@ -60,7 +60,7 @@ export default class SeriesRepository {
      * @param {string} val the url of the link
      */
     saveLinkToSeries(id: number, type: string, val: any) {
-        return this.fb.write(`/series/${id}/links/${type}`, val)
+        return this.firebase.write(`/series/${id}/links/${type}`, val)
     }
 
     /**
@@ -69,7 +69,7 @@ export default class SeriesRepository {
      * @param {*} id Id of the series
      */
     getLinksOfSeries(id: number) {
-        return this.fb.get(`/series/${id}/links`).then(val => Promise.resolve(val))
+        return this.firebase.get(`/series/${id}/links`).then(val => Promise.resolve(val))
     }
 
     exception(str: string) {

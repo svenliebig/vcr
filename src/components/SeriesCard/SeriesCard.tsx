@@ -1,6 +1,6 @@
 /** React Imports */
 import Tooltip from "@components/Tooltip"
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 import TimeUtil from "@service/TimeUtil"
 import React, { Component, ReactNode } from "react"
 import { Link } from "react-router-dom"
@@ -60,7 +60,7 @@ export default class SeriesCard extends Component<Props> {
 	 * @memberof SeriesCard
 	 */
     private getImageSrc(series: SeriesModel) {
-        const url = series.posterUrl
+        const url = series.backdropUrl
         if (url !== undefined && url.endsWith("jpg")) {
             return `https://image.tmdb.org/t/p/w300${url}`
         } else {

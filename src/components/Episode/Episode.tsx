@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Tooltip from "@components/Tooltip"
-import EpisodeModel from "@model/EpisodeModel"
+import EpisodeModel from "vcr-shared/models/EpisodeModel"
 import "./Episode.less"
 import TimeUtil from "@service/TimeUtil"
 

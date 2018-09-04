@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 
 // Model
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 
 // Components
 import IconBadge from "@components/IconBadge/IconBadge"

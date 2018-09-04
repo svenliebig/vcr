@@ -1,4 +1,6 @@
 import React from "react"
+import { Provider } from "react-redux"
+import Store from "./Store"
 import "font-awesome/css/font-awesome.css"
 
 (async function () {
@@ -8,7 +10,7 @@ import "font-awesome/css/font-awesome.css"
 
     const { render } = (await import("react-dom"))
 
-    render(<E><R /></E>, document.getElementById("root"))
+    render(<Provider store={Store}><E><R /></E></Provider>, document.getElementById("root"))
     render(<P />, document.getElementById("dialogs"));
     (await import("./registerServiceWorker")).default()
 })()

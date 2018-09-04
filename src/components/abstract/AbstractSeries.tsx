@@ -1,4 +1,4 @@
-import SeriesModel from "@model/SeriesModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 import { Component } from "react"
 
 const POSTER_URL = "https://image.tmdb.org/t/p/w300"
@@ -20,7 +20,7 @@ export default abstract class AbstractSeries<P, S extends State = State> extends
             return ""
         }
 
-        const url = `${POSTER_URL}${series.posterUrl}`
+        const url = `${POSTER_URL}${series.backdropUrl}`
         if (url.endsWith("jpg")) {
             return url.replace(`w300`, `w${width}`)
         } else {

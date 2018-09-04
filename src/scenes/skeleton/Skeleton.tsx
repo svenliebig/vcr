@@ -15,13 +15,11 @@ export interface Props {
  */
 export default class Skeleton extends Component<Props> {
     render() {
-        return (
-            <div>
-                {this.props.dontRenderHeader ? "" : <Header />}
-                <div className="content" style={{ padding: "30px", marginTop: "50px" }}>
-                    {this.props.children}
-                </div>
-            </div>
-        )
+        return <>
+            {this.props.dontRenderHeader ? "" : <Header />}
+            <main className="container-fluid">
+                {this.props.children}
+            </main>
+        </>
     }
 }

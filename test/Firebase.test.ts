@@ -1,10 +1,21 @@
-import Firebase from "./Firebase"
+import Database from "vcr-shared/service/FirebaseDatabase"
+import firebase from "firebase/app"
+import FirebaseAuth from "vcr-shared/service/FirebaseAuth"
 
-describe("Firebase", () => {
-    let classUnderTest = new Firebase()
+const config = {
+    apiKey: "AIzaSyBIdEMoGyVhG7vEuFONf43h9K4lJvqbjg8",
+    authDomain: "viewcachu-firebase-mock.firebaseapp.com",
+    databaseURL: "https://viewcachu-firebase-mock.firebaseio.com",
+    projectId: "viewcachu-firebase-mock",
+    storageBucket: "viewcachu-firebase-mock.appspot.com",
+    messagingSenderId: "506827361279"
+}
+
+describe("FirebaseDatabase", () => {
+    let classUnderTest: Database
 
     beforeAll(() => {
-        classUnderTest = new Firebase()
+        classUnderTest = new Database(firebase.initializeApp(config))
     })
 
     describe("onAuthStateChanged(object): void", () => {
@@ -132,6 +143,81 @@ describe("Firebase", () => {
         })
     })
 
+    describe("getWhere", () => {
+
+        describe("values { hello: 'darkness' } and { myold: 'friend' } are at /test", () => {
+            const value = [{ hello: "darkness" }, { myold: "friend" }]
+
+            beforeEach((done) => {
+                classUnderTest.write("/test", value).then(done)
+            })
+
+            it("should find /test where childs value 'hello' equals 'darkness'", (done) => {
+                classUnderTest.getWhere("/test", "hello", "darkness").then(val => {
+                    expect(val.length).toBe(1)
+                    expect(val[0]).toEqual(value[0])
+                    done()
+                })
+            })
+
+            it("should find /test where childs value 'myold' equals 'friend'", (done) => {
+                classUnderTest.getWhere("/test", "myold", "friend").then(val => {
+                    expect(val.length).toBe(1)
+                    expect(val[0]).toEqual(value[1])
+                    done()
+                })
+            })
+
+            it("should NOT find /test where childs value 'myold' equals 'darkness'", (done) => {
+                classUnderTest.getWhere("/test", "myold", "darkness").then(val => {
+                    expect(val).toBe(null)
+                    done()
+                })
+            })
+
+        })
+    })
+
+    afterEach(done => {
+        classUnderTest.remove("/test").then(() => {
+            done()
+        })
+    })
+
+    afterAll(() => {
+        (classUnderTest as any).db.goOffline()
+    })
+})
+
+describe("FirebaseAuth", () => {
+    let classUnderTest: FirebaseAuth
+
+    beforeAll(() => {
+        classUnderTest = new FirebaseAuth(firebase.initializeApp(config))
+    })
+
+    describe("onAuthStateChanged(object): void", () => {
+        describe("user is null", () => {
+            xit("should call localStorage removeItem", () => {
+                spyOn(window.localStorage, "removeItem")
+                    (classUnderTest as any).onAuthStateChanged(null)
+                expect(window.localStorage.removeItem).toBeCalled()
+            })
+        })
+
+        describe("user is not null", () => {
+            xit("should call localStorage setItem", () => {
+                spyOn(window.localStorage, "setItem")
+                    (classUnderTest as any).onAuthStateChanged("not null")
+                expect(window.localStorage.setItem).toBeCalled()
+            })
+
+            afterAll(() => {
+                (classUnderTest as any).user = null
+            })
+        })
+    })
+
     describe("isLoggedIn(): Boolean", () => {
         describe("user is not logged in", () => {
             it("should return false", () => {
@@ -196,50 +282,5 @@ describe("Firebase", () => {
                 })
             })
         })
-    })
-
-    describe("getWhere", () => {
-
-        describe("values { hello: 'darkness' } and { myold: 'friend' } are at /test", () => {
-            const value = [{ hello: "darkness" }, { myold: "friend" }]
-
-            beforeEach((done) => {
-                classUnderTest.write("/test", value).then(done)
-            })
-
-            it("should find /test where childs value 'hello' equals 'darkness'", (done) => {
-                classUnderTest.getWhere("/test", "hello", "darkness").then(val => {
-                    expect(val.length).toBe(1)
-                    expect(val[0]).toEqual(value[0])
-                    done()
-                })
-            })
-
-            it("should find /test where childs value 'myold' equals 'friend'", (done) => {
-                classUnderTest.getWhere("/test", "myold", "friend").then(val => {
-                    expect(val.length).toBe(1)
-                    expect(val[0]).toEqual(value[1])
-                    done()
-                })
-            })
-
-            it("should NOT find /test where childs value 'myold' equals 'darkness'", (done) => {
-                classUnderTest.getWhere("/test", "myold", "darkness").then(val => {
-                    expect(val).toBe(null)
-                    done()
-                })
-            })
-
-        })
-    })
-
-    afterEach(done => {
-        classUnderTest.remove("/test").then(() => {
-            done()
-        })
-    })
-
-    afterAll(() => {
-        (classUnderTest as any).db.goOffline()
     })
 })

@@ -1,13 +1,12 @@
 import SeriesCard from "@components/SeriesCard/SeriesCard"
-import SeriesConverter from "@converter/SeriesConverter"
-import SeriesModel from "@model/SeriesModel"
-import Skeleton from "@scenes/skeleton/Skeleton"
 import EventBus from "@service/EventBus/EventBus"
-import { SeriesFirebase } from "@service/firebase/Firebase"
-import { UserRepositoryResponse } from "@service/user/UserRepository"
 import React, { Component, Fragment } from "react"
 import { RouteComponentProps } from "react-router"
+import SeriesConverter from "vcr-shared/converter/SeriesConverter"
+import SeriesModel from "vcr-shared/models/SeriesModel"
+import { UserRepositoryResponse } from "vcr-shared/service/UserRepository"
 import "./Compare.less"
+import { SeriesFirebase } from "vcr-shared/service/FirebaseTypes"
 
 export interface State {
     yours: Array<SeriesFirebase>
@@ -45,14 +44,12 @@ export default class Compare extends Component<Props, State> {
     }
 
     render() {
-        return <Skeleton>
-            <div className="table">
-                {/* <div className="content" /> */}
-                {this.state.both.length !== 0 && this.renderBoth()}
-                {this.state.onlyyou.length !== 0 && this.renderYou()}
-                {this.state.onlyhim.length !== 0 && this.renderHim()}
-            </div>
-        </Skeleton>
+        return <div className="table">
+            {/* <div className="content" /> */}
+            {this.state.both.length !== 0 && this.renderBoth()}
+            {this.state.onlyyou.length !== 0 && this.renderYou()}
+            {this.state.onlyhim.length !== 0 && this.renderHim()}
+        </div>
     }
 
     private renderBoth() {
@@ -82,18 +79,16 @@ export default class Compare extends Component<Props, State> {
             return <button onClick={this.addSeries.bind(this, id)}><span className="fa fa-plus"></span></button>
         }
 
-        return (
-            <Fragment>
-                <div className="header">{this.state.other!.name}:</div>
-                <div className="content">
-                    {this.state.onlyhim.map(val =>
-                        <SeriesCard key={val.name} series={SeriesConverter.firebaseToModel(val)}>
-                            <div className="actions">{actions(val.id)}</div>
-                        </SeriesCard>
-                    )}
-                </div>
-            </Fragment>
-        )
+        return <>
+            <div className="header">{this.state.other!.name}:</div>
+            <div className="content">
+                {this.state.onlyhim.map(val =>
+                    <SeriesCard key={val.name} series={SeriesConverter.firebaseToModel(val)}>
+                        <div className="actions">{actions(val.id)}</div>
+                    </SeriesCard>
+                )}
+            </div>
+        </>
     }
 
     private handler(other: Array<UserRepositoryResponse>) {

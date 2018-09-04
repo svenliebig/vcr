@@ -1,8 +1,7 @@
-import { SeriesResponse } from "@service/api/Moviedb"
-import SeriesModel from "@model/SeriesModel"
-import SeasonConverter from "@converter/SeasonConverter"
-import { SeriesFirebase } from "@service/firebase/Firebase"
-
+import { SeriesResponse } from "../service/Moviedb"
+import SeriesModel from "../models/SeriesModel"
+import SeasonConverter from "../converter/SeasonConverter"
+import { SeriesFirebase } from "../service/FirebaseTypes"
 /**
  * has functions to convert or merge different episode models
  *
@@ -24,7 +23,8 @@ export default class SeriesConverter {
         series.name = response.name
         series.overview = response.overview
         series.airDate = response.first_air_date
-        series.posterUrl = response.backdrop_path || ""
+        series.posterUrl = response.poster_path || ""
+        series.backdropUrl = response.backdrop_path || ""
         series.rating = response.vote_average
         series.votes = response.vote_count
         series.genres = []
@@ -61,6 +61,7 @@ export default class SeriesConverter {
         series.overview = firebase.overview
         series.airDate = firebase.airDate
         series.posterUrl = firebase.posterUrl
+        series.backdropUrl = firebase.backdropUrl
         series.rating = firebase.rating
         series.votes = firebase.votes
         series.genres = firebase.genres || []
@@ -95,7 +96,8 @@ export default class SeriesConverter {
             result.name = next.name || previous.name
             result.overview = next.overview || previous.overview
             result.airDate = next.airDate || previous.airDate
-            result.posterUrl = next.posterUrl || previous.posterUrl
+            result.posterUrl = previous.posterUrl || next.posterUrl
+            result.backdropUrl = previous.backdropUrl || next.backdropUrl
             result.rating = next.rating || previous.rating
             result.seasonsCount = next.seasonsCount || previous.seasonsCount
             result.votes = next.votes || previous.votes

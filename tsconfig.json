@@ -74,6 +74,12 @@
             ],
             "@utils/*": [
                 "utils/*"
+            ],
+            "@details/*": [
+                "details/*"
+            ],
+            "vcr-shared/*": [
+                "vcr-shared/*"
             ]
         },
 

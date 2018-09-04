@@ -1,6 +1,6 @@
-import EpisodeModel from "@model/EpisodeModel"
-import { SeasonEpisodeResponse } from "@service/api/Moviedb"
-import { EpisodeFirebase } from "@service/firebase/Firebase"
+import EpisodeModel from "../models/EpisodeModel"
+import { SeasonEpisodeResponse } from "../service/Moviedb"
+import { EpisodeFirebase } from "../service/FirebaseTypes"
 
 /**
  * has functions to convert or merge different episode models
