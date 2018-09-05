@@ -12,6 +12,9 @@ import React, { Component, ComponentType } from "react"
 import { render } from "react-dom"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 
+export enum Routes {
+    Board = "/",
+}
 export default class Router extends Component {
     private routesArray: Array<{ path: string, component: ComponentType<any> }> = []
     private loggedIn: boolean

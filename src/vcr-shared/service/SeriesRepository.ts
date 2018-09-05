@@ -1,6 +1,8 @@
 import FirebaseDatabase from "../service/FirebaseDatabase"
 import SeriesConverter from "../converter/SeriesConverter"
 import SeriesModel from "../models/SeriesModel"
+import SeriesLinkModel from "../models/SeriesLinkModel"
+import SeriesLinkConverter from "../converter/SeriesLinkConverter"
 
 /**
  * Repository to communicate with the /series node in the database.
@@ -22,6 +24,20 @@ export default class SeriesRepository {
         }
 
         return this.firebase.get(`/series/${id}`).then(val => Promise.resolve(val && SeriesConverter.firebaseToModel(val)))
+    }
+
+    public saveSeriesLinks(id: number, links: Array<SeriesLinkModel>): Promise<void> {
+        return this.firebase.write(`/series/${id}`, links)
+    }
+
+    public getSeriesLinks(id: number): Promise<Array<SeriesLinkModel>> {
+        return this.firebase.get(`/series/${id}`)
+            .then(val => {
+                if (val) {
+                    return SeriesLinkConverter.firebaseArrayToModelArray(val)
+                }
+                // TODO Load normal links and save as new links
+            })
     }
 
     /**

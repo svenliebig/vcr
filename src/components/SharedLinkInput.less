@@ -1,0 +1,65 @@
+.shared-link {
+    font-family: 'Josefin Sans', serif !important;
+
+    display: flex;
+    position: relative;
+    margin: 0 0 20px 0;
+
+    input {
+        font-size: 23px;
+        margin-left: 5px;
+        height: 30px;
+        background: none;
+        border: none;
+        color: white;
+
+        margin-bottom: 6px;
+        display: flex;
+        flex-grow: 1;
+
+        &:focus {
+            outline: none;
+            &~.shared-link--caption {
+                width: 100%;
+            }
+        }
+    }
+
+    &:after {
+        content: "";
+        // display: block;
+        position: absolute;
+        bottom: 0;
+        height: 3px;
+        width: 100%;
+        background: rgba(181, 181, 181, 0.5);
+        z-index: 1;
+    }
+
+    .shared-link--caption {
+        height: 3px;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        width: 0;
+        transition: width 300ms ease-in-out;
+        z-index: 2;
+
+        &.crunchyroll {
+            background: #f37521;
+        }
+
+        &.netflix {
+            background: #000;
+            // background: #b20710;
+        }
+
+        &.burning-series {
+            background: #00578a;
+        }
+
+        &.amazon-prime {
+            background: #fff;
+        }
+    }
+}

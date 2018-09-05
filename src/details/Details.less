@@ -1,24 +1,25 @@
 .row.details-header {
     font-family: 'Josefin Sans', serif !important;
-    h1, h2, h3 {
-        font-family: 'Josefin Sans', serif !important;
+
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    z-index: 0;
+
+    &:before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: radial-gradient(circle at 20% 50%, rgba(92, 96, 102, 0.98) 0%, rgba(22, 31, 41, 0.88) 100%);
     }
 
-    height: 600px;
-
-    & > .backdrop-wrapper {
-        height: 600px;
-        width: 100%;
-        position: absolute;
-
-        & > div {
-            height: 100%;
-            .overlay {
-                background-image: radial-gradient(circle at 20% 50%, rgba(92, 96, 102, 0.98) 0%, rgba(22, 31, 41, 0.88) 100%);
-                            // radial-gradient(circle at 20% 50%, rgba(92, 96, 102, 0.98) 0%, rgb(22, 31, 41, 0.88) 100%);
-                height: 100%;
-            }
-        }
+    h1, h2, h3 {
+        font-family: 'Josefin Sans', serif !important;
     }
 
     .container {
@@ -39,6 +40,10 @@
     small.genre-badge {
         margin-right: 5px;
         color: rgba(181, 181, 181, 0.5);
+    }
+
+    img {
+        margin: 2rem 0;
     }
 }
 
@@ -61,4 +66,57 @@
     margin-right: -15px;
     animation-name: loading;
     animation-duration: 2s;
+}
+
+button.season {
+    font-family: 'Josefin Sans', serif !important;
+    background: none;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-bottom: 3px solid rgba(181, 181, 181, 0.5);
+    border-top-right-radius: 15px;
+    padding: 7px 10px;
+    margin: 0 1px;
+    cursor: pointer;
+
+    &:hover, &.active {
+        border-bottom-color: white;
+    }
+
+    &:focus {
+        outline: none;
+        border-bottom-color: white;
+    }
+}
+
+table.details-series-table {
+    font-family: 'Josefin Sans', serif !important;
+    width: 100%;
+    border-collapse: collapse;
+    thead {
+        tr {
+            th {
+                text-align: left;
+                padding: 0.5rem 0;
+            }
+        }
+    }
+    tbody {
+        tr {
+            &:nth-of-type(odd) {
+                background-color: rgba(0,0,0,.05);
+            }
+
+            td {
+                &:last-child {
+                    text-align: right;
+                }
+            }
+
+            input[type="checkbox"] {
+                margin: 0.2rem 0;
+            }
+        }
+    }
 }

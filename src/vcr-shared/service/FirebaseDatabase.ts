@@ -29,6 +29,10 @@ export default class FirebaseDatabase {
         return this.db.ref(path).set(value)
     }
 
+    public update(path: string, value: any) {
+        return this.db.ref(path).update(value)
+    }
+
     /**
      * Reads the value of the given node and returns a promise with the value.
      *
