@@ -10,8 +10,10 @@ export default class SeriesHandler {
         if (episode.isAired()) {
             const updated = series
             const snum = episode.season - 1
-            const epnum = episode.episode - 1
-            updated.seasons[snum].episodes[epnum].watched = !updated.seasons[snum].episodes[epnum].watched
+            const epnum = updated.seasons[snum].episodes.findIndex(val => val.episode === episode.episode)
+
+            const updatedEpisode = updated.seasons[snum].episodes[epnum]
+            updatedEpisode.watched = !updatedEpisode.watched
 
             EventBus.instance.emit("updateWatchedSeries", updated)
         }

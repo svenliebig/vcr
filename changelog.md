@@ -365,3 +365,9 @@ All notable changes to this project will be documented in this file.
 ### fix
 
 - series genres was undefined
+
+## [0.9.57] - 01.10.2018
+
+### fix
+
+- Fixed an error where episodes were unable to find while ticking them
