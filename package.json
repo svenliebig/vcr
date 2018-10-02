@@ -1,6 +1,6 @@
 {
   "name": "vcr",
-  "version": "0.9.58",
+  "version": "0.9.59",
   "private": true,
   "homepage": "http://tv.slyox.de",
   "dependencies": {
@@ -8,9 +8,12 @@
     "axios": "^0.18.0",
     "firebase": "^5.4.1",
     "font-awesome": "^4.7.0",
+    "glob": "^7.1.3",
+    "glob-all": "^3.1.0",
     "html-webpack-plugin-crossorigin": "^1.0.8",
     "object-assign": "4.1.1",
     "promise": "8.0.1",
+    "purgecss-webpack-plugin": "^1.3.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",

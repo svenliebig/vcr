@@ -377,3 +377,9 @@ All notable changes to this project will be documented in this file.
 ### feat
 
 - add sentry, for continous and better bug reports
+
+## [0.9.59] - 02.10.2018
+
+### feat
+
+- purify css from unused features

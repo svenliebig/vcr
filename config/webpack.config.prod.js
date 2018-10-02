@@ -9,11 +9,13 @@ const paths = require('./paths');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const getClientEnvironment = require('./env');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const PurgecssPlugin = require('purgecss-webpack-plugin')
 
 const publicPath = paths.servedPath;
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 const publicUrl = publicPath.slice(0, -1);
 const env = getClientEnvironment(publicUrl);
+const glob = require('glob')
 
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
     throw new Error('Production builds must have NODE_ENV=production.');
@@ -186,6 +188,12 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "static/css/[name].[contenthash:8].css",
             chunkFilename: "static/css/[id].[chunkhash:8].css"
+        }),
+
+        new PurgecssPlugin({
+            paths: glob.sync(`${paths.appSrc}/**/*`, {
+                nodir: true
+            }),
         }),
         new ManifestPlugin({
             fileName: 'asset-manifest.json'
