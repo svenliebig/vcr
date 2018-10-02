@@ -371,3 +371,9 @@ All notable changes to this project will be documented in this file.
 ### fix
 
 - Fixed an error where episodes were unable to find while ticking them
+
+## [0.9.58] - 02.10.2018
+
+### feat
+
+- add sentry, for continous and better bug reports

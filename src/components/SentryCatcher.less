@@ -1,0 +1,36 @@
+.sentry-catcher-container {
+    font-family: 'Josefin Sans', serif !important;
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    img {
+        padding: 15px;
+        background: rgba(181, 181, 181, 0.5);
+        margin-bottom: 15px;
+    }
+
+    button {
+        font-family: 'Josefin Sans', serif !important;
+        margin-top: 15px;
+        background: none;
+        color: white;
+        font-size: 18px;
+        border: none;
+        border-bottom: 3px solid rgba(181, 181, 181, 0.5);
+        border-top-right-radius: 15px;
+        padding: 7px 10px;
+        margin: 0 1px;
+        cursor: pointer;
+
+        &:hover, &.active {
+            border-bottom-color: white;
+        }
+
+        &:focus {
+            outline: none;
+            border-bottom-color: white;
+        }
+    }
+}

@@ -1,12 +1,14 @@
 {
   "name": "vcr",
-  "version": "0.9.57",
+  "version": "0.9.58",
   "private": true,
   "homepage": "http://tv.slyox.de",
   "dependencies": {
+    "@sentry/browser": "^4.0.6",
     "axios": "^0.18.0",
     "firebase": "^5.4.1",
     "font-awesome": "^4.7.0",
+    "html-webpack-plugin-crossorigin": "^1.0.8",
     "object-assign": "4.1.1",
     "promise": "8.0.1",
     "react": "^16.4.2",

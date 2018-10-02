@@ -27,6 +27,7 @@ module.exports = {
     output: {
         path: paths.appBuild,
         filename: 'static/js/[name].[chunkhash:8].js',
+        crossOriginLoading: "anonymous",
         chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
         publicPath: publicPath,
         devtoolModuleFilenameTemplate: info =>

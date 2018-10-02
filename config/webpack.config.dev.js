@@ -4,6 +4,7 @@ const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPluginCrossorigin = require('html-webpack-plugin-crossorigin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 // const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 // const eslintFormatter = require('react-dev-utils/eslintFormatter');
@@ -36,6 +37,10 @@ module.exports = {
         overlay: false,
         historyApiFallback: {
             disableDotRule: true
+        },
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
         }
     },
     entry: [
@@ -48,6 +53,7 @@ module.exports = {
         pathinfo: true,
         filename: 'static/js/bundle.js',
         chunkFilename: 'static/js/[name].chunk.js',
+        crossOriginLoading: "anonymous",
         publicPath: publicPath,
         devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
@@ -194,7 +200,14 @@ module.exports = {
         // Generates an `index.html` file with the <script> injected.
         new HtmlWebpackPlugin({
             inject: true,
-            template: paths.appHtml
+            template: paths.appHtml,
+            attributes: {
+                crossorigin: 'anonymous'
+            }
+        }),
+
+        new HtmlWebpackPluginCrossorigin({
+            inject: true
         }),
         // new InterpolateHtmlPlugin(env.raw),
         // Add module names to factory functions so they appear in browser profiler.
