@@ -60,8 +60,8 @@ export default class SeriesConverter {
         series.name = firebase.name
         series.overview = firebase.overview
         series.airDate = firebase.airDate
-        series.posterUrl = firebase.posterUrl
-        series.backdropUrl = firebase.backdropUrl
+        series.posterUrl = firebase.posterUrl || ""
+        series.backdropUrl = firebase.backdropUrl || ""
         series.rating = firebase.rating
         series.votes = firebase.votes
         series.genres = firebase.genres || []
@@ -92,7 +92,6 @@ export default class SeriesConverter {
             }
 
             result.id = next.id || previous.id
-            result.bstolink = next.bstolink || previous.bstolink
             result.name = next.name || previous.name
             result.overview = next.overview || previous.overview
             result.airDate = next.airDate || previous.airDate

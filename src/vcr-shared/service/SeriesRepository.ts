@@ -1,8 +1,8 @@
-import FirebaseDatabase from "../service/FirebaseDatabase"
 import SeriesConverter from "../converter/SeriesConverter"
+import SeriesLinkModel, { SeriesLinkTypes } from "../models/SeriesLinkModel"
 import SeriesModel from "../models/SeriesModel"
-import SeriesLinkModel from "../models/SeriesLinkModel"
-import SeriesLinkConverter from "../converter/SeriesLinkConverter"
+import FirebaseDatabase from "../service/FirebaseDatabase"
+import ServiceFactory from "@utils/ServiceFactory"
 
 /**
  * Repository to communicate with the /series node in the database.
@@ -30,14 +30,36 @@ export default class SeriesRepository {
         return this.firebase.write(`/series/${id}`, links)
     }
 
-    public getSeriesLinks(id: number): Promise<Array<SeriesLinkModel>> {
+    public async getSeriesLinks(id: number): Promise<{ [T in SeriesLinkTypes]: SeriesLinkModel }> {
         return this.firebase.get(`/series/${id}`)
-            .then(val => {
-                if (val) {
-                    return SeriesLinkConverter.firebaseArrayToModelArray(val)
+            .then(async (val) => {
+                if (val && val.links) {
+                    const oldlinksKeys = Object.keys(val.links)
+                    const name = await ServiceFactory.user.getName()
+
+                    oldlinksKeys.forEach(key => {
+                        const type = key === "bsto" ? SeriesLinkTypes.BurningSeries : null
+
+                        if (type === null) {
+                            return
+                        }
+
+                        const newLink = new SeriesLinkModel(name, type, val.links[key])
+                        this.saveSeriesLink(id, newLink)
+                    })
+
+                    delete val.links
+
+                    const newModel = SeriesConverter.firebaseToModel(val)
+                    this.addSeries(newModel)
                 }
-                // TODO Load normal links and save as new links
+
+                return this.firebase.get(`/series-links/${id}`)
             })
+    }
+
+    public saveSeriesLink(id: number, seriesLink: SeriesLinkModel) {
+        this.firebase.write(`/series-links/${id}/${seriesLink.type}`, seriesLink)
     }
 
     /**
@@ -45,17 +67,11 @@ export default class SeriesRepository {
      *
      * @param {Series} series
      */
-    addSeries(series: SeriesModel) {
+    public addSeries(series: SeriesModel): Promise<void> {
         if (series === null || !series.id) {
-            throw Promise.reject("series or VALUE is not defined.")
+            throw ("series or VALUE is not defined.")
         }
-
-        return this.getLinksOfSeries(series.id).then((links) => {
-            if (links) {
-                (series as any).links = links
-            }
-            return this.firebase.write(`/series/${series.id}`, series)
-        })
+        return this.firebase.write(`/series/${series.id}`, series)
     }
 
     /**
@@ -64,7 +80,7 @@ export default class SeriesRepository {
      * @param {number} id
      * @returns {Promise<>}
      */
-    removeSeries(id: number) {
+    public removeSeries(id: number): Promise<void> {
         return this.firebase.remove(`/series/${id}`)
     }
 
@@ -74,6 +90,7 @@ export default class SeriesRepository {
      * @param {number} id series id
      * @param {string} link link type
      * @param {string} val the url of the link
+     * @deprecated
      */
     saveLinkToSeries(id: number, type: string, val: any) {
         return this.firebase.write(`/series/${id}/links/${type}`, val)
@@ -83,6 +100,7 @@ export default class SeriesRepository {
      * Returns all links that are save on a series within a promise.
      *
      * @param {*} id Id of the series
+     * @deprecated use getSeriesLinks in future
      */
     getLinksOfSeries(id: number) {
         return this.firebase.get(`/series/${id}/links`).then(val => Promise.resolve(val))

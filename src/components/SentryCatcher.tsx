@@ -2,6 +2,7 @@ import * as React from "react"
 import * as Sentry from "@sentry/browser"
 
 import "./SentryCatcher.less"
+import environment from "@environment/environment"
 
 export interface Props {
     children: React.ReactNode
@@ -19,13 +20,15 @@ export default class SentryCatcher extends React.Component<Props, State> {
 
     componentDidCatch(error: any, errorInfo: any) {
         this.setState({ error })
-        console.debug(`i did catch`)
         Sentry.configureScope(scope => {
             Object.keys(errorInfo).forEach(key => {
                 scope.setExtra(key, errorInfo[key])
             })
         })
-        Sentry.captureException(error)
+
+        if (environment.production) {
+            Sentry.captureException(error)
+        }
     }
 
     render() {

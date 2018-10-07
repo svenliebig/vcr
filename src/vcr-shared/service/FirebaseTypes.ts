@@ -36,7 +36,6 @@ export type SeriesFirebase = {
      */
     airDate: string,
     backdropUrl: string,
-    bstolink: string,
     country: Array<string>,
     createdBy: Array<{
         credit_id: string,

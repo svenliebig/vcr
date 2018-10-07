@@ -66,6 +66,13 @@ describe("SeriesRepository", () => {
         })
     })
 
+    describe(`getSeriesLinks(id: number): Promise<Array<SeriesLinkModel>>`, () => {
+        beforeEach(() => {
+            const series = new SeriesModel(99999999)
+            repo.addSeries(series)
+        })
+    })
+
     afterAll(() => {
         (repo as any).firebase.db.goOffline()
     })
