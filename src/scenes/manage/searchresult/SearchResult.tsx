@@ -57,6 +57,7 @@ export default class SearchResult extends Component<Props, State> {
 
     render() {
         const { series } = this.props
+        const firstAirDate = series.first_air_date.length > 0 ? TimeUtil.formatDateString(series.first_air_date) : "n/a"
 
         return (
             <div className="series-result">
@@ -64,7 +65,7 @@ export default class SearchResult extends Component<Props, State> {
                 <div className="series-title-wrapper">
                     <div className="series-title">{series.name}</div>
                 </div>
-                <div className="airing">{TimeUtil.formatDateString(series.first_air_date)}</div>
+                <div className="airing">{firstAirDate}</div>
                 <div className="actions">
                     {this.actions}
                 </div>
