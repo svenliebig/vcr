@@ -9,7 +9,7 @@ import SeriesLinkModel, { SeriesLinkTypes } from "vcr-shared/models/SeriesLinkMo
 import UserRepository from "vcr-shared/service/UserRepository"
 import { Routes } from "../Router"
 import Store from "../Store"
-import DetailsView, { DispatchProps, OwnProps, StateProps } from "./DetailsView"
+import DetailsView, { DispatchProps, OwnProps, StateProps, } from "./DetailsView"
 
 const mapStateToProps: MapStateToProps<StateProps, {}, RootState> = (state: RootState): StateProps => ({
     series: state.DetailsReducer.series,
