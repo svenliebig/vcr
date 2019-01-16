@@ -22,7 +22,6 @@ export default class SeriesModel {
     public status: string
     public createdBy: Array<SeriesCreatedByResponse>
     public episodeDuration: Array<number>
-    public bstolink: string
     public seasonsCount: number
     public isCompletlyWatched: boolean = false
 
@@ -53,7 +52,6 @@ export default class SeriesModel {
         this.status = ""
         this.createdBy = []
         this.episodeDuration = []
-        this.bstolink = ""
         this.seasonsCount = seasonsCount
         this.backdropUrl = ""
     }

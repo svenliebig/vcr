@@ -6,7 +6,6 @@ import Login from "@scenes/login/Login"
 import Manage from "@scenes/manage/Manage"
 import Skeleton from "@scenes/skeleton/Skeleton"
 import Statistic from "@scenes/statistic/Statistic"
-import View from "@scenes/view/View"
 import ServiceFactory from "@utils/ServiceFactory"
 import React, { Component, ComponentType } from "react"
 import { render } from "react-dom"
@@ -30,7 +29,6 @@ export default class Router extends Component {
             this.routesArray = [
                 { path: "/", component: Board },
                 { path: "/manage", component: Manage },
-                { path: "/view/:id", component: View },
                 { path: "/details/:id", component: DetailsContainer },
                 { path: "/statistics", component: Statistic },
                 { path: "/compare/:username", component: Compare }

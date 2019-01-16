@@ -10,23 +10,26 @@ import { Routes } from "../Router"
 import SuggestionWidget from "@scenes/view/SuggestionWidget"
 import { EpisodeModel } from "vcr-shared"
 import SeasonTable from "@details/SeasonTable"
-import { SeriesLinkTypes } from "vcr-shared/models/SeriesLinkModel"
+import SeriesLinkModel, { SeriesLinkTypes } from "vcr-shared/models/SeriesLinkModel"
 
 export interface OwnProps extends RouteComponentProps<{ id: number }> {
-    children?: React.ReactNode
 }
 
 export interface StateProps {
     series: SeriesModel | null,
     selectedSeason: number
+    seriesLinks: { [T in SeriesLinkTypes]: SeriesLinkModel }
 }
 
 export interface DispatchProps {
+    resetState(): void
     loadSeries(id: number): void
+    loadLinks(id: number): void
     changeSeason(seasonNumber: number): void
     toggleEpisode(episode: EpisodeModel): void
     toggleSeason(season: SeasonModel): void
     delete(series: SeriesModel): void
+    handleSharedLinkInput(type: SeriesLinkTypes, value: string): void
 }
 
 export type Props = OwnProps & DispatchProps & StateProps
@@ -43,7 +46,13 @@ export default class DetailsView extends Component<Props, State> {
             selectedSeason: 0
         }
 
-        props.loadSeries(props.match.params.id)
+        const { match: { params: { id }}, loadSeries, loadLinks} = props
+        loadSeries(id)
+        loadLinks(id)
+    }
+
+    componentWillUnmount() {
+        this.props.resetState()
     }
 
     public render() {
@@ -102,7 +111,14 @@ export default class DetailsView extends Component<Props, State> {
                     <div className="col col-12 col-lg-4 order-0">
                         <section>
                             <h2>Links</h2>
-                            {Object.keys(SeriesLinkTypes).map((type: any) => <SharedLinkInput type={SeriesLinkTypes[type]} />)}
+                            {Object.keys(SeriesLinkTypes).map((type: any) => {
+                                return <SharedLinkInput
+                                    key={type}
+                                    value={this.props.seriesLinks[SeriesLinkTypes[type] as SeriesLinkTypes].link}
+                                    type={SeriesLinkTypes[type]}
+                                    onChange={this.props.handleSharedLinkInput}
+                                />
+                            })}
                         </section>
                         <section>
                             <h2>Teilen</h2>
