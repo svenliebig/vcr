@@ -11,25 +11,25 @@
 	margin-bottom: 10px;
     position: relative;
 	overflow: hidden;
+	display: flex;
 
-	.bs-link, .otaku-link {
+	.link-container {
 		position: absolute;
-		z-index: 10;
-		color: @text-color-1;
-		background-color: rgba(66,66,66,.7);
-		width: 21px;
-		height: 25px;
-		top: -6px;
+		top: 0;
 		left: 0;
-		padding-left: 3px;
-		text-decoration: none;
-	}
-
-	.otaku-link {
-		left: 26px
+		z-index: 1;
+		& > a > img {
+			transition: opacity 0.2s ease-out;
+			opacity: 0.5;
+			&:hover {
+				opacity: 1;
+			}
+		}
 	}
 
     .card {
+		flex-grow: 1;
+
         .seasons-wrapper {
             display: inline-block;
             height: 110px;

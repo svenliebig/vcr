@@ -1,4 +1,4 @@
-import { changeSeason, loadSeries, loadSeriesComplete, loadLinksComplete, changeLink } from "@details/DetailsAction"
+import { changeSeason, loadSeries, loadSeriesComplete, loadLinksComplete, changeLink, resetState } from "@details/DetailsAction"
 import SeriesHandler from "@service/SeriesHandler"
 import ServiceFactory from "@utils/ServiceFactory"
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from "react-redux"
@@ -31,6 +31,9 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, OwnProps> = 
     },
     changeSeason: (seasonNumber: number) => {
         dispatch(changeSeason(seasonNumber))
+    },
+    resetState: () => {
+        dispatch(resetState())
     },
     toggleEpisode: (episodeObject: EpisodeModel) => {
         if (episodeObject.isAired()) {

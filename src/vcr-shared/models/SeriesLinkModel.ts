@@ -1,8 +1,8 @@
 export enum SeriesLinkTypes {
     Crunchyroll = "crunchyroll",
     Netflix = "netflix",
-    BurningSeries = "burning-series",
-    AmazonPrime = "amazon-prime"
+    BurningSeries = "burningseries",
+    AmazonPrime = "amazonprime"
 }
 
 export default class SeriesLinkModel {

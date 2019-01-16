@@ -22,6 +22,7 @@ export interface StateProps {
 }
 
 export interface DispatchProps {
+    resetState(): void
     loadSeries(id: number): void
     loadLinks(id: number): void
     changeSeason(seasonNumber: number): void
@@ -45,8 +46,13 @@ export default class DetailsView extends Component<Props, State> {
             selectedSeason: 0
         }
 
-        props.loadSeries(props.match.params.id)
-        props.loadLinks(props.match.params.id)
+        const { match: { params: { id }}, loadSeries, loadLinks} = props
+        loadSeries(id)
+        loadLinks(id)
+    }
+
+    componentWillUnmount() {
+        this.props.resetState()
     }
 
     public render() {

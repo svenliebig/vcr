@@ -15,8 +15,8 @@ const initialState = (): DetailsState => ({
     series: null,
     selectedSeason: 0,
     seriesLinks: {
-        "amazon-prime": new SeriesLinkModel("system", SeriesLinkTypes.AmazonPrime, ""),
-        "burning-series": new SeriesLinkModel("system", SeriesLinkTypes.BurningSeries, ""),
+        amazonprime: new SeriesLinkModel("system", SeriesLinkTypes.AmazonPrime, ""),
+        burningseries: new SeriesLinkModel("system", SeriesLinkTypes.BurningSeries, ""),
         crunchyroll: new SeriesLinkModel("system", SeriesLinkTypes.Crunchyroll, ""),
         netflix: new SeriesLinkModel("system", SeriesLinkTypes.Netflix, "")
     }
@@ -26,6 +26,8 @@ const DetailsReducer = (state = initialState(), action: DetailsActionsType): Det
     switch (action.type) {
         case getType(DetailsActions.loadSeries):
             return { ...state }
+        case getType(DetailsActions.resetState):
+            return { ...initialState() }
         case getType(DetailsActions.loadSeriesComplete):
             return { ...state, series: action.payload }
         case getType(DetailsActions.loadLinksComplete):

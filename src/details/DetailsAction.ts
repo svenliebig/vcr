@@ -7,10 +7,13 @@ export enum DetailsAction {
     LoadSeriesComplete = "DetailsAction/LoadSeriesComplete",
     LoadLinksComplete = "DetailsAction/LoadLinksComplete",
     ChangeLink = "DetailsAction/ChangeLink",
-    ChangeSeason = "DetailsAction/ChangeSeason"
+    ChangeSeason = "DetailsAction/ChangeSeason",
+    ResetState = "DetailsAction/ResetState"
 }
 
 export const loadSeries = createAction(DetailsAction.LoadSeries)
+
+export const resetState = createAction(DetailsAction.ResetState)
 
 export const loadSeriesComplete = createAction(DetailsAction.LoadSeriesComplete, resolve => {
     // tslint:disable-next-line:no-unnecessary-callback-wrapper
@@ -34,7 +37,7 @@ export const changeSeason = createAction(DetailsAction.ChangeSeason, resolve => 
 
 const DetailsActions = {
     loadSeries, loadSeriesComplete, changeSeason, loadLinksComplete,
-    changeLink
+    changeLink, resetState
 }
 
 export default DetailsActions

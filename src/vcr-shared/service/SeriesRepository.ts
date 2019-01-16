@@ -33,6 +33,7 @@ export default class SeriesRepository {
     public async getSeriesLinks(id: number): Promise<{ [T in SeriesLinkTypes]: SeriesLinkModel }> {
         return this.firebase.get(`/series/${id}`)
             .then(async (val) => {
+                // übergangscode
                 if (val && val.links) {
                     const oldlinksKeys = Object.keys(val.links)
                     const name = await ServiceFactory.user.getName()
@@ -49,6 +50,9 @@ export default class SeriesRepository {
                     })
 
                     delete val.links
+                    if (val.bstolink) {   
+                        delete val.bstolink
+                    }
 
                     const newModel = SeriesConverter.firebaseToModel(val)
                     this.addSeries(newModel)
@@ -103,7 +107,7 @@ export default class SeriesRepository {
      * @deprecated use getSeriesLinks in future
      */
     getLinksOfSeries(id: number) {
-        return this.firebase.get(`/series/${id}/links`).then(val => Promise.resolve(val))
+        return this.getSeriesLinks(id)
     }
 
     exception(str: string) {

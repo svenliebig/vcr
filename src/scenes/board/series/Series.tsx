@@ -1,22 +1,16 @@
-import React from "react"
-
-// Service
-import EventBus from "@service/EventBus/EventBus"
-
-// Model
-import SeriesModel from "vcr-shared/models/SeriesModel"
-
-// Components
 import AbstractSeries, { State as AbstractSeriesState } from "@components/abstract/AbstractSeries"
-import SeriesCard from "@components/SeriesCard/SeriesCard"
 import Episode from "@components/Episode/Episode"
+import SeriesCard from "@components/SeriesCard/SeriesCard"
 import Tooltip from "@components/Tooltip"
-
+import EventBus from "@service/EventBus/EventBus"
+import SeriesHandler from "@service/SeriesHandler"
+import React from "react"
 import EpisodeModel from "vcr-shared/models/EpisodeModel"
 import SeasonModel from "vcr-shared/models/SeasonModel"
-import SeriesHandler from "@service/SeriesHandler"
-
+import SeriesLinkModel, { SeriesLinkTypes } from "vcr-shared/models/SeriesLinkModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
 import "./Series.less"
+import SeriesLinks from "./SeriesLinks"
 
 export interface Props {
     series: SeriesModel
@@ -25,8 +19,7 @@ export interface Props {
 export interface State extends AbstractSeriesState {
     activeSeason: number
     series: SeriesModel
-    bsto: string
-    otaku: string
+    links: { [T in SeriesLinkTypes]?: SeriesLinkModel }
 }
 
 /**
@@ -44,24 +37,19 @@ export default class Series extends AbstractSeries<Props, State> {
         this.state = {
             activeSeason: 0,
             series: props.series,
-            bsto: "",
-            otaku: ""
+            links: {}
         }
 
         this.getActiveSeason = this.getActiveSeason.bind(this)
         this.incrementActiveSeason = this.incrementActiveSeason.bind(this)
         this.decrementActiveSeason = this.decrementActiveSeason.bind(this)
-        this.createSeriesLink = this.createSeriesLink.bind(this)
         this.seasonScroll = this.seasonScroll.bind(this)
     }
 
     componentDidMount() {
-        EventBus.instance.emit("getLinksOfSeries", this.props.series.id).then((links: { otaku: string, bsto: string }) => {
+        EventBus.instance.emit("getLinksOfSeries", this.props.series.id).then((links: { [T in SeriesLinkTypes]: SeriesLinkModel }) => {
             if (links) {
-                this.setState({
-                    otaku: links.otaku || "",
-                    bsto: links.bsto || (this.state.bsto || "")
-                })
+                this.setState({ links })
             }
         })
 
@@ -126,14 +114,6 @@ export default class Series extends AbstractSeries<Props, State> {
         }
     }
 
-    createSeriesLink() {
-        if (this.state.bsto.match(/https:\/\/bs\.to\/serie/)) {
-            return `${this.state.bsto}/${this.state.activeSeason}`
-        } else {
-            return `${this.state.bsto}`
-        }
-    }
-
     render() {
         const createEpisodes = (episode: EpisodeModel, index: number) => {
             return <Episode key={index} episode={episode} onClick={() => this.setState({ series: SeriesHandler.toggleEpisode(this.state.series, episode) })} />
@@ -192,8 +172,9 @@ export default class Series extends AbstractSeries<Props, State> {
 
         return (
             <div className="series-card-wrapper">
-                <SeriesCard series={this.state.series} bannerLink={`/view/${this.state.series.id}`}>
-                    {
+                <SeriesLinks links={this.state.links} />
+                <SeriesCard series={this.state.series} bannerLink={`/details/${this.state.series.id}`}>
+                    {/* {
                         this.state.bsto ?
                             <a className="bs-link" href={this.createSeriesLink()} target="_blank">bs</a>
                             : ""
@@ -202,7 +183,7 @@ export default class Series extends AbstractSeries<Props, State> {
                         this.state.otaku ?
                             <a className="otaku-link" href={this.state.otaku} target="_blank">otk</a>
                             : ""
-                    }
+                    } */}
                     <Tooltip text="Alle Folgen der Serie als gesehen markieren">
                         <button className="fa fa-eye"
                             style={{ position: "absolute", left: 270, bottom: 11, zIndex: 9, background: "none", color: "inherit", border: "none", outline: "none", cursor: "pointer" }}
