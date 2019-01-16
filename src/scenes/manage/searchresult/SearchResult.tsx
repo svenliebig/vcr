@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import "./SearchResult.less"
 import TimeUtil from "@service/TimeUtil"
 import Button from "@components/button/Button"
+import { Routes } from "../../../Router"
 
 export interface Props {
     series: SeriesByNameSeriesResponse
@@ -82,7 +83,7 @@ export default class SearchResult extends Component<Props, State> {
             return <Fragment>
                 <Button onClick={this.addSeries} icon="fa fa-refresh" />
                 <Button onClick={this.removeSeries} icon="fa fa-trash" />
-                <Link to={`/view/${this.props.series.id}`}><span className="fa fa-tv" /></Link>
+                <Link to={`${Routes.Details}/${this.props.series.id}`}><span className="fa fa-tv" /></Link>
             </Fragment>
         }
         return <Button onClick={this.addSeries} icon="fa fa-plus" />

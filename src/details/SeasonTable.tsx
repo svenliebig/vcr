@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { SeasonModel, EpisodeModel } from "vcr-shared"
 import TimeUtil from "@service/TimeUtil"
-
+import "./SeasonTable.less"
 export interface OwnProps {
     children?: React.ReactNode
 }
@@ -18,13 +18,6 @@ export interface DispatchProps {
 export type Props = OwnProps & DispatchProps & StateProps
 
 export default class SeasonTable extends Component<Props> {
-    constructor(props: Props) {
-        super(props)
-
-        this.state = {
-        }
-    }
-
     render() {
         const { season, toggleEpisode, toggleSeason } = this.props
         return <table className="details-series-table">
@@ -38,7 +31,7 @@ export default class SeasonTable extends Component<Props> {
             <tbody>
                 {season.episodes.map(episode => <tr key={episode.episode}>
                     <td>
-                        <input type="checkbox" checked={episode.watched} onChange={(() => toggleEpisode(episode))} />
+                        {episode.isAired() ? <input type="checkbox" checked={episode.watched} onChange={() => toggleEpisode(episode)} /> : <span className="fa fa-clock-o" />}
                     </td>
                     <td>{episode.episode}</td>
                     <td>{episode.name}</td>

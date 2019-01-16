@@ -13,6 +13,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 
 export enum Routes {
     Board = "/",
+    Details = "/details"
 }
 export default class Router extends Component {
     private routesArray: Array<{ path: string, component: ComponentType<any> }> = []

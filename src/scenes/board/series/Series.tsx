@@ -9,6 +9,7 @@ import EpisodeModel from "vcr-shared/models/EpisodeModel"
 import SeasonModel from "vcr-shared/models/SeasonModel"
 import SeriesLinkModel, { SeriesLinkTypes } from "vcr-shared/models/SeriesLinkModel"
 import SeriesModel from "vcr-shared/models/SeriesModel"
+import { Routes } from "../../../Router"
 import "./Series.less"
 import SeriesLinks from "./SeriesLinks"
 
@@ -173,17 +174,7 @@ export default class Series extends AbstractSeries<Props, State> {
         return (
             <div className="series-card-wrapper">
                 <SeriesLinks links={this.state.links} />
-                <SeriesCard series={this.state.series} bannerLink={`/details/${this.state.series.id}`}>
-                    {/* {
-                        this.state.bsto ?
-                            <a className="bs-link" href={this.createSeriesLink()} target="_blank">bs</a>
-                            : ""
-                    }
-                    {
-                        this.state.otaku ?
-                            <a className="otaku-link" href={this.state.otaku} target="_blank">otk</a>
-                            : ""
-                    } */}
+                <SeriesCard series={this.state.series} bannerLink={`${Routes.Details}/${this.state.series.id}`}>
                     <Tooltip text="Alle Folgen der Serie als gesehen markieren">
                         <button className="fa fa-eye"
                             style={{ position: "absolute", left: 270, bottom: 11, zIndex: 9, background: "none", color: "inherit", border: "none", outline: "none", cursor: "pointer" }}
