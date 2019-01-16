@@ -14,7 +14,7 @@ export default class TimeUtil {
 
     public static formatDateString(date: string) {
         const dateArray = date.split("-").map(e => parseInt(e, 10))
-        return `${dateArray[2]}.${dateArray[1] + 1}.${dateArray[0]}`
+        return `${dateArray[2]}.${dateArray[1]}.${dateArray[0]}`
     }
 
     public static getYear(date: string) {
