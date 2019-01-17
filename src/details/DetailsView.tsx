@@ -1,16 +1,16 @@
-import React, { Component, ReactNode } from "react"
-import SeriesModel from "vcr-shared/models/SeriesModel"
-import { RouteComponentProps, Link } from "react-router-dom"
-
-import "./Details.less"
-import TimeUtil from "@service/TimeUtil"
 import SharedLinkInput from "@components/SharedLinkInput"
-import SeasonModel from "vcr-shared/models/SeasonModel"
-import { Routes } from "../Router"
-import SuggestionWidget from "@scenes/view/SuggestionWidget"
-import { EpisodeModel } from "vcr-shared"
+import Tooltip from "@components/Tooltip"
 import SeasonTable from "@details/SeasonTable"
+import SuggestionWidget from "@scenes/view/SuggestionWidget"
+import TimeUtil from "@service/TimeUtil"
+import React, { Component, ReactNode } from "react"
+import { Link, RouteComponentProps } from "react-router-dom"
+import { EpisodeModel } from "vcr-shared"
+import SeasonModel from "vcr-shared/models/SeasonModel"
 import SeriesLinkModel, { SeriesLinkTypes } from "vcr-shared/models/SeriesLinkModel"
+import SeriesModel from "vcr-shared/models/SeriesModel"
+import { Routes } from "../Router"
+import "./Details.less"
 
 export interface OwnProps extends RouteComponentProps<{ id: number }> {
 }
@@ -28,7 +28,7 @@ export interface DispatchProps {
     changeSeason(seasonNumber: number): void
     toggleEpisode(episode: EpisodeModel): void
     toggleSeason(season: SeasonModel): void
-    delete(series: SeriesModel): void
+    deleteSeries(id: number): void
     handleSharedLinkInput(type: SeriesLinkTypes, value: string): void
 }
 
@@ -38,13 +38,18 @@ export interface State {
     selectedSeason: number
 }
 
+const TextButton = ({ icon, children, active, className }: { icon: string, children: React.ReactNode, active?: boolean, className?: string}) => <button className={`text-btn${active ? " active" : ""} ${className || ""}`}>
+    <span className={`fa fa-${icon}`} />
+    <span className="text-btn-innertext">{children}</span>
+</button>
+
 export default class DetailsView extends Component<Props, State> {
+    state: State = {
+        selectedSeason: 0
+    }
+
     constructor(props: Props) {
         super(props)
-
-        this.state = {
-            selectedSeason: 0
-        }
 
         const { match: { params: { id }}, loadSeries, loadLinks} = props
         loadSeries(id)
@@ -64,14 +69,21 @@ export default class DetailsView extends Component<Props, State> {
     }
 
     private renderSeries(series: SeriesModel) {
-        const { selectedSeason, changeSeason } = this.props
+        const { selectedSeason, changeSeason, deleteSeries } = this.props
         return <>
             <div className="row details-header" style={{ backgroundImage: `url(${ImageUrlService.createBackdrop(series, SeriesImageSizes.LargeFaceBackdrop)})` }}>
                 <div className="container">
                     <div className="row align-items-lg-center align-items-baseline">
                         <div className="col col-12 d-flex justify-content-between mt-1">
                             <Link to={Routes.Board}>Zurück</Link>
-                            <Link to={Routes.Board}>Delete</Link>
+                            <Tooltip text="Priorität festlegen, die Serie wird dementsprechend weiter unter oder oben in der Übersicht eingeordnet">
+                                <div>
+                                    <TextButton icon="thumbs-down">Niedrig</TextButton>
+                                    <TextButton className="mx-2" icon="television" active>Normal</TextButton>
+                                    <TextButton icon="diamond">Hoch</TextButton>
+                                </div>
+                            </Tooltip>
+                            <a href="#" onClick={() => deleteSeries(series.id)}>Löschen</a>
                         </div>
                         <div className="col d-none d-lg-flex col-4">
                             <SeriesImage size={SeriesImageSizes.Width300} imagePath={series.posterUrl} />

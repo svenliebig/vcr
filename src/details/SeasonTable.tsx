@@ -24,7 +24,7 @@ export default class SeasonTable extends Component<Props> {
             <thead>
                 <tr>
                     <th colSpan={4}>
-                        <button onClick={() => toggleSeason(season)}>Toggle Staffel {season.seasonNumber}</button>
+                        <button onClick={() => toggleSeason(season)}>Staffel {season.seasonNumber} als {season.isNotWatchedAndAired() ? "" : "un"}gesehen markieren</button>
                     </th>
                 </tr>
             </thead>

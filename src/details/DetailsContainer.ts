@@ -1,15 +1,15 @@
-import { changeSeason, loadSeries, loadSeriesComplete, loadLinksComplete, changeLink, resetState } from "@details/DetailsAction"
+import { changeLink, changeSeason, loadLinksComplete, loadSeries, loadSeriesComplete, resetState } from "@details/DetailsAction"
 import SeriesHandler from "@service/SeriesHandler"
 import ServiceFactory from "@utils/ServiceFactory"
 import { connect, MapDispatchToPropsFunction, MapStateToProps } from "react-redux"
 import { Dispatch } from "redux"
 import { RootState } from "RootReducer"
-import { EpisodeModel, SeasonModel, SeriesConverter, SeriesModel } from "vcr-shared"
+import { EpisodeModel, SeasonModel, SeriesConverter } from "vcr-shared"
 import SeriesLinkModel, { SeriesLinkTypes } from "vcr-shared/models/SeriesLinkModel"
 import UserRepository from "vcr-shared/service/UserRepository"
 import { Routes } from "../Router"
 import Store from "../Store"
-import DetailsView, { DispatchProps, OwnProps, StateProps, } from "./DetailsView"
+import DetailsView, { DispatchProps, OwnProps, StateProps } from "./DetailsView"
 
 const mapStateToProps: MapStateToProps<StateProps, {}, RootState> = (state: RootState): StateProps => ({
     series: state.DetailsReducer.series,
@@ -54,8 +54,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, OwnProps> = 
         SeriesHandler.toggleSeasonNew(series, season)
             .then(updated => dispatch(loadSeriesComplete(updated)))
     },
-    delete: (series: SeriesModel) => {
-        UserRepository.instance.removeSeries(series.id)
+    deleteSeries: (id: number) => {
+        UserRepository.instance.removeSeries(id)
             .then(() => ownProps.history.push(Routes.Board))
     },
     handleSharedLinkInput: (type: SeriesLinkTypes, value: string) => {
