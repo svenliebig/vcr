@@ -1,7 +1,6 @@
 /** React Imports */
 import environment from "@environment/environment"
 import EventBus from "@service/EventBus/EventBus"
-import Message from "@service/Message/Message"
 import ServiceFactory from "@utils/ServiceFactory"
 import "firebase/auth"
 import "firebase/database"
@@ -24,7 +23,7 @@ export default class EventHandler extends Component<Props> {
     private userRepository = new UserRepository(ServiceFactory.database, ServiceFactory.auth)
     private seriesRepository = new SeriesRepository(ServiceFactory.database)
     private seriesApi = new SeriesapiService(environment.themoviedb)
-    private message = new Message()
+    private message = ServiceFactory.message
 
     /**
 	 * Creates an instance of EventHandler.
@@ -50,8 +49,6 @@ export default class EventHandler extends Component<Props> {
         }))
 
         // Messages
-        EventBus.instance.register("getMessages", () => this.userRepository.getName().then(name => this.message.getMessages(name)))
-        EventBus.instance.register("clearMessage", clear => this.message.clearMessage(clear))
         EventBus.instance.register("writeMessage", (id, to) =>
             this.userRepository.getName().then(from =>
                 this.message.writeMessage(id, from, to)))

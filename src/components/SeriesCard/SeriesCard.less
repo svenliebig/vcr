@@ -35,3 +35,38 @@
 		margin: 0 10px 0px 10px;
 	}
 }
+
+.message-card {
+	.white-text();
+	font-family: 'Josefin Sans', serif !important;
+	width: 100%;
+	height: 160px;
+	position: relative;
+    overflow: hidden;
+
+	img {
+		width: 100%;
+		float: left;
+	}
+
+	.title-wrapper {
+		background-color: @text-color-1-background;
+		bottom: 0px;
+		padding: 0.5rem;
+		width: 100%;
+		position: absolute;
+		overflow: hidden;
+		z-index: 6;
+	}
+
+	.actions {
+		width: 100%;
+		padding: 0.5rem;
+		background-color: @text-color-1-background;
+		position: absolute;
+	}
+
+	h4 {
+		font-size: 22px;
+	}
+}

@@ -1,12 +1,12 @@
 import SeriesCard from "@components/SeriesCard/SeriesCard"
 import EventBus from "@service/EventBus/EventBus"
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import { RouteComponentProps } from "react-router"
 import SeriesConverter from "vcr-shared/converter/SeriesConverter"
 import SeriesModel from "vcr-shared/models/SeriesModel"
+import { SeriesFirebase } from "vcr-shared/service/FirebaseTypes"
 import { UserRepositoryResponse } from "vcr-shared/service/UserRepository"
 import "./Compare.less"
-import { SeriesFirebase } from "vcr-shared/service/FirebaseTypes"
 
 export interface State {
     yours: Array<SeriesFirebase>
@@ -53,21 +53,21 @@ export default class Compare extends Component<Props, State> {
     }
 
     private renderBoth() {
-        return <Fragment>
+        return <>
             <div className="header">{this.state.other!.name} {"&"} du:</div>
             <div className="content">
                 {this.state.both.map(val => <SeriesCard key={val.name} series={SeriesConverter.firebaseToModel(val)} />)}
             </div>
-        </Fragment>
+        </>
     }
 
     private renderYou() {
-        return <Fragment>
+        return <>
             <div className="header">Du:</div>
             <div className="content">
                 {this.state.onlyyou.map(val => <SeriesCard key={val.name} series={SeriesConverter.firebaseToModel(val)} />)}
             </div>
-        </Fragment>
+        </>
     }
 
     private renderHim() {

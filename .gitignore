@@ -28,6 +28,4 @@ yarn-debug.log*
 yarn-error.log*
 **/*.css
 
-yarn.lock
-package-json.lock
 junit.xml

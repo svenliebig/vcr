@@ -20,22 +20,14 @@ export interface Props {
  * @extends {Component}
  */
 export default class SeriesCard extends Component<Props> {
-    constructor(props: Props) {
-        super(props)
-
-        this.state = {
-            props
-        }
-    }
-
     render() {
-        const { series } = this.props
+        const { series, bannerLink, children } = this.props
         const remainingWatchtime = series.totalMinutesNotWatched()
 
         return (
             <div className="card">
-                {this.props.bannerLink ?
-                    <Link className="banner-wrapper" to={this.props.bannerLink}>
+                {bannerLink ?
+                    <Link className="banner-wrapper" to={bannerLink}>
                         <div className="image-overlay" />
                         <img src={this.getImageSrc(series)} alt="" />
                     </Link>
@@ -47,7 +39,7 @@ export default class SeriesCard extends Component<Props> {
                         <div className="card-title">{series.name}</div>
                     </Tooltip>
                 </div>
-                {this.props.children}
+                {children}
             </div>
         )
     }

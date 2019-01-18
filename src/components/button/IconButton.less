@@ -1,0 +1,15 @@
+@import "../../../src/resources/default.less";
+@import "../../../src/resources/definitions.less";
+
+button.icon-button {
+	background: transparent;
+	color: @icon-color;
+	border: none;
+
+	cursor: pointer; // TODO investigating why i need to put this on a fucking default html button
+
+	transition: @icon-color-transition;
+	&:hover {
+		color: @icon-color-hover;
+	}
+}

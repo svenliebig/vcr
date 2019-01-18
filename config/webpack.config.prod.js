@@ -191,7 +191,8 @@ module.exports = {
         }),
         new PurgecssPlugin({
             paths: glob.sync(`${paths.appSrc}/**/*`, {
-                nodir: true
+                nodir: true,
+                whitelist: ["fa-thumbs-down", "fa-television", "fa-diamond"]
             }),
         }),
         new ManifestPlugin({

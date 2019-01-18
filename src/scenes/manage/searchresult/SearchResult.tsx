@@ -1,6 +1,6 @@
 import { SeriesByNameSeriesResponse } from "vcr-shared/service/Moviedb"
 import EventBus from "@service/EventBus/EventBus"
-import React, { Component, Fragment, ReactNode } from "react"
+import React, { Component, ReactNode } from "react"
 import { Link } from "react-router-dom"
 import "./SearchResult.less"
 import TimeUtil from "@service/TimeUtil"
@@ -80,11 +80,11 @@ export default class SearchResult extends Component<Props, State> {
             return null
         }
         if (this.state.hasSeries) {
-            return <Fragment>
+            return <>
                 <Button onClick={this.addSeries} icon="fa fa-refresh" />
                 <Button onClick={this.removeSeries} icon="fa fa-trash" />
                 <Link to={`${Routes.Details}/${this.props.series.id}`}><span className="fa fa-tv" /></Link>
-            </Fragment>
+            </>
         }
         return <Button onClick={this.addSeries} icon="fa fa-plus" />
     }

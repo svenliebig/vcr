@@ -7,7 +7,7 @@ import Manage from "@scenes/manage/Manage"
 import Skeleton from "@scenes/skeleton/Skeleton"
 import Statistic from "@scenes/statistic/Statistic"
 import ServiceFactory from "@utils/ServiceFactory"
-import React, { Component, ComponentType } from "react"
+import React, { Component } from "react"
 import { render } from "react-dom"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 
@@ -16,7 +16,7 @@ export enum Routes {
     Details = "/details"
 }
 export default class Router extends Component {
-    private routesArray: Array<{ path: string, component: ComponentType<any> }> = []
+    private routesArray: Array<{ path: string, component: any }> = []
     private loggedIn: boolean
     private auth = ServiceFactory.auth
 
