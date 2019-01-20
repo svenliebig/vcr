@@ -56,7 +56,6 @@ export default class SeriesRepository {
                     }
 
                     const newModel = SeriesConverter.firebaseToModel(val)
-                    console.debug(`newModel`, newModel)
                     await this.addSeries(newModel)
                 }
 
