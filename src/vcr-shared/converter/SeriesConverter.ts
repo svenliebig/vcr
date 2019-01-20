@@ -71,7 +71,7 @@ export default class SeriesConverter {
         series.episodeDuration = firebase.episodeDuration || []
         series.seasons = firebase.seasons ? firebase.seasons.map(SeasonConverter.firebaseToModel) : []
         series.seasonsCount = firebase.seasonsCount || (firebase.seasons && firebase.seasons.length) || 0
-        series.isCompletlyWatched = firebase.isCompletlyWatched
+        series.isCompletlyWatched = firebase.isCompletlyWatched || false
         return series
     }
 

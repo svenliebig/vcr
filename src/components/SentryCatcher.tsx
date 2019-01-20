@@ -19,15 +19,20 @@ export default class SentryCatcher extends React.Component<Props, State> {
     }
 
     componentDidCatch(error: any, errorInfo: any) {
-        this.setState({ error })
-        Sentry.configureScope(scope => {
-            Object.keys(errorInfo).forEach(key => {
-                scope.setExtra(key, errorInfo[key])
-            })
-        })
+        if (process.env.NODE_ENV === "production") {
 
-        if (environment.production) {
-            Sentry.captureException(error)
+            this.setState({ error })
+            Sentry.configureScope(scope => {
+                Object.keys(errorInfo).forEach(key => {
+                    scope.setExtra(key, errorInfo[key])
+                })
+            })
+            
+            if (environment.production) {
+                Sentry.captureException(error)
+            }
+        } else {
+            throw new Error(error + errorInfo)
         }
     }
 

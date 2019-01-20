@@ -3,6 +3,7 @@ import SeriesLinkModel, { SeriesLinkTypes } from "../models/SeriesLinkModel"
 import SeriesModel from "../models/SeriesModel"
 import FirebaseDatabase from "../service/FirebaseDatabase"
 import ServiceFactory from "@utils/ServiceFactory"
+import { SeriesFirebase } from "./FirebaseTypes"
 
 /**
  * Repository to communicate with the /series node in the database.
@@ -32,30 +33,36 @@ export default class SeriesRepository {
 
     public async getSeriesLinks(id: number): Promise<{ [T in SeriesLinkTypes]: SeriesLinkModel }> {
         return this.firebase.get(`/series/${id}`)
-            .then(async (val) => {
-                // übergangscode
-                if (val && val.links) {
-                    const oldlinksKeys = Object.keys(val.links)
-                    const name = await ServiceFactory.user.getName()
+            .then(async (val: SeriesFirebase) => {
+                // übergangscode, fill new links
+                if (val && (val as any).links) {
+                    const oldlinksKeys = Object.keys((val as any).links)
+                    const name = "System" // await ServiceFactory.user.getName()
 
-                    oldlinksKeys.forEach(key => {
+                    await oldlinksKeys.forEach(async key => {
                         const type = key === "bsto" ? SeriesLinkTypes.BurningSeries : null
 
                         if (type === null) {
                             return
                         }
 
-                        const newLink = new SeriesLinkModel(name, type, val.links[key])
-                        this.saveSeriesLink(id, newLink)
+                        const newLink = new SeriesLinkModel(name, type, (val as any).links[key])
+                        await this.saveSeriesLink(id, newLink)
                     })
 
-                    delete val.links
-                    if (val.bstolink) {   
-                        delete val.bstolink
+                    delete (val as any).links
+                    if ((val as any).bstolink) {   
+                        delete (val as any).bstolink
                     }
 
                     const newModel = SeriesConverter.firebaseToModel(val)
-                    this.addSeries(newModel)
+                    console.debug(`newModel`, newModel)
+                    await this.addSeries(newModel)
+                }
+
+                if (val.backdropUrl === "") {
+                    const model = await ServiceFactory.seriesApi.getCompleteSeries(val.id)
+                    await this.addSeries(model)
                 }
 
                 return this.firebase.get(`/series-links/${id}`)
@@ -63,7 +70,7 @@ export default class SeriesRepository {
     }
 
     public saveSeriesLink(id: number, seriesLink: SeriesLinkModel) {
-        this.firebase.write(`/series-links/${id}/${seriesLink.type}`, seriesLink)
+        return this.firebase.write(`/series-links/${id}/${seriesLink.type}`, seriesLink)
     }
 
     /**
