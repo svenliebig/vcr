@@ -1,4 +1,4 @@
-import SeriesLinkModel from "vcr-shared/models/SeriesLinkModel"
+import SeriesLinkModel from "../models/SeriesLinkModel"
 
 export default class SeriesLinkConverter {
     public static firebaseObjectsToModelArray(firebase: any) {

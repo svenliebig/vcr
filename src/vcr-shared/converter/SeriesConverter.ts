@@ -2,7 +2,7 @@ import { SeriesResponse } from "../service/Moviedb"
 import SeriesModel from "../models/SeriesModel"
 import SeasonConverter from "../converter/SeasonConverter"
 import { SeriesFirebase } from "../service/FirebaseTypes"
-import SeriesPriority from "vcr-shared/models/SeriesPriority"
+import SeriesPriority from "../models/SeriesPriority"
 
 /**
  * has functions to convert or merge different episode models
