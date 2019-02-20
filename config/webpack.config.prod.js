@@ -192,7 +192,9 @@ module.exports = {
         new PurgecssPlugin({
             paths: glob.sync(`${paths.appSrc}/**/*`, {
                 nodir: true,
-                whitelist: [".fa-thumbs-down", ".fa-television", ".fa-diamond"]
+				whitelist: () => ["fa-thumbs-down", "fa-television", "fa-diamond"],
+				whitelistPatterns: () => [/^fa-thumbs-down-/, /^fa-television-/, /^fa-diamond-/],
+				whitelistPatternsChildren: () => [/^fa-thumbs-down-/, /^fa-television-/, /^fa-diamond-/],
             }),
         }),
         new ManifestPlugin({

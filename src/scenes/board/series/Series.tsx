@@ -25,11 +25,9 @@ export interface State extends AbstractSeriesState {
 }
 
 function SeriesPriorityContainer({ priority }: { priority: SeriesPriority}) {
-    const faClassName = priority === 1 ? "television" : (priority ? "diamond" : "thumbs-down")
-    
     return <div className="priority-container">
         <Tooltip text={`Diese Serie hat die Priorität ${priority === 1 ? "normal" : (priority ? "hoch" : "niedrig")}.`}>
-           <span className={`fa fa-${faClassName}`} />
+           {priority === 1 ? <span className="fa fa-television" /> : (priority ? <span className="fa fa-diamond" /> : <span className="fa fa-thumbs-down" />)}
         </Tooltip>
     </div>
 }
