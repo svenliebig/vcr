@@ -46,9 +46,7 @@ export default class SentryCatcher extends React.Component<Props, State> {
                 </p>
                 <button onClick={() => Sentry.showReportDialog()}>Error Report Erstellen</button>
             </div>
-        } else {
-            //when there's not an error, render children untouched
-            return this.props.children
         }
+        return this.props.children
     }
 }
