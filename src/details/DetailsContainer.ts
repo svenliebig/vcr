@@ -10,6 +10,7 @@ import UserRepository from "vcr-shared/service/UserRepository"
 import { Routes } from "../Router"
 import Store from "../Store"
 import DetailsView, { DispatchProps, OwnProps, StateProps } from "./DetailsView"
+import SeriesPriority from "vcr-shared/models/SeriesPriority"
 
 const mapStateToProps: MapStateToProps<StateProps, {}, RootState> = (state: RootState): StateProps => ({
     series: state.DetailsReducer.series,
@@ -34,6 +35,15 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, OwnProps> = 
     },
     resetState: () => {
         dispatch(resetState())
+    },
+    setPriority: (priority: SeriesPriority) => {
+        const { series } = Store.getState().DetailsReducer
+        if (series) {
+            const updated = SeriesConverter.firebaseToModel(series)
+            updated.priority = priority
+            UserRepository.instance.setPriority(series.id, priority)
+                .then(() => dispatch(loadSeriesComplete(updated)))
+        }
     },
     toggleEpisode: (episodeObject: EpisodeModel) => {
         if (episodeObject.isAired()) {

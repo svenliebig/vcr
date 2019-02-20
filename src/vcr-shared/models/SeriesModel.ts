@@ -1,5 +1,6 @@
 import SeasonModel from "./SeasonModel"
 import { SeriesCreatedByResponse } from "../service/Moviedb"
+import SeriesPriority from "./SeriesPriority"
 
 /**
  * Represents a series.
@@ -24,6 +25,7 @@ export default class SeriesModel {
     public episodeDuration: Array<number>
     public seasonsCount: number
     public isCompletlyWatched: boolean = false
+    public priority: SeriesPriority = SeriesPriority.Medium
 
     /**
      * Creates an instance of Series.

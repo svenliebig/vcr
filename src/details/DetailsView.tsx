@@ -11,6 +11,7 @@ import SeriesLinkModel, { SeriesLinkTypes } from "vcr-shared/models/SeriesLinkMo
 import SeriesModel from "vcr-shared/models/SeriesModel"
 import { Routes } from "../Router"
 import "./Details.less"
+import SeriesPriority from "vcr-shared/models/SeriesPriority"
 
 export interface OwnProps extends RouteComponentProps<{ id: number }> {
 }
@@ -30,6 +31,7 @@ export interface DispatchProps {
     toggleSeason(season: SeasonModel): void
     deleteSeries(id: number): void
     handleSharedLinkInput(type: SeriesLinkTypes, value: string): void
+    setPriority(priority: SeriesPriority): void
 }
 
 export type Props = OwnProps & DispatchProps & StateProps
@@ -38,7 +40,11 @@ export interface State {
     selectedSeason: number
 }
 
-const TextButton = ({ icon, children, active, className }: { icon: string, children: React.ReactNode, active?: boolean, className?: string}) => <button className={`text-btn${active ? " active" : ""} ${className || ""}`}>
+interface TextButtonProps {
+    icon: string, children: React.ReactNode, active?: boolean, className?: string, onClick: () => void
+}
+
+const TextButton = ({ icon, children, active, className, onClick }: TextButtonProps) => <button onClick={onClick} className={`text-btn${active ? " active" : ""} ${className || ""}`}>
     <span className={`fa fa-${icon}`} />
     <span className="text-btn-innertext">{children}</span>
 </button>
@@ -69,7 +75,7 @@ export default class DetailsView extends Component<Props, State> {
     }
 
     private renderSeries(series: SeriesModel) {
-        const { selectedSeason, changeSeason, deleteSeries } = this.props
+        const { selectedSeason, changeSeason, deleteSeries, setPriority } = this.props
         return <>
             <div className="row details-header" style={{ backgroundImage: `url(${ImageUrlService.createBackdrop(series, SeriesImageSizes.LargeFaceBackdrop)})` }}>
                 <div className="container">
@@ -78,9 +84,9 @@ export default class DetailsView extends Component<Props, State> {
                             <Link to={Routes.Board}>Zurück</Link>
                             <Tooltip text="Priorität festlegen, die Serie wird dementsprechend weiter unter oder oben in der Übersicht eingeordnet">
                                 <div>
-                                    <TextButton icon="thumbs-down">Niedrig</TextButton>
-                                    <TextButton className="mx-2" icon="television" active>Normal</TextButton>
-                                    <TextButton icon="diamond">Hoch</TextButton>
+                                    <TextButton icon="thumbs-down" onClick={() => setPriority(SeriesPriority.Low)} active={series.priority === SeriesPriority.Low}>Niedrig</TextButton>
+                                    <TextButton className="mx-2" icon="television" onClick={() => setPriority(SeriesPriority.Medium)} active={series.priority === SeriesPriority.Medium}>Normal</TextButton>
+                                    <TextButton icon="diamond" onClick={() => setPriority(SeriesPriority.High)} active={series.priority === SeriesPriority.High}>Hoch</TextButton>
                                 </div>
                             </Tooltip>
                             <a href="#" onClick={() => deleteSeries(series.id)}>Löschen</a>

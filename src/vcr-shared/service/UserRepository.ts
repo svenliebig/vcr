@@ -3,6 +3,7 @@ import SeriesModel from "../models/SeriesModel"
 import FirebaseAuth from "../service/FirebaseAuth"
 import FirebaseDatabase from "../service/FirebaseDatabase"
 import { UserFirebase, SeriesFirebase } from "../service/FirebaseTypes"
+import SeriesPriority from "../models/SeriesPriority"
 
 export type UserRepositoryResponse = {
     series: Array<SeriesFirebase>
@@ -58,6 +59,10 @@ export default class UserRepository {
                 }
             }
         }
+    }
+    
+    public setPriority(id: number, priority: SeriesPriority) {
+        return this.database.write(`/users/${this.uid}/series/${id}/priority`, priority)
     }
 
     public getUserByName(username: string) {
@@ -138,11 +143,11 @@ export default class UserRepository {
     }
 
     /**
-	 * Returns all the series from the user with a promise.
-	 *
-	 * @returns {Promise.<Array<Series>>} called after reading the data
-	 * @memberof UserRepository
-	 */
+     * Returns all the series from the user with a promise.
+     *
+     * @returns {Promise.<Array<Series>>} called after reading the data
+     * @memberof UserRepository
+     */
     public getAllSeries(uid: string | null = this.uid) {
         return this.database.get(`/users/${uid}/series`).then(val =>
             Promise.resolve(SeriesConverter.firebaseArrayToModelArray(val))

@@ -2,6 +2,8 @@ import { SeriesResponse } from "../service/Moviedb"
 import SeriesModel from "../models/SeriesModel"
 import SeasonConverter from "../converter/SeasonConverter"
 import { SeriesFirebase } from "../service/FirebaseTypes"
+import SeriesPriority from "vcr-shared/models/SeriesPriority"
+
 /**
  * has functions to convert or merge different episode models
  *
@@ -72,6 +74,7 @@ export default class SeriesConverter {
         series.seasons = firebase.seasons ? firebase.seasons.map(SeasonConverter.firebaseToModel) : []
         series.seasonsCount = firebase.seasonsCount || (firebase.seasons && firebase.seasons.length) || 0
         series.isCompletlyWatched = firebase.isCompletlyWatched || false
+        series.priority = firebase.priority === undefined ? SeriesPriority.Medium : firebase.priority
         return series
     }
 
@@ -106,6 +109,7 @@ export default class SeriesConverter {
             result.isCompletlyWatched = next.isCompletlyWatched
             result.createdBy = Array.isArray(next.createdBy) && next.createdBy.length > 0 ? next.createdBy : previous.createdBy
             result.episodeDuration = Array.isArray(next.episodeDuration) && next.episodeDuration.length > 0 ? next.episodeDuration : previous.episodeDuration
+            result.priority = previous.priority
 
             if (Array.isArray(next.seasons) && next.seasons.length > (previous.seasons ? previous.seasons.length : 0)) {
                 result.seasons = next.seasons.map((nextEpisode, index) => {

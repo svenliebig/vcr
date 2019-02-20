@@ -12,6 +12,7 @@ import SeriesModel from "vcr-shared/models/SeriesModel"
 import { Routes } from "../../../Router"
 import "./Series.less"
 import SeriesLinks from "./SeriesLinks"
+import SeriesPriority from "vcr-shared/models/SeriesPriority"
 
 export interface Props {
     series: SeriesModel
@@ -23,15 +24,25 @@ export interface State extends AbstractSeriesState {
     links: { [T in SeriesLinkTypes]?: SeriesLinkModel }
 }
 
+function SeriesPriorityContainer({ priority }: { priority: SeriesPriority}) {
+    const faClassName = priority === 1 ? "television" : (priority ? "diamond" : "thumbs-down")
+    
+    return <div className="priority-container">
+        <Tooltip text={`Diese Serie hat die Priorität ${priority === 1 ? "normal" : (priority ? "hoch" : "niedrig")}.`}>
+           <span className={`fa fa-${faClassName}`} />
+        </Tooltip>
+    </div>
+}
+
 /**
  * Represents a Series.
  */
 export default class Series extends AbstractSeries<Props, State> {
 
     /**
-	 *
-	 * @param {{ series: SeriesModel }} props
-	 */
+     *
+     * @param {{ series: SeriesModel }} props
+     */
     constructor(props: Props) {
         super(props)
 
@@ -121,10 +132,10 @@ export default class Series extends AbstractSeries<Props, State> {
         }
 
         /**
-		 *
-		 * @param {SeasonModel} season
-		 * @param {number} index
-		 */
+         *
+         * @param {SeasonModel} season
+         * @param {number} index
+         */
         const createSeasonToggle = (season: SeasonModel) => {
             let render = true
 
@@ -145,10 +156,10 @@ export default class Series extends AbstractSeries<Props, State> {
         }
 
         /**
-		 *
-		 * @param {SeasonModel} season
-		 * @param {number} index
-		 */
+         *
+         * @param {SeasonModel} season
+         * @param {number} index
+         */
         const createSeasons = (season: SeasonModel, index: number) => {
             return (
                 <div key={index} className={"season " + this.getSeasonClass(season.seasonNumber)}>
@@ -174,6 +185,7 @@ export default class Series extends AbstractSeries<Props, State> {
         return (
             <div className="series-card-wrapper">
                 <SeriesLinks links={this.state.links} />
+                <SeriesPriorityContainer priority={this.state.series.priority} />
                 <SeriesCard series={this.state.series} bannerLink={`${Routes.Details}/${this.state.series.id}`}>
                     <Tooltip text="Alle Folgen der Serie als gesehen markieren">
                         <button className="fa fa-eye"

@@ -26,12 +26,6 @@ export interface State {
     finishedLoaded: boolean
 }
 
-/**
- * asdfs
- *
- * @field state {} asdf
- * @memberOf Board
- */
 export default class Board extends Component<{}, State> {
     constructor(props: {}) {
         super(props)
@@ -59,13 +53,13 @@ export default class Board extends Component<{}, State> {
     }
 
     componentDidMount() {
-        console.time("load series")
+        // console.time("load series")
         EventBus.instance.emit("getOpenSeries").then((series: Array<SeriesModel>) => {
             this.setState({
                 userSeries: series,
                 loaded: true
             }, () => {
-                console.timeEnd("load series")
+                // console.timeEnd("load series")
             })
         })
     }
@@ -201,10 +195,15 @@ export default class Board extends Component<{}, State> {
     private sortSeries = (seriesA: SeriesModel, seriesB: SeriesModel) => {
         if (this.state.sortRemainingTime) {
             return seriesA.totalMinutesNotWatched() - seriesB.totalMinutesNotWatched()
-        } else if (this.state.sortAscending) {
+        } else if (!this.state.sortAscending) {
+            return seriesB.name.localeCompare(seriesA.name)
+        }
+        
+        if (seriesB.priority === seriesA.priority) {
             return seriesA.name.localeCompare(seriesB.name)
         }
-        return seriesB.name.localeCompare(seriesA.name)
+
+        return seriesB.priority - seriesA.priority
     }
 
     private filterSeries = (series: SeriesModel) => {

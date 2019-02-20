@@ -61,4 +61,5 @@ export type SeriesFirebase = {
     status: string,
     votes: number,
     seasonsCount: number
+    priority: number
 }
