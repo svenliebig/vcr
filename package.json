@@ -60,7 +60,7 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "raf": "^3.4.0",
-    "react-dev-utils": "^5.0.2",
+    "react-dev-utils": "^11.0.4",
     "style-loader": "^0.23.0",
     "sw-precache-webpack-plugin": "^0.11.5",
     "ts-jest": "^23.1.4",
